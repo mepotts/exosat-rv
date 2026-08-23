@@ -1,7 +1,7 @@
+"""Per-order regression on the PUBLISHED RVs: which orders transmit the signal?"""
 import os
 _ROOT = os.environ.get("EXOSAT_ROOT") or os.path.abspath(
     os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
-"""Per-order regression on the PUBLISHED RVs: which orders transmit the signal?"""
 import numpy as np
 import sys
 sys.path.insert(0, _ROOT + "/scripts/injection")

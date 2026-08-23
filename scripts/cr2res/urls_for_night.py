@@ -1,6 +1,3 @@
-import os
-_ROOT = os.environ.get("EXOSAT_ROOT") or os.path.abspath(
-    os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
 """Resolve one ADP product to every raw frame + master needed to redo it.
 
 Two traps, both hit:
@@ -10,6 +7,9 @@ Two traps, both hit:
   * archive.eso.org intermittently returns a VOTable that parses fine but is missing the
     calSelector rows, so validity has to be checked on CONTENT, inside the retry loop.
 """
+import os
+_ROOT = os.environ.get("EXOSAT_ROOT") or os.path.abspath(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
 import io, os, subprocess, sys, time
 from astropy.io import fits
 from astropy.table import Table

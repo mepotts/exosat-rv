@@ -1,6 +1,3 @@
-import os
-_ROOT = os.environ.get("EXOSAT_ROOT") or os.path.abspath(
-    os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
 """Blind period search on OUR from-raw series. No published values enter.
 
 For each trial period: fit K*cos + K*sin + const (linear), compute BIC against the
@@ -9,6 +6,9 @@ Variants: median / clip combine, with / without a BERV covariate, 18 / 17 epochs
 (the 17 drops the epoch with no counterpart in the published table — identified
 here only by its BJD, not by using any published number in the fit).
 """
+import os
+_ROOT = os.environ.get("EXOSAT_ROOT") or os.path.abspath(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
 import numpy as np
 import sys
 sys.path.insert(0, _ROOT + "/scripts/injection")

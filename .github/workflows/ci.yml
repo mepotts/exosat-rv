@@ -2,8 +2,9 @@ name: CI
 
 # The monorepo this was split out of ran CI over three sibling projects and never
 # over this one, so the test suite here has never been exercised automatically.
-# It is exercised now: 125 tests covering the order map, the feasibility model,
-# the satellite dynamics, the archive readers and the orbit fits.
+# It is exercised now: 123 of the 125 tests covering the order map, the feasibility
+# model, the satellite dynamics, the archive readers and the orbit fits. The other two
+# are network-marked and deselected below.
 
 on:
   push:
@@ -37,8 +38,10 @@ jobs:
       - name: Install
         run: |
           python -m pip install --upgrade pip
-          pip install -e .
-          pip install pytest scipy
+          pip install -e ".[dev]"
 
       - name: Run tests
-        run: pytest tests/ -q
+        # Deselect the network-marked tests: they make live TAP calls to ESO and the NASA
+        # Exoplanet Archive, so leaving them in makes CI fail when a third party is down
+        # rather than when this code breaks. The slow-marked orbit fits are kept.
+        run: pytest -q -m "not network"

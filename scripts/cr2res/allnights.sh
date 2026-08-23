@@ -1,7 +1,11 @@
 #!/bin/bash
+# Repo root, overridable: EXOSAT_ROOT=/path/to/exosat-rv ./this-script.sh
+# Derived before any cd, so BASH_SOURCE still resolves against this script.
+EXOSAT_ROOT="${EXOSAT_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
+# Generated products and staging land outside the repo: EXOSAT_WORK=/path ./this-script.sh
+WORK="${EXOSAT_WORK:-$HOME/exosat-work}"
 # Unattended: for each extra night, resolve -> download -> reduce -> viper A/B sweep.
 # Resumable: every stage drops a marker and is skipped if already done.
-SC=/mnt/c/Users/matth/AppData/Local/Temp/claude/c--Users-matth-projects-astronomy/17e10030-3be1-497c-afec-cf77b01ab773/scratchpad
 # NOTE: do NOT source cr2env.sh here. The minimal libcurl built into the cr2res prefix
 # has no SSL and sits on LD_LIBRARY_PATH, which shadows the system libcurl for EVERY
 # binary in the shell -- even /usr/bin/curl returns HTTP 000. Network stages must run in
@@ -9,7 +13,7 @@ SC=/mnt/c/Users/matth/AppData/Local/Temp/claude/c--Users-matth-projects-astronom
 PY=~/viperenv/bin/python
 export PATH=/usr/bin:/bin:$PATH
 FTS=lib/CRIRES/FTS/CRp_SGC2_FTStmpl-HR0p007-WN5000-10000_Hband.dat
-OUT=$SC/ab; mkdir -p "$OUT"
+OUT=$WORK/ab; mkdir -p "$OUT"
 CFGS="base: add2:-telluric_add2 add2dw3:-telluric_add2|-deg_wave_3 kap:-kapsig_3 dw3:-deg_wave_3"
 
 declare -A ADP=( [night2]=ADP.2025-05-26T13-07-19.921.fits
@@ -24,7 +28,7 @@ for N in night2 night3 night4 night5; do
 
   # 1. resolve
   if [ ! -s "$D/urls.txt" ]; then
-    $PY $SC/urls_for_night.py "${ADP[$N]}" "$D/urls.txt" || { echo "$N resolve FAILED"; continue; }
+    $PY "$EXOSAT_ROOT"/scripts/cr2res/urls_for_night.py "${ADP[$N]}" "$D/urls.txt" || { echo "$N resolve FAILED"; continue; }
   fi
   echo "  urls: $(wc -l < "$D/urls.txt")"
 
@@ -45,8 +49,9 @@ for N in night2 night3 night4 night5; do
 
   # 3. reduce
   if [ ! -f "$W/.done" ]; then
-    sed "s|raw/night1|raw/$N|g; s|red/night1|red/$N|g" $SC/reduce_night.sh > /tmp/red_$N.sh
-    bash /tmp/red_$N.sh > "$HOME/cr2res/reduce_$N.log" 2>&1
+    sed "s|raw/night1|raw/$N|g; s|red/night1|red/$N|g" "$EXOSAT_ROOT"/scripts/cr2res/reduce_night.sh > /tmp/red_$N.sh
+    # The copy runs from /tmp, where it cannot derive the repo root itself -- pass it in.
+    EXOSAT_ROOT="$EXOSAT_ROOT" bash /tmp/red_$N.sh > "$HOME/cr2res/reduce_$N.log" 2>&1
   fi
   if [ ! -f "$W/cr2res_obs_nodding_extractedA.fits" ]; then
     echo "  REDUCTION FAILED"; tail -4 "$HOME/cr2res/reduce_$N.log"; continue
@@ -58,7 +63,7 @@ for N in night2 night3 night4 night5; do
   mkdir -p nod
   cp -f "$W/cr2res_obs_nodding_extractedA.fits" nod/${N}A.fits
   cp -f "$W/cr2res_obs_nodding_extractedB.fits" nod/${N}B.fits
-  $PY $SC/strip09.py nod/${N}A.fits nod/${N}B.fits > /dev/null
+  $PY "$EXOSAT_ROOT"/scripts/cr2res/strip09.py nod/${N}A.fits nod/${N}B.fits > /dev/null
   for spec in $CFGS; do
     cname=${spec%%:*}; argstr=${spec#*:}
     args=$(echo "$argstr" | tr '|' ' ' | tr '_' ' ')

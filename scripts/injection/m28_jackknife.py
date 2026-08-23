@@ -1,6 +1,3 @@
-import os
-_ROOT = os.environ.get("EXOSAT_ROOT") or os.path.abspath(
-    os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
 """M28: leave-one-out robustness of the CD-35 2722 B period detection.
 
 A referee's first question about a 17-epoch detection is whether one night carries it.
@@ -10,6 +7,9 @@ peak period and dBIC each time.
 
 Usage (WSL): python m28_jackknife.py [series.rvo.dat]
 """
+import os
+_ROOT = os.environ.get("EXOSAT_ROOT") or os.path.abspath(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
 import sys
 
 import numpy as np

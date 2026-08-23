@@ -1,6 +1,3 @@
-import os
-_ROOT = os.environ.get("EXOSAT_ROOT") or os.path.abspath(
-    os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
 """The real test: do our from-raw RVs track the published ones, night by night?
 
 Bin A and B per night (as the paper does), screen orders by telluric anchor, remove a

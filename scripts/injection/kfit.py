@@ -1,11 +1,11 @@
-import os
-_ROOT = os.environ.get("EXOSAT_ROOT") or os.path.abspath(
-    os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
 """Fit K at the published period to our median-combined series; compare to K1_pub.
 
 Circular orbit at fixed P => linear model a*cos + b*sin + c (+ d*BERV optionally).
 K = hypot(a, b). Analytic covariance from residual variance.
 """
+import os
+_ROOT = os.environ.get("EXOSAT_ROOT") or os.path.abspath(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
 import numpy as np
 import sys
 sys.path.insert(0, _ROOT + "/scripts/injection")

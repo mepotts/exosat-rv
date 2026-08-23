@@ -81,7 +81,9 @@ Data lives **outside this repository**, in WSL:
 Run analysis scripts from the repo root via WSL:
 
 ```bash
-wsl -e bash -c "cd /mnt/c/Users/matth/projects/exosat-rv-new && ~/viperenv/bin/python scripts/injection/m34_overfit_test.py"
+# Run from inside WSL, at the repo root. The repo sits on the Windows side, so its WSL
+# path is under /mnt/c/... -- `wslpath -a .` prints it and hardcodes no folder name:
+cd "$(wslpath -a .)" && ~/viperenv/bin/python scripts/injection/m34_overfit_test.py
 ```
 
 Scripts derive their own root and honour an override:

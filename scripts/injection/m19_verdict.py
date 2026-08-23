@@ -1,6 +1,3 @@
-import os
-_ROOT = os.environ.get("EXOSAT_ROOT") or os.path.abspath(
-    os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
 """M19 verdict: the beta Pic b 4-epoch series — variability test + K exclusion.
 
 With four epochs a blind period search is over-parameterized (3 fit params), so the
@@ -12,6 +9,9 @@ real binned series, compare its std against the observed std.
 
 Usage (WSL, ~/viper-src): python m19_verdict.py M19_BPB.rvo.dat
 """
+import os
+_ROOT = os.environ.get("EXOSAT_ROOT") or os.path.abspath(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
 import sys
 
 import numpy as np

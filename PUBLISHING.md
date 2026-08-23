@@ -5,6 +5,13 @@ scientific record, what the field expects a companion repository to look like, a
 what this repository deliberately does and does not expose. Venue facts checked
 2026-08-13; fees and policies drift, so re-verify before submitting.*
 
+> **Provenance.** This document was written in the `mepotts/astronomy` monorepo and covers
+> that whole portfolio, so its venue survey and the table at the end still refer to sibling
+> projects (`adql-copilot`, `itf-linker`, `seti-ellipsoid-broker`) that do not live in this
+> repository. Paths that point at exosat-rv's own files are repo-relative and resolve here;
+> references to the siblings link out to the monorepo. The venue guidance itself is
+> project-independent, which is why it was carried across rather than trimmed.
+
 ## Where an independent researcher can publish
 
 **[Research Notes of the AAS (RNAAS)](https://journals.aas.org/research-notes/)** —
@@ -25,7 +32,7 @@ published Nature paper, which is exactly what the CD-35 2722 B second-satellite
 contradiction is. Free to submit; the original authors are shown the submission
 and respond. Etiquette (and the journal) expect prior correspondence with the
 authors — the drafted query letter in
-[`exosat-rv/docs/author-query-draft.md`](exosat-rv/docs/author-query-draft.md) is
+[`docs/author-query-draft.md`](docs/author-query-draft.md) is
 step one of that path, not just politeness.
 
 **Mainstream journals** (AJ/ApJ, A&A, MNRAS, PASP) — all accept "Independent
@@ -36,7 +43,7 @@ with waiver processes). Check current terms per journal.
 
 **[JOSS](https://joss.theoj.org/)** (Journal of Open Source Software) — free,
 peer-reviewed, for the *tools*: adql-copilot's draft in
-[`adql-copilot/paper/`](adql-copilot/paper/) is aimed here.
+[`adql-copilot/paper/`](https://github.com/mepotts/astronomy/tree/main/adql-copilot/paper) is aimed here.
 
 **arXiv** — the field's noticeboard; astro-ph requires a one-time
 **endorsement** for new submitters. Practical routes for an independent: an
@@ -114,7 +121,7 @@ discipline existed. Template statement:
 
 The disclosure is split into two artifacts so the manuscript stays lean: a
 condensed **"AI contribution and responsibility statement"** in the paper itself
-([`exosat-rv/docs/paper/draft.template.html`](exosat-rv/docs/paper/draft.template.html)),
+([`docs/paper/draft.template.html`](docs/paper/draft.template.html)),
 and the full stage-by-stage **[AI-CHECKLIST.md](AI-CHECKLIST.md)** it links to —
 involvement levels 0–4 per research stage with evidence pointers into the
 repository, modeled on the Agents4Science 2025 mandatory checklists. No
@@ -185,8 +192,8 @@ submit.
 
 | Work | State | Natural venue |
 |---|---|---|
-| eta Tel B first RV limit | Result complete (`exosat-rv/M15-RESULTS.md`) | RNAAS now; folds into the full paper later |
-| CD-35 reproduction + second-satellite contradiction | Draft in `exosat-rv/docs/paper/`; decisive epochs embargoed to Dec 2026–May 2027 | Author correspondence → Nature Matters Arising, or a full OJA/journal paper |
+| eta Tel B first RV limit | Result complete (`M15-RESULTS.md`) | RNAAS now; folds into the full paper later |
+| CD-35 reproduction + second-satellite contradiction | Draft in `docs/paper/`; decisive epochs embargoed to Dec 2026–May 2027 | Author correspondence → Nature Matters Arising, or a full OJA/journal paper |
 | ITF-linker method + validation | RNAAS draft in `itf-linker/docs/`; blocked on the citable data archive (Zenodo) step | RNAAS |
 | seti-ellipsoid-broker tool note | RNAAS draft in `seti-ellipsoid-broker/docs/`, validation passed | RNAAS |
 | adql-copilot | JOSS draft in `adql-copilot/paper/` | JOSS |

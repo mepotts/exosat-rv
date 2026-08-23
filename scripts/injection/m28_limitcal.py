@@ -1,6 +1,3 @@
-import os
-_ROOT = os.environ.get("EXOSAT_ROOT") or os.path.abspath(
-    os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
 """M28: calibrate the detection bar behind the eta Tel B companion limit.
 
 M15 defines a detection as "dBIC >= 10 at the injected period AND that peak ranks
@@ -17,6 +14,9 @@ construction, with the true sampling, value distribution and window function pre
 
 Usage (WSL): python m28_limitcal.py [series.rvo.dat] [--nperm N]
 """
+import os
+_ROOT = os.environ.get("EXOSAT_ROOT") or os.path.abspath(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
 import sys
 
 import numpy as np

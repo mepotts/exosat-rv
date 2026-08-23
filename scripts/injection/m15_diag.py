@@ -1,6 +1,3 @@
-import os
-_ROOT = os.environ.get("EXOSAT_ROOT") or os.path.abspath(
-    os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
 """M15 internal diagnostics for an eta Tel B series. INFORMATIONAL ONLY.
 
 No published RVs exist for this target, so nothing here may drive an adoption
@@ -10,6 +7,9 @@ and r(BERV).
 
 Usage (WSL, from ~/viper-src): python m15_diag.py E15_R1.rvo.dat [more.rvo.dat ...]
 """
+import os
+_ROOT = os.environ.get("EXOSAT_ROOT") or os.path.abspath(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
 import sys
 
 import numpy as np

@@ -1,13 +1,16 @@
 #!/bin/bash
+# Repo root, overridable: EXOSAT_ROOT=/path/to/exosat-rv ./this-script.sh
+# Derived before any cd, so BASH_SOURCE still resolves against this script.
+EXOSAT_ROOT="${EXOSAT_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
 # Full CRIRES+ reduction cascade from raw, for one night:
 #   cal_dark -> cal_flat -> cal_wave -> obs_nodding
 # The point is obs_nodding's extractedA/extractedB + trace_wave_A/trace_wave_B, i.e. a
 # SEPARATE wavelength solution per nodding position. ESO's archive only serves the
 # combined EXTRACTC product, which has already merged them.
-source /mnt/c/Users/matth/AppData/Local/Temp/claude/c--Users-matth-projects-astronomy/17e10030-3be1-497c-afec-cf77b01ab773/scratchpad/cr2env.sh
+source "$EXOSAT_ROOT"/scripts/cr2res/cr2env.sh
 RAW=$HOME/cr2res/raw/night1
 W=$HOME/cr2res/red/night1
-CLS=/mnt/c/Users/matth/AppData/Local/Temp/claude/c--Users-matth-projects-astronomy/17e10030-3be1-497c-afec-cf77b01ab773/scratchpad/classify.py
+CLS="$EXOSAT_ROOT"/scripts/cr2res/classify.py
 PY=~/viperenv/bin/python
 mkdir -p "$W" && cd "$W" || exit 1
 

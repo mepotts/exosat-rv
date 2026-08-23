@@ -1,7 +1,7 @@
+"""Does a robust (median / clipped-mean) order combination beat the plain mean?"""
 import os
 _ROOT = os.environ.get("EXOSAT_ROOT") or os.path.abspath(
     os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
-"""Does a robust (median / clipped-mean) order combination beat the plain mean?"""
 import numpy as np
 import sys
 sys.path.insert(0, _ROOT + "/scripts/injection")

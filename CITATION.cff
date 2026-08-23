@@ -24,7 +24,7 @@ authors:
     given-names: Matthew
     email: matthew.e.potts@gmail.com
     # orcid: "https://orcid.org/0000-0000-0000-0000"  # TODO: add your ORCID
-repository-code: "https://github.com/mepotts/astronomy/tree/main/exosat-rv"
+repository-code: "https://github.com/mepotts/exosat-rv"
 license: MIT
 version: "0.1.0"
 date-released: "2026-08-10"

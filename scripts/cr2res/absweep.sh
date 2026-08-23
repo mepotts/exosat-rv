@@ -1,4 +1,6 @@
 #!/bin/bash
+# Generated products and staging land outside the repo: EXOSAT_WORK=/path ./this-script.sh
+WORK="${EXOSAT_WORK:-$HOME/exosat-work}"
 # Sweep the forward model against the A-B null test: same star, 10.6 min apart, true
 # dRV = 0. Signal-free, so unlike epoch rms it cannot be improved by deleting the signal,
 # and unlike GJ 229 B it needs no proxy target.
@@ -6,8 +8,7 @@ cd ~/viper-src || exit 1
 export PATH="$HOME/bin:$PATH"
 FTS=lib/CRIRES/FTS/CRp_SGC2_FTStmpl-HR0p007-WN5000-10000_Hband.dat
 PY=~/viperenv/bin/python
-SC=/mnt/c/Users/matth/AppData/Local/Temp/claude/c--Users-matth-projects-astronomy/17e10030-3be1-497c-afec-cf77b01ab773/scratchpad
-OUT=$SC/ab; mkdir -p "$OUT"
+OUT=$WORK/ab; mkdir -p "$OUT"
 go () {
   name="$1"; shift
   for arm in A B; do
