@@ -1,4 +1,7 @@
 #!/bin/bash
+# Repo root, overridable: EXOSAT_ROOT=/path/to/exosat-rv ./this-script.sh
+EXOSAT_ROOT="${EXOSAT_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
+
 # M20 v3: beta Pic b with the stellar-contamination orders masked.
 # Template: the v2 multi-epoch build (bpb2_tpl2). Orders dropped: o8 (the host's
 # Br-gamma line lives at 2166 nm — physics, a priori) and o3,o4,o6,o7,o15,o16
@@ -7,7 +10,7 @@ set -u
 cd ~/viper-src || exit 1
 export PATH="$HOME/bin:$PATH"
 PY=~/viperenv/bin/python
-SC=/mnt/c/Users/matth/projects/astronomy/exosat-rv/scripts/injection
+SC="$EXOSAT_ROOT"/scripts/injection
 FTSK=lib/CRIRES/FTS/CRp_SGC2_FTStmpl-HR0p007-WN3000-5000_Kband.dat
 TL='beta Pic b;* bet Pic b;05 47 17.0877 -51 03 59.441;5.160 84.041 [0.100 0.100 90];50.9307 [0.0300] A 2020yCat.1350....0G;v:spectroscopic 16.84 (Opt) A [0.50] simbad'
 OSET="1,2,5,9,10,11,12,13,14,17,18"

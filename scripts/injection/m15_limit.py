@@ -21,15 +21,17 @@ Writes /mnt/c/.../data/m15-limit.json and prints the tables.
 import glob
 import json
 import os
+_ROOT = os.environ.get("EXOSAT_ROOT") or os.path.abspath(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
 import sys
 
 import numpy as np
 
-SC = "/mnt/c/Users/matth/projects/astronomy/exosat-rv/scripts/injection"
+SC = _ROOT + "/scripts/injection"
 sys.path.insert(0, SC)
 from vs_published import load  # noqa: E402
 
-OUT = "/mnt/c/Users/matth/projects/astronomy/exosat-rv/data/m15-limit.json"
+OUT = _ROOT + "/data/m15-limit.json"
 G = 6.674e-11
 MSUN = 1.989e30
 MJUP = 1.898e27

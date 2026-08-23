@@ -1,3 +1,6 @@
+import os
+_ROOT = os.environ.get("EXOSAT_ROOT") or os.path.abspath(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
 """Two competing models for the archived combined product:
    H1 naive     : ESO = a*A + b*B            (summed at matching pixel index)
    H2 resampled : ESO = a*A + b*B_on_A_grid  (B interpolated onto A's wavelengths first)
@@ -6,7 +9,7 @@ Fit both by linear least squares per segment and compare residuals.
 import numpy as np
 from astropy.io import fits
 W = "/home/matth/cr2res/red/night1/"
-adp = "/mnt/c/Users/matth/projects/astronomy/exosat-rv/data/spectra/ADP.2025-05-25T09-47-12.250.fits"
+adp = _ROOT + "/data/spectra/ADP.2025-05-25T09-47-12.250.fits"
 A = fits.open(W+"cr2res_obs_nodding_extractedA.fits"); B = fits.open(W+"cr2res_obs_nodding_extractedB.fits")
 d = fits.open(adp)[1].data
 af=np.asarray(d["FLUX"][0]).ravel(); ao=np.asarray(d["ORDER"][0]).ravel().astype(int)

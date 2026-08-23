@@ -1,4 +1,7 @@
 #!/bin/bash
+# Repo root, overridable: EXOSAT_ROOT=/path/to/exosat-rv ./this-script.sh
+EXOSAT_ROOT="${EXOSAT_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
+
 # M17: K-band spot-check runs on AB Pic b, CT Cha B, beta Pic b (products route).
 # Per target: stage -> template ladder (iter0->1->2, kapsig creation, K-band FTS)
 # -> RV run (all 18 K2166 segments, kapsig 3, oversampling 2) -> diagnostics ->
@@ -10,8 +13,8 @@ cd ~/viper-src || exit 1
 export PATH="$HOME/bin:$PATH"
 FTSK=lib/CRIRES/FTS/CRp_SGC2_FTStmpl-HR0p007-WN3000-5000_Kband.dat
 PY=~/viperenv/bin/python
-SC=/mnt/c/Users/matth/projects/astronomy/exosat-rv/scripts/injection
-DATA=/mnt/c/Users/matth/projects/astronomy/exosat-rv/data
+SC="$EXOSAT_ROOT"/scripts/injection
+DATA="$EXOSAT_ROOT"/data
 # viper's K-band branch is 1-indexed: order o -> drs 7-(o-1)//3, so K2166's six
 # orders (07..02) are viper orders 1..18. oset 0 would seek a nonexistent order 08.
 OSET="1:19"

@@ -1,4 +1,7 @@
 #!/bin/bash
+# Repo root, overridable: EXOSAT_ROOT=/path/to/exosat-rv ./this-script.sh
+EXOSAT_ROOT="${EXOSAT_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
+
 # M31: HIP 65426 HiRISE reduction -- the M29-validated fibre chain, unchanged in every
 # recipe, parameter and SOF line from reduce_hirise.sh (commit 198ef74, on-sky-validated
 # on bpbhi: 39/39 frames, host-telluric CCF 9.8 sigma at 0 km/s), plus footprint
@@ -23,11 +26,11 @@
 #   m31_reduce.sh <slug>     raw in $RAW_BASE/<slug>, writes $RED_BASE/<slug>
 N=$1
 export LD_LIBRARY_PATH="${LD_LIBRARY_PATH:-}"
-source /mnt/c/Users/matth/projects/astronomy/exosat-rv/scripts/cr2res/cr2env.sh
+source "$EXOSAT_ROOT"/scripts/cr2res/cr2env.sh
 set -u
 RAW=${RAW_BASE:-$HOME/cr2res/raw_m30}/$N
 W=${RED_BASE:-$HOME/cr2res/red_m31}/$N
-CLS=/mnt/c/Users/matth/projects/astronomy/exosat-rv/scripts/cr2res/classify.py
+CLS="$EXOSAT_ROOT"/scripts/cr2res/classify.py
 PY=~/viperenv/bin/python
 SMOOTH_Y=${SMOOTH_Y:-9}          # fibre-scale, against the 401 default (unused: no util_trace on this path)
 MIN_CLUSTER=${MIN_CLUSTER:-20}

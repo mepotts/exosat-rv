@@ -1,4 +1,7 @@
 #!/bin/bash
+# Repo root, overridable: EXOSAT_ROOT=/path/to/exosat-rv ./this-script.sh
+EXOSAT_ROOT="${EXOSAT_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
+
 # M26 batch 2 — the remaining staged census targets, each through the standard
 # chain (tpl0 -> RV -> diag -> verdict -> matched injection arm):
 #   h81208k   HIP 81208 B, 3 K2166 nodding nights / ~105 d (second setting)
@@ -11,7 +14,7 @@ set -u
 cd ~/viper-src || exit 1
 export PATH="$HOME/bin:$PATH"
 PY=~/viperenv/bin/python
-SC=/mnt/c/Users/matth/projects/astronomy/exosat-rv/scripts/injection
+SC="$EXOSAT_ROOT"/scripts/injection
 FTSH=lib/CRIRES/FTS/CRp_SGC2_FTStmpl-HR0p007-WN5000-10000_Hband.dat
 FTSK=lib/CRIRES/FTS/CRp_SGC2_FTStmpl-HR0p007-WN3000-5000_Kband.dat
 HC="4,7,8,9,10,12,13,14,17,18,19"

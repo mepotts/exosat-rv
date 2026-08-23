@@ -1,4 +1,7 @@
 #!/bin/bash
+# Repo root, overridable: EXOSAT_ROOT=/path/to/exosat-rv ./this-script.sh
+EXOSAT_ROOT="${EXOSAT_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
+
 # M15: stage eta Tel B archive-route data in WSL and build the template ladder.
 #   iter0: -createtpl from a flat stellar reference (no template argument)
 #   iter1: -createtpl from tpl0        iter2: -createtpl from tpl1
@@ -15,7 +18,7 @@ export PATH="$HOME/bin:$PATH"
 FTS=lib/CRIRES/FTS/CRp_SGC2_FTStmpl-HR0p007-WN5000-10000_Hband.dat
 PY=~/viperenv/bin/python
 HC="4,7,8,9,10,12,13,14,17,18,19"
-SRC=/mnt/c/Users/matth/projects/astronomy/exosat-rv/data/etatel_cr2res
+SRC="$EXOSAT_ROOT"/data/etatel_cr2res
 
 mkdir -p etatel_data
 cp -n $SRC/ADP*.fits etatel_data/ 2>/dev/null || true

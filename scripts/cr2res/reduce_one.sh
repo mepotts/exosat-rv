@@ -1,12 +1,15 @@
 #!/bin/bash
+# Repo root, overridable: EXOSAT_ROOT=/path/to/exosat-rv ./this-script.sh
+EXOSAT_ROOT="${EXOSAT_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
+
 # Parameterized M12 reduce_night.sh: full CRIRES+ cascade from raw for ONE night.
 #   reduce_one.sh <nightname>     (expects raw in ~/cr2res/raw/<night>, writes ~/cr2res/red/<night>)
 # cal_dark -> cal_flat -> cal_wave -> obs_nodding; the point is extractedA/extractedB.
 N=$1
-source /mnt/c/Users/matth/projects/astronomy/exosat-rv/scripts/cr2res/cr2env.sh
+source "$EXOSAT_ROOT"/scripts/cr2res/cr2env.sh
 RAW=${RAW_BASE:-$HOME/cr2res/raw}/$N
 W=${RED_BASE:-$HOME/cr2res/red}/$N
-CLS=/mnt/c/Users/matth/projects/astronomy/exosat-rv/scripts/cr2res/classify.py
+CLS="$EXOSAT_ROOT"/scripts/cr2res/classify.py
 PY=~/viperenv/bin/python
 mkdir -p "$W" && cd "$W" || exit 1
 

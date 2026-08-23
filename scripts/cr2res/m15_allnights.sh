@@ -1,13 +1,16 @@
 #!/bin/bash
+# Repo root, overridable: EXOSAT_ROOT=/path/to/exosat-rv ./this-script.sh
+EXOSAT_ROOT="${EXOSAT_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
+
 # M15: fetch + reduce every eta Tel B H1567 epoch from raw, per ADP product
 # (two nights carry two independent visits; each gets its own reduction dir).
 # Reuses the parameterized M14 pieces: urls_for_night.py (ADP_DIR env),
 # reduce_one.sh (RAW_BASE/RED_BASE env), strip09.py. Per-nodding products land in
 # ~/viper-src/etatel_nod/. Crash-safe: .fetched/.done markers, skip logic.
 set -u
-SC=/mnt/c/Users/matth/projects/astronomy/exosat-rv/scripts/cr2res
+SC="$EXOSAT_ROOT"/scripts/cr2res
 PY=$HOME/viperenv/bin/python
-export ADP_DIR=/mnt/c/Users/matth/projects/astronomy/exosat-rv/data/spectra_etatel
+export ADP_DIR="$EXOSAT_ROOT"/data/spectra_etatel
 export RAW_BASE=$HOME/cr2res/raw_etatel
 export RED_BASE=$HOME/cr2res/red_etatel
 LOG=$HOME/cr2res/logs_etatel

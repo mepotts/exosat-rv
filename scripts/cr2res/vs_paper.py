@@ -1,3 +1,6 @@
+import os
+_ROOT = os.environ.get("EXOSAT_ROOT") or os.path.abspath(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
 """The real test: do our from-raw RVs track the published ones, night by night?
 
 Bin A and B per night (as the paper does), screen orders by telluric anchor, remove a
@@ -6,7 +9,9 @@ for the same BJDs. The scatter of the difference is the reproduction error.
 """
 import numpy as np, os, glob, re
 SP = os.path.dirname(os.path.abspath(__file__)); AB = os.path.join(SP, "ab")
-PUB = "/c/Users/matth/projects/astronomy/exosat-rv/papers/text/hoy2026_nature_published.txt".replace("/c/","C:/")
+_ROOT = os.environ.get("EXOSAT_ROOT") or os.path.abspath(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
+PUB = os.path.join(_ROOT, "papers", "text", "hoy2026_nature_published.txt")
 
 pub = {}
 for m in re.finditer(r"(24\d{5}\.\d{4})\s+(-?\d+\.\d+)\s+(\d+\.\d+)", open(PUB,encoding="utf-8",errors="replace").read()):

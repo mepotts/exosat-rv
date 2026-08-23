@@ -1,11 +1,14 @@
 #!/bin/bash
+# Repo root, overridable: EXOSAT_ROOT=/path/to/exosat-rv ./this-script.sh
+EXOSAT_ROOT="${EXOSAT_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
+
 # M24: the staring crumbs — AF Lep b (2 nights) and 51 Eri b (1 public night).
 # Same machinery as M23 (raw-first resolver with calib fallback, staring branch).
 # Expectation set by the contrast wall: both sit at ~30,000x contrast inside 0.5",
 # so these single epochs likely measure star-dominated light — that outcome extends
 # the M20 §6 wall table and is worth having either way.
 set -u
-SC=/mnt/c/Users/matth/projects/astronomy/exosat-rv/scripts/cr2res
+SC="$EXOSAT_ROOT"/scripts/cr2res
 PY=$HOME/viperenv/bin/python
 export RAW_BASE=$HOME/cr2res/raw_crumbs
 export RED_BASE=$HOME/cr2res/red_crumbs

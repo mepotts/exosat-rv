@@ -1,3 +1,6 @@
+import os
+_ROOT = os.environ.get("EXOSAT_ROOT") or os.path.abspath(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
 """Is the >1 slope vs published a BERV systematic in disguise?
 
 1. corr(published RV, BERV) over the 17 matched epochs — degeneracy of confound.
@@ -7,7 +10,7 @@
 """
 import numpy as np
 import sys
-sys.path.insert(0, "/mnt/c/Users/matth/projects/astronomy/exosat-rv/scripts/injection")
+sys.path.insert(0, _ROOT + "/scripts/injection")
 from vs_published import load, published
 
 P = 171.454

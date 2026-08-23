@@ -1,4 +1,7 @@
 #!/bin/bash
+# Repo root, overridable: EXOSAT_ROOT=/path/to/exosat-rv ./this-script.sh
+EXOSAT_ROOT="${EXOSAT_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
+
 # M19: beta Pic b's three raw K-family nights, fetched (raw-first resolver) and
 # reduced through the cr2res cascade. Per-nodding products stage to
 # ~/viper-src/bpb_nod/, stripped to the K2166 template's order set (02-07).
@@ -6,7 +9,7 @@
 # staged as betapicb_data/ in viper-src (M17). H-family nights skipped: one is
 # staring-mode, leaving a 1-epoch H "series" with no leverage.
 set -u
-SC=/mnt/c/Users/matth/projects/astronomy/exosat-rv/scripts/cr2res
+SC="$EXOSAT_ROOT"/scripts/cr2res
 PY=$HOME/viperenv/bin/python
 export RAW_BASE=$HOME/cr2res/raw_bpb
 export RED_BASE=$HOME/cr2res/red_bpb

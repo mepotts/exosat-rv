@@ -1,4 +1,7 @@
 #!/bin/bash
+# Repo root, overridable: EXOSAT_ROOT=/path/to/exosat-rv ./this-script.sh
+EXOSAT_ROOT="${EXOSAT_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
+
 # HiRISE (fibre-fed) reduction driver.
 #
 # The obs_* recipes are slit-geometry wrappers and neither applies to HiRISE data:
@@ -19,11 +22,11 @@ N=$1
 # be sourced BEFORE `set -u`, or seeded first. reduce_one.sh gets away with it by not
 # setting -u at all; this script wants -u, so seed the variable.
 export LD_LIBRARY_PATH="${LD_LIBRARY_PATH:-}"
-source /mnt/c/Users/matth/projects/astronomy/exosat-rv/scripts/cr2res/cr2env.sh
+source "$EXOSAT_ROOT"/scripts/cr2res/cr2env.sh
 set -u
 RAW=${RAW_BASE:-$HOME/cr2res/raw_m26}/$N
 W=${RED_BASE:-$HOME/cr2res/red_m26}/$N
-CLS=/mnt/c/Users/matth/projects/astronomy/exosat-rv/scripts/cr2res/classify.py
+CLS="$EXOSAT_ROOT"/scripts/cr2res/classify.py
 PY=~/viperenv/bin/python
 SMOOTH_Y=${SMOOTH_Y:-9}          # fibre-scale, against the 401 default
 MIN_CLUSTER=${MIN_CLUSTER:-20}

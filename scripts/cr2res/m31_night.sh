@@ -1,11 +1,14 @@
 #!/bin/bash
+# Repo root, overridable: EXOSAT_ROOT=/path/to/exosat-rv ./this-script.sh
+EXOSAT_ROOT="${EXOSAT_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
+
 # M31 per-night driver: banked-calib fetch -> validated reduction -> content verification.
 # No cleanup in here: raw deletions are a separate, logged, human-visible step
 # (LESSONS 4 sanction; M31-RESULTS.md carries the record).
 #   m31_night.sh <slug>
 set -u
 S=$1
-BASE=/mnt/c/Users/matth/projects/astronomy/exosat-rv
+BASE="$EXOSAT_ROOT"
 LOGD=$HOME/cr2res/logs_m31
 mkdir -p "$LOGD"
 echo "=== M31 night $S: fetch ==="

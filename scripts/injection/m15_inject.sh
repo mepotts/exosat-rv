@@ -1,4 +1,7 @@
 #!/bin/bash
+# Repo root, overridable: EXOSAT_ROOT=/path/to/exosat-rv ./this-script.sh
+EXOSAT_ROOT="${EXOSAT_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
+
 # M15 injection arm for eta Tel B (the eta Tel targ line; otherwise inject_m14).
 #   m15_inject.sh ARMNAME PLAN TEMPLATE DATADIR OSET [extra viper flags...]
 # Shift the TEMPLATE, never the observation (M12 §8.1).
@@ -8,7 +11,7 @@ cd ~/viper-src || exit 1
 export PATH="$HOME/bin:$PATH"
 FTS=lib/CRIRES/FTS/CRp_SGC2_FTStmpl-HR0p007-WN5000-10000_Hband.dat
 PY=~/viperenv/bin/python
-SC=/mnt/c/Users/matth/projects/astronomy/exosat-rv/scripts/injection
+SC="$EXOSAT_ROOT"/scripts/injection
 TL='eta Tel B;* eta Tel B;19 22 51.3580 -54 25 31.570;25.824 -82.965 [0.100 0.100 90];20.6028 [0.0300] A 2020yCat.1350....0G;v:spectroscopic -1.29 (Opt) A [0.50] simbad'
 
 $PY $SC/mktpl.py "$PLAN" "$TPL" ~/inj/$ARM

@@ -1,3 +1,6 @@
+import os
+_ROOT = os.environ.get("EXOSAT_ROOT") or os.path.abspath(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
 """Resolve one ADP product to every raw frame + master needed to redo it.
 
 Two traps, both hit:
@@ -12,7 +15,7 @@ from astropy.io import fits
 from astropy.table import Table
 
 ADP_DIR = os.environ.get(
-    "ADP_DIR", "/mnt/c/Users/matth/projects/astronomy/exosat-rv/data/spectra")
+    "ADP_DIR", _ROOT + "/data/spectra")
 ENV = {k: v for k, v in os.environ.items() if k != "LD_LIBRARY_PATH"}
 
 def fetch(url, need, tries=12):

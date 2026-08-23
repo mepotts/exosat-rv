@@ -1,4 +1,7 @@
 #!/bin/bash
+# Repo root, overridable: EXOSAT_ROOT=/path/to/exosat-rv ./this-script.sh
+EXOSAT_ROOT="${EXOSAT_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
+
 # M21 restore: the 9-night PDS 70 rebuild FAILED its injection gate (recovery
 # -62% +- 197% — the 14-file template lost its stellar lever; the quiet series it
 # produced is fake-quiet and REJECTED). Re-stage exactly the original 8 products
@@ -6,7 +9,7 @@
 set -u
 cd ~/viper-src || exit 1
 export PATH="$HOME/bin:$PATH"
-SRC=/mnt/c/Users/matth/projects/astronomy/exosat-rv/data/pds70_cr2res
+SRC="$EXOSAT_ROOT"/data/pds70_cr2res
 ORIG="ADP.2025-06-06T12-42-46.834.fits ADP.2025-06-06T12-42-46.837.fits \
 ADP.2025-11-12T14-02-53.421.fits ADP.2025-06-06T12-50-25.974.fits \
 ADP.2025-11-12T14-25-11.813.fits ADP.2025-06-06T13-07-01.940.fits \
@@ -20,7 +23,7 @@ for f in $ORIG; do cp -f $SRC/$f pds70_data/; done
 echo "staged $(ls pds70_data/*.fits | wc -l) (validated 6-night set)"
 
 TL='PDS 70;CD-40 8434;14 08 10.1546 -41 23 52.573;-29.697 -24.041 [0.100 0.100 90];8.8975 [0.0300] A 2020yCat.1350....0G;v:spectroscopic 3.13 (Opt) A [0.50] simbad'
-bash /mnt/c/Users/matth/projects/astronomy/exosat-rv/scripts/injection/m2x_run_target.sh \
-  pds70 "PDS 70" "$TL" /mnt/c/Users/matth/projects/astronomy/exosat-rv/data/pds70_cr2res_UNUSED \
+bash "$EXOSAT_ROOT"/scripts/injection/m2x_run_target.sh \
+  pds70 "PDS 70" "$TL" "$EXOSAT_ROOT"/data/pds70_cr2res_UNUSED \
   lib/CRIRES/FTS/CRp_SGC2_FTStmpl-HR0p007-WN3000-5000_Kband.dat "1:19" 300
 echo M21RESTORE_DONE

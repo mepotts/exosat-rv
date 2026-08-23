@@ -1,4 +1,7 @@
 #!/bin/bash
+# Repo root, overridable: EXOSAT_ROOT=/path/to/exosat-rv ./this-script.sh
+EXOSAT_ROOT="${EXOSAT_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
+
 # M26 analyses on the staged census-v2 data:
 #   hip81208 — 5 H-family staring nights / ~351 d on the ~67 M_Jup companion
 #   yses1    — the 2023 K2166 nodding pair (2 nights, A/B each) of the 2-planet system
@@ -8,7 +11,7 @@ set -u
 cd ~/viper-src || exit 1
 export PATH="$HOME/bin:$PATH"
 PY=~/viperenv/bin/python
-SC=/mnt/c/Users/matth/projects/astronomy/exosat-rv/scripts/injection
+SC="$EXOSAT_ROOT"/scripts/injection
 FTSH=lib/CRIRES/FTS/CRp_SGC2_FTStmpl-HR0p007-WN5000-10000_Hband.dat
 FTSK=lib/CRIRES/FTS/CRp_SGC2_FTStmpl-HR0p007-WN3000-5000_Kband.dat
 

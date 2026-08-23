@@ -1,10 +1,13 @@
 #!/bin/bash
+# Repo root, overridable: EXOSAT_ROOT=/path/to/exosat-rv ./this-script.sh
+EXOSAT_ROOT="${EXOSAT_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
+
 # M14 lever 1b driver: fetch + reduce every archive epoch not yet done from raw,
 # then strip09 the per-nodding products into ~/viper-src/nod14/.
 # Crash-safe: .fetched / .done markers per night; failed nights are skipped and listed.
 # Network stages run WITHOUT cr2env sourced (its libcurl is SSL-less — M12 trap).
 set -u
-SC=/mnt/c/Users/matth/projects/astronomy/exosat-rv/scripts/cr2res
+SC="$EXOSAT_ROOT"/scripts/cr2res
 PY=$HOME/viperenv/bin/python
 LOG=$HOME/cr2res/logs
 mkdir -p "$LOG" "$HOME/cr2res/raw"

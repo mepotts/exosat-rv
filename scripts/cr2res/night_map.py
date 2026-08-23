@@ -6,11 +6,13 @@ Existing night1..5 keep their numbers; missing epochs get night6.. in MJD order.
 """
 import glob
 import os
+_ROOT = os.environ.get("EXOSAT_ROOT") or os.path.abspath(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
 import sys
 
 from astropy.io import fits
 
-ADP_DIR = "/mnt/c/Users/matth/projects/astronomy/exosat-rv/data/spectra"
+ADP_DIR = _ROOT + "/data/spectra"
 RED = os.path.expanduser("~/cr2res/red")
 
 adps = []

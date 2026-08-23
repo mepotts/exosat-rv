@@ -1,3 +1,6 @@
+import os
+_ROOT = os.environ.get("EXOSAT_ROOT") or os.path.abspath(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
 """M15 internal diagnostics for an eta Tel B series. INFORMATIONAL ONLY.
 
 No published RVs exist for this target, so nothing here may drive an adoption
@@ -11,7 +14,7 @@ import sys
 
 import numpy as np
 
-sys.path.insert(0, "/mnt/c/Users/matth/projects/astronomy/exosat-rv/scripts/injection")
+sys.path.insert(0, _ROOT + "/scripts/injection")
 from vs_published import load  # noqa: E402
 
 for path in sys.argv[1:]:

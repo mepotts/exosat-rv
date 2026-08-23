@@ -1,4 +1,7 @@
 #!/bin/bash
+# Repo root, overridable: EXOSAT_ROOT=/path/to/exosat-rv ./this-script.sh
+EXOSAT_ROOT="${EXOSAT_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
+
 # M23 analysis: HD 1160 B staring-route RVs on the iteration-0 template.
 # (Iteration 1 crashed on a degenerate chunk; the injection arms decide whether
 # tpl0 transmits — if they pass, the ladder refinement is optional.)
@@ -6,7 +9,7 @@ set -u
 cd ~/viper-src || exit 1
 export PATH="$HOME/bin:$PATH"
 PY=~/viperenv/bin/python
-SC=/mnt/c/Users/matth/projects/astronomy/exosat-rv/scripts/injection
+SC="$EXOSAT_ROOT"/scripts/injection
 FTS=lib/CRIRES/FTS/CRp_SGC2_FTStmpl-HR0p007-WN5000-10000_Hband.dat
 TL='HD 1160 B;HD 1160B;00 15 57.3020 +04 15 04.010;20.150 -14.903 [0.100 0.100 90];8.2721 [0.0300] A 2020yCat.1350....0G;v:spectroscopic 12.60 (Opt) A [0.50] simbad'
 OSET="4,7,8,9,10,12,13,14,17,18,19"

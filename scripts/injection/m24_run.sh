@@ -1,4 +1,7 @@
 #!/bin/bash
+# Repo root, overridable: EXOSAT_ROOT=/path/to/exosat-rv ./this-script.sh
+EXOSAT_ROOT="${EXOSAT_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
+
 # M24: the staring crumbs analyzed — AF Lep b (2 nights, 3 d apart) and 51 Eri b
 # (1 night). Single-epoch science: per-target tpl0, RVs, and a matched-amplitude
 # injection arm scored by per-epoch ratio. Expectation (contrast wall, M20 §6):
@@ -8,7 +11,7 @@ set -u
 cd ~/viper-src || exit 1
 export PATH="$HOME/bin:$PATH"
 PY=~/viperenv/bin/python
-SC=/mnt/c/Users/matth/projects/astronomy/exosat-rv/scripts/injection
+SC="$EXOSAT_ROOT"/scripts/injection
 FTS=lib/CRIRES/FTS/CRp_SGC2_FTStmpl-HR0p007-WN5000-10000_Hband.dat
 OSET="4,7,8,9,10,12,13,14,17,18,19"
 

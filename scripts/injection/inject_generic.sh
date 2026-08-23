@@ -1,4 +1,7 @@
 #!/bin/bash
+# Repo root, overridable: EXOSAT_ROOT=/path/to/exosat-rv ./this-script.sh
+EXOSAT_ROOT="${EXOSAT_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
+
 # Generic injection-recovery arm for any template+config.
 #   inject_generic.sh ARMNAME TEMPLATE OSET [extra viper flags...]
 # Uses inject_plan_big.json (K=1530 m/s Keplerian at the published 171.454 d).
@@ -11,7 +14,7 @@ cd ~/viper-src || exit 1
 export PATH="$HOME/bin:$PATH"
 FTS=lib/CRIRES/FTS/CRp_SGC2_FTStmpl-HR0p007-WN5000-10000_Hband.dat
 PY=~/viperenv/bin/python
-SC=/mnt/c/Users/matth/projects/astronomy/exosat-rv/scripts/injection
+SC="$EXOSAT_ROOT"/scripts/injection
 PLAN=$SC/inject_plan_big.json
 
 $PY $SC/mktpl.py "$PLAN" "$TPL" ~/inj/$ARM

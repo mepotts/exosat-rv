@@ -1,10 +1,13 @@
 #!/bin/bash
+# Repo root, overridable: EXOSAT_ROOT=/path/to/exosat-rv ./this-script.sh
+EXOSAT_ROOT="${EXOSAT_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
+
 # M23: HD 1160 B — nine H1567 staring nights (DIT 1200 s on the ~35 M_Jup BD at
 # ~0.8", ~70x contrast) + the 2022 K pilot night. Serial fetch (m19 resolver),
 # reduce via the staring branch of reduce_one.sh, stage the collapsed extraction
 # per night into ~/viper-src/hd1160_data/ stripped to orders 02-08.
 set -u
-SC=/mnt/c/Users/matth/projects/astronomy/exosat-rv/scripts/cr2res
+SC="$EXOSAT_ROOT"/scripts/cr2res
 PY=$HOME/viperenv/bin/python
 export RAW_BASE=$HOME/cr2res/raw_hd1160
 export RED_BASE=$HOME/cr2res/red_hd1160

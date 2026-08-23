@@ -152,7 +152,7 @@ remain unexploited and would extend the baseline substantially.
 
 *Software:* `cr2res`, `viper` (Köhler et al. 2025), `astropy`, `numpy`, `scipy`. All
 reduction and analysis code, the injection harness, and the sensitivity grid are public at
-[github.com/mepotts/astronomy](https://github.com/mepotts/astronomy) (`exosat-rv/`).
+[github.com/mepotts/exosat-rv](https://github.com/mepotts/exosat-rv).
 This work is based on observations collected at the European Southern Observatory under
 ESO programmes 111.24M0, 113.268Y and 115.287U.
 

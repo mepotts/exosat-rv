@@ -1,4 +1,7 @@
 #!/bin/bash
+# Repo root, overridable: EXOSAT_ROOT=/path/to/exosat-rv ./this-script.sh
+EXOSAT_ROOT="${EXOSAT_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
+
 # Generic per-target recipe runner — the M15/M17 pattern, parameterized, so new
 # targets need a config block rather than a new script.
 #   m2x_run_target.sh SLUG TARGNAME TARGLINE DATADIR FTS OSET [K_matched]
@@ -11,7 +14,7 @@ SLUG=$1; TARG=$2; TL=$3; SRC=$4; FTS=$5; OSET=$6; KM=${7:-300}
 cd ~/viper-src || exit 1
 export PATH="$HOME/bin:$PATH"
 PY=~/viperenv/bin/python
-SC=/mnt/c/Users/matth/projects/astronomy/exosat-rv/scripts/injection
+SC="$EXOSAT_ROOT"/scripts/injection
 
 mkdir -p ${SLUG}_data
 cp -n $SRC/*.fits ${SLUG}_data/ 2>/dev/null || true

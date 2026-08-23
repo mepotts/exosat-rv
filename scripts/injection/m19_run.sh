@@ -1,4 +1,7 @@
 #!/bin/bash
+# Repo root, overridable: EXOSAT_ROOT=/path/to/exosat-rv ./this-script.sh
+EXOSAT_ROOT="${EXOSAT_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
+
 # M19 endgame: the beta Pic b 4-epoch K2166 series (901 d) — the first
 # multi-epoch RV constraint on a directly imaged planet.
 # Stages the 2023-01-03 sub-exposure products (M17) plus the three from-raw
@@ -9,7 +12,7 @@ cd ~/viper-src || exit 1
 export PATH="$HOME/bin:$PATH"
 FTSK=lib/CRIRES/FTS/CRp_SGC2_FTStmpl-HR0p007-WN3000-5000_Kband.dat
 PY=~/viperenv/bin/python
-SC=/mnt/c/Users/matth/projects/astronomy/exosat-rv/scripts/injection
+SC="$EXOSAT_ROOT"/scripts/injection
 OSET="1:19"
 TL='beta Pic b;* bet Pic b;05 47 17.0877 -51 03 59.441;5.160 84.041 [0.100 0.100 90];50.9307 [0.0300] A 2020yCat.1350....0G;v:spectroscopic 16.84 (Opt) A [0.50] simbad'
 

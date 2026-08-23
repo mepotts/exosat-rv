@@ -9,16 +9,18 @@ Products:
   etatel_landscape.csv  dBIC(P) with/without BERV (median combine, screened)
 """
 import os
+_ROOT = os.environ.get("EXOSAT_ROOT") or os.path.abspath(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 import sys
 
 import numpy as np
 
-SC = "/mnt/c/Users/matth/projects/astronomy/exosat-rv/scripts/injection"
+SC = _ROOT + "/scripts/injection"
 sys.path.insert(0, SC)
 from vs_published import load, published  # noqa: E402
 from m14_score import bin_frames  # noqa: E402
 
-OUT = "/mnt/c/Users/matth/projects/astronomy/exosat-rv/data/export"
+OUT = _ROOT + "/data/export"
 os.makedirs(OUT, exist_ok=True)
 
 

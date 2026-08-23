@@ -1,3 +1,6 @@
+import os
+_ROOT = os.environ.get("EXOSAT_ROOT") or os.path.abspath(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
 """M28: calibrate the detection bar behind the eta Tel B companion limit.
 
 M15 defines a detection as "dBIC >= 10 at the injected period AND that peak ranks
@@ -18,7 +21,7 @@ import sys
 
 import numpy as np
 
-SC = "/mnt/c/Users/matth/projects/astronomy/exosat-rv/scripts/injection"
+SC = _ROOT + "/scripts/injection"
 sys.path.insert(0, SC)
 from vs_published import load  # noqa: E402
 

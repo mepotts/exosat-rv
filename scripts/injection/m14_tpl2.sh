@@ -1,4 +1,7 @@
 #!/bin/bash
+# Repo root, overridable: EXOSAT_ROOT=/path/to/exosat-rv ./this-script.sh
+EXOSAT_ROOT="${EXOSAT_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
+
 # M14 lever 3: SECOND template iteration, with the M9/M11 injection guard.
 # M13tpl was iteration 1 (created against the M12-era cd35_2722B_tpl). This creates
 # iteration 2 with IDENTICAL creation flags (only the input template changes), then
@@ -9,7 +12,7 @@ cd ~/viper-src || exit 1
 export PATH="$HOME/bin:$PATH"
 FTS=lib/CRIRES/FTS/CRp_SGC2_FTStmpl-HR0p007-WN5000-10000_Hband.dat
 PY=~/viperenv/bin/python
-SC=/mnt/c/Users/matth/projects/astronomy/exosat-rv/scripts/injection
+SC="$EXOSAT_ROOT"/scripts/injection
 HC="4,7,8,9,10,12,13,14,17,18,19"
 
 if [ ! -f M14tpl2_tpl.fits ]; then

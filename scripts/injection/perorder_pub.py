@@ -1,7 +1,10 @@
+import os
+_ROOT = os.environ.get("EXOSAT_ROOT") or os.path.abspath(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
 """Per-order regression on the PUBLISHED RVs: which orders transmit the signal?"""
 import numpy as np
 import sys
-sys.path.insert(0, "/mnt/c/Users/matth/projects/astronomy/exosat-rv/scripts/injection")
+sys.path.insert(0, _ROOT + "/scripts/injection")
 from vs_published import load, published
 
 pb, pv, pe = published()

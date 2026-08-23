@@ -1,9 +1,12 @@
 #!/bin/bash
+# Repo root, overridable: EXOSAT_ROOT=/path/to/exosat-rv ./this-script.sh
+EXOSAT_ROOT="${EXOSAT_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
+
 # M26: serial fetch+reduce of every census-v2-verified public night.
 # Same machinery as M23/M24 (raw-first resolver + calib fallback, nodding or
 # staring branch as tagged, staged to ~/viper-src/m26_data/<slug>_o8.fits).
 set -u
-SC=/mnt/c/Users/matth/projects/astronomy/exosat-rv/scripts/cr2res
+SC="$EXOSAT_ROOT"/scripts/cr2res
 PY=$HOME/viperenv/bin/python
 export RAW_BASE=$HOME/cr2res/raw_m26
 export RED_BASE=$HOME/cr2res/red_m26
