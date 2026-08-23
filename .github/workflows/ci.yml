@@ -1,0 +1,44 @@
+name: CI
+
+# The monorepo this was split out of ran CI over three sibling projects and never
+# over this one, so the test suite here has never been exercised automatically.
+# It is exercised now: 125 tests covering the order map, the feasibility model,
+# the satellite dynamics, the archive readers and the orbit fits.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    name: pytest · py${{ matrix.python-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+          pip install pytest scipy
+
+      - name: Run tests
+        run: pytest tests/ -q
