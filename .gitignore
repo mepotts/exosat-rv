@@ -14,3 +14,27 @@ data/raw/
 # text under papers/text/ IS committed -- it is what the milestones cite.
 papers/pdf/
 papers/text/abs.html
+
+# --- Carried from the monorepo root -------------------------------------------
+# This project lived in mepotts/astronomy, whose root .gitignore was an explicit
+# "safety net at the portfolio root" that every subproject leaned on. The split took
+# this file but not that one, so these rules -- the secret patterns above all -- were
+# silently lost. Restored here.
+node_modules/
+venv/
+*.py[cod]
+.mypy_cache/
+dist/
+build/
+# Secrets
+.env
+.env.*
+*.token
+*.key
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+# Logs (esorex writes one into the repo root when run from here)
+*.log
