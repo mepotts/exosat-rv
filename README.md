@@ -1,5 +1,7 @@
 # exosat-rv
 
+> **New here, or handing this to an agent?** Start with [`ONBOARDING.md`](ONBOARDING.md) — environment, operating rules, the traps that cost a day each, and where every draft stands.
+
 An independent raw-to-radial-velocity pipeline for **directly imaged companions**, and what
 it finds when pointed at the one system where a satellite has been reported.
 

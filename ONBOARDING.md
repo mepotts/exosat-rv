@@ -1,0 +1,165 @@
+# Onboarding — read this first
+
+You are picking up an independent astronomy project that is close to publication. This
+document is the fastest correct path into it. It assumes you have just opened this folder and
+know nothing else about it.
+
+---
+
+## 1. What this is, in one paragraph
+
+Point a high-resolution spectrograph at a *directly imaged companion* rather than at its host
+star, and its own reflex motion can be measured — which makes satellites of that companion
+detectable. Hoy et al. (2026, *Nature*) did this on the brown dwarf **CD-35 2722 B** and
+reported a planetary-mass satellite. This project rebuilt the measurement from the public raw
+frames with an independently configured pipeline, then applied that pipeline to nine further
+companions. It runs on a laptop against public archives; there is no telescope time and no
+institutional affiliation behind it.
+
+**Findings.** The satellite reproduces. The reported *second* companion does not, and there is
+a mechanism for why. η Tel B has no satellite down to ~0.5–1.3 M_Jup. The pipeline transfers
+across three wavelength settings and both observing modes.
+
+---
+
+## 2. Read these four files, in this order
+
+| order | file | why |
+|---|---|---|
+| 1 | **`LESSONS.md`** | The consolidated trap catalogue. Every expensive mistake this project made, and how to avoid repeating it. **Read this before touching anything.** |
+| 2 | `README.md` | What the project is and what it found. |
+| 3 | `HANDOFF.md` | State of play, target roster, what is queued. |
+| 4 | `docs/target-queue.md` | The ledger: every target, its verdict, and the evidence behind it. |
+
+Then read the milestone document for whatever you are about to work on. `M*-RESULTS.md` files
+are numbered and each owns a conclusion; `LESSONS.md` maps which one owns what.
+
+---
+
+## 3. Non-negotiable operating rules
+
+These are not style preferences. Each was paid for.
+
+1. **Nothing is submitted, sent, or published without Matthew's explicit per-instance
+   approval.** Journals, arXiv, the MPC, email to other researchers — all gated. Preparing a
+   submission is fine; sending it is not. See `LESSONS.md` §6.
+2. **Never push to a remote or merge to `main` unless told to.**
+3. **Do not claim priority.** "First" in this area is an argument about category boundaries,
+   not a result. It was deliberately removed from every draft; do not reintroduce it.
+4. **Every adopted pipeline change must pass injection recovery.** Internal fit statistics
+   have each been, at least once, anti-correlated with truth. The paper's own precision
+   statistic is invariant to a common-mode signal by construction.
+5. **Check a milestone number is free before writing to it.** `ls M*-RESULTS.md` and
+   `git log --oneline -15`. Writing over a committed milestone has happened. `git status`
+   showing `M` on a file you believe you created means something already lived there.
+6. **Never re-type a number that a script can print.** An audit found 34 conflicting values
+   that entered by hand-transcription, and fifteen wrong citations.
+7. **Never reimplement a reference computation to "avoid a dependency."** Import it or extract
+   its source. A reimplementation of the period search once produced a false retraction of the
+   project's central result.
+
+---
+
+## 4. Environment
+
+The analysis runs under **WSL**, not Windows Python.
+
+```bash
+~/viperenv/bin/python          # the ONLY interpreter with astropy
+python3                        # has numpy, NOT astropy — will fail confusingly
+```
+
+Data lives **outside this repository**, in WSL:
+
+```
+~/cr2res/red*/                 # reduced products, per target
+~/cr2res/raw_m26/, raw_m30/    # retained raw frames
+~/viper-src/*.rvo.dat          # ~800 RV output series from every configuration run
+~/viper-src/*_tpl.fits         # viper stellar templates (wavelength in ANGSTROM, not nm)
+```
+
+Run analysis scripts from the repo root via WSL:
+
+```bash
+wsl -e bash -c "cd /mnt/c/Users/matth/projects/exosat-rv-new && ~/viperenv/bin/python scripts/injection/m34_overfit_test.py"
+```
+
+Scripts derive their own root and honour an override:
+
+```bash
+EXOSAT_ROOT=/path/to/repo ./scripts/cr2res/m15_allnights.sh
+```
+
+### Traps that will cost you a day each
+
+- **Line endings.** `.gitattributes` pins `*.sh`/`*.py` to LF. If that guard is lost, Windows
+  writes CRLF, WSL bash dies on the stray `\r`, and a driver script *appears to run and
+  produces nothing*. Diagnose with `file script.sh` from **inside WSL**.
+- **Wavelength units.** viper templates are Ångström; `cr2res` products are nm. Mixing them
+  silently matches zero orders.
+- **`set -u` must come after sourcing `cr2env.sh`**, which references unset variables.
+- **`cr2res_obs_nodding` requires an even frame count.** With an odd count it writes empty
+  products and exits 0.
+- **Windows console is cp1252.** Printing `″`, `β` or `η` raises `UnicodeEncodeError` and can
+  abort a script *before it writes its output file*. Wrap stdout or avoid non-ASCII in prints.
+
+---
+
+## 5. Building the documents
+
+```bash
+python scripts/m16_build_paper.py      # manuscript -> docs/paper/cd35-etatel-draft.html
+python scripts/m33_render_notes.py     # the four notes -> matching .html
+```
+
+`.md` and `draft.template.html` are **sources**. The `.html` files are **build products** —
+never hand-edit them. The notes share the manuscript's stylesheet, lifted at render time, so
+changing the manuscript's typography updates all of them.
+
+---
+
+## 6. Where things stand
+
+| draft | state |
+|---|---|
+| `docs/paper/rnaas-etatel-draft.md` | **Ready to submit.** 1,464 words, needs an ORCID and Matthew's decision. |
+| `docs/paper/draft.template.html` | The manuscript. Sound; **needs a target journal chosen**. |
+| `docs/paper/contrast-wall-note.md` | Checklist cleared bar one data item and two DOIs. |
+| `docs/paper/methods-note.md` | **13 open items.** Least advanced; the remaining work is reconciling its own numbers against the milestone documents. |
+| `docs/paper/sampler-reproducibility-note.md` | Recommend retiring — its content is §5.1 of the manuscript and load-bearing there. |
+
+**The highest-value open experiment**, recorded in `M34-RESULTS.md` §3: choose an extraction
+configuration by injection recovery *alone*, never computing rms against the published series,
+then run the blind period search. That would make the reproduction independent end to end. It
+needs re-running viper rather than re-scoring.
+
+---
+
+## 7. Things that are true and non-obvious
+
+- **The pipeline is not a reconstruction of Hoy et al.'s procedure**, which has never been
+  published. It is an independent route to the same quantity. Where the two agree, that is
+  cross-validation of both.
+- **The method is not overfitted, but this reproduction is not fully independent.** Two
+  different statements — `M34-RESULTS.md` separates them carefully. Do not collapse them.
+- **A companion closer than one resolution element has no extractable spectrum at any
+  contrast**, and every other diagnostic — precision, dispersion, injection recovery —
+  *improves* on a host. Only the spatial profile catches it. This withdrew one verdict.
+- **β Pic b is taken.** Kenworthy et al. (2026, MNRAS) published RV limits on it in July. Do
+  not spend effort competing with a dedicated campaign using one archival night.
+- **A catalogue magnitude column widely used in this field is wrong** in two of the three cases
+  checked against primary sources, by 1.6 and 2.4 mag. Treat compiled photometry as
+  provisional.
+
+---
+
+## 8. First moves
+
+```bash
+git log --oneline -20                  # what happened recently
+cat LESSONS.md                         # the traps
+PYTHONPATH=src python -m pytest tests/ -q
+```
+
+Then ask Matthew what he wants next rather than guessing. The project is at the stage where
+the remaining decisions are editorial and his, not technical.
