@@ -37,3 +37,4 @@ abandoned. Before writing a new one, check the number is free — see `../LESSON
 | **M31** | [`M31-RESULTS.md`](M31-RESULTS.md) | HIP 65426's three HiRISE nights through the validated fibre path (2026-08-14) |
 | **M32** | [`M32-RESULTS.md`](M32-RESULTS.md) | the η Tel B note, and what preparing it for outside eyes turned up |
 | **M34** | [`M34-RESULTS.md`](M34-RESULTS.md) | Is the CD-35 detection an artefact of tuning the extraction on the published RVs? |
+| **M35** | [`M35-RESULTS.md`](M35-RESULTS.md) | The two pre-submission cross-checks: no photometric period, and clean astrometry |

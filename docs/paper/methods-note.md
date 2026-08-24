@@ -243,7 +243,9 @@ what limit a multi-epoch campaign. In this project the statistic moved the *wron
 against both of the two largest genuine improvements: 331 → 347 m s⁻¹ when template
 oversampling was fixed, and 331 → 429 m s⁻¹ when the decisive second template iteration was
 adopted, while the rms against the published reference series fell from 147 to 133 and then
-to 85 m s⁻¹ — a ~40% improvement in external agreement (M14 §4, §6). Both changes were
+to 85 m s⁻¹ — a 36% improvement in external agreement on the step that carries it,
+133 → 85, which M14 §8 attributes to the second template iteration (M14 §4, §6, §8). The
+147 is the median-combine baseline and is not comparable with 85 directly. Both changes were
 adopted on the external metric and both passed injection recovery; the internal statistic
 would have rejected them.
 
@@ -566,9 +568,16 @@ milestone document in the repository.
    Both appear to be measured against the same M13 baseline of 331 rather than in sequence.
    Confirm before the sentence is read as a two-step progression; the phrasing here is
    deliberately non-sequential.
-2. **The "~40% external improvement".** Computed here as 147 → 85 m s⁻¹ = 42%, matching the
-   existing HTML draft's "40%". Confirm the two rms values are on the same order combine and
-   epoch screen.
+2. ~~**The "~40% external improvement".**~~ — **FIXED (2026-08-24).** §4 now reads **36%**
+   on the 133 → 85 step and names what it is, matching the manuscript. The old 42% was
+   147 → 85, which spans two separate changes *and* a change of combine.
+   **One wrinkle, recorded because the resolution above does not quite say it:** its stated
+   reason is that 147 is median-combine and 85 is mean-combine, but M14's table at §5 quotes
+   **133 under a "rms_pub (median combine)" header too**, so 133 → 85 also crosses combines.
+   What justifies the pair is not that the combines match — they do not — but that M14 §8's
+   own improvement chain reads *osamp 2 (147→133) → template iteration 2 (→85)*, so 133 → 85
+   is the step that change is responsible for. Anyone re-deriving this should quote it that
+   way rather than as a like-for-like combine comparison.
 3. **"a known signal of several hundred m s⁻¹" on CD-35 (§7).** `NEXT-DIRECTIONS.md` §A1
    uses "~430 m s⁻¹"; the published *K*₁ is 306 and this project's own fitted *K* runs
    380–470. Written vaguely here on purpose; decide which number to state.
@@ -607,9 +616,21 @@ milestone document in the repository.
 
     Vanderburg et al. 2018 is *"Detecting Exomoons via Doppler Monitoring of Directly Imaged
     Exoplanets"* — worth noting, since it is the paper this technique is usually credited to
-    and its title states the method exactly. Still unresolved: **Horstman et al. 2024** and
-    **Kral et al. 2026** (both need a DOI read off the paper), and ADS *bibcodes* cannot be
-    obtained here at all.
+    and its title states the method exactly.
+
+    **The last two are now resolved as well (2026-08-24)**, and neither needed a PDF:
+
+    | reference | journal, volume, page | DOI |
+    |---|---|---|
+    | Horstman et al. 2024 | AJ **168**, 175 | 10.3847/1538-3881/ad73d8 |
+    | Kral et al. 2026 | A&A **705**, A217 | 10.1051/0004-6361/202557127 |
+
+    Kral came from arXiv (2511.20091), whose record carries the published DOI and a
+    `journal_ref` of "A&A 705, A217 (2026)" that agrees with what CrossRef returns for that
+    DOI. Horstman had no DOI on its arXiv record at all — but a CrossRef *title* search finds
+    it directly, so the claim that it "needs a DOI read off the paper" was simply wrong. Both
+    were checked against the archived copies by title and first author (Katelyn Horstman;
+    Q. Kral). ADS *bibcodes* still cannot be obtained here at all — that part stands.
 10. ~~**Kral et al. 2025** filename looks misleading~~ — **RESOLVED (M32).** The archived
     copy is the **arXiv preprint** (ESO 2025, dated 26 November 2025); A&A **published it in
     January 2026**. So the `kral2026_*` filename is correct and the year to cite is **2026**,

@@ -111,18 +111,31 @@ cheap ask.
 
 ## B. Cheap external checks that strengthen the paper now
 
-### B1. Photometric cross-check of the 171 d period ⭐ *do this before submitting*
+### B1. Photometric cross-check of the 171 d period — **DONE (M35)**
 
 If CD-35 2722 shows a ~171 d **photometric** periodicity, the satellite has an activity
 explanation and the paper's central claim is in trouble. If it does not, that is another
 independent systematics defence. ASAS-SN, ATLAS and TESS are public and account-free,
 and the primary is bright. Half a day of work, and a referee will ask for it.
 
-### B2. Gaia astrometric cross-check
+> **Result (2026-08-24, `scripts/m35_asassn_photometry.py`, M35 §1): it does not.**
+> No power at 171.454 d in either ASAS-SN filter era (permutation *p* = 0.35-0.55), and
+> injection recovery puts the limit at **5 mmag** -- an order of magnitude below the star's
+> own rotational amplitude. The same search recovers the catalogued 1.717 d rotation as its
+> daily alias at *p* = 0.000, so the null has demonstrated sensitivity rather than being a
+> power failure. **The satellite has no photometric activity explanation.**
+
+### B2. Gaia astrometric cross-check -- **DONE (M35)**
 
 RUWE, astrometric excess noise, and any non-single-star solution for CD-35 2722 A and
 for every target carrying a limit. Independent constraint on unseen companions,
 essentially free, and it strengthens the null results as well as the detection.
+
+> **Result (2026-08-24, `scripts/m35_gaia_astrometry.py`, M35 §2).** CD-35 2722:
+> **RUWE 1.023**, excess noise 0.099 mas, **no non-single-star solution**. eta Tel likewise
+> (RUWE 1.013). **Not one of the 31 roster positions carries an NSS solution.** Six exceed
+> RUWE 1.4 and every one is a very bright star, where Gaia's astrometric solution is known
+> to degrade -- they are not read as companions, and nothing rests on them.
 
 ## C. Method contributions with reach beyond this subfield
 
@@ -188,7 +201,8 @@ the methods paper published first so it reads as method rather than accusation.
 
 ## Suggested execution order
 
-1. **B1, B2** — cheap, and they belong in Paper I before it goes out.
+1. ~~**B1, B2**~~ — **done (M35).** Both came out the way the paper needs. They are ready
+   to be cited in Paper I; neither has been written into the manuscript yet.
 2. **C1** — writes from banked milestones.
 3. **A2, A3** — new science, moderate new analysis.
 4. Then the existing queue: YSES 1 b's blocked 2022 pair, beta Pic b's HiRISE nights,

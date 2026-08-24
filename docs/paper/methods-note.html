@@ -461,7 +461,9 @@ what limit a multi-epoch campaign. In this project the statistic moved the <em>w
 against both of the two largest genuine improvements: 331 → 347 m s⁻¹ when template
 oversampling was fixed, and 331 → 429 m s⁻¹ when the decisive second template iteration was
 adopted, while the rms against the published reference series fell from 147 to 133 and then
-to 85 m s⁻¹ — a ~40% improvement in external agreement (M14 §4, §6). Both changes were
+to 85 m s⁻¹ — a 36% improvement in external agreement on the step that carries it,
+133 → 85, which M14 §8 attributes to the second template iteration (M14 §4, §6, §8). The
+147 is the median-combine baseline and is not comparable with 85 directly. Both changes were
 adopted on the external metric and both passed injection recovery; the internal statistic
 would have rejected them.</p>
 <h3>4.1 The ten-minute repeatability test that nearly produced a false reproduction</h3>
@@ -772,9 +774,16 @@ milestone document in the repository.</p>
 Both appear to be measured against the same M13 baseline of 331 rather than in sequence.
 Confirm before the sentence is read as a two-step progression; the phrasing here is
 deliberately non-sequential.</li>
-<li><strong>The &quot;~40% external improvement&quot;.</strong> Computed here as 147 → 85 m s⁻¹ = 42%, matching the
-existing HTML draft's &quot;40%&quot;. Confirm the two rms values are on the same order combine and
-epoch screen.</li>
+<li><s><strong>The &quot;~40% external improvement&quot;.</strong></s> — <strong>FIXED (2026-08-24).</strong> §4 now reads <strong>36%</strong>
+on the 133 → 85 step and names what it is, matching the manuscript. The old 42% was
+147 → 85, which spans two separate changes <em>and</em> a change of combine.
+<strong>One wrinkle, recorded because the resolution above does not quite say it:</strong> its stated
+reason is that 147 is median-combine and 85 is mean-combine, but M14's table at §5 quotes
+<strong>133 under a &quot;rms_pub (median combine)&quot; header too</strong>, so 133 → 85 also crosses combines.
+What justifies the pair is not that the combines match — they do not — but that M14 §8's
+own improvement chain reads <em>osamp 2 (147→133) → template iteration 2 (→85)</em>, so 133 → 85
+is the step that change is responsible for. Anyone re-deriving this should quote it that
+way rather than as a like-for-like combine comparison.</li>
 <li><strong>&quot;a known signal of several hundred m s⁻¹&quot; on CD-35 (§7).</strong> <code>NEXT-DIRECTIONS.md</code> §A1
 uses &quot;~430 m s⁻¹&quot;; the published <em>K</em>₁ is 306 and this project's own fitted <em>K</em> runs
 380–470. Written vaguely here on purpose; decide which number to state.</li>
@@ -855,9 +864,35 @@ exactly these fields. Resolved by DOI:</p>
 </table>
 <p>Vanderburg et al. 2018 is <em>&quot;Detecting Exomoons via Doppler Monitoring of Directly Imaged
 Exoplanets&quot;</em> — worth noting, since it is the paper this technique is usually credited to
-and its title states the method exactly. Still unresolved: <strong>Horstman et al. 2024</strong> and
-<strong>Kral et al. 2026</strong> (both need a DOI read off the paper), and ADS <em>bibcodes</em> cannot be
-obtained here at all.</p>
+and its title states the method exactly.</p>
+<p><strong>The last two are now resolved as well (2026-08-24)</strong>, and neither needed a PDF:</p>
+<table>
+<thead>
+<tr>
+<th>reference</th>
+<th>journal, volume, page</th>
+<th>DOI</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Horstman et al. 2024</td>
+<td>AJ <strong>168</strong>, 175</td>
+<td>10.3847/1538-3881/ad73d8</td>
+</tr>
+<tr>
+<td>Kral et al. 2026</td>
+<td>A&amp;A <strong>705</strong>, A217</td>
+<td>10.1051/0004-6361/202557127</td>
+</tr>
+</tbody>
+</table>
+<p>Kral came from arXiv (2511.20091), whose record carries the published DOI and a
+<code>journal_ref</code> of &quot;A&amp;A 705, A217 (2026)&quot; that agrees with what CrossRef returns for that
+DOI. Horstman had no DOI on its arXiv record at all — but a CrossRef <em>title</em> search finds
+it directly, so the claim that it &quot;needs a DOI read off the paper&quot; was simply wrong. Both
+were checked against the archived copies by title and first author (Katelyn Horstman;
+Q. Kral). ADS <em>bibcodes</em> still cannot be obtained here at all — that part stands.</p>
 </li>
 <li>
 <p><s><strong>Kral et al. 2025</strong> filename looks misleading</s> — <strong>RESOLVED (M32).</strong> The archived

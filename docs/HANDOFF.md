@@ -1,5 +1,25 @@
 # HANDOFF — exosat-rv
 
+> ## M35 (2026-08-24) — the two pre-submission cross-checks came back clean
+>
+> `NEXT-DIRECTIONS.md` B1 and B2, the two items ranked ahead of any new science because a
+> referee will ask for both, are done ([`M35-RESULTS.md`](milestones/M35-RESULTS.md)).
+> **B1 — photometry.** The host shows **no periodicity at 171.454 d** in either ASAS-SN
+> filter era: power 0.0007–0.0017, permutation *p* = 0.35–0.55 over 500 draws, on baselines
+> of 1609 d (V) and 2439 d (g). Injection recovery sets the limit at **5 mmag**, against the
+> star's own rotational amplitude of 57 mmag. Crucially the null is not a power failure —
+> the same search recovers the star's catalogued 1.717 d rotation (VSX: ASAS J060919-3549.5,
+> TTS/ROT) as its |1−f| daily alias at 2.379 d, *p* = 0.000, matching to 0.0028 c/d. **The
+> satellite has no photometric activity explanation.** A first pass searching to 2000 d
+> against a 1609 d baseline reproduced the methods note's own §5.3 defect and was redone with
+> the grid capped at half the baseline; the 171 d numbers were unaffected.
+> **B2 — astrometry.** Gaia DR3 for all 31 roster positions in one batched query: CD-35 2722
+> is RUWE **1.023**, excess noise 0.099 mas, **NSS = 0**; η Tel B's host RUWE 1.013. **No
+> target on the roster carries a non-single-star solution.** Six exceed RUWE 1.4 and all six
+> are very bright stars where the solution degrades — not read as companions.
+> **Neither result is in the manuscript yet.** Both are ready to cite and that is an
+> editorial call, not an open question.
+
 > ## M31 (2026-08-14) — the fibre chain transfers: HIP 65426's three HiRISE nights extracted, and the planet is below the background
 >
 > All **27/27 staged frames** of the three public HiRISE nights reduce through the

@@ -945,10 +945,10 @@ face value. Closing this needs a nodding reduction or a standard star, not a re-
 what is already on disk.</p>
 </li>
 <li>
-<p><strong>Bibliographic details — mostly resolved (M33, <code>scripts/m33_resolve_refs.py</code>).</strong> ADS
+<p><strong>Bibliographic details — resolved (M33, <code>scripts/m33_resolve_refs.py</code>).</strong> ADS
 itself is unavailable here: its API needs an Authorization header and no key is configured.
-<strong>CrossRef needs none and holds everything item 6 actually asked for</strong>, so the four
-references now resolve by DOI:</p>
+<strong>CrossRef needs none and holds everything item 6 actually asked for</strong>, so these
+references resolve by DOI:</p>
 <table>
 <thead>
 <tr>
@@ -973,14 +973,27 @@ references now resolve by DOI:</p>
 <td>Neuhäuser et al. 2011</td>
 <td>MNRAS <strong>416</strong>, 1430–1435 — doi:10.1111/j.1365-2966.2011.19139.x</td>
 </tr>
+<tr>
+<td>Bonnefoy et al. 2014</td>
+<td>A&amp;A <strong>567</strong>, L9 — doi:10.1051/0004-6361/201424041</td>
+</tr>
+<tr>
+<td>Wahhaj et al. 2011</td>
+<td>ApJ <strong>729</strong>, 139 — doi:10.1088/0004-637X/729/2/139</td>
+</tr>
 </tbody>
 </table>
-<p><strong>Still open:</strong> Bonnefoy et al. 2014, where CrossRef's title search returns an encyclopedia
-entry rather than the paper (the archived copy is an A&amp;A Letter, &quot;Physical and orbital
-properties of β Pictoris b&quot;), and Wahhaj et al. 2011, where it returns a conference
-abstract. Both need a DOI read off the paper itself. <strong>ADS bibcodes are not obtainable
-here at all</strong> — they are an ADS-specific identifier — so if the target journal wants
-bibcodes rather than DOIs, that step is genuinely a human one.</p>
+<p><strong>The last two are closed.</strong> CrossRef's title search genuinely cannot find them — it returns
+an encyclopedia entry for Bonnefoy and a conference abstract for Wahhaj — but neither
+needed a human with a PDF. arXiv records the <em>published</em> DOI once a preprint is published,
+and both papers are on arXiv (1407.4001 and 1101.2893, the latter printed on the archived
+copy's first page). Each DOI was then resolved through CrossRef and checked against the
+archived paper by <strong>title, first author, journal, volume, page and year</strong> — the check the
+trap below says is the one that matters. Bonnefoy's arXiv record independently carries
+<code>journal_ref: A&amp;A 567, L9 (2014)</code>, which agrees with what CrossRef returned for its DOI.
+All fifteen references in <code>scripts/m33_resolve_refs.py</code> now resolve by verified DOI.
+<strong>ADS bibcodes remain unobtainable here</strong> — they are an ADS-specific identifier, not a
+DOI — so if the target journal wants bibcodes, that step is still genuinely a human one.</p>
 <p>⚠ One trap, paid for in this pass: a DOI lookup is exact <em>only if the DOI is verified</em>.
 Two were first filled from memory; one was right and the other resolved silently to a
 different 2014 A&amp;A paper by another author, and the tool reported it as exact because the

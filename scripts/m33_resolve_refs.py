@@ -60,6 +60,11 @@ KNOWN_DOI = {
     #             CAMPAIGN: ... CD-35 2722", Zahed Wahhaj
     "Bonnefoy+2014":   "10.1051/0004-6361/201424041",
     "Wahhaj+2011":     "10.1088/0004-637X/729/2/139",
+    # The methods note's item 9 called these two unresolvable without a PDF. Kral came from
+    # arXiv:2511.20091 (journal_ref "A&A 705, A217 (2026)", agreeing with the DOI record);
+    # Horstman has no DOI on arXiv at all, but a plain CrossRef title search finds it.
+    "Horstman+2024":   "10.3847/1538-3881/ad73d8",
+    "Kral+2026":       "10.1051/0004-6361/202557127",
 }
 
 # (short key, bibliographic query, what the repo currently claims)
@@ -92,6 +97,10 @@ REFS = [
      "posteriors and evidences", "MNRAS 493, 3132"),
     ("Dorn+2023", "CRIRES+ on sky performance high resolution infrared spectrograph",
      "A&A 671, A24"),
+    ("Horstman+2024", "RV measurements of directly imaged brown dwarf GQ Lup B to search "
+     "for exo-satellites", "AJ 168, 175"),
+    ("Kral+2026", "Exomoon search with VLTI GRAVITY around the substellar companion "
+     "HD 206893 B", "A&A 705, A217"),
 ]
 
 
