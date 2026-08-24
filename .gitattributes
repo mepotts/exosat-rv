@@ -1,8 +1,19 @@
 # The reduction and analysis tooling is executed by bash inside WSL. With
-# core.autocrlf=true on Windows, git rewrites these to CRLF on checkout and
+# core.autocrlf=true on Windows, git rewrites text files to CRLF on checkout and
 # WSL's bash then fails on the stray \r -- silently enough that a driver script
 # can appear to "run" and produce nothing (see LESSONS.md, ops).
-# Pin every executable text file to LF so a fresh clone is runnable.
+#
+# Default everything to LF. Attributes beat core.autocrlf and travel with the repo,
+# so any clone on any machine is runnable -- which a local git config would not give.
+# Data files need this as much as scripts: a URL list with CRLF fetches fine and then
+# fails every filename check built from the same string (LESSONS.md, M29).
+* text=auto eol=lf
+
+# The executable text, called out because these are the ones that fail silently.
 *.sh   text eol=lf
 *.py   text eol=lf
 *.sof  text eol=lf
+
+# Binary -- never rewritten. Listed explicitly rather than left to content sniffing.
+*.npz  binary
+*.png  binary

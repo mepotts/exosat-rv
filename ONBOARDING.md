@@ -94,9 +94,21 @@ EXOSAT_ROOT=/path/to/repo ./scripts/cr2res/m15_allnights.sh
 
 ### Traps that will cost you a day each
 
-- **Line endings.** `.gitattributes` pins `*.sh`/`*.py` to LF. If that guard is lost, Windows
+- **Line endings.** `.gitattributes` pins `*.sh`/`*.py`/`*.sof` to LF. Lose that guard and Windows
   writes CRLF, WSL bash dies on the stray `\r`, and a driver script *appears to run and
   produces nothing*. Diagnose with `file script.sh` from **inside WSL**.
+  The guard being present is not the same as it having applied: attributes act at checkout,
+  so files cloned before `.gitattributes` existed keep their CRLF forever, and `git status`
+  stays **clean** throughout, because git normalises to LF on the way *in*. That is what the
+  split left behind -- 104 of 155 tracked scripts, `cr2env.sh` among them, so its
+  `export PATH="$CR2RES_PREFIX/bin:$PATH"` resolved to `install\r/bin` and esorex fell off
+  PATH without a word. Interrogate the working tree, not the index:
+
+  ```bash
+  git ls-files -z "*.sh" "*.py" "*.sof" | xargs -0 file | grep -c CRLF   # want 0
+  # repair -- tracked and unmodified, so git rewrites them byte-for-byte:
+  git ls-files -z "*.sh" "*.py" "*.sof" | xargs -0 rm -f && git checkout -- .
+  ```
 - **Wavelength units.** viper templates are Ångström; `cr2res` products are nm. Mixing them
   silently matches zero orders.
 - **`set -u` must come after sourcing `cr2env.sh`**, which references unset variables.
@@ -160,7 +172,11 @@ needs re-running viper rather than re-scoring.
 ```bash
 git log --oneline -20                  # what happened recently
 cat LESSONS.md                         # the traps
-PYTHONPATH=src python -m pytest tests/ -q
+
+# 125 tests, run from inside WSL. viperenv is the only interpreter carrying the whole set:
+# Windows python has no scipy, WSL python3 has no astropy, and each fails a different slice.
+# If an import is missing:  ~/viperenv/bin/pip install -e ".[dev]"
+cd "$(wslpath -a .)" && PYTHONPATH=src ~/viperenv/bin/python -m pytest tests/ -q
 ```
 
 Then ask Matthew what he wants next rather than guessing. The project is at the stage where
