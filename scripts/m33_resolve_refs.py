@@ -51,6 +51,15 @@ KNOWN_DOI = {
     "Kohler+2025":     "10.1051/0004-6361/202553919",
     "Dorn+2023":       "10.1051/0004-6361/202245217",
     "Speagle+2020":    "10.1093/mnras/staa278",
+    # These two defeated CrossRef's title search -- it returns an encyclopedia entry for
+    # Bonnefoy and a conference abstract for Wahhaj -- so they came from arXiv, which
+    # records the published DOI, and were then verified BY TITLE through CrossRef:
+    #   Bonnefoy: arXiv:1407.4001, journal_ref "A&A 567, L9 (2014)"
+    #             -> "Physical and orbital properties of beta Pictoris b", M. Bonnefoy
+    #   Wahhaj:   arXiv:1101.2893 -> ApJ 729, 139, "THE GEMINI NICI PLANET-FINDING
+    #             CAMPAIGN: ... CD-35 2722", Zahed Wahhaj
+    "Bonnefoy+2014":   "10.1051/0004-6361/201424041",
+    "Wahhaj+2011":     "10.1088/0004-637X/729/2/139",
 }
 
 # (short key, bibliographic query, what the repo currently claims)

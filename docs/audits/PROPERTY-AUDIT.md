@@ -1,7 +1,14 @@
 # Object-property audit — the externally-sourced astrophysical numbers, checked against their sources
 
-**Date:** 2026-08-13 · **Scope:** `exosat-rv/` only · **Nothing in this file has been applied.**
-It is a list of findings for review.
+**Date:** 2026-08-13 · **Scope:** `exosat-rv/` only · **Nothing in this file had been applied when it
+was written.**
+
+> **Status, as of 2026-08-24.** Three of its findings — η Tel B's companion mass, its K-band
+> magnitude and its parallax — were resolved in M32/M33 and carry **RESOLVED** markers inline.
+> The rest stand as written. Each row is authoritative for itself: a row without a resolution
+> marker is still open, and the ⛔ UNSOURCED and ⚠ CONFLICTING verdicts below are the live
+> ones. Paths quoted predate the 2026-08-24 reorganisation; the documents live under `docs/`
+> now.
 
 **Why this exists.** Today's reference audit found 14 wrong citations, all produced by the same
 mechanism: when a fact was not in front of the writer, a plausible one was generated instead of

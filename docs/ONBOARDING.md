@@ -138,9 +138,9 @@ changing the manuscript's typography updates all of them.
 |---|---|
 | `docs/paper/rnaas-etatel-draft.md` | **Ready to submit.** 1,464 words, needs an ORCID and Matthew's decision. |
 | `docs/paper/draft.template.html` | The manuscript. Sound; **needs a target journal chosen**. |
-| `docs/paper/contrast-wall-note.md` | Checklist cleared bar one data item and two DOIs. |
+| `docs/paper/contrast-wall-note.md` | Checklist cleared bar **one data item**: PDS 70's R is still unmeasured, and closing it needs a nodding reduction or a standard star, not a re-read of what is on disk. The two open DOIs were closed 2026-08-24 (via arXiv, verified through CrossRef by title). |
 | `docs/paper/methods-note.md` | **13 open items.** Least advanced; the remaining work is reconciling its own numbers against the milestone documents. |
-| `docs/paper/sampler-reproducibility-note.md` | Recommend retiring — its content is §5.1 of the manuscript and load-bearing there. |
+| `docs/paper/sampler-reproducibility-note.md` | **Open decision.** Retiring it is the recommendation here, because its content is §5.1 of the manuscript and load-bearing there — but `NEXT-DIRECTIONS.md` C2 proposes publishing exactly this material as a standalone RNAAS note. Both cannot hold. Matthew's call. |
 
 **The highest-value open experiment**, recorded in `M34-RESULTS.md` §3: choose an extraction
 configuration by injection recovery *alone*, never computing rms against the published series,

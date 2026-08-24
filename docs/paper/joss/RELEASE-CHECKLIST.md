@@ -113,15 +113,26 @@ splits into its own repository via `git filter-repo --subdirectory-filter exosat
 
 - [ ] Add a real ORCID to `CITATION.cff`'s author entry (currently a commented-out
       TODO). Zenodo, OpenAIRE, and ORCID's own auto-import all key off this field.
-- [ ] Add a `version` field to `.zenodo.json` and keep it synchronized with
+- [x] Add a `version` field to `.zenodo.json` and keep it synchronized with
       `pyproject.toml`'s `[project] version` and `CITATION.cff`'s `version:` at every
-      release (today all three would need to agree; only two currently carry the field).
-- [ ] Add `related_identifiers` to `.zenodo.json`: at minimum, a link to the GitHub
-      repository itself, and a link to Hoy et al. 2026 (DOI `10.1038/s41586-026-10751-w`)
-      as the work this software reproduces (relation `isSupplementTo` or `cites`, per
-      Zenodo's controlled vocabulary — pick the more accurate one at write time).
-- [ ] Reconcile `CITATION.cff` vs `.zenodo.json` and pick one as authoritative, or keep
-      both in lockstep deliberately. Zenodo's GitHub integration has historically
+      release. **Done 2026-08-24** — all three read `0.1.0`, and the synchronisation is
+      no longer a thing to remember: `tests/test_citation_metadata.py` fails if they
+      diverge, so CI catches it before a release does.
+- [x] Add `related_identifiers` to `.zenodo.json`. **Done 2026-08-24**, and the choice
+      of vocabulary was made deliberately: the repository is `isSupplementTo` (what
+      Zenodo's own GitHub integration uses), and **Hoy et al. 2026 is `cites`, not
+      `isSupplementTo`**. `isSupplementTo` would present this record as material
+      accompanying their Nature paper. It is an independent reproduction by an
+      unaffiliated author, and metadata that implies otherwise is a misrepresentation
+      that propagates into OpenAIRE and every aggregator downstream. A test asserts the
+      relation stays `cites`.
+- [x] **Decided 2026-08-24: `CITATION.cff` is authoritative for the prose, and
+      `.zenodo.json` is kept in lockstep** — its `description` is now the CITATION
+      abstract *verbatim*, written programmatically rather than retyped, and a test
+      asserts byte-identity so the drift below cannot recur. Both also had a stale
+      `HANDOFF.md` path, from before the reorganisation moved it under `docs/`; fixed in
+      both, and a test now checks that every document either record names actually
+      exists. **Still to confirm at release time:** Zenodo's GitHub integration has historically
       preferred `.zenodo.json` over `CITATION.cff` when both are present at the
       repository root that gets archived — confirm current behavior at release time,
       since this has changed before — and fix the abstract/description drift noted in

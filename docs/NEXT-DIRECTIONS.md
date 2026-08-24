@@ -189,9 +189,22 @@ the methods paper published first so it reads as method rather than accusation.
 ## Suggested execution order
 
 1. **B1, B2** — cheap, and they belong in Paper I before it goes out.
-2. **C2** — the data is already computed.
-3. **A1** — the highest-value new result available without new observations.
-4. **C1** — writes from banked milestones.
-5. **A2, A3** — new science, moderate new analysis.
-6. Then the existing queue: YSES 1 b's blocked 2022 pair, beta Pic b's HiRISE nights,
+2. **C1** — writes from banked milestones.
+3. **A2, A3** — new science, moderate new analysis.
+4. Then the existing queue: YSES 1 b's blocked 2022 pair, beta Pic b's HiRISE nights,
    Keck/KOA (DH Tau B, HR 8799).
+
+**Two items came off this ranking and are deliberately not in it.**
+
+- **A1 is attempted and not achievable with the data in hand.** Its own section carries the
+  result: ~2 frames per night is too few degrees of freedom, and the built-in control — a
+  target with a real signal — resolves its excess at only 1.4σ, so every other object's "no
+  excess" is a power failure rather than a physical result. It stays written up because the
+  negative is informative, but it was ranked third here as "the highest-value new result
+  available without new observations" and that is no longer true.
+- **C2 is blocked on a decision, not on work.** Its content is presently §5.1 of the
+  manuscript, where `ONBOARDING.md` §6 records it as load-bearing and recommends **retiring**
+  the standalone note for that reason. So the two documents want opposite things with the same
+  material: publishing C2 separately means cutting §5.1 out of the manuscript and citing the
+  note instead — one stronger paper traded for two thinner ones. **This is Matthew's call**,
+  and until it is made neither document should be read as having settled it.

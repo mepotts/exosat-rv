@@ -15,7 +15,17 @@ that is weaker than VERIFIED and is called out as such.
 **Headline:** 54 distinct citation claims across 29 distinct works. **14 are wrong**, in 60+
 places. Three source PDFs in `papers/` carry filenames that name the wrong first author, and
 every one of those three wrong names has been copied into prose — and in two cases into Python
-identifiers. Nothing in this file has been applied; it is a list of corrections for review.
+identifiers. Nothing in this file had been applied **when it was written**.
+
+> **Status, as of 2026-08-24.** That sentence is no longer true of the file as a whole and is
+> kept only because it describes the pass as it stood on 2026-08-13. Findings have since been
+> acted on in M29, M32 and M33 — this document's own closing section, *Resolution of the two
+> open findings*, records two of them being settled and applied, and the reference work was
+> propagated into the methods note afterwards. **Each finding's own entry is authoritative:**
+> where a row carries a resolution marker it was applied, and a row without one should be
+> treated as still open. This file is the record of the pass, not a live to-do list. Paths
+> quoted below predate the 2026-08-24 reorganisation — the documents still exist, under
+> `docs/`.
 
 ---
 

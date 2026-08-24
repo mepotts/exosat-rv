@@ -12,7 +12,7 @@ abstract: >-
   themselves do not yet reproduce from the archive, and a positive control on the known
   binary brown dwarf GJ 229 B establishes that the shortfall is precision rather than a
   broken extraction. Every claim the project published and later found false is indexed in
-  HANDOFF.md. No discovery is claimed and nothing is submitted anywhere. Beyond the reproduction
+  docs/HANDOFF.md. No discovery is claimed and nothing is submitted anywhere. Beyond the reproduction
   it derives a feasibility framework for applying the method to other directly imaged
   companions, calibrated on the achieved precision rather than a forecast, and inventories the
   public VLTI/GRAVITY holdings that make an independent astrometric route possible. Its most
