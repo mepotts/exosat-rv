@@ -27,6 +27,10 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest>=8.0", "ruff>=0.5", "pypdf>=4.0"]  # pypdf reads the preprint; see M1-RESULTS
+# M35's photometric cross-check re-fetches ASAS-SN light curves with the survey's own
+# client. Optional on purpose: the fetched curve is committed as data/m35-asassn-cd35.csv,
+# so the period search reruns from cache and only --refetch needs this.
+photometry = ["skypatrol>=0.6"]
 
 [project.scripts]
 exosat-rv = "exosat_rv.cli:app"
