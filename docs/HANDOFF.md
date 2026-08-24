@@ -1,5 +1,27 @@
 # HANDOFF — exosat-rv
 
+> ## M36 (2026-08-24) — the paper-blind selection was attempted, and it is inconclusive
+>
+> M34 §3's experiment — choose the extraction configuration by injection recovery alone,
+> never consulting the published series — was pre-registered
+> ([`M36-PREREGISTRATION.md`](milestones/M36-PREREGISTRATION.md), committed before the first
+> run) and executed over 36 configurations in 40 minutes.
+> **It did not answer the question, and the reason is a defect in my own protocol.** The gate
+> constrained the recovery slope but never its uncertainty: slopes came back spanning −12.3 to
+> +2.0 with errors of ±0.48 to ±6.12, and the three that "passed" did so on 0.97 ± 2.28,
+> 1.13 ± 1.54 and 1.14 ± 0.92 — every 2σ interval containing zero, i.e. consistent with total
+> signal destruction. The adopted configuration's own gates run at 99–101% ± 1%.
+> The blind search was run anyway, as the protocol requires: the winner puts its best near-171 d
+> peak at 174.9–182.0 d, ΔBIC +4.6 to +8.3, never rank 1 — but the fitted K values are
+> **2,376–119,098 m/s** against a real signal of ~306 published / 380–470 fitted, so the series
+> are noise and the search is fitting sampling, not sky.
+> **This is not evidence against the M14 detection**; it is an experiment that failed to be
+> sensitive. The likely cause is stated in [`M36-RESULTS.md`](milestones/M36-RESULTS.md) §6:
+> the protocol excluded iteration-2 templates as paper-contaminated, and M14 found iteration 2
+> is *the* decisive change — so removing the paper's influence also removed the ingredient that
+> makes the extraction work. **M34 §3's question remains open**, and §7 sets out what a valid
+> version needs: a paper-blind template-iteration rule, pre-registered separately. Not started.
+
 > ## M35 (2026-08-24) — the two pre-submission cross-checks came back clean
 >
 > `NEXT-DIRECTIONS.md` B1 and B2, the two items ranked ahead of any new science because a

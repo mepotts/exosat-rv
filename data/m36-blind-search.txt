@@ -1,0 +1,74 @@
+epochs: 18, unmatched vs published table: ['604.821']
+internal screen: dropping 1 epoch(s) with spread >3x median: ['604.821']
+
+[mean, all epochs] n=18
+  top peaks (P d, dBIC vs const, K m/s): (8.5, +3.5, 9656)  (6.8, +1.6, 8554)  (6.4, +1.4, 8350)  (8.9, +0.8, 9770)  (6.1, +0.5, 8728)  (9.9, +0.4, 7672)
+  near-171d best: P=168.3  dBIC=-4.4  K=3878   rank among peaks: >6
+
+[mean, +BERV covariate] n=18
+  top peaks (P d, dBIC vs const, K m/s): (8.4, +3.6, 8837)  (10.2, +2.9, 10417)  (13.7, +2.7, 9176)  (9.0, +2.2, 9844)  (7.1, +2.1, 8620)  (6.0, +1.8, 8364)
+  near-171d best: P=161.6  dBIC=-5.3  K=2376   rank among peaks: >6
+
+[mean, internal screen] n=17
+  top peaks (P d, dBIC vs const, K m/s): (8.5, +12.5, 5436)  (117.8, +6.9, 4585)  (5.6, +5.6, 4542)  (174.9, +4.6, 4141)  (13.8, +4.5, 4765)  (360.7, +4.0, 9543)
+  near-171d best: P=174.9  dBIC=+4.6  K=4141   rank among peaks: 4
+
+[mean, screened, +BERV] n=17
+  top peaks (P d, dBIC vs const, K m/s): (8.5, +13.7, 5540)  (186.2, +7.9, 6334)  (5.6, +7.9, 4931)  (117.1, +7.5, 4598)  (365.7, +6.8, 168814)  (176.9, +5.4, 4554)
+  near-171d best: P=182.0  dBIC=+7.2  K=5803   rank among peaks: 6
+
+[mean, matched only] n=17
+  top peaks (P d, dBIC vs const, K m/s): (8.5, +12.5, 5436)  (117.8, +6.9, 4585)  (5.6, +5.6, 4542)  (174.9, +4.6, 4141)  (13.8, +4.5, 4765)  (360.7, +4.0, 9543)
+  near-171d best: P=174.9  dBIC=+4.6  K=4141   rank among peaks: 4
+
+[mean, matched, +BERV] n=17
+  top peaks (P d, dBIC vs const, K m/s): (8.5, +13.7, 5540)  (186.2, +7.9, 6334)  (5.6, +7.9, 4931)  (117.1, +7.5, 4598)  (365.7, +6.8, 168814)  (176.9, +5.4, 4554)
+  near-171d best: P=182.0  dBIC=+7.2  K=5803   rank among peaks: 6
+
+[median, all epochs] n=18
+  top peaks (P d, dBIC vs const, K m/s): (8.5, +2.1, 8061)  (16.0, +0.1, 7519)  (6.9, -0.1, 6874)  (6.1, -0.3, 7571)  (8.9, -0.3, 8116)  (6.4, -0.3, 6793)
+  near-171d best: P=173.2  dBIC=-3.9  K=4174   rank among peaks: >6
+
+[median, +BERV covariate] n=18
+  top peaks (P d, dBIC vs const, K m/s): (8.0, +3.3, 8214)  (13.7, +2.8, 8693)  (5.7, +2.0, 7493)  (9.0, +1.7, 8276)  (8.5, +1.4, 7473)  (11.9, +1.1, 7251)
+  near-171d best: P=161.6  dBIC=-5.6  K=1377   rank among peaks: >6
+
+[median, internal screen] n=17
+  top peaks (P d, dBIC vs const, K m/s): (8.5, +21.2, 3732)  (8.9, +9.7, 3510)  (120.1, +7.1, 2770)  (190.0, +4.3, 2582)  (126.3, +4.1, 2445)  (26.5, +4.0, 2369)
+  near-171d best: P=182.0  dBIC=+3.5  K=2472   rank among peaks: >6
+
+[median, screened, +BERV] n=17
+  top peaks (P d, dBIC vs const, K m/s): (8.5, +22.3, 3823)  (8.9, +11.0, 3635)  (120.3, +7.4, 2796)  (365.7, +7.0, 134450)  (191.3, +5.8, 3362)  (26.5, +4.8, 2498)
+  near-171d best: P=182.0  dBIC=+3.8  K=2764   rank among peaks: >6
+
+[median, matched only] n=17
+  top peaks (P d, dBIC vs const, K m/s): (8.5, +21.2, 3732)  (8.9, +9.7, 3510)  (120.1, +7.1, 2770)  (190.0, +4.3, 2582)  (126.3, +4.1, 2445)  (26.5, +4.0, 2369)
+  near-171d best: P=182.0  dBIC=+3.5  K=2472   rank among peaks: >6
+
+[median, matched, +BERV] n=17
+  top peaks (P d, dBIC vs const, K m/s): (8.5, +22.3, 3823)  (8.9, +11.0, 3635)  (120.3, +7.4, 2796)  (365.7, +7.0, 134450)  (191.3, +5.8, 3362)  (26.5, +4.8, 2498)
+  near-171d best: P=182.0  dBIC=+3.8  K=2764   rank among peaks: >6
+
+[clip, all epochs] n=18
+  top peaks (P d, dBIC vs const, K m/s): (8.5, +1.0, 7854)  (6.9, +0.7, 7478)  (6.4, +0.5, 7245)  (16.0, +0.1, 7660)  (5.5, -0.1, 7846)  (14.3, -0.4, 6468)
+  near-171d best: P=175.9  dBIC=-3.0  K=5171   rank among peaks: >6
+
+[clip, +BERV covariate] n=18
+  top peaks (P d, dBIC vs const, K m/s): (11.9, +3.3, 8032)  (13.7, +3.2, 8254)  (8.6, +2.2, 7811)  (8.0, +2.1, 7706)  (5.5, +1.6, 8212)  (10.2, +1.6, 8348)
+  near-171d best: P=161.6  dBIC=-5.6  K=1405   rank among peaks: >6
+
+[clip, internal screen] n=17
+  top peaks (P d, dBIC vs const, K m/s): (8.5, +13.6, 3682)  (186.4, +8.8, 3360)  (118.2, +7.9, 3123)  (196.1, +6.7, 3163)  (177.1, +6.7, 3067)  (369.8, +4.7, 6211)
+  near-171d best: P=182.0  dBIC=+8.3  K=3276   rank among peaks: 5
+
+[clip, screened, +BERV] n=17
+  top peaks (P d, dBIC vs const, K m/s): (8.5, +14.4, 3559)  (119.0, +10.5, 3159)  (366.1, +9.6, 119098)  (187.4, +8.3, 4080)  (26.8, +6.9, 2889)  (8.9, +6.4, 3264)
+  near-171d best: P=182.0  dBIC=+7.2  K=3516   rank among peaks: >6
+
+[clip, matched only] n=17
+  top peaks (P d, dBIC vs const, K m/s): (8.5, +13.6, 3682)  (186.4, +8.8, 3360)  (118.2, +7.9, 3123)  (196.1, +6.7, 3163)  (177.1, +6.7, 3067)  (369.8, +4.7, 6211)
+  near-171d best: P=182.0  dBIC=+8.3  K=3276   rank among peaks: 5
+
+[clip, matched, +BERV] n=17
+  top peaks (P d, dBIC vs const, K m/s): (8.5, +14.4, 3559)  (119.0, +10.5, 3159)  (366.1, +9.6, 119098)  (187.4, +8.3, 4080)  (26.8, +6.9, 2889)  (8.9, +6.4, 3264)
+  near-171d best: P=182.0  dBIC=+7.2  K=3516   rank among peaks: >6

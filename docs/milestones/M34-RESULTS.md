@@ -120,6 +120,15 @@ the published series at any point, then run the blind search — has still not b
 requires re-running viper rather than re-scoring, and it remains the cleanest available
 strengthening of the reproduction.
 
+> **Attempted 2026-08-24, and inconclusive — see [`M36-RESULTS.md`](M36-RESULTS.md).** The
+> experiment was pre-registered and run over 36 paper-blind configurations. It failed on its
+> own selection metric rather than on the data: the eligibility gate constrained the recovery
+> slope and not its uncertainty, and nothing in the grid measured a slope to better than ±0.48.
+> The probable cause is that the protocol excluded iteration-2 templates as paper-contaminated,
+> while §6 above found iteration 2 to be the decisive change — so the design removed the
+> ingredient that makes the extraction work. **The question stated in this section is unchanged
+> and still open.**
+
 ## 4. ⚠ The first version of this test said the opposite, and it was wrong
 
 Round 1 announced *"the detection tracks the tuning metric… the reproduction cannot be claimed

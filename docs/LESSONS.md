@@ -27,6 +27,7 @@ not either.
 | 8 | Phase–BERV degeneracy | CD-35's blind peak entangled with BERV at r=−0.71 | Ten-minute phase–BERV geometry pre-check **before** any campaign compute (M15, permanent) |
 | 9 | Claiming "first ever" | "First RVs of beta Pic b" was wrong (A&A 2024 got there) | Literature-search every first; hedge as "to the best of our knowledge"; log corrections in place (M20 §5) |
 | 10 | Trusting the mode label | The entire "staring" tier was actually **HiRISE fiber data**; slit-recipe reductions produced km/s artifacts we mistook for sky physics | **Check `INS MODE` + `ORIGFILE` in raw headers before classifying any dataset**; three ledgered verdicts had to be retracted (M27 banner, target-queue) |
+| 11 | An injection gate read without its error bar | M36: three configurations "passed" `slope in [0.80, 1.20]` on 0.97 +- 2.28, 1.13 +- 1.54, 1.14 +- 0.92 — every 2-sigma interval containing **0**, i.e. total signal destruction | **A recovery number with no usable uncertainty is not a pass.** Gate the error too: this project's working configurations gate at 99–101% ± 1%, so require `slope_err <= 0.10` alongside the slope. Same family as M28 §6.5, one level up |
 
 ## 2. viper quirks (mechanical, cost hours each)
 
