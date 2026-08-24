@@ -44,7 +44,11 @@ external enters.
 
 Four axes, chosen because viper exposes them and they plausibly change an extraction, with
 values spanning good and bad so the selection rule has something to reject. Full factorial,
-**24 configurations**.
+**36 configurations** (3 × 3 × 2 × 2).
+
+> **Amendment, before execution.** This document first said 24, which is simply wrong
+> arithmetic — 3 × 3 × 2 × 2 = 36. Corrected here, and committed before the first viper run,
+> with no axis and no value changed. The dry run is what caught it.
 
 | axis | values | why these |
 |---|---|---|
@@ -120,6 +124,6 @@ not available here, and saying so is part of the result.
 ## 9. Cost
 
 A single viper run on one epoch takes **3 s** (measured, H band, five orders). Each
-configuration is 18 uninjected epochs plus 18 injected ones, so ~2 min; the 24-configuration
-grid is **under an hour**, and viper's outputs are kilobytes — the disk pressure recorded in M30
+configuration is 18 uninjected epochs plus 18 injected ones, so ~2 min; the 36-configuration
+grid is **about 35 minutes**, and viper's outputs are kilobytes — the disk pressure recorded in M30
 constrains cr2res re-reductions, not this.
