@@ -554,7 +554,7 @@ affiliated with or endorsed by the authors of any work discussed.
 >
 > Items 3, 4, 6, 7 stand as written — they are caveats to travel with the numbers, not
 > ambiguities to resolve. Items 9, 10, 11 are covered by the repository-wide reference
-> audit in `docs/REFERENCE-AUDIT.md`.
+> audit in `../audits/REFERENCE-AUDIT.md`.
 
 
 Items the author should check personally. Everything else in this note traces to a numbered
@@ -588,7 +588,7 @@ milestone document in the repository.
 **Bibliography**
 
 8. ~~**Köhler initial.**~~ — **RESOLVED.** Verified as **J. Köhler** against the archived
-   paper and confirmed in `docs/REFERENCE-AUDIT.md`; the manuscript now reads J. throughout.
+   paper and confirmed in `../audits/REFERENCE-AUDIT.md`; the manuscript now reads J. throughout.
 9. ~~**Journal, volume and year** are not confirmed anywhere in the repository.~~ —
     **RESOLVED (M33, `scripts/m33_resolve_refs.py`).** ADS is unavailable here (its API needs
     an Authorization header and no key is configured), but CrossRef needs none and holds

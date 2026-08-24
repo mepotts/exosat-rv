@@ -8,7 +8,7 @@ there a second route to the project's actual goal — finding or bounding a *new
 astrometry of **beta Pic b** has **28 pipeline-reduced nights over 2987 days**, all public,
 against the 18 nights over 466 days on which the published RV detection rests.
 
-Run with `exosat-rv gravity`; machine-readable form in [`data/m10-gravity.json`](data/m10-gravity.json).
+Run with `exosat-rv gravity`; machine-readable form in [`data/m10-gravity.json`](../../data/m10-gravity.json).
 
 **A kill-check remains open.** See §5 — this is the M0-equivalent, not the M1-equivalent.
 

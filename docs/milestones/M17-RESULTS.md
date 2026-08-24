@@ -19,10 +19,10 @@ probe ~100 M⊕ exomoons.
 
 ## 0. What ran
 
-[`m17_inventory.py`](scripts/m17_inventory.py) (per-target archive census +
-products), [`m15_convert.py`](scripts/m15_convert.py) (now setting-parameterized),
-[`m17_run.sh`](scripts/injection/m17_run.sh) (per-target template ladder → RV run →
-injections), [`m17_score.py`](scripts/injection/m17_score.py) (small-n recovery by
+[`m17_inventory.py`](../../scripts/m17_inventory.py) (per-target archive census +
+products), [`m15_convert.py`](../../scripts/m15_convert.py) (now setting-parameterized),
+[`m17_run.sh`](../../scripts/injection/m17_run.sh) (per-target template ladder → RV run →
+injections), [`m17_score.py`](../../scripts/injection/m17_score.py) (small-n recovery by
 per-epoch ratio; phase-90 plans so 2–3-epoch targets still measure transmission).
 Everything on archive calib_level=2 products — no raw reduction needed for
 spot-checks.

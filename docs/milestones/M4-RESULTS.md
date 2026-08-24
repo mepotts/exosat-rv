@@ -10,7 +10,7 @@ a 115-day signal at the fitted amplitude clears the 1% FAP only **6%** of the ti
 **74%** for 87.46 d. The paper's choice is better supported than the periodogram alone
 suggests, and for a reason the paper does not state.
 
-Run with `exosat-rv alias`; machine-readable form in [`data/m4-aliases.json`](data/m4-aliases.json).
+Run with `exosat-rv alias`; machine-readable form in [`data/m4-aliases.json`](../../data/m4-aliases.json).
 
 **This milestone needs no radial velocities** — only the times the target was observed. That
 is why it could run before M2.

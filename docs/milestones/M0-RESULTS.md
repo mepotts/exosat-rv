@@ -7,7 +7,7 @@ and if so how much of the expensive part (raw → 1-D reduction) has to be redon
 ESO pipeline-reduced 1-D spectra today. The remaining 3 exist as public raw frames only.
 
 Reproduce with `exosat-rv inventory`; the machine-readable form is
-[`data/m0-inventory.json`](data/m0-inventory.json).
+[`data/m0-inventory.json`](../../data/m0-inventory.json).
 
 ---
 

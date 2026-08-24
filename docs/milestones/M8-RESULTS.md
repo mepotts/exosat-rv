@@ -9,7 +9,7 @@ right fix — but it must be paired with a different observing technique, and th
 requirements pull against each other as an inverse cube.** Three known planets satisfy both
 even under the most pessimistic tidal assumption, and eight under the optimistic one.
 
-Run with `exosat-rv closein`; machine-readable form in [`data/m8-closein.json`](data/m8-closein.json).
+Run with `exosat-rv closein`; machine-readable form in [`data/m8-closein.json`](../../data/m8-closein.json).
 
 ---
 

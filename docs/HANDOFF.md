@@ -3,7 +3,7 @@
 > ## M31 (2026-08-14) — the fibre chain transfers: HIP 65426's three HiRISE nights extracted, and the planet is below the background
 >
 > All **27/27 staged frames** of the three public HiRISE nights reduce through the
-> M29-validated util_ path with **zero parameter changes** ([`M31-RESULTS.md`](M31-RESULTS.md)):
+> M29-validated util_ path with **zero parameter changes** ([`M31-RESULTS.md`](milestones/M31-RESULTS.md)):
 > 21 non-empty orders per frame, FPET wavelength solutions, ranges matching the bpbhi
 > reference to <1 nm. On-sky proof reproduced on a second target: **h65hi2's deep frames
 > share tellurics with its host at 11.8σ at exactly 0 km/s** (benchmark 9.8σ); h65hi1/h65hi3
@@ -21,7 +21,7 @@
 > ## M30 (2026-08-14) — the outside sweep's "new public epochs": none were new
 >
 > `DISCOVERY/run3-prospectus.md` avenue #1 claimed three newly-public CRIRES+ blocks.
-> Verified per-night against TAP + raw headers ([`M30-RESULTS.md`](M30-RESULTS.md)):
+> Verified per-night against TAP + raw headers ([`M30-RESULTS.md`](milestones/M30-RESULTS.md)):
 > **(a)** HIP 65426's "90 exposures" are M22's own five-night K2192 series (134 frames,
 > consumed); **(b)** CD-35's "300 exposures Oct 2024" are the M4368 thermal-IR deep pair,
 > shelved since M26; **(c)** the beta Pic series is still embargoed (truth: 6 nights /
@@ -43,8 +43,8 @@
 > A day spent checking old work against its actual sources found **14 wrong citations
 > across 60+ sites** and **34 conflicting object properties**, and **not one was found by
 > producing a new result**. Before using any externally-sourced number here, check
-> [`docs/REFERENCE-AUDIT.md`](docs/REFERENCE-AUDIT.md) and
-> [`docs/PROPERTY-AUDIT.md`](docs/PROPERTY-AUDIT.md). The traps are
+> [`audits/REFERENCE-AUDIT.md`](audits/REFERENCE-AUDIT.md) and
+> [`audits/PROPERTY-AUDIT.md`](audits/PROPERTY-AUDIT.md). The traps are
 > [`LESSONS.md`](LESSONS.md) §5b.
 >
 > Three things that will bite immediately:
@@ -58,12 +58,12 @@
 >   then fails a pre-committed order screen. The "4-night/290-d prize" never existed.
 >
 > ## ⚠ START AT [`LESSONS.md`](LESSONS.md) — the consolidated trap catalog + map of all conclusions
-> Then [`docs/target-queue.md`](docs/target-queue.md) for the roster and the
+> Then [`docs/target-queue.md`](target-queue.md) for the roster and the
 > **HiRISE revelation (M27 pending)**: the entire "staring" tier is fiber-fed
 > HiRISE data, three verdicts were corrected, and six public starlight-suppressed
 > beta Pic b nights are waiting on a fiber-appropriate reduction.
 
-> ## ⚠ READ [`M15-RESULTS.md`](M15-RESULTS.md) and [`M14-RESULTS.md`](M14-RESULTS.md) FIRST (then M13, M12); [`M17`](M17-RESULTS.md) adds the K-band tier; [`M20`](M20-RESULTS.md) the census harvest; [`M23`](M23-RESULTS.md) closes the roster
+> ## ⚠ READ [`M15-RESULTS.md`](milestones/M15-RESULTS.md) and [`M14-RESULTS.md`](milestones/M14-RESULTS.md) FIRST (then M13, M12); [`M17`](milestones/M17-RESULTS.md) adds the K-band tier; [`M20`](milestones/M20-RESULTS.md) the census harvest; [`M23`](milestones/M23-RESULTS.md) closes the roster
 >
 > **M23–M24 (2026-08-12, THE PLAN IS WALKED):** HD 1160 B — first multi-epoch series
 > via the new staring branch, quality-limited (725 m/s / 41 d; one ±37 m/s night
@@ -95,7 +95,7 @@
 > m/s over 2 nights, gates pass), and **CT Cha B** (usable only with per-order
 > screening; disk emission suspected). viper's K-band branch is 1-indexed
 > (`oset 1:19` for K2166); filter_path is now at five documented lies. The paper
-> draft ([docs/paper/](docs/paper/)) carries the CD-35 + eta Tel story with
+> draft ([docs/paper/](paper/)) carries the CD-35 + eta Tel story with
 > figures/tables; beta Pic b's raw K-nights (night-to-night repeatability of a
 > planet RV) are the next queue item.
 >
@@ -142,8 +142,8 @@
 > evidence **flips to −0.51** (paper: +2.62) under the same BIC/2 proxy that still
 > reproduces the v1 comparison. `exosat-rv orbits` now defaults to the Nature table
 > (`--version v1` for the superseded one). The scoring truth for any extraction change is
-> [`data/published/hoy2026_nature_table2_rvs.csv`](data/published/hoy2026_nature_table2_rvs.csv)
-> via [`scripts/injection/vs_published.py`](scripts/injection/vs_published.py).
+> [`data/published/hoy2026_nature_table2_rvs.csv`](../data/published/hoy2026_nature_table2_rvs.csv)
+> via [`scripts/injection/vs_published.py`](../scripts/injection/vs_published.py).
 >
 > ## The M12 ground (still load-bearing)
 >
@@ -184,30 +184,30 @@ times — M12, M13, and now M14 — each time on evidence.)
 - ✅ **The conclusion reproduces from raw data.** Blind period search on our own
   from-raw series: **~169–171 d, rank 1 in every combine, ΔBIC +40 alone, +25 to +28
   with a BERV nuisance covariate**, fatal epoch excluded by an internal screen. Both
-  routes (archive-combined and per-nodding-binned) agree. ([M14](M14-RESULTS.md) §6, §8)
+  routes (archive-combined and per-nodding-binned) agree. ([M14](milestones/M14-RESULTS.md) §6, §8)
 - ✅ Per-epoch precision **70–90 m/s vs 57.68 claimed** (1.2–1.6×, from 25× at start);
   the decisive changes were the second template iteration and `-oversampling 2`, both
-  injection-validated. ([M14](M14-RESULTS.md) §2, §5, §8)
+  injection-validated. ([M14](milestones/M14-RESULTS.md) §2, §5, §8)
 - ❌ **The second satellite is disfavoured on the paper's own Nature table**: ten
   nested-sampling integrals, ΔlogZ −0.8 to −6.6, never positive, vs their +2.622.
   The 87.35 d period *choice* still reproduces; the *existence* evidence does not
-  survive their own data revision. ([M14](M14-RESULTS.md) §1, §7)
+  survive their own data revision. ([M14](milestones/M14-RESULTS.md) §1, §7)
 - ✅ On the superseded v1 table the same code still prefers two satellites (+3.04), as
-  M6 found — the flip is in the data revision, not the code. ([M6](M6-RESULTS.md), M13 §5)
+  M6 found — the flip is in the data revision, not the code. ([M6](milestones/M6-RESULTS.md), M13 §5)
 - ⚠ **Amplitude runs 20–40% high** (K 360–440 vs their 306; slope 1.19–1.24) — a hint
   that rhymes with M11's measured template-absorption, not claimable while phase and
-  BERV are −0.71 entangled. Decidable when the embargoed epochs release. ([M14](M14-RESULTS.md) §9)
+  BERV are −0.71 entangled. Decidable when the embargoed epochs release. ([M14](milestones/M14-RESULTS.md) §9)
 
 **M7 read the paper's reference list and the project's assumptions moved.** Read
-[`M7-RESULTS.md`](M7-RESULTS.md) §0 before planning anything: the method was *proposed* in
+[`M7-RESULTS.md`](milestones/M7-RESULTS.md) §0 before planning anything: the method was *proposed* in
 2018, its detectability was *forecast* in 2022 by four of Hoy et al.'s own co-authors, and
 **three published nulls preceded this detection**, not one. There is now a `papers/`
-archive; use [`scripts/fetch_paper.py`](scripts/fetch_paper.py) to add to it.
+archive; use [`scripts/fetch_paper.py`](../scripts/fetch_paper.py) to add to it.
 
 **This is what a new agent should do next**, in order:
 
 0. **M14 closed all three of M13's successors** (nested sampling ✓, floor ✓,
-   amplitude-matched injection ✓) — see [M14 §10](M14-RESULTS.md): (a) update the
+   amplitude-matched injection ✓) — see [M14 §10](milestones/M14-RESULTS.md): (a) update the
    author query with the evidence integrals and the independent detection; (b) **M15 —
    eta Tel B** with the full validated recipe (per-nodding, 2-iteration template with
    `-kapsig 3` creation, telluric-selected orders, `-kapsig 3`, `-oversampling 2`,
@@ -216,7 +216,7 @@ archive; use [`scripts/fetch_paper.py`](scripts/fetch_paper.py) to add to it.
    (Dec 2026 – May 2027), settle the amplitude overshoot and the second satellite on
    data the confound cannot reach. The full target order — including the young
    self-luminous planetary-mass class (beta Pic b, PDS 70 b, and the limits tier) —
-   is now in [docs/target-queue.md](docs/target-queue.md): eta Tel B is the only
+   is now in [docs/target-queue.md](target-queue.md): eta Tel B is the only
    orbit-capable archive today; beta Pic b's 753 frames are 6 nights (spot-check, not
    orbit); PDS 70 b is the flagship proposal target.
 
@@ -226,7 +226,7 @@ archive; use [`scripts/fetch_paper.py`](scripts/fetch_paper.py) to add to it.
    is left of the gap (~2.5–3.8×) is night-to-night per-order drift, unexplained but
    characterised.
 2. ~~**Fix the per-order forward model — the template first.**~~ **DONE, and it failed —
-   [`M11`](M11-RESULTS.md).** Rebuilding the template the published way (Köhler et al. 2025
+   [`M11`](milestones/M11-RESULTS.md).** Rebuilding the template the published way (Köhler et al. 2025
    §2.2, two iterations, `-tpl_wave tell`) makes CD-35 2722 B *look* better (776 → 620 m/s)
    and **collapses the control**: recovered amplitude on GJ 229 B's undisputed binary falls
    to **41% of correct after one iteration** and does not recover. Self-templating absorbs
@@ -246,9 +246,9 @@ archive; use [`scripts/fetch_paper.py`](scripts/fetch_paper.py) to add to it.
    cheap levers: the nodding frames are worth **10%** (the authors' own Fig. 4, 31.44 vs
    34.49 m/s) and order screening/reweighting **6%** (823 → 776 m/s), against a factor of 25.
    The combination stage already works; **the whole shortfall is per-order.** See
-   [`M9-RESULTS.md`](M9-RESULTS.md) §7.
+   [`M9-RESULTS.md`](milestones/M9-RESULTS.md) §7.
 4. **Only then** apply the pipeline to **eta Tel B** — 16 usable H-band nights over an
-   800-day baseline, no published RVs, nobody has looked. ([M5](M5-RESULTS.md)) M7 confirms
+   800-day baseline, no published RVs, nobody has looked. ([M5](milestones/M5-RESULTS.md)) M7 confirms
    it independently: it ranks **4th of 38** in Lazzoni et al. 2022's physics-based detection
    probability, having been ranked **1st** by M5 on archive holdings alone. Two rankings
    sharing no assumptions agree. But note M7 §5 — a null there limits satellites to
@@ -258,7 +258,7 @@ Any new detection requires step 2 to succeed. M6 contributes nothing to it: fitt
 someone's published velocities cannot find a new satellite.
 
 4. **In parallel, and independent of all of the above: probe a GRAVITY product.**
-   [`M10`](M10-RESULTS.md) found that **beta Pic b has 28 public pipeline-reduced VLTI/GRAVITY
+   [`M10`](milestones/M10-RESULTS.md) found that **beta Pic b has 28 public pipeline-reduced VLTI/GRAVITY
    nights over 2987 days** — 1.6x the epochs over 6.4x the baseline of the dataset the
    published RV detection rests on — and that HD 206893 B, where Kral et al. 2026 report a
    tentative astrometric exomoon candidate, has 22 public nights. **Astrometry outranks RV in
@@ -266,55 +266,55 @@ someone's published velocities cannot find a new satellite.
    The kill-check is open and cheap: download one `calib_level=2` visibility product and
    verify it carries the dual-field differential phase astrometry needs. **M1's precedent
    applies — the first automated verdict on ESO's CRIRES+ products was wrong and nearly cost
-   a needless pipeline rebuild.** See [`M10-RESULTS.md`](M10-RESULTS.md) §5.
+   a needless pipeline rebuild.** See [`M10-RESULTS.md`](milestones/M10-RESULTS.md) §5.
 
 **Three new lines exist that need no CRIRES+ precision at all:**
 
-- [`M7`](M7-RESULTS.md) — the generalisation framework (`exosat-rv survey`), with the
+- [`M7`](milestones/M7-RESULTS.md) — the generalisation framework (`exosat-rv survey`), with the
   detection threshold recalibrated on the achieved 31.44 m/s rather than a forecast.
-- [`M8`](M8-RESULTS.md) — satellites of **young close-in giants** (`exosat-rv closein`).
+- [`M8`](milestones/M8-RESULTS.md) — satellites of **young close-in giants** (`exosat-rv closein`).
   3-8 real targets survive both a tidal-survival and a cross-correlation-observability cut,
   depending on the planetary tidal Q. The prize is not the moon: a limit at 10-30 M_Earth
   around a young hot Jupiter **discriminates between hot-Jupiter migration channels**.
-- [`M10`](M10-RESULTS.md) — the **astrometric route** (`exosat-rv gravity`). Better public
+- [`M10`](milestones/M10-RESULTS.md) — the **astrometric route** (`exosat-rv gravity`). Better public
   data than the RV route has, and **beta Pic b is the crossover target**: #2 in M7's RV
   ranking, one of Kral et al.'s two best astrometric targets, and the best public GRAVITY
   dataset. The one object where two independent techniques could be cross-checked.
 
 ## Reading order
 
-0. [`papers/`](papers/) — the source and its citation chain, as PDFs and extracted text.
+0. [`papers/`](../papers/) — the source and its citation chain, as PDFs and extracted text.
    **Read `papers/text/hoy2026_v1.txt` in full before forming any view.** It did not exist
    until M7; six milestones ran on two papers and an appendix.
 1. [`SPEC.md`](SPEC.md) — what is being tested and why it is worth testing.
-2. [`M0-RESULTS.md`](M0-RESULTS.md) — what the archive contains. **Its arithmetic is corrected
+2. [`M0-RESULTS.md`](milestones/M0-RESULTS.md) — what the archive contains. **Its arithmetic is corrected
    by M1 and M2; do not quote it alone.**
-3. [`M1-RESULTS.md`](M1-RESULTS.md) — the source read properly, and two retractions of M0.
-4. [`M2-RESULTS.md`](M2-RESULTS.md) — RV extraction, and why it falls short. Carries two
+3. [`M1-RESULTS.md`](milestones/M1-RESULTS.md) — the source read properly, and two retractions of M0.
+4. [`M2-RESULTS.md`](milestones/M2-RESULTS.md) — RV extraction, and why it falls short. Carries two
    corrections of its own.
-5. [`M3-RESULTS.md`](M3-RESULTS.md) — the positive control that makes M2's null readable.
-6. [`M6-RESULTS.md`](M6-RESULTS.md) — **the reproduction of the conclusion.** Read before
+5. [`M3-RESULTS.md`](milestones/M3-RESULTS.md) — the positive control that makes M2's null readable.
+6. [`M6-RESULTS.md`](milestones/M6-RESULTS.md) — **the reproduction of the conclusion.** Read before
    forming any view on whether the paper holds up.
-7. [`M4-RESULTS.md`](M4-RESULTS.md) — the alias structure of the second signal.
-8. [`M5-RESULTS.md`](M5-RESULTS.md) — analogue targets, and the control's provenance.
-8b. [`M7-RESULTS.md`](M7-RESULTS.md) — the literature this method came from, three
+7. [`M4-RESULTS.md`](milestones/M4-RESULTS.md) — the alias structure of the second signal.
+8. [`M5-RESULTS.md`](milestones/M5-RESULTS.md) — analogue targets, and the control's provenance.
+8b. [`M7-RESULTS.md`](milestones/M7-RESULTS.md) — the literature this method came from, three
     attribution corrections, and the generalisation framework.
-8c. [`M8-RESULTS.md`](M8-RESULTS.md) — young close-in giants, and why satellite survival
+8c. [`M8-RESULTS.md`](milestones/M8-RESULTS.md) — young close-in giants, and why satellite survival
     and cross-correlation observability trade as an inverse cube.
-8d. [`M9-RESULTS.md`](M9-RESULTS.md) — **order screening falsified, and the reweighting that
+8d. [`M9-RESULTS.md`](milestones/M9-RESULTS.md) — **order screening falsified, and the reweighting that
     fooled the target and was caught by the control.** Read §5 before touching order weights.
-8e. [`M10-RESULTS.md`](M10-RESULTS.md) — the astrometric route, inventoried. Read §5: its
+8e. [`M10-RESULTS.md`](milestones/M10-RESULTS.md) — the astrometric route, inventoried. Read §5: its
     kill-check is open.
-8f. [`M11-RESULTS.md`](M11-RESULTS.md) — **the template rebuilt the published way, and why
+8f. [`M11-RESULTS.md`](milestones/M11-RESULTS.md) — **the template rebuilt the published way, and why
     it suppresses the signal.** Third change running that improved the target and failed
     the control. **Read M12 §5.3 alongside it: M11 changed three things at once and ran
     with the cell error present, so its verdict is conditional.**
-8g. [`M12-RESULTS.md`](M12-RESULTS.md) — **read this first, not last.** The published Nature
+8g. [`M12-RESULTS.md`](milestones/M12-RESULTS.md) — **read this first, not last.** The published Nature
     version, the gas cell that was never switched off, the telluric-contaminated template,
     and the RV–BERV correlation that ties them together.
 9. [`BUILD-PLAN.md`](BUILD-PLAN.md) — stack, architecture, milestones.
 10. [`DATA-SOURCES.md`](DATA-SOURCES.md) — endpoints, and the traps in each.
-11. [`docs/viper-runbook.md`](docs/viper-runbook.md) — **rebuild the RV pipeline from
+11. [`docs/viper-runbook.md`](viper-runbook.md) — **rebuild the RV pipeline from
     scratch.** Nothing in it is documented upstream for archive data.
 
 The rest of this file is the expensive part: claims that turned out false, approaches
@@ -338,7 +338,7 @@ M0 published a disproof of a value in a peer-reviewed paper. The disproof was wr
 
 Recomputed with the paper's own parameters, 1.07 au falls out at e_host ~ 0.93–0.94 —
 inside the published ">0.9". **The paper was right.** Full working in
-[`M1-RESULTS.md`](M1-RESULTS.md) §1.1.
+[`M1-RESULTS.md`](milestones/M1-RESULTS.md) §1.1.
 
 **Root cause, and the lesson that outlives the specific error:** M0 reasoned from an AI
 summary of a source it had not read, all the way to a public claim. It *had* tagged the
@@ -364,7 +364,7 @@ drawing the same inference from them. Failing the first says nothing about the s
 **The preprint publishes its full RV table** (Table 2, appendix A). Feeding it to an
 independent fitter reproduces the conclusion: the ~169 d signal above the 0.1% FAP level, an
 ~88 d second satellite preferred over 14/70/115 d, K₂ agreeing to 0.1%, and both model
-comparisons in the same direction as the paper's. See [`M6-RESULTS.md`](M6-RESULTS.md).
+comparisons in the same direction as the paper's. See [`M6-RESULTS.md`](milestones/M6-RESULTS.md).
 
 **General lesson: before concluding a result cannot be reproduced, check whether the authors
 published the intermediate data.** Many papers do, in an appendix nobody reads. Three
@@ -460,7 +460,7 @@ made much of — unlike §1, this one was checked against the actual PDF.
 | Approach | Why rejected |
 |---|---|
 | Working from a source paper without archiving it or its references | Six milestones ran on the Hoy PDF read once and discarded, plus two hand-picked citations. The reference list named the framework paper (Lazzoni+2022), the method's proposal (Vanderburg+2018) and two unnoticed prior nulls. `papers/` and `scripts/fetch_paper.py` now exist; **extract the reference list first.** |
-| Reading a null result on the close-in case as "hot Jupiter moons are impossible" | The naive tidal argument (all stable orbits inside corotation) assumes a *synchronised* planet. Young planets are not synchronised, and tau_spin-down goes as a^6 — the answer flips over a factor of 3 in orbital distance. See [`M8-RESULTS.md`](M8-RESULTS.md) §2. |
+| Reading a null result on the close-in case as "hot Jupiter moons are impossible" | The naive tidal argument (all stable orbits inside corotation) assumes a *synchronised* planet. Young planets are not synchronised, and tau_spin-down goes as a^6 — the answer flips over a factor of 3 in orbital distance. See [`M8-RESULTS.md`](milestones/M8-RESULTS.md) §2. |
 | Defaulting a host's density to Jupiter's when computing a Roche limit | A 37 M_Jup object in 1.2 R_Jup is ~27 g/cm^3, not 1.3. The wrong default returns 3.1 R_host against the paper's 8.4 — a plausible-looking number, no error raised. Densities are now computed from mass and radius and pinned by a test. |
 | Weighting viper's per-order RVs by inverse **formal** variance | Not merely useless but **actively harmful**: 2620 m/s against 823 for a plain mean. Order 8 has the largest scatter (4130 m/s) and the smallest formal error (101 m/s), so it dominates. M2 knew the errors were untrustworthy; M9 measured the cost of using them anyway. |
 | Applying the paper's telluric-order rule to ESO's combined product | Keeping only orders where viper constrains the telluric abundance (12/14/15/16) makes the target **worse** (1142 vs 823 m/s) and weakens the control (63.8 → 46.7). Either our `atm0` errors do not mean what they appear to, or the rule needs the per-nodding data. |

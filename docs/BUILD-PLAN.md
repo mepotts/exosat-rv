@@ -2,7 +2,7 @@
 
 Desk/data/software-only: no telescope time, no proprietary data, no paid service. See
 [`SPEC.md`](SPEC.md) for the thesis, [`DATA-SOURCES.md`](DATA-SOURCES.md) for endpoints, and
-[`M0-RESULTS.md`](M0-RESULTS.md) for what M0 actually measured.
+[`M0-RESULTS.md`](milestones/M0-RESULTS.md) for what M0 actually measured.
 
 ---
 
@@ -59,13 +59,13 @@ especially, what failed.
 Is this reproducible, and how much reduction must be redone?
 **Result: 17 of 20 epochs already reduced; 3 need esorex.** Also disproved a published-looking
 Hill radius and exposed a provenance problem across the whole config. See
-[`M0-RESULTS.md`](M0-RESULTS.md).
+[`M0-RESULTS.md`](milestones/M0-RESULTS.md).
 
 ### M1 — Spectra in hand ✅
 **Track A — read the source: DONE.** `pypdf` extracted the PDF that defeated M0's fetch
 (27 pages, no poppler/WSL needed). Every config field is now `[v1]` or `[TAP]`; the `[SUMM]`
 tier is eliminated. **Two claims M0 published were retracted** — see
-[`M1-RESULTS.md`](M1-RESULTS.md) §1.
+[`M1-RESULTS.md`](milestones/M1-RESULTS.md) §1.
 
 **Track B — open a product: DONE, and it passes.** `exosat-rv probe` (after ESO's outage
 lifted) shows the products are **per-order extractions**: 7 orders x 3 detectors x 2048
@@ -106,14 +106,14 @@ first epoch and may offer alias-breaking leverage, at the cost of a cross-settin
 The preprint publishes its full RV table, so the **inference** is testable independently of
 the extraction M2 failed at. Fitting it with a different code reproduces the paper's period
 choice (88 d over 14/70/115), its secondary amplitude (114 vs 113.92 m/s), and the direction
-of both model comparisons. `exosat-rv orbits`; see [`M6-RESULTS.md`](M6-RESULTS.md).
+of both model comparisons. `exosat-rv orbits`; see [`M6-RESULTS.md`](milestones/M6-RESULTS.md).
 Uses BIC/2 as a Δlog Z proxy rather than nested sampling — labelled as an approximation, and
 the reason my evidence differences run smaller than theirs.
 
 ### M5 — Analogue target list ✅ *(list built; application awaits M2)*
 Built **archive-first**, because a catalogue-first list cannot contain CD-35 2722 B at all.
 CD-35 2722 B being rediscovered is the control, and it passes. See
-[`M5-RESULTS.md`](M5-RESULTS.md).
+[`M5-RESULTS.md`](milestones/M5-RESULTS.md).
 
 **Two targets survive the epoch-cadence test**, which frame counts badly mislead on
 (beta Pic b's 753 frames are 6 nights):
@@ -133,7 +133,7 @@ paper that **proposed** the method (Vanderburg et al. 2018) and **two prior null
 noticed**. There is now a `papers/` archive and `scripts/fetch_paper.py`. Three attribution
 errors in SPEC/M5 corrected. `exosat-rv survey` scores 38 imaged companions on a four-way
 conjunction; **eta Tel B is confirmed best by two rankings sharing no assumptions**, and
-**no target reaches Galilean-class satellites**. See [`M7-RESULTS.md`](M7-RESULTS.md).
+**no target reaches Galilean-class satellites**. See [`M7-RESULTS.md`](milestones/M7-RESULTS.md).
 
 ### M8 — Young close-in giants ✅ *(a spur, not on the reproduction path)*
 Whether the method reaches satellites of "hot" young planets. Signal is easy (an Earth-mass
@@ -141,13 +141,13 @@ moon of a 1 M_Jup planet gives K ~ 71 m/s); **survival is the constraint**, deci
 planet's spin, and observability needs cross-correlation rather than a slit. 3–8 real
 targets clear both cuts depending on tidal Q. `exosat-rv closein`.
 **Labelled a spur deliberately** — it is not ESO archive data, not CRIRES+, and reproduces
-nothing. See [`M8-RESULTS.md`](M8-RESULTS.md).
+nothing. See [`M8-RESULTS.md`](milestones/M8-RESULTS.md).
 
 ### M9 — Order screening ✅ *(hypothesis falsified)*
 Can per-order screening close the extraction gap? **No — 6%** (823 → 776 m/s). The
 combination stage already works; the shortfall is entirely per-order. Also measured that the
 nodding frames are a **10%** lever, quantified in the authors' own Fig. 4 — so the plan had
-ranked a 10% fix first. `exosat-rv orders`. See [`M9-RESULTS.md`](M9-RESULTS.md).
+ranked a 10% fix first. `exosat-rv orders`. See [`M9-RESULTS.md`](milestones/M9-RESULTS.md).
 
 ### M10 — The astrometric route ✅ *(inventory only; kill-check OPEN)*
 An independent path to the goal that does not need the RV gap closed. **beta Pic b has 28
@@ -155,13 +155,13 @@ public reduced VLTI/GRAVITY nights over 2987 days** — 1.6× the epochs over 6.
 of the dataset the published detection rests on. `exosat-rv gravity`.
 **This is the M0-equivalent, not the M1-equivalent**: whether those visibility products
 carry the dual-field differential phase astrometry needs is unverified. See
-[`M10-RESULTS.md`](M10-RESULTS.md) §5.
+[`M10-RESULTS.md`](milestones/M10-RESULTS.md) §5.
 
 ### M11 — The template, rebuilt the published way ✅ *(fails; suppresses signal)*
 Köhler et al. 2025 §2.2's recipe, two iterations, `-tpl_wave tell`. Target improved
 (776 → 620 m/s); **control collapsed** — recovered amplitude on GJ 229 B's known binary fell
 to **41% of correct after one iteration**. Self-templating absorbs the signal.
-**Net movement on the reproduction: none.** See [`M11-RESULTS.md`](M11-RESULTS.md).
+**Net movement on the reproduction: none.** See [`M11-RESULTS.md`](milestones/M11-RESULTS.md).
 
 ### M12 — Verify the ADP→cr2res segment mapping ⬜ *(next; leading suspect)*
 M2 verified the conversion is *lossless* (max difference 0), which proves the numbers

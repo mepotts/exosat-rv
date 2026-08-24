@@ -48,9 +48,9 @@ this is the initial version submitted to them before peer review. Please see the
 version published in Nature ... before reaching specific conclusions about this work."*
 
 The accepted version is public and unpaywalled — ESO hosts it with the press release.
-Archived here as [`papers/pdf/hoy2026_nature_published.pdf`](papers/pdf/hoy2026_nature_published.pdf)
+Archived here as [`papers/pdf/hoy2026_nature_published.pdf`](../../papers/pdf/hoy2026_nature_published.pdf)
 (35 pages, against the preprint's 27) and
-[`papers/text/hoy2026_nature_published.txt`](papers/text/hoy2026_nature_published.txt).
+[`papers/text/hoy2026_nature_published.txt`](../../papers/text/hoy2026_nature_published.txt).
 
 | | arXiv v1 (used by M0–M11) | **Nature (published)** |
 |---|---:|---:|
@@ -189,7 +189,7 @@ at 6% and the published Fig. 4 puts the nodding frames at 4.9%.
 
 ## 5. The template is not telluric-free, and its tellurics move with the fitted RV
 
-[`docs/viper-runbook.md`](docs/viper-runbook.md) §4 builds the template by copying an
+[`docs/viper-runbook.md`](../viper-runbook.md) §4 builds the template by copying an
 observation and multiplying its wavelengths by 10. Confirmed: `cd35_2722B_tpl.fits` carries
 `ESO PRO CATG = OBS_NODDING_EXTRACTC_IDP` — **it is an ADP science spectrum, telluric lines
 and all.**

@@ -32,7 +32,7 @@ published Nature paper, which is exactly what the CD-35 2722 B second-satellite
 contradiction is. Free to submit; the original authors are shown the submission
 and respond. Etiquette (and the journal) expect prior correspondence with the
 authors — the drafted query letter in
-[`docs/author-query-draft.md`](docs/author-query-draft.md) is
+[`paper/author-query-draft.md`](paper/author-query-draft.md) is
 step one of that path, not just politeness.
 
 **Mainstream journals** (AJ/ApJ, A&A, MNRAS, PASP) — all accept "Independent
@@ -121,7 +121,7 @@ discipline existed. Template statement:
 
 The disclosure is split into two artifacts so the manuscript stays lean: a
 condensed **"AI contribution and responsibility statement"** in the paper itself
-([`docs/paper/draft.template.html`](docs/paper/draft.template.html)),
+([`docs/paper/draft.template.html`](paper/draft.template.html)),
 and the full stage-by-stage **[AI-CHECKLIST.md](AI-CHECKLIST.md)** it links to —
 involvement levels 0–4 per research stage with evidence pointers into the
 repository, modeled on the Agents4Science 2025 mandatory checklists. No

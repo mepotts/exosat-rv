@@ -110,6 +110,6 @@ set the research questions, verified the agents' claims, and takes sole responsi
 for all content. This follows the disclosure practice already established for the
 project's scientific manuscript: see the AI contribution and responsibility statement
 in `docs/paper/draft.template.html` and the stage-by-stage checklist at the repository
-root, `AI-CHECKLIST.md`.
+`docs/AI-CHECKLIST.md`.
 
 ## References

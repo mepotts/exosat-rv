@@ -49,7 +49,7 @@ These are not style preferences. Each was paid for.
 4. **Every adopted pipeline change must pass injection recovery.** Internal fit statistics
    have each been, at least once, anti-correlated with truth. The paper's own precision
    statistic is invariant to a common-mode signal by construction.
-5. **Check a milestone number is free before writing to it.** `ls M*-RESULTS.md` and
+5. **Check a milestone number is free before writing to it.** `ls docs/milestones/M*-RESULTS.md` and
    `git log --oneline -15`. Writing over a committed milestone has happened. `git status`
    showing `M` on a file you believe you created means something already lived there.
 6. **Never re-type a number that a script can print.** An audit found 34 conflicting values

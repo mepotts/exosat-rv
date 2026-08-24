@@ -100,7 +100,7 @@ separation are**:
   VLTI/GRAVITY astrometric residuals around **HD 206893 B** consistent with a ~0.4 M_Jup
   companion at P ~ 0.76 yr, and flag them as possibly systematic. Two tentative candidates
   around substellar companions, by two techniques, inside a year. Any framing of Hoy et al.
-  as a lone result is out of date. See [`M7-RESULTS.md`](M7-RESULTS.md) §6b.
+  as a lone result is out of date. See [`M7-RESULTS.md`](milestones/M7-RESULTS.md) §6b.
 - **Reproductions rarely overturn detections, and should not be framed as trying to.** The
   169 d signal has a fitted amplitude of 246.45 m/s against ~31 m/s per-epoch errors. The
   realistic outcomes are: it reproduces (most likely and worth recording), or the second

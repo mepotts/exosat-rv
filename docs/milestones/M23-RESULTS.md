@@ -29,7 +29,7 @@ PDS 70 nine-night upgrade. What do they yield?
 The engineering deliverables held: classify.py routes staring-mode science to
 `cr2res_obs_staring`, reduce_one.sh collapses each night to one deep spectrum, and
 the calSelector-empty trap (associations missing for 1200 s darks) is bypassed by a
-direct per-night CALIB query ([`m19_urls_from_raw.py`](scripts/cr2res/m19_urls_from_raw.py)
+direct per-night CALIB query ([`m19_urls_from_raw.py`](../../scripts/cr2res/m19_urls_from_raw.py)
 fallback). Two data quirks documented: staring extractions carry a phantom empty
 order 01 on detector 1 (stripped at staging), and template iteration 1 crashes on a
 degenerate chunk (run on tpl0; gates decide sufficiency).
@@ -57,7 +57,7 @@ coordinates).
 
 ## 3. CT Cha B, screened
 
-The injection-based order screen ([`ctcha_screen.py`](scripts/injection/ctcha_screen.py),
+The injection-based order screen ([`ctcha_screen.py`](../../scripts/injection/ctcha_screen.py),
 the sanctioned M13 drop rule: survive BOTH arms within 15 points of unity at ≤25
 scatter) keeps orders 3,4,5,8,11,12,13. On the screened set: +46 ± 84, −1511 ± 463,
 +159 ± 213 m/s — the middle epoch is 3.3σ deviant *after* screening. Recorded as a
@@ -73,7 +73,7 @@ datalink host) grew PDS 70 to 9 nights / 483 d. The rebuilt series looked excell
 systematically negative per-order recoveries: the 14-file template converged to a
 solution with no stellar lever, and a series that measures nothing is always quiet.
 **Rejected on the gate; the validated six-night state re-staged and reproduced
-bit-for-bit** ([`m21_restore.sh`](scripts/injection/m21_restore.sh)). Two lessons
+bit-for-bit** ([`m21_restore.sh`](../../scripts/injection/m21_restore.sh)). Two lessons
 banked: the injection gate is the only thing standing between this pipeline and
 publishing flat noise as a limit — it caught exactly that, twice in one project —
 and the generic runner should gate **every** template iteration, not just the last

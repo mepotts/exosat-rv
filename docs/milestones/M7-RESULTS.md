@@ -9,7 +9,7 @@ this project had not read it.** Hoy et al. cite **Lazzoni et al. 2022**,
 satellites around 38 directly imaged companions and computes RV detection probabilities for
 every one. It is the framework M5 was groping toward from the archive side.
 
-Run with `exosat-rv survey`; machine-readable form in [`data/m7-survey.json`](data/m7-survey.json).
+Run with `exosat-rv survey`; machine-readable form in [`data/m7-survey.json`](../../data/m7-survey.json).
 
 ---
 
@@ -28,7 +28,7 @@ list was never extracted, so the following went unnoticed:
 | **[13] Horstman et al. 2024** | prior null on GQ Lup B | cited, **misattributed** |
 
 There is now a `papers/` archive with the PDFs and extracted text, and
-[`scripts/fetch_paper.py`](scripts/fetch_paper.py) to add to it.
+[`scripts/fetch_paper.py`](../../scripts/fetch_paper.py) to add to it.
 
 ### Three corrections to SPEC, all from the reference list alone
 

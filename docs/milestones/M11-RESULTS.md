@@ -17,7 +17,7 @@ seen from the side where the truth is unknown.
 
 ## 1. What was actually run
 
-viper under WSL, per [`docs/viper-runbook.md`](docs/viper-runbook.md), on the same 18
+viper under WSL, per [`docs/viper-runbook.md`](../viper-runbook.md), on the same 18
 archive nights. Two changes from M2's configuration, both taken from the published recipe:
 
 1. **`-tpl_wave tell`** instead of the default `initial`. viper's default sets `bervt = 0`

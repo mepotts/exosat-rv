@@ -1,8 +1,8 @@
 # M32 — the η Tel B note, and what preparing it for outside eyes turned up
 
 > **Status: the RNAAS note is prepared, not submitted.** Submission is Matthew's call
-> (`LESSONS.md` §6). The draft is [`docs/paper/rnaas-etatel-draft.md`](docs/paper/rnaas-etatel-draft.md);
-> every number in it is printed by [`scripts/m32_etatel_numbers.py`](scripts/m32_etatel_numbers.py).
+> (`LESSONS.md` §6). The draft is [`docs/paper/rnaas-etatel-draft.md`](../paper/rnaas-etatel-draft.md);
+> every number in it is printed by [`scripts/m32_etatel_numbers.py`](../../scripts/m32_etatel_numbers.py).
 
 The task was narrow: package the M15 η Tel B first-limit result as a Research Note. Writing
 for readers outside the repo forced every input to be sourced, and four of them turned out to
@@ -291,7 +291,7 @@ rather than *added*, and it was restored from `HEAD` intact.
 
 **The lesson, now LESSONS §5d:** milestone numbers are allocated in more than one thread, and
 they are not sequential in time — M29 is still gaining sections while M30 and M31 are open.
-Check `ls M*-RESULTS.md` and `git log --oneline -15` before claiming a number, and read
+Check `ls docs/milestones/M*-RESULTS.md` and `git log --oneline -15` before claiming a number, and read
 `git status` letters before committing: `M` on a file you believe you created is the signal
 that something already lived there.
 

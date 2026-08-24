@@ -93,7 +93,7 @@ HD 206893 B 234 / 22 / 2153 d, AF Lep b 34 / 6 / 711 d.
 
 **Whether those visibility products carry the dual-field differential phase that companion
 astrometry is extracted from is UNVERIFIED.** Existence is not usability — M1 learned that
-the hard way for CRIRES+. See [`M10-RESULTS.md`](M10-RESULTS.md) §5.
+the hard way for CRIRES+. See [`M10-RESULTS.md`](milestones/M10-RESULTS.md) §5.
 
 ## NASA Exoplanet Archive — young close-in planets (M8)
 

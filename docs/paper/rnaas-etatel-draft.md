@@ -178,7 +178,7 @@ ESO programmes 111.24M0, 113.268Y and 115.287U.
 - Ruffio, J.-B. et al. 2023, *AJ*, **165**, 113
 - Vanderburg, A. & Rodriguez, J. E. 2021, *ApJ*, **922**, L2
 
-*(Verification status per `docs/REFERENCE-AUDIT.md`. Hoy, Köhler and Chai are checked against
+*(Verification status per `../audits/REFERENCE-AUDIT.md`. Hoy, Köhler and Chai are checked against
 full copies archived in `papers/`. Dorn is corroborated via Hoy et al.'s reference [11];
 Neuhäuser against the MNRAS record — both photometry and mass range quoted verbatim from it.
 Lazzoni et al. 2020 is cited via Chai et al. 2024 §5, which attributes the 47 (+5/−6) M_Jup

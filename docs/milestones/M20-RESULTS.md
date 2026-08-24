@@ -25,10 +25,10 @@ What do they actually yield?
 Data: ESO archive products under `CD-40 8434` (PDS 70), `HIP65426b`/`HD 116434`
 (HIP 65426), and raw K2166 nights under `BET PIC` (programme 114.27DX; header-verified
 as the planet — DIT 120 s would saturate the star thousands of times over).
-All runs use the generic chain ([`m2x_run_target.sh`](scripts/injection/m2x_run_target.sh)):
+All runs use the generic chain ([`m2x_run_target.sh`](../../scripts/injection/m2x_run_target.sh)):
 per-target template ladder with `-kapsig 3` creation, `-oversampling 2`, injection
 arms at K = 1530 and an amplitude-matched K, small-n scoring by per-epoch ratio
-([`m17_score.py`](scripts/injection/m17_score.py)). No published RVs exist for any of
+([`m17_score.py`](../../scripts/injection/m17_score.py)). No published RVs exist for any of
 these series; the injection harness carries all validation. Two more `filter_path`
 lies were caught by header checks (the "K" nights of beta Pic b that are really
 M4368; the census's own row-cap truncation) — the count stands at six, and the rule

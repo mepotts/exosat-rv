@@ -10,7 +10,7 @@ the combined scatter from **823 m/s to 776 m/s**, against the 31.44 m/s needed. 
 screen that *looked* best — a 1.6× improvement on the science target — turned out to work by
 deleting the signal.
 
-Run with `exosat-rv orders`; machine-readable form in [`data/m9-orders.json`](data/m9-orders.json).
+Run with `exosat-rv orders`; machine-readable form in [`data/m9-orders.json`](../../data/m9-orders.json).
 
 ---
 

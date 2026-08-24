@@ -26,28 +26,28 @@ night-to-night per-order drift floor (147–218 m/s vs the paper's 57.68) be clo
 
 ## 0. What ran, and how to re-run it
 
-Warm-up (Windows venv): [`scripts/nested_orbits.py`](scripts/nested_orbits.py) — dynesty
+Warm-up (Windows venv): [`scripts/nested_orbits.py`](../../scripts/nested_orbits.py) — dynesty
 3.1.0, results in `data/m14-nested-{fixP,freeP,eccP}.json`.
 
 Extraction (WSL `~/viper-src`, as M13):
 
 | artifact | what it is |
 |---|---|
-| [`m14_nod5.sh`](scripts/injection/m14_nod5.sh) | M13 recipe on the 5 from-raw nights' per-nodding A/B frames |
-| [`m14_batch1.sh`](scripts/injection/m14_batch1.sh) | oversampling + IP-model sweep on the archive route |
-| [`m14_score.py`](scripts/injection/m14_score.py) | scorer: per-order centering, robust combines, A/B binning, paired reference |
-| [`m14_drift.py`](scripts/injection/m14_drift.py) | lever 4: drift model on signal-free cross-order differences |
-| [`night_map.py`](scripts/cr2res/night_map.py) / [`reduce_one.sh`](scripts/cr2res/reduce_one.sh) / [`m14_allnights.sh`](scripts/cr2res/m14_allnights.sh) | from-raw pipeline for the remaining 13 archive epochs |
-| [`inject_m14.sh`](scripts/injection/inject_m14.sh) / [`inject_score_m14.py`](scripts/injection/inject_score_m14.py) / [`scale_plan.py`](scripts/injection/scale_plan.py) | injection arms with arbitrary plan/data-dir; median-combine recovery |
+| [`m14_nod5.sh`](../../scripts/injection/m14_nod5.sh) | M13 recipe on the 5 from-raw nights' per-nodding A/B frames |
+| [`m14_batch1.sh`](../../scripts/injection/m14_batch1.sh) | oversampling + IP-model sweep on the archive route |
+| [`m14_score.py`](../../scripts/injection/m14_score.py) | scorer: per-order centering, robust combines, A/B binning, paired reference |
+| [`m14_drift.py`](../../scripts/injection/m14_drift.py) | lever 4: drift model on signal-free cross-order differences |
+| [`night_map.py`](../../scripts/cr2res/night_map.py) / [`reduce_one.sh`](../../scripts/cr2res/reduce_one.sh) / [`m14_allnights.sh`](../../scripts/cr2res/m14_allnights.sh) | from-raw pipeline for the remaining 13 archive epochs |
+| [`inject_m14.sh`](../../scripts/injection/inject_m14.sh) / [`inject_score_m14.py`](../../scripts/injection/inject_score_m14.py) / [`scale_plan.py`](../../scripts/injection/scale_plan.py) | injection arms with arbitrary plan/data-dir; median-combine recovery |
 
 Scoring truth unchanged: the published Nature table via
-[`vs_published.py`](scripts/injection/vs_published.py) (M12 §9b.4's rule).
+[`vs_published.py`](../../scripts/injection/vs_published.py) (M12 §9b.4's rule).
 
 ## 1. The second satellite's flip SURVIVES nested sampling
 
 M13 §5's caveat was that −0.51 was a BIC/2 proxy with periods fixed. dynesty
 (nlive=500, `rwalk`, two seeds each; likelihood identical to
-[`orbits.py`](src/exosat_rv/analysis/orbits.py): σ² = erv² + jitter²; priors symmetric
+[`orbits.py`](../../src/exosat_rv/analysis/orbits.py): σ² = erv² + jitter²; priors symmetric
 across models — offset U(−600,600), jitter log-U(0.1,300), K U(0,1000), e U(0,0.85),
 ω U(0,2π), tp U(0,P); period windows P₁ U(150,200), P₂ U(75,100) where free):
 
@@ -104,7 +104,7 @@ confirming M13 §6.
 order's cross-order-difference series (signal-free by construction: the Doppler signal
 is common-mode across orders) against BERV/time and subtracting reduces internal
 per-order scatter (1241 → 722–876 m/s) but *worsens* rms_pub (147 → 158–186 median;
-165 → 191–247 clip) ([`m14_drift.py`](scripts/injection/m14_drift.py)). Pulling orders
+165 → 191–247 clip) ([`m14_drift.py`](../../scripts/injection/m14_drift.py)). Pulling orders
 toward the noisy common mode correlates their errors and destroys precisely the
 diversity the median averages over. Conclusion: the night-to-night per-order drift is
 not a smooth function of BERV or time per order — it behaves like independent
@@ -137,7 +137,7 @@ per-frame extraction avoids. n=5, so treated as a go signal, not a result.
 
 ⏳ **The full test is running**: all 13 remaining archive epochs are being fetched raw
 (~1.5 GB/night) and reduced through the M12 cascade
-([`m14_allnights.sh`](scripts/cr2res/m14_allnights.sh)), giving a 36-frame per-nodding
+([`m14_allnights.sh`](../../scripts/cr2res/m14_allnights.sh)), giving a 36-frame per-nodding
 series over 18 nights. Then: M13-recipe + `-oversampling 2` on all frames, bin A/B,
 score, injection-validate the whole pipeline (K=1530 and amplitude-matched K≈306 arms,
 per-frame plans), and re-run the blind period search with the BERV covariate.
@@ -166,7 +166,7 @@ disagreeing with the external one (M12 §9b.4's rule keeps earning its place).
 
 ## 5. Lever 3 lands it: the second template iteration passes its guard and closes the floor
 
-M13tpl was iteration 1. Iteration 2 ([`m14_tpl2.sh`](scripts/injection/m14_tpl2.sh):
+M13tpl was iteration 1. Iteration 2 ([`m14_tpl2.sh`](../../scripts/injection/m14_tpl2.sh):
 `-createtpl` from M13tpl over all 21 segments) **crashed with creation flags identical
 to M13tpl's** (scipy curve_fit maxfev on 7 segments); adding `-kapsig 3` to the
 creation run stabilises it (reported: iteration count is then not the only changed
@@ -190,7 +190,7 @@ orders being noise the median had to vote out).
 
 ## 6. The blind search now finds the satellite — and survives the BERV covariate
 
-[`blind_search.py`](scripts/injection/blind_search.py) (mean combine added), archive
+[`blind_search.py`](../../scripts/injection/blind_search.py) (mean combine added), archive
 route, T2 series. The search now carries an **internal epoch screen** — drop epochs
 whose across-order spread exceeds 3× the median spread, computed from our data alone.
 It selects exactly one epoch: BJD 2460604.821 at **7.3× the median (6670 vs 914 m/s;
@@ -243,7 +243,7 @@ slope (mean 252±115) and are flagged; the transmitting core is linear.
 
 All 13 remaining archive epochs were fetched raw (~1.5 GB/night, zero failed
 downloads) and reduced through the M12 cr2res cascade
-([`m14_allnights.sh`](scripts/cr2res/m14_allnights.sh)); with M12 §9b's five nights
+([`m14_allnights.sh`](../../scripts/cr2res/m14_allnights.sh)); with M12 §9b's five nights
 that makes **36 per-nodding frames over all 18 archive epochs**. The paper's favoured
 recipe end to end — per-nodding extraction, 2-iteration template, `H_C`, `-kapsig 3`,
 `-oversampling 2`, bin A/B per night (`M14_NODT2`):
@@ -313,7 +313,7 @@ template iteration 2 (→85, detection becomes BERV-robust) → per-nodding + bi
 
 ## 10. For the next agent
 
-1. **Update the author query** ([docs/author-query-draft.md](docs/author-query-draft.md))
+1. **Update the author query** ([docs/author-query-draft.md](../paper/author-query-draft.md))
    with §1/§7's evidence integrals and §8's independent detection — it currently cites
    the BIC proxy.
 2. **M15 = eta Tel B** with the full validated recipe (per-nodding, 2-iteration

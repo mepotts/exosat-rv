@@ -8,10 +8,10 @@ Headline: **no published conclusion is retracted.** Two of the three new tests
 real defect was found — in the error bars on the second-satellite refutation, not in
 its sign. Six smaller issues are logged with their blast radius.
 
-New machinery, all committed: [`m28_nullcal.py`](scripts/injection/m28_nullcal.py),
-[`m28_limitcal.py`](scripts/injection/m28_limitcal.py),
-[`m28_jackknife.py`](scripts/injection/m28_jackknife.py),
-[`m28_contam.py`](scripts/injection/m28_contam.py).
+New machinery, all committed: [`m28_nullcal.py`](../../scripts/injection/m28_nullcal.py),
+[`m28_limitcal.py`](../../scripts/injection/m28_limitcal.py),
+[`m28_jackknife.py`](../../scripts/injection/m28_jackknife.py),
+[`m28_contam.py`](../../scripts/injection/m28_contam.py).
 
 ---
 
@@ -290,7 +290,7 @@ significant on its own terms**, before any argument about priors, and consistent
 their own word "tentative". We cannot test their sampler and do not claim to. The
 falsifiable version is a question they can answer in an afternoon: how many independent
 runs stand behind +2.62, and what is the scatter among them? That is now the lead ask in
-`docs/author-query-draft.md`.
+`../paper/author-query-draft.md`.
 
 Drafted into the manuscript as Table 3 (rebuilt with mean ± s.e. and run-to-run σ as
 separate columns) and a new §5.1.

@@ -20,7 +20,7 @@ for an entire milestone.
 ## 1. The data
 
 20 RVs, extracted from the arXiv PDF with `pypdf`, stored with provenance at
-[`data/published/hoy2026_table2_rvs.csv`](data/published/hoy2026_table2_rvs.csv).
+[`data/published/hoy2026_table2_rvs.csv`](../../data/published/hoy2026_table2_rvs.csv).
 
 The extraction verifies itself: 20 rows, baseline 464.9 d, and the mean of the error column
 is **31.45 m/s** against the **31.44 m/s** the paper states in its Methods for its favoured
@@ -122,7 +122,7 @@ M3 claimed.
 
 M3's verdict — "neither confirmed nor contradicted" — was correct about the extraction and
 **wrong as a statement about the paper's conclusion**, which was never tested there. Both
-documents now carry a pointer here. The mistake is indexed in [`HANDOFF.md`](HANDOFF.md) §1.
+documents now carry a pointer here. The mistake is indexed in [`HANDOFF.md`](../HANDOFF.md) §1.
 
 The lesson generalises past this project: **before concluding that a result cannot be
 reproduced, check whether the authors published the intermediate data.** A great many papers

@@ -22,13 +22,13 @@ satellite would have been seen with ~70% probability.
 
 | artifact | what it is |
 |---|---|
-| [`m15_inventory.py`](scripts/m15_inventory.py) | ESO TAP inventory + the phase–BERV geometry check (the M13 §4b design rule) |
-| [`m15_fetch_products.py`](scripts/m15_fetch_products.py) / [`m15_convert.py`](scripts/m15_convert.py) | product fetch + ADP→cr2res converter, rebuilt from the surviving CD-35 format, M10-style verification per file |
-| [`m15_stage_tpl.sh`](scripts/m15_stage_tpl.sh) | template ladder (flat → iter1 → iter2, `-kapsig 3` creation) + RV runs |
-| [`m15_inject.sh`](scripts/injection/m15_inject.sh) / [`m15_diag.py`](scripts/injection/m15_diag.py) | eta Tel injection arm; informational-only internals reader |
-| [`m15_limit.py`](scripts/injection/m15_limit.py) | end-to-end injected-series detection + the sensitivity curve → [`data/m15-limit.json`](data/m15-limit.json) |
-| [`m15_allnights.sh`](scripts/cr2res/m15_allnights.sh) / [`m15_nodall.sh`](scripts/injection/m15_nodall.sh) | per-epoch raw reduction + the armed per-nodding endgame |
-| [`data/m15-eta-tel-inventory.json`](data/m15-eta-tel-inventory.json) | nights, products, geometry |
+| [`m15_inventory.py`](../../scripts/m15_inventory.py) | ESO TAP inventory + the phase–BERV geometry check (the M13 §4b design rule) |
+| [`m15_fetch_products.py`](../../scripts/m15_fetch_products.py) / [`m15_convert.py`](../../scripts/m15_convert.py) | product fetch + ADP→cr2res converter, rebuilt from the surviving CD-35 format, M10-style verification per file |
+| [`m15_stage_tpl.sh`](../../scripts/m15_stage_tpl.sh) | template ladder (flat → iter1 → iter2, `-kapsig 3` creation) + RV runs |
+| [`m15_inject.sh`](../../scripts/injection/m15_inject.sh) / [`m15_diag.py`](../../scripts/injection/m15_diag.py) | eta Tel injection arm; informational-only internals reader |
+| [`m15_limit.py`](../../scripts/injection/m15_limit.py) | end-to-end injected-series detection + the sensitivity curve → [`data/m15-limit.json`](../../data/m15-limit.json) |
+| [`m15_allnights.sh`](../../scripts/cr2res/m15_allnights.sh) / [`m15_nodall.sh`](../../scripts/injection/m15_nodall.sh) | per-epoch raw reduction + the armed per-nodding endgame |
+| [`data/m15-eta-tel-inventory.json`](../../data/m15-eta-tel-inventory.json) | nights, products, geometry |
 
 Rules in force: no published RVs exist for this target, so **the injection harness
 carries the entire validation burden** (M9/M12: every internal metric has lied at
@@ -121,7 +121,7 @@ through the full pipeline); the same blind search that returned the null finds i
 **rank 1, P = 196–199 d, ΔBIC +15 to +19, in all three combines**.
 
 Transmission at ~100% with 12–23 m/s repeatability licenses a post-extraction
-sensitivity grid ([`m15_limit.py`](scripts/injection/m15_limit.py)): add
+sensitivity grid ([`m15_limit.py`](../../scripts/injection/m15_limit.py)): add
 K sin(2πt/P + φ) to the real screened series, demand ΔBIC ≥ 10 *and* rank 1 at the
 injected period, marginalize over 12 phases:
 

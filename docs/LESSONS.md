@@ -143,7 +143,7 @@ time**: M29 was still gaining sections while M30 was committed and M31 was open 
 uncommitted scripts and no results document. "The highest number I remember" is not the next
 free number.
 
-**Before claiming a number:** `ls M*-RESULTS.md` and `git log --oneline -15`.
+**Before claiming a number:** `ls docs/milestones/M*-RESULTS.md` and `git log --oneline -15`.
 **Before committing:** read the status letters. **`M` on a file you believe you just created
 means something already lived there.** `A` is a new file; `M` is an overwrite.
 
@@ -152,7 +152,7 @@ has to happen before the write, not after.
 
 ## 6. Human-gated actions (never automate)
 
-- The author email (`docs/author-query-draft.md`) is **sent by Matthew only**.
+- The author email (`paper/author-query-draft.md`) is **sent by Matthew only**.
 - HIP 65426 b's headline uses another team's active-programme data — publication priority is **Matthew's decision** (M20 §5) and gates the paper fold-in of M20–M24.
 - Never push/merge to main, never submit anywhere (journals, MPC) without explicit approval.
 
@@ -169,8 +169,8 @@ has to happen before the write, not after.
 | `docs/paper/draft.template.html` | The manuscript (generated, never hand-edited) + Figs 5–12 answering Hoy figure-for-figure |
 | `M28-RESULTS.md` | The audit: common-mode test (171 d exists nowhere else), permutation significance (p=5e-4), jackknife 17/17, eta Tel limit verified, slit-function contamination bound |
 | `M29-RESULTS.md` | YSES 1 b's 2022 night reduced then **rejected** by a pre-committed screen; the CRLF defect; the contrast axis derived, twice corrected, and finally replaced by **S = contrast/theta^2** (§§6-8) |
-| `docs/REFERENCE-AUDIT.md` | Every citation checked against source PDFs: 14 wrong across 60+ sites |
-| `docs/PROPERTY-AUDIT.md` | 268 object properties: 171 verified, 34 conflicting, 63 unsourced |
+| `audits/REFERENCE-AUDIT.md` | Every citation checked against source PDFs: 14 wrong across 60+ sites |
+| `audits/PROPERTY-AUDIT.md` | 268 object properties: 171 verified, 34 conflicting, 63 unsourced |
 | `~/.claude/.../memory/` | Cross-session index of all of the above |
 
 **Open front (M27):** proper HiRISE reduction → re-do the fiber tier → beta Pic b's

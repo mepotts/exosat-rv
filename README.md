@@ -1,6 +1,6 @@
 # exosat-rv
 
-> **New here, or handing this to an agent?** Start with [`ONBOARDING.md`](ONBOARDING.md) — environment, operating rules, the traps that cost a day each, and where every draft stands.
+> **New here, or handing this to an agent?** Start with [`ONBOARDING.md`](docs/ONBOARDING.md) — environment, operating rules, the traps that cost a day each, and where every draft stands.
 
 An independent raw-to-radial-velocity pipeline for **directly imaged companions**, and what
 it finds when pointed at the one system where a satellite has been reported.
@@ -33,28 +33,33 @@ and the matching `.html` is a rendered build product.
 search; [`data/published/`](data/published/) carries the transcribed reference table with
 provenance headers.
 
-Everything runs on a laptop against public archives. See [`SPEC.md`](SPEC.md) for the thesis,
-[`DATA-SOURCES.md`](DATA-SOURCES.md) for endpoints and their known incompletenesses, and
-[`BUILD-PLAN.md`](BUILD-PLAN.md) for the milestone plan.
+Everything runs on a laptop against public archives. See [`SPEC.md`](docs/SPEC.md) for the thesis,
+[`DATA-SOURCES.md`](docs/DATA-SOURCES.md) for endpoints and their known incompletenesses, and
+[`BUILD-PLAN.md`](docs/BUILD-PLAN.md) for the milestone plan.
 
-**Current state: M0–M34.** Start at [`LESSONS.md`](LESSONS.md) — the
-consolidated trap catalog and the map of which milestone document owns which conclusion —
-then [`HANDOFF.md`](HANDOFF.md) and the roster ledger
-[`docs/target-queue.md`](docs/target-queue.md). Milestone documents:
-[`M0`](M0-RESULTS.md) archive · [`M1`](M1-RESULTS.md) the source, and two retractions ·
-[`M2`](M2-RESULTS.md) RV extraction · [`M3`](M3-RESULTS.md) the positive control ·
-[`M4`](M4-RESULTS.md) aliases · [`M5`](M5-RESULTS.md) analogues ·
-[`M6`](M6-RESULTS.md) reproduction from the published table ·
-[`M7`](M7-RESULTS.md) the literature, and three attribution corrections ·
-[`M8`](M8-RESULTS.md) young close-in giants · [`M9`](M9-RESULTS.md) order screening
-falsified, and a trap the control caught · [`M10`](M10-RESULTS.md) the astrometric route ·
-[`M11`](M11-RESULTS.md) self-templating suppresses the signal ·
-[`M12`](M12-RESULTS.md) injection discipline (shift the template, never the observation) ·
-[`M13`](M13-RESULTS.md) the paper's own eleven orders, and the evidence flip ·
-[`M14`](M14-RESULTS.md) **the floor closed and the flip confirmed** ·
-[`M15`](M15-RESULTS.md) **eta Tel B's first RV limit** · [`M17`](M17-RESULTS.md) the
-K-band tier · [`M20`](M20-RESULTS.md) the census harvest and the contrast wall ·
-[`M23`](M23-RESULTS.md) the roster closed.
+**Current state: M0–M34.** Start at [`docs/LESSONS.md`](docs/LESSONS.md) — the consolidated
+trap catalog and the map of which milestone document owns which conclusion — then
+[`docs/HANDOFF.md`](docs/HANDOFF.md) and the roster ledger
+[`docs/target-queue.md`](docs/target-queue.md). The twenty-five milestone records are indexed,
+each with the conclusion it owns, in [`docs/milestones/`](docs/milestones/README.md). The
+load-bearing ones are [`M14`](docs/milestones/M14-RESULTS.md) — the drift floor closed and the
+evidence flip confirmed — [`M15`](docs/milestones/M15-RESULTS.md), η Tel B's first RV limit, and
+[`M34`](docs/milestones/M34-RESULTS.md), which asks whether the detection is an artefact of
+tuning the extraction on the published answer.
+
+## Where things are
+
+```
+docs/            the working record -- start at docs/README.md
+  milestones/    one document per milestone, each owning a conclusion
+  audits/        every citation, and every borrowed number, checked against its source
+  paper/         manuscripts: .md / .template.html are source, .html are build products
+src/exosat_rv/   the package -- archive readers, order maps, feasibility model, orbit fits
+scripts/         drivers -- cr2res/ reduces raw frames, injection/ is the harness + blind search
+tests/           125 tests, exercised in CI on Python 3.11 and 3.12
+data/            published reference tables, exported figures, per-milestone JSON
+papers/          the literature this project cites (text committed, PDFs not redistributable)
+```
 
 ## The verdict
 
@@ -131,7 +136,7 @@ hand-edited.
 companion's orbit is highly eccentric (e > 0.9, a ~ 222 au, not a circular 62.6 au), and
 recomputed properly the paper's value is **correct**. M0 also misreported what the paper's
 Δlog Z = 2.6 compares. Both retractions, with working, are in
-[`M1-RESULTS.md`](M1-RESULTS.md) §1 and indexed in [`HANDOFF.md`](HANDOFF.md) §1.
+[`M1-RESULTS.md`](docs/milestones/M1-RESULTS.md) §1 and indexed in [`HANDOFF.md`](docs/HANDOFF.md) §1.
 
 ---
 
@@ -140,7 +145,7 @@ recomputed properly the paper's value is **correct**. M0 also misreported what t
 > ~1850 m/s floor, M9/M11's 776 m/s) was closed by M13–M14, and M10's astrometric route
 > was shelved once the RV route worked. They stay because the dead ends are the method:
 > each one was closed by a control or an injection gate, and
-> [`LESSONS.md`](LESSONS.md) §7 maps every conclusion to the milestone that owns it.
+> [`LESSONS.md`](docs/LESSONS.md) §7 maps every conclusion to the milestone that owns it.
 
 ## M0 in one table
 
@@ -203,7 +208,7 @@ paper's choice, by an argument stronger than the Δlog Z = 2.6 it quotes.
 
 **M1 — two of M0's published claims were wrong**, found by reading the actual PDF. M0 had
 "disproved" a value in the paper that turned out to be correct. Both retractions are indexed
-in [`HANDOFF.md`](HANDOFF.md) §1.
+in [`HANDOFF.md`](docs/HANDOFF.md) §1.
 
 **M2 — a converter that unlocks the archive.** ESO's products can drive `viper` after a
 verified-lossless reshape into cr2res layout, plus four undocumented configuration facts
@@ -236,7 +241,7 @@ probabilities for each. The method itself was proposed by
 nulls preceded this detection**, not the one SPEC named (under the wrong author). There is
 now a `papers/` archive and [`scripts/fetch_paper.py`](scripts/fetch_paper.py) to extend it.
 
-**[`M7`](M7-RESULTS.md) — the feasibility framework.** Four conditions, not two: wobble,
+**[`M7`](docs/milestones/M7-RESULTS.md) — the feasibility framework.** Four conditions, not two: wobble,
 flux, dynamical allowance, and *survival*. Two results worth stating:
 
 - **eta Tel B is the best analogue on two independent criteria.** M5 ranked it #1 on archive
@@ -247,7 +252,7 @@ flux, dynamical allowance, and *survival*. Two results worth stating:
   from a threshold recalibrated on the *achieved* 31.44 m/s rather than their forecast, which
   the real instrument beat by 1.6x.
 
-**[`M8`](M8-RESULTS.md) — young close-in giants.** Pushing the M_host^(-2/3) scaling to
+**[`M8`](docs/milestones/M8-RESULTS.md) — young close-in giants.** Pushing the M_host^(-2/3) scaling to
 hot Jupiters: an Earth-mass moon there gives K ~ 71 m/s, and a 10 M_Earth one ~708 m/s,
 *larger* than the 246 m/s actually detected. The signal is easy; survival is the problem.
 
@@ -346,12 +351,12 @@ technique and best-in-class for another.)
 ⚠️ **A kill-check is open.** This is the M0-equivalent, not the M1-equivalent: the data is
 public and reduced, but whether those visibility products carry the dual-field differential
 phase astrometry needs is unverified. M1's precedent applies — the first automated verdict on
-ESO's CRIRES+ products was wrong. See [`M10-RESULTS.md`](M10-RESULTS.md) §5.
+ESO's CRIRES+ products was wrong. See [`M10-RESULTS.md`](docs/milestones/M10-RESULTS.md) §5.
 
 ## Continuing this work
 
-Reading order: [`LESSONS.md`](LESSONS.md) (every trap this project paid for, so you don't
-pay twice) → [`HANDOFF.md`](HANDOFF.md) (state and next actions) →
+Reading order: [`LESSONS.md`](docs/LESSONS.md) (every trap this project paid for, so you don't
+pay twice) → [`HANDOFF.md`](docs/HANDOFF.md) (state and next actions) →
 [`docs/target-queue.md`](docs/target-queue.md) (the per-system roster, embargo calendar,
 and the M27/HiRISE front) → the latest `M*-RESULTS.md`.
 

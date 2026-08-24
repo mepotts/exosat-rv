@@ -6,7 +6,7 @@ the same method on?
 **Answer: two, and one of them comes with a built-in positive control.** The pool is far
 smaller than frame counts suggest, because what matters is not frames but *nights spread
 over time*. Reproduce with `exosat-rv targets`; machine-readable form in
-[`data/m5-targets.json`](data/m5-targets.json).
+[`data/m5-targets.json`](../../data/m5-targets.json).
 
 ---
 

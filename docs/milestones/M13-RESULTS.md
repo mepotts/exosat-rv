@@ -33,19 +33,19 @@ table scatters about its orbit fit (§6).
 ## 0. What ran, and how to re-run it
 
 All extraction happens in WSL `~/viper-src` (viper + cr2res products from M12 §9b).
-Scripts live in [`scripts/injection/`](scripts/injection/):
+Scripts live in [`scripts/injection/`](../../scripts/injection/):
 
 | artifact | what it is |
 |---|---|
-| [`m13_batch.sh`](scripts/injection/m13_batch.sh) | builds the M13 template and all ten sweep runs |
+| [`m13_batch.sh`](../../scripts/injection/m13_batch.sh) | builds the M13 template and all ten sweep runs |
 | `M13tpl_tpl.fits` (WSL) | telluric-free template, all 21 segments, one `-createtpl -nocell -tpl_wave tell` iteration over all frames |
 | `M13_A..J.rvo.dat` (WSL) | the sweep outputs |
-| [`vs_published.py`](scripts/injection/vs_published.py) | the honest scorer: per-run rms vs the published Nature RVs |
-| [`median_test.py`](scripts/injection/median_test.py) | mean / median / clipped-mean order combines, same metric |
-| [`perorder_pub.py`](scripts/injection/perorder_pub.py) | per-order regression on the published series |
-| [`berv_check.py`](scripts/injection/berv_check.py) | BERV-confound test + matched-epoch K fit (§4) |
-| [`inject_generic.sh`](scripts/injection/inject_generic.sh) / [`inject_score2.py`](scripts/injection/inject_score2.py) | injection-recovery arm for any template+config (§3) |
-| [`data/published/hoy2026_nature_table2_rvs.csv`](data/published/hoy2026_nature_table2_rvs.csv) | Nature Table 2, 23 epochs, provenance in header — the scoring truth |
+| [`vs_published.py`](../../scripts/injection/vs_published.py) | the honest scorer: per-run rms vs the published Nature RVs |
+| [`median_test.py`](../../scripts/injection/median_test.py) | mean / median / clipped-mean order combines, same metric |
+| [`perorder_pub.py`](../../scripts/injection/perorder_pub.py) | per-order regression on the published series |
+| [`berv_check.py`](../../scripts/injection/berv_check.py) | BERV-confound test + matched-epoch K fit (§4) |
+| [`inject_generic.sh`](../../scripts/injection/inject_generic.sh) / [`inject_score2.py`](../../scripts/injection/inject_score2.py) | injection-recovery arm for any template+config (§3) |
+| [`data/published/hoy2026_nature_table2_rvs.csv`](../../data/published/hoy2026_nature_table2_rvs.csv) | Nature Table 2, 23 epochs, provenance in header — the scoring truth |
 
 The scoring truth is the **published Nature table**, per M12 §9b.4's rule: every internal
 proxy this project has tried (epoch rms, A–B repeatability, GJ 229 B, anchor screens) has
@@ -113,7 +113,7 @@ mean over orders with the median or a 3×MAD clipped mean improves the published
 | median | **147** | 1.31 ± 0.17 |
 
 Why: the eleven orders are **bimodal**. Per-order regression on the published series
-([`perorder_pub.py`](scripts/injection/perorder_pub.py)) splits them cleanly —
+([`perorder_pub.py`](../../scripts/injection/perorder_pub.py)) splits them cleanly —
 
 ```
 transmitting:  o12 1.23±0.20   o13 1.91±0.27   o17 1.28±0.22   o14 1.40±0.62
@@ -132,7 +132,7 @@ M9's lesson stands on file: the best-looking "improvement" this project ever pro
 worked by deleting the signal. So the winning config was fed a known K = 1530 m/s
 Keplerian at the published period, injected by shifting the *template* (M12 §8.1 — never
 the observation), one shifted template per epoch, full viper re-run per epoch
-([`inject_generic.sh`](scripts/injection/inject_generic.sh)):
+([`inject_generic.sh`](../../scripts/injection/inject_generic.sh)):
 
 ```
 G13: n=18  recovery = 100% ± 5%   resid_rms = 213 m/s
@@ -148,7 +148,7 @@ The improvement chain mean → kapsig → robust combine does not suppress signa
 ## 4. The published amplitude reproduces — and an overshoot hint that does not survive scrutiny
 
 Fitting a circular orbit at the published two-satellite period (171.454 d) to the
-**matched epochs only** ([`berv_check.py`](scripts/injection/berv_check.py)):
+**matched epochs only** ([`berv_check.py`](../../scripts/injection/berv_check.py)):
 
 | series | K (m/s) | resid (m/s) |
 |---|---:|---:|
@@ -178,7 +178,7 @@ sampling is not BERV-orthogonal either.
 
 §4 fits K at a period the paper supplied, which reproduces a *measurement*, not a
 *conclusion*. The conclusion-level test is a blind period search on our own series
-([`blind_search.py`](scripts/injection/blind_search.py): ΔBIC of a circular Keplerian
+([`blind_search.py`](../../scripts/injection/blind_search.py): ΔBIC of a circular Keplerian
 vs constant, 4000 trial periods, 5–460 d, no published value entering the fit):
 
 - **All 18 epochs: no detection.** The epoch at BJD 2460604.821 — catastrophic on
@@ -205,7 +205,7 @@ will be baked in from the start.
 ## 5. The second satellite does not survive its own revised table
 
 `exosat-rv orbits` now takes `--version nature|v1`
-([cli.py](src/exosat_rv/cli.py), [orbits.py](src/exosat_rv/analysis/orbits.py)) and fits
+([cli.py](../../src/exosat_rv/cli.py), [orbits.py](../../src/exosat_rv/analysis/orbits.py)) and fits
 the corresponding published table with periods fixed at the published values, eccentric
 1-sat vs circular 2-sat exactly as the paper's Table 1 pairs them. Same code, both tables:
 
@@ -226,7 +226,7 @@ disfavoured" (−0.51, claimed +2.62). The proxy tracked the paper's own numbers
 it could be checked (2.35 vs 2.6 on the alias comparison), which makes its disagreement on
 the one number that matters — +2.62 claimed, −0.51 measured — hard to dismiss as proxy
 noise. A nested-sampling run on the Nature table is the natural next step; the author
-query ([docs/author-query-draft.md](docs/author-query-draft.md)) stays polite about it.
+query ([docs/author-query-draft.md](../paper/author-query-draft.md)) stays polite about it.
 
 ## 6. What remains
 

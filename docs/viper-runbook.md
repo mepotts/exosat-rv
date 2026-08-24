@@ -1,6 +1,6 @@
 # Runbook — extracting RVs from ESO archive spectra with `viper`
 
-> ## ⚠ THIS RUNBOOK REPRODUCES THREE KNOWN BUGS. Read [`M12-RESULTS.md`](../M12-RESULTS.md) first.
+> ## ⚠ THIS RUNBOOK REPRODUCES THREE KNOWN BUGS. Read [`M12-RESULTS.md`](milestones/M12-RESULTS.md) first.
 >
 > 1. **§5's command is missing `-nocell`.** `[CRIRES]` in `config_viper.ini` is the
 >    *gas-cell* configuration; our data has `INS1 OPTI1 ID = FREE`. Without the flag viper
@@ -155,7 +155,7 @@ Three differences from the authors remain, in the order I would attack them:
    combined spectrum (34.49 m/s), and quantify the gain at ~10% in their own Fig. 4. It is
    the only remaining difference they name, but it cannot close a factor of 25. Do this
    last, not first. Order screening was measured too, at 6% — see
-   [`M9-RESULTS.md`](../M9-RESULTS.md).
+   [`M9-RESULTS.md`](milestones/M9-RESULTS.md).
 
    **What to attack instead: the per-order forward model, template first.** M2's co-added
    template made the scatter *worse* (823 → 1638 m/s), which is what co-adding without
@@ -187,7 +187,7 @@ Two iterations per the published recipe improved CD-35 2722 B (776 → 620 m/s) 
 the control's recovered amplitude** — 5948 → 2452 m/s on GJ 229 B's undisputed binary,
 after a *single* iteration, with no recovery on the second. Self-templating absorbs the
 signal: the template is co-added from the target's own spectra aligned by RVs measured
-against a template already containing the signal. See [`M11-RESULTS.md`](../M11-RESULTS.md).
+against a template already containing the signal. See [`M11-RESULTS.md`](milestones/M11-RESULTS.md).
 
 `-createtpl` *does* apply the RV shift (`viper.py` line 624) and Köhler's eq. 14 weighting
 (line 630). The recipe is implemented faithfully; the recipe itself is the hazard here.
