@@ -54,3 +54,4 @@ checkable in the git history rather than asserted afterwards.
 Drafts are design records only. They are neither preregistered nor authorized to run.
 
 - [`M38-PROTOCOL-DRAFT.md`](M38-PROTOCOL-DRAFT.md) — Outcome-isolated successor design; extraction lineage, thresholds, and clean templates remain unresolved
+- [`M38-CONTROL-DEVELOPMENT.md`](M38-CONTROL-DEVELOPMENT.md) — Generic synthetic-only implementation checkpoint; no target run and no protocol blockers closed by code alone

@@ -531,10 +531,11 @@ def rvo(tag):
 
 
 def usable(path, min_rows=2):
-    return (
-        os.path.exists(path)
-        and len([ln for ln in open(path).read().splitlines() if ln.strip()]) >= min_rows
-    )
+    if not os.path.exists(path):
+        return False
+    with open(path, encoding="utf-8") as handle:
+        populated_rows = sum(bool(line.strip()) for line in handle)
+    return populated_rows >= min_rows
 
 
 def score(arm, ref_path):

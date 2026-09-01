@@ -295,6 +295,12 @@ target RV/period diagnostic, or treat the M38 draft as execution authority. Any 
 stop condition pending a reviewed, committed replacement preregistration and the required
 role-separated target mount.
 
+The generic implementation completed under this boundary is recorded in
+[`M38-CONTROL-DEVELOPMENT.md`](milestones/M38-CONTROL-DEVELOPMENT.md). It provides synthetic
+injection/convergence, search/calibration, recovery-selection, manifest-chain, and application
+firewall primitives. It does not choose controls or thresholds, create observer blindness, or
+authorize a target run; the next automatic work remains simulations and declared controls only.
+
 ## Reading order
 
 Start with [`M37-RESULTS.md`](milestones/M37-RESULTS.md) for the current scientific verdict and

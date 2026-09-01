@@ -8,6 +8,11 @@
 > §12 is resolved independently of CD-35 2722 B's RV outcome, the implementation and inputs
 > are frozen and hashed, and a new immutable preregistration supersedes this draft.
 
+Generic control-only infrastructure developed under §11 is recorded in
+[`M38-CONTROL-DEVELOPMENT.md`](M38-CONTROL-DEVELOPMENT.md). That checkpoint resolves no
+scientific threshold, control choice, role-separation requirement, or authority to mount the
+target.
+
 ## 1. Why M38 would be a new experiment
 
 [M34](M34-RESULTS.md) showed that the candidate period survives across some extraction
@@ -229,9 +234,11 @@ sampling, and noise. Shifting the whole observation is invalid because it also s
 tellurics. Shifting only the final template, as `mktpl.py` currently does, remains useful as a
 fitter-stage diagnostic but does not qualify as M38 end-to-end validation.
 
-A validated stellar-only injection operator does not yet exist. Its construction and recovery
-on synthetic truth are blocking prerequisites, not implementation details to improvise during
-the target run.
+A generic synthetic one-dimensional component operator now exists in the control-development
+checkpoint, but it is neither an earliest-representation detector/extraction operator nor
+validated on the required control suite. A qualifying full-chain operator and demonstrated
+recovery on synthetic truth remain blocking prerequisites, not implementation details to
+improvise during the target run.
 
 Two disjoint, hash-committed target injection plans are required:
 
