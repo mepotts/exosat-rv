@@ -12,7 +12,8 @@ Two things this makes explicit that prose would hide:
    detected fraction reaches 0.90 -- not interpolated and not fitted. Where the grid does
    not reach 0.90 the entry is reported as a lower bound, not silently rounded down.
 
-2. The msini limit scales as (host mass)^(2/3), and the adopted 47 M_Jup is single-source
+2. The msini sensitivity threshold scales as (host mass)^(2/3), and the adopted 47 M_Jup is
+   single-source
    (Lazzoni+2022 Table 1, itself citing Langlois et al. 2021b, which this repo does not
    hold). So the headline number inherits an unverified input. The sensitivity table below
    states exactly how much the limit moves if that mass is wrong, so a reader with a better
@@ -39,7 +40,7 @@ LIMIT = ROOT / "data" / "m15-limit.json"
 #                                                    prior-driven" (prior 35 +/- 15)
 #   Neuhauser et al. 2011, MNRAS 416    20-50        bolometric luminosity
 # The two INDEPENDENT determinations are Lazzoni's 47 and Chai's 29. Both are quoted.
-M_HOST_ADOPTED = 47.0     # kept as the adopted value so the published limit is reproducible
+M_HOST_ADOPTED = 47.0  # retained so the published sensitivity calculation is reproducible
 DETECT_FRAC = 0.90
 
 
@@ -91,8 +92,9 @@ def main():
         print(f"{P:>7.0f} {K:>10d} {m:>13.2f}   {fr[str(K)]:.2f}")
 
     lo, hi = min(r[2] for r in rows), max(r[2] for r in rows)
-    print(f"\n# headline: msini >= {lo:.1f}-{hi:.1f} MJup excluded over "
-          f"P = {min(r[0] for r in rows):.0f}-{max(r[0] for r in rows):.0f} d\n")
+    print(f"\n# headline: grid-pointwise 90%-phase sensitivity = {lo:.1f}-{hi:.1f} MJup over "
+          f"P = {min(r[0] for r in rows):.0f}-{max(r[0] for r in rows):.0f} d")
+    print("# scope: circular orbits; conditional on the adopted fitter-stage transmission\n")
 
     print("# HOW MUCH DOES THE UNVERIFIED HOST MASS MATTER? msini scales as M^(2/3).")
     print(f"{'M (MJup)':>9s} {'source / meaning':<34s} {'msini range (MJup)':>20s} "
@@ -104,10 +106,11 @@ def main():
         f = (M / M_HOST_ADOPTED) ** (2 / 3)
         print(f"{M:>9.0f} {why:<34s} {min(vals):>9.2f}-{max(vals):<10.2f} "
               f"{f:>6.2f}x")
-    print("")
+    print()
     print("# The two independent determinations, 29 and 47 MJup, span a 27% shift in the")
-    print("# limit -- and it shifts DOWNWARD from the adopted value, so quoting the 47 is the")
-    print("# conservative choice. The exclusion stays sub-Jupiter to Jupiter-mass across")
+    print("# sensitivity threshold -- it shifts downward from the adopted value, so using")
+    print("# 47 MJup is conservative. Grid-pointwise sensitivity stays sub-Jupiter to")
+    print("# Jupiter-mass across")
     print("# the whole range: the qualitative claim survives the disagreement.")
 
     print("\n# a twin of the CD-35 2722 B satellite (msini 0.918 MJup) at this host mass.")

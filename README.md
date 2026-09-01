@@ -2,50 +2,82 @@
 
 > **New here, or handing this to an agent?** Start with [`ONBOARDING.md`](docs/ONBOARDING.md) — environment, operating rules, the traps that cost a day each, and where every draft stands.
 
-An independent raw-to-radial-velocity pipeline for **directly imaged companions**, and what
-it finds when pointed at the one system where a satellite has been reported.
+An independently implemented, paper-calibrated raw-to-radial-velocity workflow for
+**directly imaged companions**, and what it finds when pointed at the one system where a
+satellite has been reported.
 
 Rather than observing the star, the spectrograph is pointed at the *companion* and its own
 reflex motion is measured. Hoy et al. (2026, [Nature](https://www.nature.com/articles/s41586-026-10751-w);
 [arXiv:2607.05193](https://arxiv.org/abs/2607.05193)) used VLT/CRIRES+ this way on the brown
 dwarf **CD-35 2722 B** and reported a planetary-mass satellite. This project rebuilds the
-measurement from the public raw frames with an independently configured pipeline, and applies
-the same pipeline to nine further companions.
+measurement from the public raw frames with a separate implementation whose extraction
+configuration was calibrated against the published RV series. The downstream fits do not
+ingest the published RV values, but the historical search/reporting code is target- and
+paper-aware, so this is not a blind or independent confirmation. The project also explored other
+archival companions, but the clean transfer evidence is narrower than first reported: the
+supposed staring-mode tier was HiRISE fibre data processed with the wrong slit recipe.
 
 **Results.**
 
-- The satellite **reproduces**. A blind period search that never sees a published number
-  finds it at ~169–171 d, it survives a barycentric nuisance term, permutation gives a
-  false-alarm probability of 5×10⁻⁴, and it is absent from every other companion series
-  reduced identically.
-- The reported **second** companion **does not** reproduce, and there is a mechanism: the
-  run-to-run scatter of the evidence integral is 1.1–8.1× larger than a single run's internal
-  uncertainty, and widens as live points increase.
-- **η Tel B**: no satellite, m sin i ≳ 0.51–1.27 M_Jup over P = 20–300 d.
-- The pipeline transfers unmodified across three wavelength settings and both observing
-  modes, at 99–101% injection recovery.
+- The primary ~171 d signal is recovered **conditionally on an internal quality screen**.
+  On the 17 retained nights, a target- and paper-aware downstream search whose model fits do
+  not ingest the published RV values finds ~169–171 d and survives a barycentric nuisance
+  term. A 5000-permutation rerun gives a nominal global *p* of about 0.002–0.008,
+  conditional on exchangeability of the fitted base-model residuals and on the post-hoc
+  screen; it is not a confirmatory false-alarm probability. With all 18 archival nights,
+  the search degrades to noise; the excluded night is therefore load-bearing even though its
+  across-order spread is objectively extreme.
+- The reported **second** companion **does not reproduce under the models and priors tested
+  here**: 81 of 82 paired evidence comparisons favour one companion. The measured dynesty
+  seed scatter cannot establish the reproducibility of H26's different sampler.
+- **η Tel B**: no detected signal; circular-orbit, grid-pointwise 90%-completeness limits of
+  m sin i ≈ 0.51–1.27 M_Jup over P = 20–300 d, conditional on fitter-stage transmission.
+- The strongest clean transfer is η Tel B in the same H1567 nodding configuration, at
+  99–101% fitter-stage injection recovery. Transfer across both observing modes has not been
+  demonstrated; the apparent staring-mode results were withdrawn after the HiRISE audit.
+- A nightly and per-camera ASAS-SN reanalysis finds no host-star signal at 171.454 d
+  (nominal night-permutation *p* = 0.13–0.16, conditional on exchangeability of the final
+  camera-corrected night bins). Across nested deterministic grids of 720, 1440 and 2880 phases, the
+  first sampled semiamplitude reaching at least 90% phase recovery on every grid is 12–13 mmag;
+  the cross-series threshold is 13 mmag (26 mmag peak-to-peak), not the previously quoted
+  5 mmag. The two source IDs are alternative aperture photometry of the same 2,173
+  timestamp/camera measurements, not independent replications. This sensitivity is conditional
+  on one observed-noise realization and an estimated fixed-period permutation threshold, not
+  a binomial confidence bound. Gaia RUWE/NSS provide catalogue context but do not prove the
+  host is astrometrically unperturbed.
 
 **Papers** are in [`docs/paper/`](docs/paper/) — each `.md`/`.template.html` is the source
 and the matching `.html` is a rendered build product.
 
 **Running it.** [`scripts/cr2res/`](scripts/cr2res/) drives the reduction from raw frames;
-[`scripts/injection/`](scripts/injection/) holds the injection harness and the blind period
+[`scripts/injection/`](scripts/injection/) holds the injection harness and the period
 search; [`data/published/`](data/published/) carries the transcribed reference table with
 provenance headers.
+
+The adopted M14/M15 RV, per-order, BERV, parameter and target tables, the VIPER configuration
+and tracked source patch observed in the audited checkout, and a hash manifest are frozen under
+[`data/repro/`](data/repro/). That configuration records checkout state only; it does not prove
+which configuration governed the historical extraction runs. Raw/reduced ESO spectra and the
+fitted templates remain external; the templates and FTS atlas are hash-bound in the manifest.
+The bundle supports offline downstream reanalysis, not a raw exposure-to-template replay.
 
 Everything runs on a laptop against public archives. See [`SPEC.md`](docs/SPEC.md) for the thesis,
 [`DATA-SOURCES.md`](docs/DATA-SOURCES.md) for endpoints and their known incompletenesses, and
 [`BUILD-PLAN.md`](docs/BUILD-PLAN.md) for the milestone plan.
 
-**Current state: M0–M34.** Start at [`docs/LESSONS.md`](docs/LESSONS.md) — the consolidated
+**Current state: results through M37, plus an unexecuted M38 successor-protocol draft.** Start at [`docs/LESSONS.md`](docs/LESSONS.md) — the consolidated
 trap catalog and the map of which milestone document owns which conclusion — then
 [`docs/HANDOFF.md`](docs/HANDOFF.md) and the roster ledger
-[`docs/target-queue.md`](docs/target-queue.md). The twenty-five milestone records are indexed,
-each with the conclusion it owns, in [`docs/milestones/`](docs/milestones/README.md). The
+[`docs/target-queue.md`](docs/target-queue.md). The milestone records are indexed
+in [`docs/milestones/`](docs/milestones/README.md). The
 load-bearing ones are [`M14`](docs/milestones/M14-RESULTS.md) — the drift floor closed and the
-evidence flip confirmed — [`M15`](docs/milestones/M15-RESULTS.md), η Tel B's first RV limit, and
+evidence flip confirmed — [`M15`](docs/milestones/M15-RESULTS.md), η Tel B's circular-orbit
+RV sensitivity, and
 [`M34`](docs/milestones/M34-RESULTS.md), which asks whether the detection is an artefact of
-tuning the extraction on the published answer.
+tuning the extraction on the published answer, [`M36`](docs/milestones/M36-RESULTS.md), whose
+attempted injection-selected experiment was paper-derived and did not execute its
+pre-registration faithfully, and [`M37`](docs/milestones/M37-RESULTS.md), which freezes the
+screened/all-18 permutation re-audit.
 
 ## Where things are
 
@@ -55,65 +87,75 @@ docs/            the working record -- start at docs/README.md
   audits/        every citation, and every borrowed number, checked against its source
   paper/         manuscripts: .md / .template.html are source, .html are build products
 src/exosat_rv/   the package -- archive readers, order maps, feasibility model, orbit fits
-scripts/         drivers -- cr2res/ reduces raw frames, injection/ is the harness + blind search
-tests/           125 tests, exercised in CI on Python 3.11 and 3.12
+scripts/         drivers -- cr2res/ reduces raw frames, injection/ is the harness + period search
+tests/           offline suite (plus live-network tests); exercised in CI on Python 3.11/3.12
 data/            published reference tables, exported figures, per-milestone JSON
 papers/          the literature this project cites (text committed, PDFs not redistributable)
 ```
 
 ## The verdict
 
-**The primary conclusion reproduces — now from the raw data too. The second satellite does
-not survive the paper's own table.** Getting to sentence one took fourteen milestones;
-sentence two emerged on the way.
+**The screened archival series recovers the primary signal from raw data; the second
+satellite does not survive this project's model comparisons on the paper's own table.**
+Both statements carry the qualifications below.
 
-**Reproduced.** An independent re-reduction (cr2res from raw frames, viper forward
-modeling, the paper's own eleven-order set found in M13) reaches **70–90 m/s rms against
-the paper's published per-epoch RVs** — down from ~1850 m/s at M6 — and a **blind period
-search re-detects the ~171-day signal at rank 1 with a BERV nuisance covariate in the
-model** (ΔBIC +26 to +28), on two independent reduction routes. Fitted amplitude
-K = 304 ± 69 m/s against the published 306. Every adopted pipeline change passed
-injection-recovery gating; the decisive levers were a second template iteration,
-oversampling, and per-nodding-frame extraction (M14).
+**Recovered, with a load-bearing screen.** A separately implemented re-reduction (cr2res
+from raw frames, viper forward modeling, the paper's eleven-order set and extraction choices
+calibrated against its published series) reaches **70–90 m/s rms against the published
+per-epoch RVs** — down from ~1850 m/s at M6 — and a **target- and paper-aware downstream
+period search re-detects the ~171-day signal at rank 1 with a BERV nuisance covariate in the
+model** (ΔBIC +26 to +28), on two reduction routes. The fits do not ingest the published RV
+values, but the driver constructs a paper-matched subset and reports a hard-coded 171.45-day
+window. The result holds for the 17 nights retained
+by the internal across-order-spread screen; with all 18 nights the search degrades to noise,
+so the exclusion is part of the result. Fitted amplitude
+is estimator-dependent and high: K = 426–472 m/s by direct fit against the published 306,
+or slopes 1.19–1.34 in regression. Every adopted pipeline change passed
+fitter-stage injection-recovery gating; because those injections shift an already-built
+template, they do not test absorption during template construction. The decisive levers were
+a second template iteration, oversampling, and per-nodding-frame extraction (M14, M28 §6.2).
 
-**Contradicted.** Nested sampling (dynesty) on the paper's *own published RV table* gives
-ΔlogZ(two satellites − one eccentric satellite) between **−0.8 and −6.6 across ten
-configurations** (three model pairings × prior styles × seeds), never positive, against
-the paper's claimed **+2.62**. The evidence for the second satellite does not reproduce
-on the data as published (M13 §4, M14 §1).
+**Not reproduced under the tested models.** Nested sampling (dynesty) on the paper's *own
+published RV table* gives a negative mean ΔlogZ(two satellites − one satellite) in all ten
+tested model/prior/live-point configurations. Across 82 paired comparisons, 81 are negative;
+the one exception is +0.90, against the paper's claimed **+2.62**. This establishes
+non-reproduction under this project's stated likelihoods and priors, not a direct test of the
+authors' different sampler or incompletely published prior configuration (M28 §7).
 
-**Caveats, stated plainly.** The recovered amplitude runs 20–40% high and the published
-RVs correlate with BERV at r = −0.71, so the reproduction is confound-limited at current
+**Caveats, stated plainly.** The recovered amplitude runs 19–34% high by regression slope and
+39–54% high by direct fit, while the published RVs correlate with BERV at r = −0.71, so the screened, paper-calibrated recovery is
+confound- and selection-limited at current
 sampling; the epochs that decide it are embargoed until Dec 2026 – May 2027
 (the calendar is in [`docs/target-queue.md`](docs/target-queue.md)).
 
-The floor-closing is only trustworthy because of the **positive control** discipline from
+The fitter-stage validation is only trustworthy because of the **positive control** discipline from
 M3 onward (GJ 229 B, a known 12.1-day binary — Δχ² = 63.8) and injection gates on every
 change: three separate "improvements" that deleted signal were caught and rejected by
 exactly that machinery (M9, M11, M23).
 
-## After the reproduction: the survey (M15–M26) and what it found
+## After the core reanalysis: the survey (M15–M26) and what it found
 
-The validated recipe was then pointed at **every archival CRIRES+ companion-spectroscopy
+The recipe was then pointed at **every archival CRIRES+ companion-spectroscopy
 campaign** a coordinate-based census could find (names lie; a 50,000-frame sky-clustered
-sweep does not). Eighteen systems adjudicated; final roster in M23 §5 — **one
-confirmation, one contradiction, four upper limits, one contamination-limited case, four
-data-limited**. Highlights:
+sweep does not). The M23 roster counts were later revised by the HiRISE mode audit and the
+spatial-resolution audit; use the living ledger in `docs/target-queue.md`, not the historical
+count, for current per-target verdicts. Highlights:
 
-- **eta Tel B** — the first RV constraint a literature search can find on the object:
-  no detection, **msini ≳ 0.5–1.2 M_Jup (90%) across P = 20–300 d**, confirmed on both
-  reduction routes; the injection-calibrated machinery re-finds its own end-to-end
-  K = 300 m/s injection at rank 1, so the null is meaningful (M15).
-- **The K-band tier** — RVs of **beta Pic b itself** at 162 m/s within-night scatter
-  (adding night-to-night repeatability to the 2024 CRIRES+ spin/RV literature), AB Pic b,
-  and CT Cha B with a 3.3σ variability candidate undecidable at n = 3 (M17, M23).
-- **The feasibility limit, and what it is actually a function of** — neither contrast nor
-  separation orders the outcomes. Their combination does: **S = contrast/θ²**, the ratio of
-  scattered host flux to companion flux at the slit. Clean at S ≲ 4300, flooded at
-  S ≳ 15 000, with the transition interval never observed by anyone (M29 §§6–8; the
-  earlier "2000×/5000× contrast wall" of M20 §6 is superseded — those figures were never
-  derived, and the axis was wrong). Where the
-  wall stands, fiber starlight suppression is the instrument answer.
+- **eta Tel B** — no detection, with **grid-pointwise circular-orbit 90%-completeness limits
+  of m sin i ≈ 0.51–1.27 M_Jup across P = 20–300 d**, consistent across two reduction routes.
+  The 99–101% injection result validates transmission through the fitter after the template
+  has been built; possible self-template absorption is not tested on this target (M15, M28).
+- **The K-band tier** — the β Pic b slit extraction reaches 162 m/s within-night fit scatter,
+  but the spatial-profile audit shows that the planet and host are unresolved and the
+  extracted spectrum is host-dominated; it is **not a β Pic b RV measurement**. AB Pic b
+  remains resolved, while CT Cha B has a 3.3σ variability candidate undecidable at n = 3
+  (M17, M23, M29).
+- **The measured feasibility gate is spatial resolution** — define
+  **R = separation / delivered PSF FWHM** from the slit profile. The audited reductions are
+  host-dominated below R ≈ 1 and spatially eligible above it. This does not establish a
+  universal contrast threshold for resolved pairs: the proposed S = contrast/θ² ordering is
+  exploratory and method-dependent, and the transition remains unmeasured here. For unresolved
+  pairs, fibre starlight suppression or interferometry is required (M29 §§3–9; M33).
 - **YSES 1 b** — 34 m/s night-to-night, the best per-epoch quality of the whole campaign
   (~20–30 M⊕ satellite reach if its blocked 2022 pair is recovered) (M25–M26).
 - **The machinery catches fakes** — PDS 70's nine-night template upgrade *looked* quieter
@@ -182,12 +224,13 @@ Two archive facts decide the whole project, both measured in M0 rather than assu
   retired.** Working from the combined product costs ~10% precision (34.49 vs 31.44 m/s),
   which is understood in advance rather than discovered in M3.
 
-## What "reproduce" means here
+## What this reanalysis does and does not mean
 
-Not re-running the authors' pipeline on the authors' products. The inference stage is
-deliberately built on a *different* Keplerian fitter than the paper's, so agreement means
-something. The sharpest question in the data is not whether the 169-day signal is real —
-it is the **period of the second signal**. The paper is explicit that 14, 70, 88 and 115 days
+This is not a rerun of the authors' pipeline on the authors' products. The inference stage
+uses a *different* Keplerian fitter, which supplies a method-diverse cross-check but not
+independent evidence because the extraction was calibrated against the published series.
+Within the paper-calibrated, screened analysis, the sharpest remaining inference
+question is the **period of the second signal**. The paper is explicit that 14, 70, 88 and 115 days
 are aliases of one another, produced by two observing seasons almost exactly a year apart,
 and that its favoured 88-day model beats the 115-day one by only Δlog Z = 2.6. That is a
 *sampling* problem, and a reanalysis can attack it without new telescope time — via the
@@ -248,7 +291,7 @@ flux, dynamical allowance, and *survival*. Two results worth stating:
   holdings alone; Lazzoni et al. rank it **4th of 38** on physics alone. Neither ranking
   shares an assumption with the other.
 - **No imaged companion reaches planet-like (Galilean/Titan-class) satellites.** This method
-  finds binary-like satellites or nothing — reproducing Lazzoni et al.'s central conclusion
+  finds binary-like satellites or nothing — matching Lazzoni et al.'s central conclusion
   from a threshold recalibrated on the *achieved* 31.44 m/s rather than their forecast, which
   the real instrument beat by 1.6x.
 
@@ -321,7 +364,7 @@ detected signal. **Three changes in a row have now improved the science target a
 rejected by the control** — M9's empirical weighting, M9's telluric screen, and this. On a
 non-detection, anything that removes signal looks like success.
 
-**Net movement on the reproduction: none.** Still 776 m/s against 31.44 needed. What it did
+**Net movement toward the target precision: none.** Still 776 m/s against 31.44 needed. What it did
 buy is elimination: the template, order screening and the nodding frames are all now measured
 rather than assumed, and the leading suspect is what remains — the ADP→cr2res conversion,
 verified *lossless* but never verified to put segments in the right order/detector slots.
@@ -342,11 +385,12 @@ Astrometry also **outranks RV in Lazzoni et al.'s own table** (P = 0.999 vs 0.99
 *below* RV's ~0.4 M_Jup floor. And **HD 206893 B, where Kral et al. 2026 report a tentative
 astrometric exomoon candidate, has 22 public reduced nights** — their result is reanalysable.
 
-**beta Pic b is the crossover target**: #2 in M7's RV ranking, one of Kral et al.'s two best
-astrometric targets, and the best public GRAVITY dataset of the five. It is the one object
-where an RV limit and an astrometric limit could be set independently and cross-checked.
-(M5 *rejected* it for RV — 753 frames on 6 nights. The same target can be hopeless for one
-technique and best-in-class for another.)
+**beta Pic b was the historical crossover target in M10**: #2 in M7's forecast RV ranking
+and one of the strongest public GRAVITY datasets considered there, offering a route to compare
+RV and astrometric limits. The present-day qualification is decisive: this repository's slit
+series is host-dominated, its public HiRISE nights require a fibre-appropriate reduction, and
+Kenworthy et al. (2026) have since published dedicated β Pic b RV limits. The same target can
+be unusable for one implementation and strong for another.
 
 ⚠️ **A kill-check is open.** This is the M0-equivalent, not the M1-equivalent: the data is
 public and reduced, but whether those visibility products carry the dual-field differential
@@ -375,7 +419,7 @@ exosat-rv inventory          # M0: what is public, reduced, and usable right now
 exosat-rv probe              # M1: open a reduced product, check viper can use it
 exosat-rv targets            # M5: analogue target list, archive-first
 exosat-rv alias              # M4: is the second period set by the data or the sampling?
-exosat-rv orbits             # M6: reproduce the model comparison from the published RVs
+exosat-rv orbits             # M6: rerun the model comparison from the published RVs
 exosat-rv survey             # M7: which imaged companions can the method work on?
 exosat-rv closein            # M8: can it reach satellites of young close-in giants?
 exosat-rv orders             # M9: per-order screening, and the ceiling on what it buys
@@ -386,7 +430,7 @@ pytest                       # adds the live archive assertions
 
 ## Honest scope
 
-This project does not claim a discovery and will not submit one. Its output is a
-reproduction verdict, a harmonic test, and — for the analogue survey — most likely
+This project does not claim a discovery and will not submit one. Its output is a qualified
+reanalysis verdict, a harmonic test, and — for the analogue survey — most likely
 **upper limits** rather than detections. Upper limits are the expected result and are
 reported as the result.

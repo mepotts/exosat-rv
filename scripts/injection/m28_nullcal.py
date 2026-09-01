@@ -1,4 +1,4 @@
-"""M28: null calibration + common-mode audit of the blind period search.
+"""M28: null calibration + common-mode audit of the historical target-aware search.
 
 Two questions the project has never answered, both asked with machinery already here:
 
@@ -15,7 +15,7 @@ Two questions the project has never answered, both asked with machinery already 
       time-coherent signal while preserving the sampling, the value distribution and the
       nuisance structure -- and rebuild the max-dBIC distribution.
 
-Recipe is byte-identical to blind_search.py: per-order median / 3-MAD-clipped mean,
+Recipe matches the numerical search in blind_search.py: per-order median / 3-MAD-clipped mean,
 per-night binning (tol 0.2 d), internal >3x-spread epoch screen, dBIC of a circular
 Keplerian over a constant, optionally with a BERV nuisance column.
 
@@ -27,13 +27,23 @@ import sys
 import numpy as np
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from vs_published import load          # noqa: E402
-from m14_score import bin_frames       # noqa: E402
+from m14_score import bin_frames
+from vs_published import load
 
 P_MIN, P_MAX = 5.0, 460.0
 P_REF = 171.45          # the published CD-35 period; the common-mode question
 LOG_TOL = 0.06          # same window blind_search.py uses around P_REF
 RNG = np.random.default_rng(20260813)
+
+
+def internal_screen(spread):
+    """Reference >3x-median nightly across-order-spread screen."""
+    spread = np.asarray(spread, float)
+    finite = np.isfinite(spread)
+    if not finite.any():
+        return np.zeros(len(spread), dtype=bool), np.nan
+    threshold = 3 * np.median(spread[finite])
+    return spread > threshold, threshold
 
 
 def series(path, nod=True):
@@ -52,10 +62,7 @@ def series(path, nod=True):
         _, clip, _ = bin_frames(t, clip, berv)
         _, spread, _ = bin_frames(t, spread, berv)
         t, berv = t_b, berv_b
-    fin = np.isfinite(spread)
-    bad = np.zeros(len(t), bool)
-    if fin.any():
-        bad = spread > 3 * np.median(spread[fin])
+    bad, _ = internal_screen(spread)
     return t, med, clip, berv, bad, len(orders)
 
 
@@ -112,11 +119,21 @@ def run(label, t, y, berv, nperm, ngrid):
 
         p_max = (1 + np.sum(null_max >= obs[i_max])) / (1 + nperm)
         p_ref = (1 + np.sum(null_ref >= obs[i_ref])) / (1 + nperm)
-        rows.append(dict(berv=use_berv, n=n, span=t.max() - t.min(),
-                         P_max=grid[i_max], dbic_max=obs[i_max], p_max=p_max,
-                         P_ref=grid[i_ref], dbic_ref=obs[i_ref], p_ref=p_ref,
-                         null95=np.percentile(null_max, 95),
-                         null_ref95=np.percentile(null_ref, 95)))
+        rows.append(
+            {
+                "berv": use_berv,
+                "n": n,
+                "span": t.max() - t.min(),
+                "P_max": grid[i_max],
+                "dbic_max": obs[i_max],
+                "p_max": p_max,
+                "P_ref": grid[i_ref],
+                "dbic_ref": obs[i_ref],
+                "p_ref": p_ref,
+                "null95": np.percentile(null_max, 95),
+                "null_ref95": np.percentile(null_ref, 95),
+            }
+        )
     for r in rows:
         tag = "+BERV" if r["berv"] else "plain"
         print(f"  {label:<20s} {tag:<6s} n={r['n']:<3d} span={r['span']:6.0f}d  "
@@ -138,8 +155,8 @@ def main():
     targets = [a for a in argv if "=" in a]
     print(f"# M28 null calibration -- {nperm} permutations, {ngrid} periods, "
           f"{P_MIN:g}-{P_MAX:g} d, reference period {P_REF} d")
-    print(f"# p is the permutation false-alarm probability: fraction of shuffled "
-          f"series reaching that dBIC.\n")
+    print("# p is the permutation false-alarm probability: fraction of shuffled "
+          "series reaching that dBIC.\n")
     summary = {}
     for spec in targets:
         label, path = spec.split("=", 1)

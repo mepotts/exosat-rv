@@ -29,9 +29,7 @@ import sys
 import numpy as np
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from vs_published import load, published  # noqa: E402
-
-pb, pv, pe = published()
+from vs_published import load
 
 
 def order_matrix(path):
@@ -70,6 +68,10 @@ def bin_frames(t, v, berv, tol=0.2):
 
 
 def match_pub(t, v, restrict=None):
+    # Keep the published table out of imports used by blind downstream analyses.
+    from vs_published import published
+
+    pb, pv, _ = published()
     ours, pub, keep_t = [], [], []
     for tt, x in zip(t, v):
         if not np.isfinite(x):
@@ -95,7 +97,7 @@ def stats(ours, pub):
 
 
 def series_for(path, how, center, nod):
-    t, berv, RV, orders = order_matrix(path)
+    t, berv, RV, _orders = order_matrix(path)
     if center:
         RV = RV - np.nanmedian(RV, axis=1, keepdims=True)
     v = combine(RV, how)

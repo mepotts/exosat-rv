@@ -1,4 +1,4 @@
-"""Paper figures for the CD-35 2722 B reproduction + eta Tel B limit manuscript.
+"""Paper figures for the CD-35 2722 B audit + eta Tel B sensitivity manuscript.
 
 Four SVGs into data/export/. Committed light 'paper sheet' look (preprint-style):
 surface #fcfcfb, ink #0b0b0b/#52514e, muted #898781, grid #e1e0d9, axis #c3c2b7.
@@ -7,11 +7,11 @@ orange #eb6834 = Hoy et al. published values; models/reference lines in gray ink
 """
 from pathlib import Path
 
-import numpy as np
 import matplotlib
+import numpy as np
 
 matplotlib.use("SVG")
-import matplotlib.pyplot as plt  # noqa: E402
+import matplotlib.pyplot as plt
 
 ROOT = Path(__file__).resolve().parents[1]
 EXP = ROOT / "data" / "export"
@@ -73,7 +73,7 @@ a1.errorbar(d["bjd"][m] - t0, ours[m], yerr=ours_err[m],
             mfc=SURF, mew=1.6, label="This work (from raw frames, 17 nights)",
             zorder=3)
 a1.set_ylabel("RV  (m s$^{-1}$)")
-a1.set_title("CD-35 2722 B: independent extraction against the published series")
+a1.set_title("CD-35 2722 B: paper-calibrated extraction against the published series")
 a1.legend(loc="upper right", fontsize=8)
 a1.annotate("embargoed-epoch\nregion (2026)", xy=(1055, -320), fontsize=7.5,
             color=MUTED, ha="center")
@@ -131,7 +131,7 @@ for ax, dd, title, ann in (
         (a2, et, "eta Tel B (17 nights)", "null")):
     ax.axhline(0, color=AXIS, lw=0.8)
     ax.axhline(10, color=MUTED, lw=0.8, ls=(0, (4, 3)))
-    ax.plot(dd["P_d"], dd["dbic"], lw=1.4, color=BLUE, label="blind search")
+    ax.plot(dd["P_d"], dd["dbic"], lw=1.4, color=BLUE, label="target-aware search")
     ax.plot(dd["P_d"], dd["dbic_berv"], lw=1.4, color=ORANGE,
             label="+ BERV covariate")
     ax.axvline(171.45, color=MUTED, lw=0.8, ls=":")
@@ -145,10 +145,10 @@ a1.annotate("published period", xy=(171.45, -12), fontsize=7, color=MUTED,
 a1.annotate(f"peak +{cd['dbic'].max():.0f}\n(+{cd['dbic_berv'].max():.0f} w/ BERV)",
             xy=(171.45, cd["dbic"].max()), xytext=(445, 33), fontsize=7.5,
             ha="right", color=INK2,
-            arrowprops=dict(arrowstyle="-", color=MUTED, lw=0.7))
+            arrowprops={"arrowstyle": "-", "color": MUTED, "lw": 0.7})
 a2.annotate("ΔBIC = 10", xy=(6.2, 11), fontsize=7, color=MUTED)
 a1.legend(loc="upper left", fontsize=8)
-fig.suptitle("Blind period search, internally screened series", fontsize=10,
+fig.suptitle("Target-aware period search, internally screened series", fontsize=10,
              color=INK, y=1.02)
 fig.savefig(EXP / "fig3_landscapes.svg", bbox_inches="tight")
 plt.close(fig)
@@ -177,10 +177,12 @@ m90 = msini(K90, Ps)
 
 fig, ax = plt.subplots(figsize=(7.2, 3.5))
 ax.fill_between(Ps, m90, 4.0, color=BLUE_FILL, alpha=0.55, lw=0)
-ax.plot(Ps, m90, "-o", lw=1.6, ms=5, color=BLUE, label="90% exclusion (this work)")
+ax.plot(Ps, m90, "-o", lw=1.6, ms=5, color=BLUE,
+        label="90%-phase sensitivity (circular; fitter-stage)")
 ax.plot([171.45], [0.918], "D", ms=7, color=ORANGE, mec=SURF, mew=1.2,
         label="CD-35 2722 B satellite (for scale)")
-ax.annotate("excluded", xy=(45, 2.4), fontsize=9, color="#1c5cab")
+ax.annotate("recovered in ≥90% of tested phases", xy=(45, 2.4), fontsize=8,
+            color="#1c5cab")
 ax.annotate("M7 survey forecast (3.3 M$_{Jup}$)", xy=(21, 3.35), fontsize=7.5,
             color=MUTED)
 ax.axhline(3.3, color=MUTED, lw=0.8, ls=(0, (4, 3)))
@@ -192,7 +194,7 @@ ax.get_xaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
 ax.minorticks_off()
 ax.set_xlabel("orbital period  (d)")
 ax.set_ylabel(r"companion $m\,\sin i$  (M$_{Jup}$)")
-ax.set_title("eta Tel B: first radial-velocity companion limit")
+ax.set_title("eta Tel B: circular-orbit radial-velocity sensitivity")
 ax.legend(loc="lower right", fontsize=8)
 despine(ax)
 fig.savefig(EXP / "fig4_limit.svg", bbox_inches="tight")

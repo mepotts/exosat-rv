@@ -1,5 +1,11 @@
 # M28 — the audit: three new tests, one real defect, and what survives
 
+> **Second-audit correction (M37, 2026-08-31):** the headline below is no longer current.
+> Its permutation and jackknife results first apply the internal epoch screen; they show that
+> no *retained* night carries the signal. Restoring the rejected night makes every
+> BERV-adjusted global search compatible with noise. The detection and its false-alarm
+> calibration must therefore be described as conditional on the screen.
+
 Asked for: the primary-star null control, a common-mode check, and a full scrutiny of
 the code, logic and methods "as a true astronomer would". This is what came back.
 

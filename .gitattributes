@@ -17,3 +17,9 @@
 # Binary -- never rewritten. Listed explicitly rather than left to content sniffing.
 *.npz  binary
 *.png  binary
+
+# M37 freezes these audited upstream artifacts byte-for-byte. Their source whitespace is
+# hash-bound in data/repro/manifest.json and must not be normalized merely to satisfy a diff
+# diagnostic.
+data/repro/viper/results/* -whitespace
+data/repro/viper/viper-tracked.patch -whitespace

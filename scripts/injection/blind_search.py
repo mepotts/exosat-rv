@@ -1,17 +1,25 @@
-"""Blind period search on OUR from-raw series. No published values enter.
+"""Historical target-aware period search on the project's extracted series.
+
+Published RV values do not enter the least-squares fits, but this is not paper-blind: the
+script loads the published epoch table to define/report a matched subset and evaluates a
+hard-coded window around the published 171.45-day period.
 
 For each trial period: fit K*cos + K*sin + const (linear), compute BIC against the
 constant-only model. Report the ΔBIC(P) landscape and where ~171 d ranks.
 Variants: median / clip combine, with / without a BERV covariate, 18 / 17 epochs
-(the 17 drops the epoch with no counterpart in the published table — identified
-here only by its BJD, not by using any published number in the fit).
+(the 17 drops the epoch with no counterpart in the published table, using the published
+epochs to identify that subset even though published velocities are not fit).
 """
 import os
+
 _ROOT = os.environ.get("EXOSAT_ROOT") or os.path.abspath(
     os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
-import numpy as np
 import sys
+
+import numpy as np
+
 sys.path.insert(0, _ROOT + "/scripts/injection")
+from m28_nullcal import internal_screen
 from vs_published import load, published
 
 path = sys.argv[1]
@@ -98,7 +106,7 @@ if NOD:
                                     np.asarray(c["BERV"], float))
 else:
     spread_night = spread_frame
-bad = spread_night > 3 * np.median(spread_night[np.isfinite(spread_night)])
+bad, _ = internal_screen(spread_night)
 print(f"internal screen: dropping {bad.sum()} epoch(s) with spread >3x median: "
       f"{[f'{t-2460000:.3f}' for t, b in zip(t_all, bad) if b]}")
 

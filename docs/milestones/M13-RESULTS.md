@@ -1,5 +1,12 @@
 # M13 — The eleven orders found, the combine fixed, and the second satellite does not survive its own revised table
 
+> **Historical milestone; independence claim superseded by M37 (2026-08-31).** M13 selected
+> the paper's eleven-order set, scored configurations against the published RV table, and fit
+> the published period. Its amplitude agreement is therefore a conditional, paper-aware
+> calibration result, not an independent or end-to-end reproduction. The injection in §3
+> shifts an already-built template and does not test signal retention during template creation.
+> See [M37](M37-RESULTS.md) for the controlling audit language.
+
 **Question:** M12 §9b left the from-raw extraction at **387 m/s rms against the paper's
 published RVs** (their per-epoch claim: 57.68 m/s), with the paper's eleven orders unknown
 and the inference never re-run on the corrected Nature table.
@@ -14,8 +21,8 @@ and the inference never re-run on the corrected Nature table.
    165 (clipped), 147 (median)** against the published RVs, from 511 at M12 baseline and
    382 at M12 best. An injection-recovery test returns **100% ± 5%** of a known signal —
    this improvement is not signal deletion (§3). Fitting the matched epochs at the published
-   period returns **K = 304 ± 69 m/s against their K₁ = 306.0** (clipped combine): **the
-   published orbit's amplitude now reproduces from raw archive data** (§4).
+   period returns **K = 304 ± 69 m/s against their K₁ = 306.0** (clipped combine): the
+   paper-aware extraction's fitted amplitude numerically agrees at that fixed period (§4).
 3. **The inference, re-run on the paper's own published table, no longer favours the second
    satellite.** The same code that reproduces the v1 comparison (+3.04 for two satellites,
    paper claimed 6.9) returns **−0.51 on the Nature table** (paper claims +2.62). The
@@ -157,9 +164,9 @@ Fitting a circular orbit at the published two-satellite period (171.454 d) to th
 | published table itself | 273 ± 30 | 91 |
 | published K₁ (2-sat circular) | 306.0 | — |
 
-**K = 304 ± 69 against 306.0**: the from-raw pipeline recovers the published orbit's
-amplitude at the published period. That is the closest this project has come to an
-end-to-end reproduction of the measurement.
+**K = 304 ± 69 against 306.0**: the paper-aware pipeline's fitted amplitude agrees with the
+published value when evaluated at the published period on the paper-matched epochs. M37
+supersedes the original description of this comparison as an end-to-end reproduction.
 
 The median series and the transmitting orders individually run *above* the published
 amplitude (slopes 1.3–2.8 in §2), which would rhyme with M11 — their self-templating

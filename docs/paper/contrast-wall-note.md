@@ -1,8 +1,8 @@
 # First resolve, then worry about contrast: a measured resolution gate for slit-fed companion radial velocimetry — and the free-floating regime where neither gate applies
 
-*Matthew Potts · independent analysis · draft 2026-08-14*
+*Matthew Potts · unaffiliated analysis · draft 2026-08-14*
 
-*Instrument-oriented note. Target venue: A&A/MNRAS short paper or an instrument-design note. Written from milestones M7–M29 of the `exosat-rv` archival project; measured quantities are cited inline as (M-n §s), or (queue) for the roster ledger, and every separation traces to a primary source. Quantities that could not be sourced are marked, not estimated.*
+*Instrument-oriented note. Target venue: A&A/MNRAS short paper or an instrument-design note. Written from milestones M7–M33 of the `exosat-rv` archival project; measured quantities are cited inline as (M-n §s), or (queue) for the roster ledger, and every separation traces to a primary source. Quantities that could not be sourced are marked, not estimated.*
 
 ---
 
@@ -18,8 +18,8 @@ separation / delivered PSF FWHM**, the number of resolution elements between com
 host, for every target with a reduction on disk. **R < 1 means the pair sits inside one
 resolution element: there is no companion spectrum to extract, at any contrast.** Across
 eight classifiable reductions the roster splits cleanly — resolved at R = 1.32, 1.42, 1.79,
-10.64, 11.26; blended at 0.39, 0.52, 0.54 — with nothing in between, and a second,
-independent diagnostic from the same profile (its height at the companion's offset)
+ 10.64, 11.26; blended at 0.39, 0.52, 0.54 — with nothing in between, and a second
+ diagnostic derived from the same profile (its height at the companion's offset)
 corroborates with a clean gap: 0.00–0.15 of peak when resolved, 0.55–0.71 when blended. The
 consequences are concrete. **One of our own earlier readings is withdrawn**: we had recorded
 HD 206893 B as "clean, gates 100–102%", and at R = 0.52 that extraction is a measurement of
@@ -33,7 +33,7 @@ transmission throughout. And **no fit statistic detects this**: an injection gat
 whether the *fitter* transmits an imposed velocity, which a bright host does better than a
 faint companion — as do per-epoch precision and across-order dispersion. Only the spatial
 profile catches it. The contrast question survives only above R ≈ 1, and it is untested:
-every system in the interval where a contrast threshold would be tested is blended, which is
+every system in this project's roster in the interval where a contrast threshold would be tested is blended, which is
 not a coincidence but the same fact stated twice. The instrument consequence is therefore a
 requirement rather than a preference: **fibre-fed starlight suppression is not a better way
 to work close in, it is the only way**, because the slit cannot deliver a companion spectrum
@@ -52,16 +52,17 @@ on GQ Lup B. Hoy et al. (2026, hereafter H26) reported a detection, in CD-35 272
 Proposals in this genre are written on one feasibility axis: how bright the companion is.
 Lazzoni et al.'s threshold is a pure flux scaling — 100 m s⁻¹ at K = 13.5, degrading 1.585×
 per magnitude (M7 §1) — and this project's own ranking used the same form, re-anchored on
-H26's achieved 31.44 m s⁻¹ at K = 12.01 (M7 §2). Running one injection-gated pipeline across
-eleven archival systems shows that axis is not the binding one: companions of similar
-brightness differ by four orders of magnitude in delivered velocity scatter.
+H26's achieved 31.44 m s⁻¹ at K = 12.01 (M7 §2). The nominal eleven-system application was
+later narrowed by the HiRISE mode and spatial-resolution audits, so it is not a homogeneous
+pipeline sample. Among the remaining diagnostic reductions, brightness alone still does not
+order delivered velocity scatter.
 
 Finding what *is* binding took four attempts, and the failures are part of the result. A
 contrast threshold was asserted for several milestones before anyone computed the ratios;
 computed, they moved, and one was contradicted by 2.4 mag by the discovery photometry.
 Contrast alone then failed to order the outcomes, and so did separation alone. A combination,
-S = contrast/θ², ordered them but could not be tested. What settled it was not a better
-statistic but a measurement nobody had made: **the resolution each observation actually
+S = contrast/θ², ordered them but could not be tested. What settled the classification in
+this project was not a better statistic but a measurement it had not yet made: **the resolution each observation actually
 delivered**, read off the spatial profile the pipeline already writes. This note reports two
 gates in series — a geometric one that decides whether a companion spectrum exists at all
 (§§3–6), and a contrast one that governs its quality and remains untested (§8) — and then the
@@ -74,18 +75,21 @@ instrument requirement that follows (§9) and the regime where neither gate appl
 All spectra are public ESO archive holdings. RVs are extracted with `viper` (Köhler et al.
 2025) in gas-cell-free CRIRES+ mode, forward-modelling each order against a telluric-free
 template built from the target's own observations; reductions use `cr2res` 1.6.10, from raw
-frames where required, and reproduce ESO's archived products to 42 m s⁻¹ in the final RV
+frames where required, and match ESO's archived products to 42 m s⁻¹ in the final RV
 (M12 §9b). No published RV truth exists off CD-35 2722 B, so signal injection carries the
 validation burden for the velocities: every series below had to transmit an injected
 Keplerian — imposed by shifting the template, never the observation — at both a loud and an
 amplitude-matched semi-amplitude (M12 §8.1, M20 §1). §5 is about what that gate does *not*
-cover.
+cover. Because the template is already built before it is shifted, the gate validates
+fitter-stage transmission but not possible absorption during self-template construction;
+that latter failure mode is externally bounded only for CD-35 2722 B (M28 §6.2).
 
 **Nodding only.** Every dataset this project had classified as "staring-mode" turned out to
 be **HiRISE**: fibre-fed SPHERE→CRIRES+ observations (`ESO INS MODE = HIRISE`), reduced by us
 through a slit recipe. Three ledgered verdicts were retracted (queue, HiRISE banner; LESSONS
-trap 1.10). Nodding conclusions stand; the fibre tier is provisional pending a
-fibre-appropriate reduction (M27) and appears here only where noted.
+trap 1.10). The M27 mode audit did not by itself invalidate the nodding reductions, but their
+separate spatial, quality-screen and validation qualifications still apply. The fibre tier is
+provisional pending a fibre-appropriate reduction (M27) and appears here only where noted.
 
 **Every separation is sourced.** The values this project quoted were, until this milestone,
 mostly unsourced — and a guessed separation is exactly what invalidates the analysis below.
@@ -133,7 +137,7 @@ nothing is modelled or assumed. The classification rule was fixed before the swe
 **R < 1 means the pair lies within one resolution element, so the extraction describes the
 host, whatever the pipeline was told to call it.**
 
-The same profile yields a second, independent diagnostic: its **height at the companion's
+The same profile yields a second diagnostic: its **height at the companion's
 offset**, the quantity that flagged HD 4747 B. R comes from the profile's width, the wing
 from its height somewhere else; they share no arithmetic.
 
@@ -152,7 +156,7 @@ resolution elements it is trivial.
 | target | sep. | delivered PSF | orders | **R** | wing | class | ledger verdict |
 |---|---:|---:|---:|---:|---:|---|---|
 | η Tel B | 4.210″ | 0.374″ | 367 | **11.26** | 0.00 | resolved | NULL, injection-gated (M15) |
-| CD-35 2722 B | 2.800″ | 0.263″ | 283 | **10.64** | 0.00 | resolved | CONFIRMED, 70–90 m s⁻¹ (M14) |
+| CD-35 2722 B | 2.800″ | 0.263″ | 283 | **10.64** | 0.00 | resolved | screened recovery, 70–90 m s⁻¹; all 18 fail (M14/M37) |
 | 2M0103AB b | 1.764″ | 0.986″ | 10 | **1.79** | 0.02 | resolved | clean, ~53 m s⁻¹ (queue) |
 | YSES 1 b | 1.698″ | 1.197″ | 24 | **1.42** | 0.12 | resolved | clean, 34 m s⁻¹ (queue) |
 | HIP 81208 B | 0.325″ | 0.246″ | 32 | **1.32** | 0.15 | resolved | clean, 124 m s⁻¹ (queue) |
@@ -173,10 +177,11 @@ quoted, it was not read off the data.
 settings, gates 100–102%, epochs banked". At R = 0.52 with a wing of 0.63 the pair is
 unresolved: the spectrum is the host's, and the verdict is not a companion measurement.
 
-**Four verdicts are confirmed as genuine companion measurements** — CD-35 2722 B, η Tel B,
-YSES 1 b and HIP 81208 B, at R from 1.32 to 11.26, with 2M0103AB b's at-risk entry clearing
-at R = 1.79 and a wing of 0.02. Every claim this project rests on survives the check: the
-detection, the η Tel B limit, and the two best-precision series.
+**Five extractions remain spatially eligible as companion measurements** — CD-35 2722 B,
+η Tel B, YSES 1 b, HIP 81208 B and 2M0103AB b, at R from 1.32 to 11.26. This geometric check
+does not confirm their scientific verdicts: CD-35's recovery is conditional on its 17-night
+screen and fails with all 18 nights, while η Tel B's sensitivity is grid-pointwise and
+conditional on fitter-stage transmission.
 
 Four limitations belong with the table. PDS 70 is absent, because its H-band nights were
 never reduced (blocked on an order-mapping quirk), so the one system that plausibly fails by
@@ -241,7 +246,7 @@ Three consequences survive intact and are strengthened by having a mechanism:
    because there is nothing to unmask.
 3. **The signature is cheap to test for in advance**: km s⁻¹ epoch scatter with high injection
    transmission, a strong RV–BERV correlation, and candidate periodicities that vanish under a
-   BERV covariate. Two independent reductions of β Pic b give ΔBIC −1.8 and −1.7 at the period
+   BERV covariate. Two reduction routes for β Pic b give ΔBIC −1.8 and −1.7 at the period
    where CD-35 2722 B gives +27.9 (M28 §1): no periodic content at all. The profile check of
    §3 is cheaper still, and diagnostic rather than suggestive.
 
@@ -407,13 +412,15 @@ that may be untestable at a slit — and for an isolated target neither uncertai
 both are irrelevant.
 
 What is *unchanged* is what makes the measurement possible: a young, self-luminous object
-radiating its own K ≈ 12–15 infrared spectrum, of the class this project measured eleven
-times. The telluric wavelength reference, the template built from the target's own data and
-the injection test are all host-independent.
+radiating its own K ≈ 12–15 infrared spectrum. This project attempted that class across a
+nominal eleven-system roster, but the audits above leave a smaller set of valid resolved
+reductions. The telluric wavelength reference, the template built from the target's own data
+and the fitter-stage injection test are all host-independent.
 
 **The reach, from measured numbers.** On η Tel B, a ~47 M_Jup host, 20 archival epochs over
-815 d at 127–130 m s⁻¹ exclude companions of 0.51–1.27 M_Jup across *P* = 20–300 d, at
-injection transmission 99–101 ± 1%. Nothing in that chain used the host star. We anchor on
+815 d at 127–130 m s⁻¹ give circular-orbit, grid-pointwise 90%-completeness thresholds of
+0.51–1.27 M_Jup across *P* = 20–300 d, conditional on 99–101 ± 1% fitter-stage injection
+transmission. Nothing in that chain used the host star. We anchor on
 this target rather than on the deeper archival limit we also hold for HIP 65426 b, because
 those five nights belong to another group's active programme; that limit is not reported here.
 The per-epoch precisions behind such a limit — all injection-gated, all on resolved
@@ -463,15 +470,16 @@ the noise, not the occurrence rate.
    roster is 0.54 < R_crit < 1.32.
 2. **Read the slit function before believing any verdict.** A blended extraction passes
    injection gates, improves per-epoch precision and improves across-order dispersion. One
-   verdict here was withdrawn on this basis; four survived it.
+   verdict here was withdrawn on this basis; five extractions remained spatially eligible,
+   which is not the same as confirming their scientific claims.
 3. **Specify the delivered PSF in the observing block**, not the separation. The spread across
    this roster is 0.246–1.514″.
 4. **Treat the contrast gate as open.** It applies only above R ≈ 1, it is untested, and every
    system that would test it is blended — possibly making it untestable at a slit.
 5. **Where the pair is unresolved, a fibre feed or an interferometer is not an improvement but
    a requirement.** Public HiRISE nights on β Pic b already exist.
-6. **And point some of it at objects with no host at all**, where neither gate applies and the
-   measured precisions transfer unchanged.
+6. **And test objects with no host at all**, where neither gate applies. Measure their precision
+   empirically rather than assuming the resolved-companion values transfer unchanged.
 
 ---
 
@@ -482,12 +490,12 @@ calibration, the sourcing and blending audits, and the drafting of this note —
 out by AI agents (Claude, Anthropic, running in Claude Code), directed and reviewed by the
 human author, who set the research questions, challenged the agents' claims, made every
 decision with external consequences, and takes sole responsibility for all content.
-Verification is primarily mechanical rather than expert-audited: every adopted pipeline change
-was scored against an external reference and required signal-injection recovery; positive
-controls preceded every null. Dead ends and retractions remain in the public record, including
+Verification is primarily mechanical rather than expert-audited: adopted extraction changes
+were scored against an external reference and required fitter-stage signal-injection recovery
+after template construction; valid nulls were conditioned on positive controls. Dead ends and retractions remain in the public record, including
 the three superseded framings of this note's organising variable and the verdict withdrawn in
-§4. Based on data obtained from the ESO Science Archive Facility. This document reports an
-independent analysis and is not affiliated with or endorsed by the authors of any work
+§4. Based on data obtained from the ESO Science Archive Facility. This document reports a
+separately authored analysis and is not affiliated with or endorsed by the authors of any work
 discussed.
 
 ## Data and code availability
@@ -497,7 +505,13 @@ converter, injection harness, the delivered-PSF measurement (`scripts/m29_psf.py
 blending sweep (`scripts/m29_blend.py`), the slit-function contamination bound
 (`scripts/injection/m28_contam.py`), the contrast-axis tests (`scripts/m29_wallaxis.py`,
 `scripts/m29_wallpredict.py`) and the feasibility relations of §10 (`src/exosat_rv/`) — lives
-in the project repository, with the milestone documents cited inline throughout.
+in the project repository, with the milestone documents cited inline throughout. The adopted
+M14/M15 RV, per-order/BERV, parameter and target products, the VIPER configuration and tracked
+source patch observed in the audited checkout, and a hash manifest are frozen in `data/repro/`
+for downstream replay. That configuration records checkout state only; it does not prove which
+configuration governed the historical extraction runs. Raw/reduced spectra and fitted
+templates remain external to Git; templates and the FTS atlas are hash-bound, so the repository
+alone does not replay raw exposures through template construction.
 
 ## References
 
@@ -559,9 +573,10 @@ Items for the author; everything else traces to a numbered milestone document or
    GRAVITY astrometry the correction depends on is Kral et al.'s.
 2. ~~**Publication priority on HIP 65426 b.**~~ — **RESOLVED BY REMOVING THE DEPENDENCY (M33).**
    Rather than decide whether to publish a headline from another group's active-programme
-   nights, the reach argument is now anchored on **η Tel B**, which this project owns outright
-   and is publishing separately. The relation reproduces its measured limits at
-   *P* = 20/120/200 d to within **1.3–1.5× and on the conservative side**, so the anchor is
+   nights, the reach argument is now anchored on **η Tel B**, which uses public archival data
+   and has a separate internal draft. The relation matches its grid-pointwise,
+   fitter-stage-conditional sensitivity thresholds at *P* = 20/120/200 d to within
+   **1.3–1.5× and on the conservative side**, so the anchor is
    better constrained than before — three periods instead of one — and the HIP 65426 b limit is
    explicitly not reported. No permission is now required from anyone.
 3. ~~**The delivered-PSF measurement.**~~ — **TESTED AND PASSED (M33,

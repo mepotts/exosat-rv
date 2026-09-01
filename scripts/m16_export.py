@@ -1,6 +1,7 @@
 """Export the final M14/M15 series + blind-search landscapes to CSVs for the paper.
 
-Runs in WSL (reads ~/viper-src rvo files), writes to data/export/ on the repo side.
+Reads the audited M37 evidence tables committed under ``data/repro`` and writes to
+``data/export``.  No external VIPER checkout is needed for this downstream step.
 
 Products:
   cd35_series.csv       binned per-nodding nights (NODT2): bjd, rv_med, rv_mean, pub, epub
@@ -9,6 +10,7 @@ Products:
   etatel_landscape.csv  dBIC(P) with/without BERV (median combine, screened)
 """
 import os
+
 _ROOT = os.environ.get("EXOSAT_ROOT") or os.path.abspath(
     os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 import sys
@@ -17,10 +19,11 @@ import numpy as np
 
 SC = _ROOT + "/scripts/injection"
 sys.path.insert(0, SC)
-from vs_published import load, published  # noqa: E402
-from m14_score import bin_frames  # noqa: E402
+from m14_score import bin_frames
+from vs_published import load, published
 
 OUT = _ROOT + "/data/export"
+EVIDENCE = _ROOT + "/data/repro/viper/results"
 os.makedirs(OUT, exist_ok=True)
 
 
@@ -61,7 +64,7 @@ def landscape(t, y, berv=None, lo=5, hi=460, n=3000):
 
 
 # ---- CD-35: NODT2 binned, matched to published ----
-t, med, mean, spread, berv = series(os.path.expanduser("~/viper-src/M14_NODT2.rvo.dat"))
+t, med, mean, spread, berv = series(EVIDENCE + "/M14_NODT2.rvo.dat")
 pb, pv, pe = published()
 rows = []
 for i, tt in enumerate(t):
@@ -71,8 +74,7 @@ for i, tt in enumerate(t):
                  pv[j] if match else np.nan, pe[j] if match else np.nan))
 with open(f"{OUT}/cd35_series.csv", "w") as f:
     f.write("bjd,rv_med,rv_mean,spread,pub,epub\n")
-    for r in rows:
-        f.write(",".join(f"{x:.3f}" for x in r) + "\n")
+    f.writelines(",".join(f"{x:.3f}" for x in r) + "\n" for r in rows)
 print(f"cd35_series: {len(rows)} nights")
 
 keep = spread <= 3 * np.nanmedian(spread)
@@ -80,12 +82,11 @@ P, d0 = landscape(t[keep], mean[keep])
 _, d1 = landscape(t[keep], mean[keep], berv[keep])
 with open(f"{OUT}/cd35_landscape.csv", "w") as f:
     f.write("P_d,dbic,dbic_berv\n")
-    for a, b, c2 in zip(P, d0, d1):
-        f.write(f"{a:.4f},{b:.3f},{c2:.3f}\n")
+    f.writelines(f"{a:.4f},{b:.3f},{c2:.3f}\n" for a, b, c2 in zip(P, d0, d1))
 print("cd35_landscape written")
 
 # ---- eta Tel: E15_NOD binned ----
-t, med, mean, spread, berv = series(os.path.expanduser("~/viper-src/E15_NOD.rvo.dat"))
+t, med, mean, spread, berv = series(EVIDENCE + "/E15_NOD.rvo.dat")
 keep = spread <= 3 * np.nanmedian(spread)
 with open(f"{OUT}/etatel_series.csv", "w") as f:
     f.write("bjd,rv_med,rv_mean,spread,kept\n")
@@ -97,6 +98,5 @@ P, d0 = landscape(t[keep], med[keep])
 _, d1 = landscape(t[keep], med[keep], berv[keep])
 with open(f"{OUT}/etatel_landscape.csv", "w") as f:
     f.write("P_d,dbic,dbic_berv\n")
-    for a, b, c2 in zip(P, d0, d1):
-        f.write(f"{a:.4f},{b:.3f},{c2:.3f}\n")
+    f.writelines(f"{a:.4f},{b:.3f},{c2:.3f}\n" for a, b, c2 in zip(P, d0, d1))
 print("etatel_landscape written")

@@ -12,9 +12,13 @@ and amplitude grid than M15 used (12 phases -> 36, 8 amplitudes -> 19).
 Null realizations permute the real series against fixed epoch times: signal-free by
 construction, with the true sampling, value distribution and window function preserved.
 
-Usage (WSL): python m28_limitcal.py [series.rvo.dat] [--nperm N]
+Usage: python m28_limitcal.py [series.rvo.dat] [--nperm N]
+
+With no series argument, reads the audited M37 copy under ``data/repro``.
 """
+import argparse
 import os
+
 _ROOT = os.environ.get("EXOSAT_ROOT") or os.path.abspath(
     os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
 import sys
@@ -23,7 +27,7 @@ import numpy as np
 
 SC = _ROOT + "/scripts/injection"
 sys.path.insert(0, SC)
-from vs_published import load  # noqa: E402
+from vs_published import load
 
 G = 6.674e-11
 MJUP = 1.898e27
@@ -80,10 +84,13 @@ def msini_mjup(K, P_days):
 
 
 def main():
-    path = next((a for a in sys.argv[1:] if not a.startswith("--")), "E15_R2.rvo.dat")
-    nperm = 2000
-    if "--nperm" in sys.argv:
-        nperm = int(sys.argv[sys.argv.index("--nperm") + 1])
+    default = os.path.join(_ROOT, "data/repro/viper/results/E15_R2.rvo.dat")
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("series", nargs="?", default=default)
+    parser.add_argument("--nperm", type=int, default=2000)
+    args = parser.parse_args()
+    path = args.series
+    nperm = args.nperm
     t, y = series(path)
     n = len(y)
     grid = np.exp(np.linspace(np.log(5), np.log(460), 2000))

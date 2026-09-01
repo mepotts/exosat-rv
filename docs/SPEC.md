@@ -1,5 +1,12 @@
 # SPEC — exosat-rv
 
+> **Audit status (M37, 2026-08-31):** this file records the project's original motivation,
+> not its current conclusion. The extraction family and order/template choices were developed
+> with the paper visible, and the near-171-day peak is strong only after the project's internal
+> 17-of-18-night screen. With all 18 nights, the BERV-adjusted global searches are compatible
+> with noise. The project is therefore a conditional, paper-calibrated audit—not an independent
+> reproduction. See [`milestones/M37-RESULTS.md`](milestones/M37-RESULTS.md).
+
 ## The claim under test
 
 Hoy et al. 2026, *Planetary-Mass Exosatellite Detected Around the Substellar Companion of a
@@ -38,15 +45,16 @@ separation are**:
 
 ## What this project is
 
-**An independent reproduction, not a re-run.** Three things make it worth doing:
+**A separately implemented, paper-calibrated audit—not an independent reproduction.** Three
+things motivated it:
 
 1. **The dataset is public.** M0 measured that the preprint's 20 epochs are exactly the 20
    public H-band CRIRES+ nights, and 17 of them already exist as ESO pipeline-reduced 1-D
    spectra. The reproduction is not gated on telescope time or on rebuilding cr2res.
-2. **The inference can be made genuinely independent.** The paper used `EMPEROR`; this uses
-   `radvel`. Extraction still uses the paper's own `viper` — forward-modelling RV
-   extraction is not credibly reimplemented — so independence is claimed at the inference
-   stage only, and claimed no more broadly than that.
+2. **The inference machinery can be compared, but not treated as a clean replication.** The
+   paper used `EMPEROR`; this project tested `radvel`/`dynesty` under its own models and priors.
+   It did not run EMPEROR, and extraction choices were calibrated with the published RVs
+   visible. Results therefore apply only to the implementations actually run here.
 3. **There is a real open question in the data, and the paper names it.** The *existence*
    of a second satellite is reasonably supported (delta-log-Z = 6.9 over an eccentric
    one-satellite model). Its *period* is not. The preprint states outright:

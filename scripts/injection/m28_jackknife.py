@@ -1,13 +1,16 @@
 """M28: leave-one-out robustness of the CD-35 2722 B period detection.
 
 A referee's first question about a 17-epoch detection is whether one night carries it.
-This drops each epoch in turn and re-runs the identical blind search (median combine,
+This drops each epoch in turn and re-runs the same target-aware search (median combine,
 internal screen already applied, with and without the BERV covariate), reporting the
 peak period and dBIC each time.
 
-Usage (WSL): python m28_jackknife.py [series.rvo.dat]
+Usage: python m28_jackknife.py [series.rvo.dat]
+
+With no argument, reads the audited M37 copy under ``data/repro``.
 """
 import os
+
 _ROOT = os.environ.get("EXOSAT_ROOT") or os.path.abspath(
     os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
 import sys
@@ -16,7 +19,7 @@ import numpy as np
 
 SC = _ROOT + "/scripts/injection"
 sys.path.insert(0, SC)
-from m28_nullcal import series, qr_bank, landscape, P_REF, LOG_TOL  # noqa: E402
+from m28_nullcal import LOG_TOL, P_REF, landscape, qr_bank, series
 
 
 def peak(t, y, berv, grid, use_berv):
@@ -31,15 +34,16 @@ def peak(t, y, berv, grid, use_berv):
 
 
 def main():
-    path = sys.argv[1] if len(sys.argv) > 1 else "M14_NODT2.rvo.dat"
-    t, med, clip, berv, bad, _ = series(path)
+    default = os.path.join(_ROOT, "data/repro/viper/results/M14_NODT2.rvo.dat")
+    path = sys.argv[1] if len(sys.argv) > 1 else default
+    t, med, _clip, berv, bad, _ = series(path)
     keep = ~bad if bad.any() else np.ones(len(t), bool)
     t, y, berv = t[keep], med[keep], berv[keep]
     grid = np.exp(np.linspace(np.log(5), np.log(460), 4000))
     n = len(t)
     print(f"# leave-one-out on {path}: n={n}, median combine, internal screen applied")
-    P0, d0, r0 = peak(t, y, berv, grid, False)
-    P1, d1, r1 = peak(t, y, berv, grid, True)
+    P0, d0, _r0 = peak(t, y, berv, grid, False)
+    P1, d1, _r1 = peak(t, y, berv, grid, True)
     print(f"# full series: plain peak P={P0:.2f} dBIC={d0:+.2f} | "
           f"+BERV peak P={P1:.2f} dBIC={d1:+.2f}\n")
     print(f"# {'dropped':>10s} {'BJD-2460000':>12s} | {'plainP':>8s} {'plaindBIC':>10s} "

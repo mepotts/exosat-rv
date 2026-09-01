@@ -1,5 +1,12 @@
 # M14 — The flip survives nested sampling, the drift floor closes, and the blind search finds the satellite through the BERV confound
 
+> **Audit correction (M37, 2026-08-31):** the period result below is conditional on the
+> internal quality screen. With all 18 nights, the BERV-adjusted global search is compatible
+> with noise; the leave-one-out result applies only after the rejected night is removed. The
+> extraction choices were calibrated with the published RV series visible, and shifted-template
+> injections validate fitter-stage transmission rather than template construction. Read M37
+> before quoting this milestone's “blind” or “reproduction” language.
+
 **Question:** M13 left two successors. (a) Does §5's second-satellite evidence flip
 (BIC/2 proxy −0.51 vs the paper's +2.622) survive a real evidence integral? (b) Can the
 night-to-night per-order drift floor (147–218 m/s vs the paper's 57.68) be closed to

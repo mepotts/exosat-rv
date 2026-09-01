@@ -1,7 +1,13 @@
 # M36 — Pre-registration: select the extraction configuration by injection recovery alone
 
-**Status: PROTOCOL. Nothing has been run. Written and committed before any result exists,
-which is the only thing that makes it a pre-registration.**
+**Historical status at registration: PROTOCOL. When this text was committed, nothing had
+been run and no result existed; that timing is what made it a pre-registration.**
+
+> **Post-audit note (M37, 2026-08-31):** this historical protocol was executed, but not as
+> specified. It also failed its paper-blind premise because the registered injection plan
+> encodes the published 171.454-day orbit and the search script uses published epochs and a
+> hard-coded published-period window. See `M37-RESULTS.md`; do not execute this protocol as a
+> current preregistration.
 
 `M34-RESULTS.md` §3 names this as "the cleanest available strengthening of the reproduction",
 and it is the last open experiment in the project that could change what Paper I is entitled to

@@ -1,5 +1,11 @@
 # M17 — The K-band spot-checks: first RVs of three more objects, and beta Pic b says the exomoon regime is reachable
 
+> **Superseded verdict (M29/M37):** the beta Pic slit spectrum is unresolved and
+> host-dominated, so its precision is not a beta Pic b RV measurement and cannot establish
+> exomoon reach. The later audit also withdrew the cross-observing-mode transfer claim after
+> the supposed staring data were identified as HiRISE fibre observations reduced with a slit
+> recipe. This document is retained as the historical path to those corrections.
+
 **Question:** what does the validated recipe return on the tier-2 targets — the ones
 with some archival data but not enough for an orbit (docs/target-queue.md)?
 

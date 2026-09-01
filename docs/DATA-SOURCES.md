@@ -2,6 +2,19 @@
 
 Every endpoint below is anonymous-access. No credentials exist anywhere in this repository.
 
+## Committed derived evidence (M37)
+
+`data/repro/` contains the small adopted VIPER RV tables, per-order parameter tables, target
+sidecars, the configuration found in the audited checkout, and its tracked patch. The
+machine-readable manifest records byte counts and SHA-256 hashes; it also fingerprints the
+fitted templates and H-band FTS atlas that remain external. Run
+`python scripts/m37_package_evidence.py --verify` for an offline integrity check.
+
+This is a **derived downstream evidence bundle**, not a new archive endpoint and not a
+raw-data snapshot. ESO exposures, CR2RES products, fitted-template FITS files, and the
+historical run environment are not included. See `data/repro/README.md` and M37 for the exact
+boundary. Raw ESO data remain discoverable through the endpoints below.
+
 ---
 
 ## ESO Science Archive — TAP

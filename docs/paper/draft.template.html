@@ -1,4 +1,4 @@
-<title>CD-35 2722 B: reproduction and second-companion re-examination — draft</title>
+<title>CD-35 2722 B: paper-calibrated reanalysis and second-companion re-examination — draft</title>
 <style>
   /* ------------------------------------------------------------------------
      Journal typography, modelled on the AASTeX / A&A / MNRAS two-column page.
@@ -242,38 +242,39 @@
 </style>
 
 <div class="sheet">
-  <div class="draftbar">Draft · internal reproduction report · not submitted</div>
+  <div class="draftbar">Draft · internal reanalysis report · not submitted</div>
 
-  <h1>An independent reproduction of the CD&#8209;35&nbsp;2722&nbsp;B exosatellite from raw archival data, and a re&#8209;examination of the evidence for a second companion</h1>
-  <p class="byline"><b>Matthew Potts</b> · independent analysis</p>
-  <p class="dateline">11 August 2026 · figure-by-figure appendix added 12 August 2026 · reproduces Hoy et al. (2026), <em>Nature</em> · all data from the public ESO archive</p>
+  <h1>A from&#8209;raw, paper&#8209;calibrated reanalysis of the CD&#8209;35&nbsp;2722&nbsp;B exosatellite, and a re&#8209;examination of the evidence for a second companion</h1>
+  <p class="byline"><b>Matthew Potts</b> · unaffiliated analysis</p>
+  <p class="dateline">11 August 2026 · figure-by-figure appendix added 12 August 2026 · audit revision 31 August 2026 · reanalyses Hoy et al. (2026), <em>Nature</em> · all data from the public ESO archive</p>
 
   <div class="abstract">
     <div class="eyebrow">Abstract</div>
     <p>
     Hoy et al. (2026) report the radial-velocity detection of a ~0.9 M<sub>Jup</sub>
     companion to the young brown dwarf CD-35 2722 B, with tentative evidence for a second,
-    smaller companion. Starting from the raw CRIRES+ frames in the ESO archive and an
-    independently configured extraction (cr2res 1.6.10 + viper), we reproduce the primary
-    detection blind: a period search with no reference to the published values finds
-    P&nbsp;≈&nbsp;169–171&nbsp;d as the top peak (ΔBIC&nbsp;+40), and the detection survives a
-    barycentric-correction nuisance term (ΔBIC&nbsp;+25 to +28) despite the strong
-    phase–BERV degeneracy of the epoch sampling. Three further tests place it: a
-    permutation null on the true cadence gives a false-alarm probability of
-    5×10<sup>−4</sup>; all seventeen leave-one-out subsets return the same period; and the
-    signal is absent from every other companion series reduced identically here, including
-    η&nbsp;Tel&nbsp;B on the same instrument setting over a longer baseline — so the period
-    is a property of the object, not of the observing calendar. Our per-epoch precision
-    reaches 70–90&nbsp;m&nbsp;s<sup>−1</sup> against the published 57.7, and our
-    semi-amplitude runs high by +19 to +34% (regression slope) or +39 to +54% (direct fit)
-    — a hint, entangled with the same degeneracy, that we do not claim. The
-    second companion does not reproduce: on the published <em>Nature</em> RV table itself,
-    nested-sampling model comparison disfavours the two-companion model in every prior
-    family tried. The discrepancy is not a matter of sampler settings: across 82 runs the
-    run-to-run scatter of such an evidence integral is 1.1&ndash;8.1&times; larger than the
-    uncertainty a single run reports internally, and raising the live-point count widens
-    that gap rather than closing it — so an evidence difference of the published size is
-    within the reproducibility of the method that produced it.
+    smaller companion. Starting from the raw CRIRES+ frames in the ESO archive, we use a
+    separately implemented extraction (cr2res 1.6.10 + viper) whose orders, template
+    iteration and other configuration choices were calibrated with the published RV series
+    visible. A downstream period search whose fits do not ingest the published RV values,
+    but whose historical driver is target- and paper-aware, recovers
+    P&nbsp;≈&nbsp;169–171&nbsp;d as the top peak on the 17 nights retained by an internal
+    across-order-spread screen (ΔBIC&nbsp;+40), and the peak survives a
+    barycentric-correction nuisance term (ΔBIC&nbsp;+25 to +28). With all 18 archival nights,
+    however, the search degrades to noise; the quality exclusion is objective but
+    load-bearing, and the 17/17 leave-one-out result is conditional on it. A
+    5000-permutation null with BERV included gives a nominal global <i>p</i> of about
+    0.002–0.008; without BERV the range is about 0.0002–0.0006. These values assume
+    exchangeability of the fitted base-model residuals and are conditional on the post-hoc
+    screen, so they are not confirmatory false-alarm probabilities. The same-setting η&nbsp;Tel&nbsp;B
+    control has no 171 d power, arguing against a shared observing-calendar origin. Our
+    per-epoch precision reaches 70–90&nbsp;m&nbsp;s<sup>−1</sup> against the published 57.7,
+    and our semi-amplitude runs high by +19 to +34% (regression slope) or +39 to +54%
+    (direct fit), which we do not interpret. On the published <em>Nature</em> RV table, the
+    two-companion model is not favoured under any model/prior configuration tested here:
+    81 of 82 paired evidence comparisons are negative. This establishes non-reproduction
+    under our stated likelihoods and priors; our dynesty seed scatter does not measure the
+    reproducibility of the authors' different sampler.
     </p>
   </div>
 
@@ -312,19 +313,19 @@
   testing carefully rather than taking on trust.
   </p>
   <p>
-  A detection of this kind is worth reproducing end to end: the claimed amplitude sits far
+  A detection of this kind is worth reanalysing from raw data: the claimed amplitude sits far
   below the per-spectrum noise, the epoch sampling entangles the orbital phase with the
   barycentric correction (§4), and the published evidence for the second companion moved
   substantially between the preprint and the accepted version. This draft reports
-  (i)&nbsp;a from-raw, independently configured reproduction of the
+  (i)&nbsp;a from-raw, separately implemented but paper-calibrated extraction of the
   <span class="them">H26</span> measurement (§2–4, Figs.&nbsp;1–3), (ii)&nbsp;a
   re-examination of the two-companion evidence on the published RV table
-  (§5, Table&nbsp;3). Every stage is validated by
+  (§5, Table&nbsp;3). Fitter-stage velocity transmission is tested by
   signal injection rather than by internal fit statistics; the distinction turns out to
   matter (§6). §7 then rebuilds the whole comparison in
   <span class="them">H26</span>'s own order — one figure of ours for each figure of
   theirs (Figs.&nbsp;4–11, Table&nbsp;4) — for readers who want to check the
-  reproduction panel by panel rather than argument by argument.
+  comparison panel by panel rather than argument by argument.
   </p>
 
   <h2><span class="no">2</span>Data and reduction</h2>
@@ -334,13 +335,13 @@
   epoch was re-reduced from the raw frames with the same pipeline version as
   <span class="them">H26</span> (cr2res 1.6.10; <code>cal_dark → cal_flat → cal_wave →
   obs_nodding</code>), keeping the two nodding positions as separate spectra — the
-  extraction <span class="them">H26</span> favour. Our from-raw reduction reproduces
+  extraction <span class="them">H26</span> favour. Our from-raw reduction matches
   ESO's archived combined products to 42&nbsp;m&nbsp;s<sup>−1</sup> in the final RV.
   The same cascade was run on all 20 public H1567 epochs of η&nbsp;Tel&nbsp;B
   (2023 May – 2025 Aug; programmes 111.24M0, 113.268Y, 115.287U), which serve here as
   the common-mode control of §5 — the same instrument setting and a longer baseline,
   so a period intrinsic to the observing calendar rather than to CD-35 2722 B would
-  appear in both. Those data also support a first radial-velocity limit on
+  appear in both. Those data also support a radial-velocity limit on
   η&nbsp;Tel&nbsp;B itself, reported separately.
   </p>
 
@@ -352,10 +353,10 @@
   Table&nbsp;1 lists their stated choices beside the configuration adopted here and how
   each element was fixed. Three elements deserve note. The eleven spectral orders were
   recovered by mapping the paper's order labels through a pre-2024 change in viper's
-  CRIRES+ order numbering, and independently confirmed by the paper's own selection
+  CRIRES+ order numbering, and separately cross-checked against the paper's own selection
   criterion (telluric line density) and by head-to-head scoring. The stellar template
   requires two build iterations, as <span class="them">H26</span> state; we find the
-  second iteration is <em>decisive</em> — without it the blind detection of §4 fails its
+  second iteration is <em>decisive</em> — without it the screened period result of §4 fails its
   robustness test. Template oversampling and the instrumental-profile model are
   unstated in <span class="them">H26</span>; a sweep fixes oversampling at 2 and shows
   the IP choice to be degenerate at this signal-to-noise.
@@ -363,7 +364,7 @@
 
   <div class="tablewrap">
   <table>
-    <caption><b>Table 1.</b> Extraction configuration: as stated by <span class="them">H26</span>, and as adopted here. The scoring metric for every choice was the rms against the published RV series; every adopted change was additionally required to pass signal-injection recovery (shift the template, re-run the full fit per epoch).</caption>
+    <caption><b>Table 1.</b> Extraction configuration: as stated by <span class="them">H26</span>, and as adopted here. The scoring metric for every choice was the rms against the published RV series; every adopted change was additionally required to pass fitter-stage signal-injection recovery (shift the already-built template, re-run the RV fit per epoch).</caption>
     <thead><tr>
       <th>element</th><th>H26 (stated)</th><th>this work (adopted)</th><th>fixed by</th>
     </tr></thead>
@@ -381,37 +382,52 @@
   </table>
   </div>
 
-  <h3>3.1 Validation by injection, not by fit statistics</h3>
+  <h3>3.1 Fitter-stage validation by injection, not by fit statistics</h3>
   <p>
   Self-built templates can absorb the very signal being measured; on the known binary
   GJ&nbsp;229&nbsp;B, one template-iteration recipe recovered only 41% of a known
   amplitude. Every configuration adopted here was therefore required to transmit an
-  injected Keplerian — imposed by shifting the <em>template</em> per epoch, never the
-  observation, and re-running the full fit — at both K&nbsp;=&nbsp;1530 and an
+  injected Keplerian — imposed by shifting the <em>already-built template</em> per epoch,
+  never the observation, and re-running the RV fit — at both K&nbsp;=&nbsp;1530 and an
   amplitude-matched K&nbsp;≈&nbsp;306&nbsp;m&nbsp;s<sup>−1</sup>. The final CD-35
   configuration recovers 105&nbsp;±&nbsp;4% (all eleven orders individually at
   92–112%), with the core orders linear at the matched amplitude to 2–8%. The final
   η&nbsp;Tel&nbsp;B configuration recovers 99–101&nbsp;±&nbsp;1%.
   </p>
+  <p>
+  This gate begins <em>after</em> template construction. It answers “given this template,
+  does the fitter transmit velocity?”, not “would constructing the template from data that
+  contain a real orbit absorb part of that orbit?”. The external comparison to the published
+  CD-35 series bounds that second failure mode only for CD-35; η&nbsp;Tel&nbsp;B has no equivalent
+  external check. These injections therefore validate fitter-stage transmission, not the
+  full self-templating pipeline.
+  </p>
 
-  <h2><span class="no">4</span>CD-35 2722 B: the companion reproduces</h2>
+  <h2><span class="no">4</span>CD-35 2722 B: the screened series recovers the signal</h2>
   <p>
   Figure&nbsp;1 shows our binned per-nodding series against the published table: 17
   usable archival nights match, with rms difference 90&nbsp;m&nbsp;s<sup>−1</sup>
   (mean order combine; 70–76 with per-order centering and robust combines) against the
   published per-epoch precision of 57.7. One archival night (BJD&nbsp;2460604.8) is
   excluded by an internal quality screen — its across-order scatter is 7× the median
-  night's — and is, independently, the one archival epoch absent from the published
-  table. Figure&nbsp;2 folds both series on the published period.
+  night's — and also happens to be the one archival epoch absent from the published
+  table. This exclusion is load-bearing: with all 18 nights included, the period search
+  degrades to noise. The screen identifies an objectively extreme epoch without using the
+  published RV values, but the detection and every subsequent robustness statistic in this
+  section are conditional on the 17-night screened set. Figure&nbsp;2 folds both retained
+  series on the published period.
   </p>
 
   {{FIG1}}
   {{FIG2}}
 
   <p>
-  The conclusion-level test is a blind period search (ΔBIC of a circular Keplerian over
-  a constant, 4000 trial periods, 5–460&nbsp;d) on our series alone
-  (Fig.&nbsp;3, left). The published period family emerges as the top peak
+  The conclusion-level test is a downstream period search (ΔBIC of a circular Keplerian over
+  a constant, 4000 trial periods, 5–460&nbsp;d) on our screened series alone. The fits do not
+  ingest the published RV values, but the historical driver imports the published table to
+  construct the matched subset and reports a hard-coded 171.45-day comparison window; we
+  therefore describe it as target- and paper-aware, not blind (Fig.&nbsp;3, left). The
+  published period family emerges as the top peak
   (P&nbsp;=&nbsp;169–171&nbsp;d, ΔBIC&nbsp;=&nbsp;+40), and — the decisive property —
   <em>survives the addition of a BERV nuisance covariate</em> (ΔBIC&nbsp;=&nbsp;+25 to
   +28, rank 1 in mean, median, and clipped combines, on both extraction routes). This
@@ -443,18 +459,18 @@
 
   <div class="tablewrap">
   <table>
-    <caption><b>Table 2.</b> Headline comparison for CD-35 2722 B. "Blind ΔBIC" is the period-search peak with the BERV covariate included; <span class="them">H26</span> did not publish an equivalent statistic.</caption>
+    <caption><b>Table 2.</b> Headline comparison for CD-35 2722 B. "Search ΔBIC" is the period-search peak with the BERV covariate included; <span class="them">H26</span> did not publish an equivalent statistic.</caption>
     <thead><tr>
       <th>quantity</th><th class="num">H26</th><th class="num">this work</th>
     </tr></thead>
     <tbody>
-      <tr><td class="k">period (d)</td><td class="num">171.11 / 171.45</td><td class="num">169–171 (blind top peak)</td></tr>
+      <tr><td class="k">period (d)</td><td class="num">171.11 / 171.45</td><td class="num">169–171 (search top peak)</td></tr>
       <tr><td class="k">K (m s⁻¹)</td><td class="num">306 ± 18</td><td class="num">426–472 direct; slope 1.19–1.34 (hint only)</td></tr>
       <tr><td class="k">m sin i (M<sub>Jup</sub>)</td><td class="num">0.918</td><td class="num">consistent family; amplitude caveat</td></tr>
       <tr><td class="k">per-epoch precision (m s⁻¹)</td><td class="num">57.7</td><td class="num">70–90</td></tr>
-      <tr><td class="k">epochs</td><td class="num">23 (5–6 still embargoed)</td><td class="num">17 public archival nights</td></tr>
+      <tr><td class="k">epochs</td><td class="num">23 (5–6 still embargoed)</td><td class="num">17 of 18 public archival nights; all 18 fail the robust search</td></tr>
       <tr><td class="k">detection robust to BERV term</td><td class="num">not reported</td><td class="num">yes: ΔBIC +25 to +28, rank 1</td></tr>
-      <tr class="last"><td class="k">permutation false-alarm probability</td><td class="num">not reported</td><td class="num">5×10<sup>−4</sup> (2.5×10<sup>−3</sup> with BERV)</td></tr>
+      <tr class="last"><td class="k">nominal global permutation <i>p</i></td><td class="num">not reported</td><td class="num">plain: 0.0002–0.0006; with BERV: 0.0022–0.0076</td></tr>
     </tbody>
   </table>
   </div>
@@ -465,35 +481,41 @@
   penalty charges for parameters, not for the size of the search. We therefore calibrate
   it against the sampling itself. Holding the epoch times, the BERV column and the value
   distribution fixed, and shuffling the residuals of the base model — signal-free by
-  construction, with the true window function preserved — 2000 realisations give a
-  false-alarm probability of <b>5×10<sup>−4</sup></b> for the plain search and
-  2.5×10<sup>−3</sup> to 5.5×10<sup>−3</sup> once the BERV covariate is included, in every
-  combine. The same null delivers a number worth carrying elsewhere in this field: a
+  construction, with the true window function preserved — 5000 realisations give nominal
+  global permutation <i>p</i>-values of <b>0.0002–0.0006</b> for the plain search and
+  <b>0.0022–0.0076</b> once the BERV covariate is included, across mean, median and clipped
+  combines. They are conditional on exchangeability of the fitted base-model residuals and
+  on a post-hoc quality screen, so they are diagnostic rather than confirmatory false-alarm
+  probabilities. On all 18 nights the corresponding nominal BERV-adjusted values are
+  0.31–0.91, quantifying the screen's leverage. Under the same conditional null, a
   signal-free series with this cadence reaches ΔBIC&nbsp;≈&nbsp;19 as its best peak 5% of
   the time, so peaks in the teens are not evidence — a bar we apply to our own η&nbsp;Tel&nbsp;B
   control series in Table&nbsp;2a as strictly as to <span class="them">H26</span>.
   </p>
   <p>
-  Second, no single night carries the result. Dropping each epoch in turn, all 17
+  Second, within the already-screened sample, no one of the remaining nights carries the
+  result. Dropping each retained epoch in turn, all 17
   leave-one-out subsets return the peak within 6% of 171&nbsp;d, at ΔBIC&nbsp;+38.5 to
   +45.7 without the BERV term and +23.9 to +29.8 with it. The largest single-epoch effect
-  is to <em>raise</em> the significance.
+  is to <em>raise</em> the test statistic.
   </p>
   <p>
   Third — and this is the test that speaks to the phase–BERV degeneracy most directly — the
-  period is not a property of the observing cadence. If ~171&nbsp;d arose from the seasonal
+  control data argue against a period set only by the observing cadence. If ~171&nbsp;d arose from the seasonal
   structure that CRIRES+ companion programmes share, it should recur in other targets
-  reduced identically. It does not. Pushing every companion series in this project through
-  the same recipe (Table&nbsp;2a), <span class="us">η&nbsp;Tel&nbsp;B</span> — the same
+  reduced with the same setting and cadence. It does not. Applying the same search recipe
+  (Table&nbsp;2a), <span class="us">η&nbsp;Tel&nbsp;B</span> — the same
   H1567 setting, the same eleven orders, the same pipeline, overlapping seasons and a
   <em>longer</em> baseline — carries ΔBIC&nbsp;=&nbsp;−3.1 at 171&nbsp;d, and β&nbsp;Pic&nbsp;b
-  returns −1.8 and −1.7 on two independent reductions. The signal is a property of
-  CD-35&nbsp;2722&nbsp;B, not of the calendar.
+  returns −1.8 and −1.7 on two K-band slit reductions, although those unresolved,
+  host-dominated spectra are not a same-setting control. The η&nbsp;Tel result is the clean
+  comparison and argues against, but cannot by itself prove the absence of, a shared
+  calendar systematic.
   </p>
 
   <div class="tablewrap">
   <table>
-    <caption><b>Table 2a.</b> The common-mode test: ΔBIC near 171 d for every series in this project with at least six epochs, identical recipe (median order combine, per-night binning, internal spread screen, BERV covariate included). <i>p</i> is the permutation false-alarm probability.</caption>
+    <caption><b>Table 2a.</b> Comparison at 171 d for the slit-derived series remaining after invalid HiRISE results are excluded (median order combine, per-night binning, internal spread screen, BERV covariate included). η Tel B is the same-setting nodding control; β Pic b is a K-band, unresolved host-dominated comparison and not a planet RV series. <i>p</i> is the historical nominal 2000-permutation reference-window probability, conditional on residual exchangeability, not the 5000-permutation nominal global value quoted above.</caption>
     <thead><tr>
       <th>series</th><th class="num">n</th><th class="num">span (d)</th><th class="num">ΔBIC near 171 d</th><th class="num">p</th>
     </tr></thead>
@@ -502,29 +524,52 @@
       <tr><td class="k">CD-35 2722 B, combined route</td><td class="num">17</td><td class="num">466</td><td class="num good">+23.8</td><td class="num">0.0005</td></tr>
       <tr><td class="k">η Tel B</td><td class="num">17</td><td class="num">815</td><td class="num">−3.1</td><td class="num">0.61</td></tr>
       <tr><td class="k">β Pic b (template v2)</td><td class="num">11</td><td class="num">813</td><td class="num">−1.8</td><td class="num">0.54</td></tr>
-      <tr><td class="k">β Pic b (v3, orders masked)</td><td class="num">11</td><td class="num">813</td><td class="num">−1.7</td><td class="num">0.55</td></tr>
-      <tr class="last"><td class="k">HD 1160 B <i>(41 d baseline — see note)</i></td><td class="num">8</td><td class="num">41</td><td class="num">+9.3</td><td class="num">0.045</td></tr>
+      <tr class="last"><td class="k">β Pic b (v3, orders masked)</td><td class="num">11</td><td class="num">813</td><td class="num">−1.7</td><td class="num">0.55</td></tr>
     </tbody>
   </table>
   </div>
   <p>
-  The HD&nbsp;1160&nbsp;B entry is listed for completeness and is not a counterexample: its
-  baseline is 41&nbsp;days, so a 171&nbsp;d period is an extrapolation four times beyond
-  the data, and the power appears only when the BERV column is added. It supports no claim
-  here or anywhere else in this work.
+  HD&nbsp;1160&nbsp;B is omitted. It was later identified as HiRISE fibre data reduced with the
+  wrong slit recipe, and its earlier 41-day, 171-day extrapolation supports no scientific
+  claim.
   </p>
 
-  <h2><span class="no">5</span>The second companion does not survive its own table</h2>
+  <h3>4.2 Host-star photometry and Gaia catalogue context</h3>
+  <p>
+  A nightly and per-camera ASAS-SN reanalysis finds no coherent host-star modulation at
+  171.454&nbsp;d (nominal night-permutation <i>p</i>&nbsp;=&nbsp;0.13–0.16 across the host/filter
+  rows, conditional on exchangeability of the final camera-corrected night bins). The two
+  source IDs are alternative aperture photometry of the same 2,173
+  timestamp/camera measurements, not independent replications. On nested deterministic grids
+  of 720, 1440 and 2880 phases, the four rows first reach at least 90% phase recovery at
+  K&nbsp;=&nbsp;12/13/12/13&nbsp;mmag; the grid-resolved cross-series threshold is therefore
+  13&nbsp;mmag semiamplitude (26&nbsp;mmag peak to peak). The previously quoted
+  5&nbsp;mmag signal is recovered in only 43.2–44.2% of the finest-grid phases, and the
+  maximum successive-grid fraction change over the curves is &lt;0.0007. These are numerical
+  uniform-phase fractions conditional on one observed-noise realization, the preprocessing and
+  an estimated fixed-period permutation threshold, not binomial confidence bounds. This is a
+  photometric null at that conditional sensitivity, not proof that the RV signal is nonstellar.
+  </p>
+  <p>
+  Gaia DR3 gives the primary RUWE&nbsp;=&nbsp;1.023 and no non-single-star solution. These are
+  useful catalogue checks, but they do not establish that the host is astrometrically
+  unperturbed: the reported astrometric excess noise is 0.099&nbsp;mas and formally significant,
+  and RUWE/NSS alone cannot exclude an unresolved companion. Neither external check is used
+  to raise the RV detection significance.
+  </p>
+
+  <h2><span class="no">5</span>The second companion is not reproduced under the tested models</h2>
   <p>
   <span class="them">H26</span> report lnZ&nbsp;=&nbsp;−144.32&nbsp;±&nbsp;0.70 for a
   one-companion (eccentric) model and −141.70&nbsp;±&nbsp;0.69 for two companions:
   ΔlnZ&nbsp;=&nbsp;+2.62&nbsp;±&nbsp;~1.0 in favour of two. Fitting the same published
   23-epoch table with nested sampling (dynesty; likelihood identical to our fitter,
-  priors symmetric between models), <em>every configuration we tried returns the
+  priors symmetric between models), <em>every configuration mean we obtain has the
   opposite sign</em> (Table&nbsp;3): pinning the periods at the published values, freeing
   them in the paper's own windows, or matching the paper's literal both-eccentric
-  pairing; under uniform, linear-jitter, or log-amplitude priors. Across 82 independent
-  sampler runs, 81 land below zero; the single exception reaches +0.90, still far short
+  pairing; under uniform, linear-jitter, or log-amplitude priors. Across 82 paired
+  model-evidence comparisons (164 nested-sampler invocations), 81 land below zero; the
+  single exception reaches +0.90, still far short
   of the claimed +2.62. The 87.3&nbsp;d period
   <em>choice</em> does reproduce — it beats the 70/115&nbsp;d aliases in both table
   versions, as in <span class="them">H26</span> — but the <em>existence</em> evidence
@@ -537,21 +582,21 @@
 
   <div class="tablewrap">
   <table>
-    <caption><b>Table 3.</b> Nested-sampling evidence for the second companion on the published <em>Nature</em> RV table: ΔlnZ (two-companion − one-companion); positive favours two. Each row is <b>ten independent sampler runs</b>; we quote the mean with the standard error on that mean, and separately the run-to-run scatter — the reproducibility of a <em>single</em> run, which is the quantity comparable to a published ΔlnZ. The paper claims +2.62 ± ~1.0. The last block repeats the uniform-prior rows at 4× the live points as a convergence check.</caption>
+    <caption><b>Table 3.</b> Nested-sampling evidence for the second companion on the published <em>Nature</em> RV table: ΔlnZ (two-companion − one-companion); positive favours two. Each ΔlnZ is a paired one-model/two-model comparison. The nlive&nbsp;=&nbsp;500 rows use ten seeds and the nlive&nbsp;=&nbsp;2000 convergence rows use four; in total there are 82 comparisons and 164 sampler invocations. We quote the mean with its standard error and separately the seed-to-seed scatter. The paper claims +2.62 ± ~1.0.</caption>
     <thead><tr>
-      <th>model pairing</th><th>priors</th><th class="num">ΔlnZ (mean ± s.e.)</th><th class="num">run-to-run σ</th><th class="num">range over 10 runs</th>
+      <th>model pairing</th><th>priors</th><th class="num">n</th><th class="num">ΔlnZ (mean ± s.e.)</th><th class="num">seed-to-seed σ</th><th class="num">range</th>
     </tr></thead>
     <tbody>
-      <tr><td class="k">1-ecc vs 2-circ, periods fixed at published</td><td>uniform</td><td class="num">−1.83 ± 0.08</td><td class="num">0.25</td><td class="num">−2.24 … −1.42</td></tr>
-      <tr><td class="k">1-ecc vs 2-circ, periods in H26's windows</td><td>uniform</td><td class="num">−4.60 ± 0.27</td><td class="num">0.87</td><td class="num">−5.90 … −3.23</td></tr>
-      <tr><td class="k">both eccentric (H26's Table 1 pairing)</td><td>uniform</td><td class="num">−5.51 ± 0.69</td><td class="num">2.18</td><td class="num">−8.87 … −1.74</td></tr>
-      <tr><td class="k">free periods</td><td>jitter U(0,300)</td><td class="num">−3.82 ± 0.20</td><td class="num">0.62</td><td class="num">−4.61 … −2.88</td></tr>
-      <tr><td class="k">both eccentric</td><td>jitter U(0,300)</td><td class="num">−3.37 ± 0.38</td><td class="num">1.19</td><td class="num">−5.29 … −2.07</td></tr>
-      <tr><td class="k">free periods</td><td>K log-uniform</td><td class="num">−3.77 ± 0.30</td><td class="num">0.96</td><td class="num">−5.05 … −2.30</td></tr>
-      <tr><td class="k">both eccentric</td><td>K log-uniform</td><td class="num">−1.42 ± 0.44</td><td class="num">1.40</td><td class="num">−4.52 … <b>+0.90</b></td></tr>
-      <tr><td class="k">periods fixed <i>(nlive ×4)</i></td><td>uniform</td><td class="num">−1.50 ± 0.24</td><td class="num">0.49</td><td class="num">−2.06 … −0.87</td></tr>
-      <tr><td class="k">periods in windows <i>(nlive ×4)</i></td><td>uniform</td><td class="num">−4.46 ± 0.31</td><td class="num">0.62</td><td class="num">−5.14 … −3.77</td></tr>
-      <tr class="last"><td class="k">both eccentric <i>(nlive ×4)</i></td><td>uniform</td><td class="num">−3.49 ± 0.27</td><td class="num">0.54</td><td class="num">−4.06 … −2.84</td></tr>
+      <tr><td class="k">1-ecc vs 2-circ, periods fixed at published</td><td>uniform</td><td class="num">10</td><td class="num">−1.83 ± 0.08</td><td class="num">0.25</td><td class="num">−2.24 … −1.42</td></tr>
+      <tr><td class="k">1-ecc vs 2-circ, periods in H26's windows</td><td>uniform</td><td class="num">10</td><td class="num">−4.60 ± 0.27</td><td class="num">0.87</td><td class="num">−5.90 … −3.23</td></tr>
+      <tr><td class="k">both eccentric (H26's Table 1 pairing)</td><td>uniform</td><td class="num">10</td><td class="num">−5.51 ± 0.69</td><td class="num">2.18</td><td class="num">−8.87 … −1.74</td></tr>
+      <tr><td class="k">free periods</td><td>jitter U(0,300)</td><td class="num">10</td><td class="num">−3.82 ± 0.20</td><td class="num">0.62</td><td class="num">−4.61 … −2.88</td></tr>
+      <tr><td class="k">both eccentric</td><td>jitter U(0,300)</td><td class="num">10</td><td class="num">−3.37 ± 0.38</td><td class="num">1.19</td><td class="num">−5.29 … −2.07</td></tr>
+      <tr><td class="k">free periods</td><td>K log-uniform</td><td class="num">10</td><td class="num">−3.77 ± 0.30</td><td class="num">0.96</td><td class="num">−5.05 … −2.30</td></tr>
+      <tr><td class="k">both eccentric</td><td>K log-uniform</td><td class="num">10</td><td class="num">−1.42 ± 0.44</td><td class="num">1.40</td><td class="num">−4.52 … <b>+0.90</b></td></tr>
+      <tr><td class="k">periods fixed <i>(nlive ×4)</i></td><td>uniform</td><td class="num">4</td><td class="num">−1.50 ± 0.24</td><td class="num">0.49</td><td class="num">−2.06 … −0.87</td></tr>
+      <tr><td class="k">periods in windows <i>(nlive ×4)</i></td><td>uniform</td><td class="num">4</td><td class="num">−4.46 ± 0.31</td><td class="num">0.62</td><td class="num">−5.14 … −3.77</td></tr>
+      <tr class="last"><td class="k">both eccentric <i>(nlive ×4)</i></td><td>uniform</td><td class="num">4</td><td class="num">−3.49 ± 0.27</td><td class="num">0.54</td><td class="num">−4.06 … −2.84</td></tr>
     </tbody>
   </table>
   </div>
@@ -559,60 +604,59 @@
   <h3>5.1 What a published ΔlnZ uncertainty does and does not mean</h3>
   <p>
   Table&nbsp;3 quotes two uncertainties per row because they differ by up to an order of
-  magnitude, and only one of them is the quantity a reader needs. dynesty's internal
+  magnitude and answer different questions. dynesty's internal
   estimate — the number a single run reports, and the analogue of what published evidence
-  comparisons normally quote — sits at ±0.24–0.27 in every row here. The <em>measured</em>
+  comparisons normally quote — sits at ±0.24–0.27 in the nlive&nbsp;=&nbsp;500 rows. The <em>measured</em>
   run-to-run scatter of the same comparison, same data, same priors, differing only in
   the random seed, is 0.25, 0.62, 0.87, 0.96, 1.19, 1.40 and 2.18 depending on
   configuration: understated by factors of 1.1 to 8.1.
   </p>
   <p>
-  This is not a convergence problem that more live points repair. Raising nlive fourfold
-  shrinks the internal estimate to ±0.12–0.13, as its <i>N</i><sup>−1/2</sup> scaling
-  demands, while the empirical scatter stays at 0.49–0.62 — the understatement gets
-  <em>worse</em>, reaching 4–5×. The internal number tracks the sampler's own accounting
-  of its integration, not the dispersion of answers the procedure actually returns.
+  Increasing nlive is useful but does not make the internal estimate interchangeable with
+  empirical reproducibility. At four times the live points, one partly unconverged row's
+  scatter tightens substantially (2.18 to 0.54) and its mean moves from −5.51 to −3.49;
+  the other high-nlive rows have scatter 0.49–0.62. The internal estimates nevertheless
+  shrink to ±0.12–0.13, so all three high-nlive ratios remain 4–5×. The convergence of a
+  mean and the seed-to-seed reproducibility of a comparison are separate diagnostics.
   </p>
   <p>
   The consequence for the disagreement in this section is worth stating plainly, because
   it is more collegial than it first sounds. <span class="them">H26</span>'s
-  ΔlnZ&nbsp;=&nbsp;+2.62 rests on lnZ uncertainties of ±0.70 and ±0.69, which are of the
-  same class and, on this evidence, likely to be understated by a similar factor. If the
-  reproducibility of their comparison resembles what we measure for ours, <b>+2.62 is not
-  significant on its own terms</b> — before any argument about priors, and consistent with
-  their own description of the second companion as tentative. We cannot test their sampler
-  and do not claim to have. The falsifiable version of this is a question they can answer
-  in an afternoon: how many independent runs stand behind +2.62, and what is the scatter
-  among them? We would publish that number gladly, whichever way it falls.
+  ΔlnZ&nbsp;=&nbsp;+2.62 rests on lnZ uncertainties of ±0.70 and ±0.69, which are internal
+  estimates of a related kind. Our dynesty experiment shows why repeated-run scatter is worth
+  asking for, but it does <em>not</em> establish the scatter of H26's EMPEROR calculation or
+  change the significance of their value. Their exact sampler behaviour and incompletely
+  published priors require their exact configuration. The falsifiable question is therefore:
+  how many independent comparisons stand behind +2.62, and what is the scatter among them?
+  Until that is known, our defensible conclusion is only non-reproduction under the models and
+  priors tested here, consistent with their description of the second companion as tentative.
   </p>
 
-  <h3>5.2 An independent method, calibrated once against the only reference available</h3>
+  <h3>5.2 A separate implementation with paper-aware calibration</h3>
   <p>
   The pipeline used here is not a reconstruction of <span class="them">H26</span>'s
-  procedure, which has not been published; it is an independent route from raw frames to
-  velocities, and it need not agree with theirs in method for the two to be compared in
-  result. Its configuration (Table&nbsp;1) was fixed once, by minimising rms against the only
-  published companion-RV series that exists in this class, and every adopted choice was
-  additionally required to transmit an injected Keplerian.
+  procedure, which has not been published; it is a separately implemented route from raw
+  frames to velocities. Its configuration (Table&nbsp;1), however, was selected by minimising
+  rms against the published CD-35 RV series, with every adopted choice additionally required
+  to transmit an injected Keplerian at the fitter stage. That is calibration with the target
+  answer visible, not an end-to-end independent reproduction.
   </p>
   <p>
-  <b>That configuration then transferred unmodified.</b> The same recipe was applied to nine
-  further companions across three wavelength settings (H1567, K2166, K2192) and both nodding
-  and staring modes, none of which has a published velocity to tune against, returning
-  injection-gated per-epoch precisions from 34 to several hundred m&nbsp;s<sup>&minus;1</sup>
-  that scale with target brightness and spectral type as expected, at recovery fractions of
-  99&ndash;101%. A configuration fitted to one series would not survive that transfer. What
-  the tuning represents is therefore calibration against an external reference, not adaptation
-  to it &mdash; and using the single available ground truth to fix free parameters, then
-  demonstrating transfer where no ground truth exists, is the ordinary way such a pipeline is
-  validated.
+  The strongest uncontaminated transfer test is narrower: the same H1567 nodding recipe on
+  η&nbsp;Tel&nbsp;B returns 99–101% fitter-stage injection recovery and a null over a longer
+  baseline. Other valid nodding datasets use setting- or target-specific recipes. Every dataset
+  originally classified here as staring mode was later identified as HiRISE fibre data that had
+  been processed through the wrong slit recipe; those scientific verdicts were withdrawn. We
+  therefore do not claim unmodified transfer to nine companions or validation across both
+  observing modes.
   </p>
   <p>
-  One narrower point remains, and it concerns this <i>reproduction</i> rather than the method.
-  Because the configuration was fixed with <span class="them">H26</span>'s velocities in view,
-  our agreement with those velocities is not fully independent evidence. Everything downstream
-  is: the period search sees no published number, and its internal screen independently
-  rediscovers the one epoch their table omits. The analysis is blind; the calibration was not.
+  The period-search fits use no published RV values, and the internal spread screen selects
+  the one epoch absent from H26's table. The surrounding machinery is nevertheless target- and
+  paper-aware: the driver imports the published table to construct its matched subset and
+  hard-codes a 171.45-day reporting window. Neither the downstream search nor the extraction
+  choices, quality-screen development or analysis as a whole is a blind reproduction. The
+  screen is also load-bearing because the all-18-night series has no robust detection.
   </p>
   <p>
   We can bound what that buys. Twenty-one complete RV series exist from these same spectra
@@ -625,30 +669,34 @@
   agrees better with any competent measurement of the same photons and recovers a real
   signal more strongly; what would indicate circularity is the signal vanishing away from
   the best-matching configurations, and it does not. In degraded configurations the period
-  weakens and loses rank before it disappears, which is the behaviour of a real but marginal
-  signal rather than a manufactured one.
+  weakens and loses rank before it disappears, behaviour consistent with a signal that
+  weakens with extraction quality. This does not prove the signal is physical or establish
+  what would have happened had the family itself been chosen without the published series.
   </p>
   <p>
   This bounds selection <i>within</i> a configuration family that was itself explored with
-  the published series available; it does not bound the family's boundaries. The fully
-  independent version &mdash; choose a configuration by injection recovery alone, never
-  computing rms against the published series at any stage, then run the blind search &mdash;
-  requires re-reducing rather than re-scoring and has not been done. We flag it as the
-  cleanest available strengthening of this reproduction.
+  the published series available; it does not bound the family's boundaries. M36 attempted an
+  injection-selected holdout experiment, but its design was itself paper-derived: its injection plan fixed
+  K&nbsp;=&nbsp;1530&nbsp;m&nbsp;s<sup>−1</sup> at the published 171.454-day orbit. Its execution
+  was also invalid/inconclusive: the gate ignored recovery-slope uncertainty, the runner did
+  not pass the pre-registered polynomial degrees, and the scorer could compare means formed
+  from different valid-order sets. A valid replacement requires a new frozen protocol, fresh
+  validation material and new extraction runs. End-to-end independence therefore remains open.
   </p>
 
   <h2><span class="no">6</span>Discussion</h2>
   <p>
-  Two conclusions. <em>First</em>, the central claim of
-  <span class="them">H26</span> stands up to a from-raw, independently configured,
-  injection-validated reproduction: CD-35 2722 B's RVs contain a coherent
-  ~170-day signal that a blind search finds at high significance and that survives the
-  BERV degeneracy of the sampling. <em>Second</em>, the second companion does not: on
-  the paper's own revised table the evidence integral lands on the other side of zero
-  in every prior family we tried, and the claimed +2.62 is itself within ~2.7σ of zero
-  by the paper's own quoted lnZ uncertainties. The pipeline behind both is validated by
-  signal injection at every stage; its application to further targets is reported
-  separately.
+  Two qualified conclusions. <em>First</em>, a separately implemented, paper-calibrated
+  from-raw extraction recovers a coherent ~170-day signal on the 17 nights retained by an
+  objective but load-bearing quality screen. A target- and paper-aware downstream search whose
+  fits do not ingest the published RV values survives the BERV nuisance term, with a nominal
+  global permutation <i>p</i> of about 0.002–0.008 under residual exchangeability and the
+  post-hoc screen; the all-18-night series gives 0.31–0.91. This is diagnostic null
+  calibration, not a confirmatory false-alarm probability. <em>Second</em>, the two-companion
+  model is not favoured on the paper's revised table under any model/prior configuration
+  tested here. This does not measure the behaviour of H26's different sampler. Signal
+  injection validates fitter-stage transmission after template construction, not every
+  stage of the pipeline.
   </p>
   <p>
   One piece of context belongs with all three, and it is easy to miss because the
@@ -668,8 +716,9 @@
   where the detection was made.
   </p>
   <p>
-  This takes nothing away from <span class="them">H26</span>: the signal is there, and it
-  reproduces. But it bounds what may be inferred from it. Planetary-mass companions around
+  This does not resolve the signal's physical interpretation: it recovers conditionally in
+  the screened archival series, while end-to-end independence remains open. It also bounds
+  what may be inferred from the favourable CD-35 geometry. Planetary-mass companions around
   brighter hosts sit two to three orders of magnitude further out in contrast, and this
   work contains no measured point between ~430:1, where extraction is clean, and
   ~3950:1, where it fails. Contrast alone does not order these outcomes —
@@ -682,12 +731,13 @@
   <p>
   A metrological note. The paper's per-epoch precision statistic (its Eq.&nbsp;1, an
   error-weighted across-order dispersion) moved <em>against</em> our two largest real
-  improvements while the external agreement improved by 36% (rms against the published
-  series, 133&nbsp;→&nbsp;85&nbsp;m&nbsp;s<sup>−1</sup> on a like-for-like combine): it is invariant to a
+  improvements while rms against the published series fell from
+  133&nbsp;to&nbsp;85&nbsp;m&nbsp;s<sup>−1</sup> along the documented adoption chain. The order
+  combine also changed, so this is not a controlled single-change comparison. The statistic is invariant to a
   common-mode signal by construction, and it does not measure night-level accuracy. In
   a regime where every internal statistic we tried was, at least once, anti-correlated
   with truth, injection recovery plus an external reference series were the only
-  reliable guides. Reproductions of this class of measurement should assume the same.
+  reliable guides. Reanalyses of this class of measurement should assume the same.
   </p>
   <p>
   The open items are dated. The amplitude excess and the second-companion
@@ -733,14 +783,14 @@
       <th>H26</th><th>what it shows</th><th>here</th><th>verdict</th>
     </tr></thead>
     <tbody>
-      <tr><td class="k">Fig. 1</td><td>periodogram of the RVs and of the model residuals</td><td class="k">Fig. 5</td><td><span class="mark yes">reproduces</span> — same peak, same significance</td></tr>
-      <tr><td class="k">Fig. 2</td><td>RVs with the one- and two-satellite models</td><td class="k">Fig. 6</td><td><span class="mark yes">reproduces</span> — amplitude runs high</td></tr>
+      <tr><td class="k">Fig. 1</td><td>periodogram of the RVs and of the model residuals</td><td class="k">Fig. 5</td><td><span class="mark part">screened agreement</span> — same GLS peak; nominal global permutation <i>p</i> in §4.1; all 18 fail</td></tr>
+      <tr><td class="k">Fig. 2</td><td>RVs with the one- and two-satellite models</td><td class="k">Fig. 6</td><td><span class="mark part">screened phase agreement</span> — amplitude runs high</td></tr>
       <tr><td class="k">Fig. 3</td><td>slit-viewer PSF fits, stellar contamination</td><td class="k">§7.4</td><td><span class="mark part">answered differently</span> — bounded from the slit function</td></tr>
       <tr><td class="k">Fig. 4</td><td>per-nodding versus combined-spectrum extraction</td><td class="k">Fig. 7</td><td><span class="mark part">direction confirmed</span>, size combine-dependent</td></tr>
       <tr><td class="k">Fig. 5</td><td>period posteriors for the second signal</td><td class="k">Fig. 8</td><td><span class="mark part">peaks reproduce</span>, evidence does not</td></tr>
       <tr><td class="k">Fig. 6</td><td>the high-evidence two-satellite models</td><td class="k">Fig. 9</td><td><span class="mark part">same four models</span>, all lose to one</td></tr>
-      <tr><td class="k">Fig. 7</td><td>GLS of every viper output</td><td class="k">Fig. 10</td><td><span class="mark yes">reproduces</span> — <em>and</em> adds the BERV panel</td></tr>
-      <tr><td class="k">Fig. 8</td><td>corner plot, large satellite</td><td class="k">Fig. 11</td><td><span class="mark yes">reproduces</span> — their values inside ours</td></tr>
+      <tr><td class="k">Fig. 7</td><td>GLS of every viper output</td><td class="k">Fig. 10</td><td><span class="mark yes">same diagnostic pattern</span> — <em>and</em> adds the BERV panel</td></tr>
+      <tr><td class="k">Fig. 8</td><td>corner plot, large satellite</td><td class="k">Fig. 11</td><td><span class="mark yes">posterior overlap</span> — their values inside ours</td></tr>
       <tr class="last"><td class="k">Fig. 9</td><td>corner plot, small satellite</td><td class="k">Fig. 12</td><td><span class="mark no">does not</span> — K₂ consistent with zero</td></tr>
     </tbody>
   </table>
@@ -748,11 +798,13 @@
 
   <h3>8.1 The detection itself (their Figs. 1, 2, 7)</h3>
   <p>
-  The primary result reproduces in the plainest possible terms. Run the same
-  generalised Lomb-Scargle on their published table and on our from-raw series and the
+  The screened series has closely matching GLS morphology. Run the same generalised
+  Lomb-Scargle on their published table and on our from-raw series and the
   two periodograms are near-twins (Fig.&nbsp;5, top row): their 23 epochs peak at
   171.0&nbsp;d with power 0.85, our 17 nights at 170.3&nbsp;d with power 0.93, both
-  past the 0.1% false-alarm level, both with the same ~365&nbsp;d alias shoulder. On
+  past the plotted 0.1% GLS false-alarm level, both with the same ~365&nbsp;d alias shoulder.
+  That plotted threshold is distinct from the nominal global permutation <i>p</i> in §4.1, and our
+  17-night result remains conditional on the load-bearing screen. On
   the model-residual rows the two series part company in an informative way. After
   removing one satellite, <em>their</em> residuals peak at 87.2&nbsp;d — this is the
   second satellite, visible exactly where their Fig.&nbsp;1 puts it — while ours peak
@@ -763,7 +815,7 @@
   <p>
   Their Fig.&nbsp;7 is the paper's systematics defence: GLS periodograms of every
   viper output, showing that no instrumental or atmospheric parameter repeats the RV
-  periodicity. It reproduces (Fig.&nbsp;10) — across ten fitted quantities the largest
+  periodicity. The same diagnostic pattern appears (Fig.&nbsp;10) — across ten fitted quantities the largest
   power at 171&nbsp;d is 0.42, from the linear wavelength-solution coefficient, and
   most sit below 0.2. But the panel that matters most is one their figure does not
   contain. The barycentric correction is not a viper output, so it is not in their
@@ -792,7 +844,7 @@
 
   <h3>8.3 The second satellite (their Figs. 5, 6, 8, 9)</h3>
   <p>
-  Here the comparison is at its sharpest, because the parameters reproduce and the
+  Here the comparison is at its sharpest, because the period structure agrees and the
   conclusion does not. Their Fig.&nbsp;5 shows the second signal's period posterior
   falling into four peaks — ~14, 70, 88 and 115&nbsp;d — and argues the 88&nbsp;d one
   is the real solution. Give the same table a wide P<sub>2</sub> prior and three of
@@ -874,9 +926,11 @@
   challenged the agents' claims (one such challenge is logged as a correction in the
   record), made every decision with external consequences, and takes sole
   responsibility for all content. Verification is primarily mechanical rather than
-  expert-audited: every adopted pipeline change was scored against the published RV
-  series only and required signal-injection recovery (template shifted, never the
-  observation), positive controls preceded any null, and the blind search carried a
+  expert-audited: every CD-35 extraction change adopted into the central recipe was scored
+  against the published RV series and required fitter-stage signal-injection recovery (an
+  already-built template shifted, never the observation), valid nulls were conditioned on
+  positive controls, and the downstream
+  period search carried a
   BERV nuisance covariate; dead ends and retractions remain in the public record.
   Known residual confounds (the RV–BERV correlation of the published series; the
   amplitude excess, +19–34% by regression slope and +39–54% by direct fit) are reported in the text rather than resolved by
@@ -890,16 +944,25 @@
   <h2><span class="no"> </span>Data & code availability</h2>
   <p class="refs" style="font-size:14.5px">
   All spectra are public ESO archive products and raw frames (programmes 110.23RW,
-  111.24M0, 113.268Y, 115.287U, 083.C-0759, 383.D-0183). The full pipeline &mdash;
+  111.24M0, 113.268Y, 115.287U, 083.C-0759, 383.D-0183). The pipeline code &mdash;
   reduction drivers, the ADP converter, the injection harness, the nested-sampling code and
-  every script behind the figures and tables &mdash; is at
+  the scripts behind the figures and tables &mdash; is available at
   <a href="https://github.com/mepotts/exosat-rv">github.com/mepotts/exosat-rv</a>,
-  released under the MIT licence. Useful entry points: <code>scripts/cr2res/</code> drives
+  under the MIT licence; no version tag or archived software release exists yet. Useful entry points: <code>scripts/cr2res/</code> drives
   the reduction from raw frames, <code>scripts/injection/</code> holds the injection harness
-  and the blind period search, and the numbered <code>M*-RESULTS.md</code> documents record
-  every milestone including the retractions &mdash; M0 through M34 at the time of writing.
+  and period-search machinery, and the numbered <code>M*-RESULTS.md</code> documents record
+  every completed milestone including the retractions &mdash; through M37 at the time of
+  writing. M37 records the 5000-permutation screened/all-18 rerun; M38 is an unexecuted
+  successor-protocol draft, not a scientific result.
   The published RV table is transcribed from the <span class="them">H26</span> appendix with
-  provenance headers, in <code>data/published/</code>.
+  provenance headers, in <code>data/published/</code>. The adopted M14/M15 <code>.rvo</code>,
+  <code>.par</code>, target, per-order and BERV products, the VIPER configuration and tracked
+  source patch observed in the audited checkout, and a hash manifest are frozen in
+  <code>data/repro/</code>. That configuration records checkout state only; it does not prove
+  which configuration governed the historical extraction runs. This supports offline downstream
+  reanalysis. Raw/reduced ESO spectra and fitted templates remain external
+  (the templates and FTS atlas are hash-bound in the manifest), so a raw-exposure-to-template
+  replay is not yet possible from Git alone.
   </p>
 
   <h2><span class="no"> </span>References</h2>
@@ -924,14 +987,14 @@
   </div>
 
   <div class="foot">
-    Draft prepared 2026-08-11 from milestones M13–M15 of the exosat-rv reproduction
+    Draft prepared 2026-08-11 from milestones M13–M15 of the exosat-rv reanalysis
     project; §7 added 2026-08-12. Figures 1–3 are generated by
     <code>scripts/m16_figures.py</code> and Figures 5–12 by
     <code>scripts/m18_figures.py</code>, from the exported series in
     <code>data/export/</code> and the posterior samples written by
     <code>scripts/m18_posteriors.py</code>. No figure of H26's is reproduced here:
     every panel is computed from the published RV table, from the published Table 1
-    values, or from our own extraction. This document reports an independent analysis
+    values, or from our own extraction. This document reports a separately authored analysis
     and is not affiliated with or endorsed by the authors of H26. Based on data obtained
     from the ESO Science Archive Facility.
   </div>

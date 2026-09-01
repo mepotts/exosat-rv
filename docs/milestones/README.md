@@ -37,8 +37,9 @@ abandoned. Before writing a new one, check the number is free — see `../LESSON
 | **M31** | [`M31-RESULTS.md`](M31-RESULTS.md) | HIP 65426's three HiRISE nights through the validated fibre path (2026-08-14) |
 | **M32** | [`M32-RESULTS.md`](M32-RESULTS.md) | the η Tel B note, and what preparing it for outside eyes turned up |
 | **M34** | [`M34-RESULTS.md`](M34-RESULTS.md) | Is the CD-35 detection an artefact of tuning the extraction on the published RVs? |
-| **M35** | [`M35-RESULTS.md`](M35-RESULTS.md) | The two pre-submission cross-checks: no photometric period, and clean astrometry |
-| **M36** | [`M36-RESULTS.md`](M36-RESULTS.md) | The paper-blind selection is inconclusive, and the gate that let it through was mine |
+| **M35** | [`M35-RESULTS.md`](M35-RESULTS.md) | Corrected by M37: no photometric detection; 13 mmag semiamplitude conditional grid sensitivity; RUWE/NSS are catalogue context only |
+| **M36** | [`M36-RESULTS.md`](M36-RESULTS.md) | Historical preregistration executed invalidly and not paper-blind; its conservative inconclusive interpretation remains safe |
+| **M37** | [`M37-RESULTS.md`](M37-RESULTS.md) | Audit correction: the 171-day result is conditional, not independent |
 
 
 ## Pre-registered protocols
@@ -46,4 +47,10 @@ abandoned. Before writing a new one, check the number is free — see `../LESSON
 Written and committed *before* the experiment runs, so that the procedure is
 checkable in the git history rather than asserted afterwards.
 
-- [`M36-PREREGISTRATION.md`](M36-PREREGISTRATION.md) — Pre-registration: select the extraction configuration by injection recovery alone
+- [`M36-PREREGISTRATION.md`](M36-PREREGISTRATION.md) — Historical preregistration; M37 found its execution invalid and paper-aware, so it is not a current protocol
+
+## Draft protocols
+
+Drafts are design records only. They are neither preregistered nor authorized to run.
+
+- [`M38-PROTOCOL-DRAFT.md`](M38-PROTOCOL-DRAFT.md) — Outcome-isolated successor design; extraction lineage, thresholds, and clean templates remain unresolved

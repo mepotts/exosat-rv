@@ -1,4 +1,13 @@
-# Target interrogation queue — FINAL STATUS (plan complete, 2026-08-12)
+# Target interrogation queue — audited status through M37 (2026-08-31)
+
+> **M37 correction:** the first adjudicated roster below is current; later tier-planning
+> sections are preserved as pre-audit history, not current claims. CD-35 2722 B is a
+> conditional screened-series recovery, not an independent
+> confirmation; the all-18-night BERV-adjusted searches are compatible with noise. The
+> eta Tel result is grid-pointwise circular-orbit sensitivity conditional on the adopted
+> extraction and fitter-stage transmission, not an unconditional upper limit or priority
+> claim. All supposed staring-mode companion results were HiRISE fibre data reduced with
+> an invalid slit recipe and are withdrawn.
 
 > ## ⚠ THE HiRISE REVELATION (2026-08-13) — reopens the "staring" tier as M27
 >
@@ -48,21 +57,22 @@
 >
 > ## The roster, adjudicated (M14–M24; detail per milestone doc)
 >
-> Every target with public data has a verdict. All claims injection-gated; all
-> "firsts" hedged to a literature search (M20 §5).
+> Every target with public data has an audited status. Retained sensitivity statements are
+> conditional on their stated fitter-stage injection gates; priority and "first" claims are
+> not carried forward without an updated literature review.
 >
 > | target | data used | setting | **verdict** | doc |
 > |---|---|---|---|---|
-> | **CD-35 2722 B** | 18 nights / 466 d | H1567 nodding | ✅ **CONFIRMED** — satellite 1 reproduces blind, BERV-robust (ΔBIC +25–28); ❌ satellite 2 **CONTRADICTED** on their own table (10/10 integrals negative) | M14 |
-> | **eta Tel B** | 18 nights / 815 d | H1567 nodding | ⛔ **NULL** — msini ≳ 0.5–1.2 M_Jup excluded, P = 20–300 d (90%), both routes | M15 |
+> | **CD-35 2722 B** | 18 nights / 466 d | H1567 nodding | ⚠ **CONDITIONAL RECOVERY** — near the published period only on the internally screened series; the complete-series +BERV searches are noise-compatible; paper-calibrated, not independent. Satellite 2 is disfavoured only under the models/priors actually run. | M37 |
+> | **eta Tel B** | 18 nights / 815 d | H1567 nodding | ⛔ **NO DETECTION** — conditional, grid-pointwise circular-orbit sensitivity only; see the generated M37 table for values and scope | M15/M37 |
 > | **HIP 65426 b** | 5 nights / 422 d | K2192 nodding | ⛔ **NULL** — ≳0.4 M_Jup (~115 M⊕) excluded at P ≤ 100 d; *priority caveat: active-programme data* | M20 §4–5 |
 > | **PDS 70 (star)** | 6 nights / 426 d | K2166 nodding | ⛔ **NULL** — flat at 130 m/s; ~3 M_Jup stellar-companion limit; planet b unreachable by slit. (9-night rebuild **gate-rejected**, 6-night state reproduced) | M20 §3, M23 §4 |
 > | **beta Pic b** | 13 nights / 813 d | K2166 nodding | 🚧 **CONTAMINATION-LIMITED** — km/s BERV-locked starlight (0.55″ / ~5000×); no claim possible; the measured case for fiber-fed suppression | M20 §2 |
-> | **HD 1160 B** | 9 nights / 41 d | H1567 staring | 📊 **FIRST SERIES, quality-limited** — 725 m/s, night quality varies 70×; no claim; ±37 m/s best night shows the ceiling | M23 §1 |
+> | **HD 1160 B** | 9 nights / 41 d | H1567 HiRISE | ❌ **WITHDRAWN** — fibre data were reduced with a slit recipe; requires a fibre-appropriate reduction | M27/M37 |
 > | **CT Cha B** | 3 epochs / 70 d | K2166 nodding | ❓ **VARIABILITY CANDIDATE** — 3.3σ epoch survives the order screen; undecidable at n=3; two more epochs settle it | M17, M23 §3 |
 > | **AB Pic b** | 2 epochs / 3 d | K2166 nodding | 📊 clean repeatability datum (~120–190 m/s, gates pass); archive exhausted — **top proposal target** (lighter host than CD-35) | M17 |
-> | **AF Lep b** | 2 epochs / 3 d | H1567 staring | 🚧 **DILUTION-LIMITED** — 68% injection transmission at ~30,000× contrast; no measurement | M23 §2 |
-> | **51 Eri b** | 1 epoch | H1567 staring | 🚧 **BEYOND SLIT REACH** — 3 of 11 orders respond | M23 §2 |
+> | **AF Lep b** | 2 epochs / 3 d | H1567 HiRISE | ❌ **WITHDRAWN** — fibre data were reduced with a slit recipe | M27/M37 |
+> | **51 Eri b** | 1 epoch | H1567 HiRISE | ❌ **WITHDRAWN** — fibre data were reduced with a slit recipe | M27/M37 |
 > | **GSC 08047-00232 B** | — | K | ⏸ **EMBARGOED** — 2 raw K nights bankable on release | — |
 >
 > **⚠ SUPERSEDED by M29 §§6–8 — the axis was wrong.** Neither contrast nor separation
@@ -146,14 +156,14 @@
 >   beta Pic b / PDS 70 b — every sensitivity number measured, not forecast).
 > - CT Cha B: any two new epochs decide the variability candidate.
 
-The validated recipe (per-nodding from raw, 2-iteration template with `-kapsig 3`
-creation and the injection guard, telluric-selected orders, `-kapsig 3`,
-`-oversampling 2`, robust combine, internal 3×-spread epoch screen, blind search that
-must survive a BERV covariate) is transferable. This queue orders where to point it.
-Sources: M5 (archive holdings, night-level audit), M7 (physics feasibility, 38
-companions), M14 (demonstrated 70–90 m/s per epoch on CD-35 2722 B, K = 12.0 — right
-at the ~94 m/s anchor M7's thresholds assumed, so the survey numbers stand and are
-mildly conservative).
+## Historical pre-audit planning tiers
+
+The sections below preserve the queue as it was originally planned. They are not current
+performance or priority claims. M37 found that the slit/nodding extraction was calibrated
+with the published CD-35 series visible, that its internally screened result fails on all
+18 nights, and that fitter-stage injections do not test signal survival through template
+construction. The recipe therefore has not established general transferability. Any reuse
+needs a target-appropriate, prospectively frozen protocol and full-pipeline controls.
 
 Class note: every target below the brown-dwarf boundary here is a *young, self-luminous
 giant* — 10⁴–10⁵× brighter than a field-age Jupiter, which is the only reason
@@ -164,7 +174,7 @@ genuinely satellite-mass (sub-Jovian) science vs binary-mass limits.
 
 | target | class | K | nights (public) | baseline | reachable |
 |---|---|---:|---:|---:|---|
-| **eta Tel B** | ~47 M_Jup BD, β Pic group, 24 Myr | 11.6 | 26 (22) | 815 d | companions ≳3.3 M_Jup — binary-mass limit or detection; first RVs of the object either way |
+| **eta Tel B** | ~47 M_Jup BD, β Pic group, 24 Myr | 11.6 | 26 (22) | 815 d | M15 completed: no detection; conditional grid-pointwise circular-orbit sensitivity only (see M37) |
 
 **This is M15.** Check the epoch sampling's phase–BERV geometry before anything else
 (M13 §4b design rule).
@@ -176,7 +186,7 @@ name, but night structures that cannot constrain an orbit (M5 §3):
 
 | target | mass | K | archive reality | what a spot-check yields |
 |---|---:|---:|---|---|
-| **beta Pic b** | 12.8 M_Jup | 14.9 | 753 frames = **6 nights** / 1034 d | first RV series of the planet; variability limit at ~400 m/s scale; min-sat physics is real (~214 M_Earth) so any variability is interesting |
+| **beta Pic b** | 12.8 M_Jup | 14.9 | 753 frames = **6 nights** / 1034 d | HiRISE fibre holdings require a fibre-appropriate reduction; no companion-RV claim from the slit pipeline |
 | AB Pic b | ~14 M_Jup | 15.1 | 64 frames = 4 consecutive nights (3 d) | single-epoch RV + short-term stability; no orbit |
 | CT Cha B | M8 companion, accreting | — | 3 nights / 70 d | RV spot-check only |
 | GSC 08047-00232 B | M9.5 | 16.4 | 3 nights (2 public) / 4 d | thin; skip unless free |

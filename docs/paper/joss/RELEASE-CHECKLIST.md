@@ -1,42 +1,36 @@
 # Release checklist — minting a Zenodo DOI for exosat-rv
 
 Scope note: written 2026-08-13, when nothing in it had been executed. **Revised
-2026-08-23: the repository split described in §2 has since been carried out**, and
-`CITATION.cff`'s `repository-code` has been repointed with it. Still not done: no git
-tag, no GitHub release, no Zenodo record, and no edit to `.zenodo.json` or
-`pyproject.toml`. The 2026-08-13 state was verified against the repository contents and
+2026-08-31: the repository split described in §2 and the metadata synchronization in §3
+have since been carried out.** Still not done: no git tag, no GitHub release, no Zenodo
+record, and no release-date declaration. The 2026-08-13 state was verified against the repository contents and
 two read-only, unauthenticated checks: the public GitHub releases/tags API, and Zenodo's
 public search API. Items marked ✅ below were verified on 2026-08-23.
 
 ## 1. Current state
 
 - **`CITATION.cff`** exists at the repository root and is substantially complete:
-  title, abstract, one author (Matthew Potts), license (MIT), `repository-code`,
-  version (`0.1.0`), `date-released` (`2026-08-10`), keywords, and a `references:`
-  list of the five papers this project engages with most directly. ✅ `repository-code`
+  title, audit-qualified abstract, one author (Matthew Potts), license (MIT),
+  `repository-code`, development version (`0.1.0`), keywords, and a `references:` list of
+  the five papers this project engages with most directly. It deliberately has no
+  `date-released` while no release exists. ✅ `repository-code`
   now reads `https://github.com/mepotts/exosat-rv` (repointed at the split; it previously
   pointed into the monorepo tree). Gap: the author's `orcid` field is present only as a
   commented-out `# TODO: add your ORCID` line.
 - **`.zenodo.json`** exists at the repository root and covers title, `upload_type:
-  software`, description, one creator (`Potts, Matthew`), license, `access_right:
-  open`, and keywords. Gaps relative to `CITATION.cff`: no `version` field, no
-  `related_identifiers` (nothing links the record to the GitHub repo URL or to the Hoy
-  et al. 2026 paper this project reproduces), and no ORCID.
-- **The two files have already drifted.** `CITATION.cff`'s abstract ends "...No
-  discovery is claimed and nothing is submitted anywhere. Beyond the reproduction..."
-  while `.zenodo.json`'s description ends "...No discovery is claimed. Beyond the
-  reproduction..." — the "nothing is submitted anywhere" clause exists in one and not
-  the other. Harmless today; a warning that maintaining two overlapping metadata files
-  by hand will not stay in sync without a deliberate process (see §3).
+  software`, the same audit-qualified description, one creator (`Potts, Matthew`),
+  license, `access_right: open`, keywords, version, and related identifiers. The remaining
+  author-metadata gap in both records is the ORCID.
+- ✅ **The two prose records are synchronized.** `CITATION.cff` is authoritative and an
+  offline test requires `.zenodo.json`'s description to be byte-identical after YAML
+  folding. This fixed the drift recorded by the first version of this checklist.
 - ✅ **Both metadata files are now at the archived repository's root**, which is what
   Zenodo reads. Before the split they sat one level down, inside `astronomy/exosat-rv/`,
   where a monorepo release would not have used them.
 - **No release or version tag exists yet.** `git ls-remote --tags origin` against
-  `mepotts/exosat-rv` returns nothing (checked 2026-08-23). One stray tag, `itf-state`,
-  survives in *local* clones: an automated itf-linker data snapshot authored by
-  `github-actions[bot]`, carried through the split, unrelated to exosat-rv and not
-  reachable from `main`. It is not a version release and should be deleted rather than
-  reasoned about — see §2.
+  `mepotts/exosat-rv` returned nothing when checked 2026-08-23, and the local tag list is
+  empty as of 2026-08-31. The unrelated `itf-state` tag carried through the split was deleted;
+  see §2.
 - **No Zenodo record exists yet.** A search of Zenodo's public API for "exosat-rv"
   returns no matching record.
 - **Zenodo–GitHub integration status is not verifiable from the repository.** Whether
@@ -122,8 +116,8 @@ splits into its own repository via `git filter-repo --subdirectory-filter exosat
       of vocabulary was made deliberately: the repository is `isSupplementTo` (what
       Zenodo's own GitHub integration uses), and **Hoy et al. 2026 is `cites`, not
       `isSupplementTo`**. `isSupplementTo` would present this record as material
-      accompanying their Nature paper. It is an independent reproduction by an
-      unaffiliated author, and metadata that implies otherwise is a misrepresentation
+      accompanying their Nature paper. It is an independently authored reanalysis, not
+      material supplied by those authors, and metadata that implies otherwise is a misrepresentation
       that propagates into OpenAIRE and every aggregator downstream. A test asserts the
       relation stays `cites`.
 - [x] **Decided 2026-08-24: `CITATION.cff` is authoritative for the prose, and
@@ -135,15 +129,16 @@ splits into its own repository via `git filter-repo --subdirectory-filter exosat
       exists. **Still to confirm at release time:** Zenodo's GitHub integration has historically
       preferred `.zenodo.json` over `CITATION.cff` when both are present at the
       repository root that gets archived — confirm current behavior at release time,
-      since this has changed before — and fix the abstract/description drift noted in
-      §1 either way.
+      since this has changed before. The abstract/description drift is already guarded
+      by an offline test.
 - [ ] Decide the version number for the first tagged release. `pyproject.toml` and
-      `CITATION.cff` currently both say `0.1.0`, and the README states "M0–M26
-      complete, M27 open" — i.e. active, evolving work. Whether the first Zenodo
+      `CITATION.cff` currently both say `0.1.0`, and the README records completed results
+      through M37 plus an unexecuted M38 successor-protocol draft, with audit remediation still
+      open — i.e. active, evolving work. Whether the first Zenodo
       snapshot should be tagged `v0.1.0` ("first archived state") or bumped to `v1.0.0`
       ("stable, citable API") is Matthew's call, not a default to assume.
-- [ ] At the moment of tagging, update `CITATION.cff`'s `date-released` (currently a
-      stale `2026-08-10`) to the actual release date.
+- [ ] At the moment of tagging, add `CITATION.cff`'s `date-released` using the actual
+      release date. It is intentionally absent until then.
 
 **Step B — resolve the monorepo structure (see §2): DONE 2026-08-23.**
 
@@ -153,8 +148,9 @@ splits into its own repository via `git filter-repo --subdirectory-filter exosat
 - [x] Verify the filtered result actually installs and its test suite still passes —
       `pip install -e ".[dev]"` then `pytest -m "not network"` — in a fresh clone, not
       assumed from the fact that internal paths are relative. ✅ Done exactly that way
-      on 2026-08-23: **123 passed, 2 deselected**. The two deselected are the
-      network-marked tests; CI now deselects them too, for the same reason.
+      on 2026-08-23; the current offline suite and lint state must be rechecked from the release
+      candidate after the audit correction pass. Live-archive checks are network-marked and CI
+      deselects them. CI does not currently run lint, so lint needs a separate release check.
 - [x] Decide the new repository's name and the GitHub account/org it lives under.
       ✅ `github.com/mepotts/exosat-rv`.
 - [x] Update `CITATION.cff`'s `repository-code` field (was
@@ -223,7 +219,13 @@ is not automatic and needs its own scoping:
       (e.g. the per-target combined and per-order series referenced throughout the
       `M*-RESULTS.md` files), not a dump of everything under `data/`. Deciding exactly
       which files qualify is a human call — Matthew's, not a default "upload
-      everything."
+      everything." **Progress 2026-08-31:** `data/repro/` now freezes the adopted M14/M15
+      RV/per-order/BERV, parameter and target tables, the VIPER configuration and tracked
+      source patch observed in the audited checkout, and their hashes. That configuration
+      records checkout state only; it does not prove which configuration governed the
+      historical extraction runs. This is an in-repository downstream evidence bundle, not a
+      Zenodo deposit or a raw-to-template replay; raw/reduced spectra and fitted templates
+      remain external, with the latter hash-bound.
 - [ ] **Write a self-contained data dictionary.** A Zenodo dataset is expected to be
       interpretable without also cloning the code repository. Today the meaning of
       each column (BJD timescale, RV units and sign convention, what "combined" vs
@@ -253,8 +255,9 @@ is not automatic and needs its own scoping:
       practice this means the software deposit's metadata gets a follow-up edit after
       the dataset exists, or the two are coordinated to mint together.
 - [ ] **Separate "ours" from "theirs."** This project's own from-raw extraction does
-      not yet match the published precision (confound-limited; M14 measures a 20–40%
-      amplitude excess), and `data/published/hoy2026_nature_table2_rvs.csv` is a
+      not match the published series exactly: its amplitude is high by 19–34% in regression
+      slope or 39–54% in direct fits, and its precision remains confound-limited.
+      `data/published/hoy2026_nature_table2_rvs.csv` is a
       transcription of Hoy et al.'s own table, kept for comparison. A dataset deposit
       must clearly separate the project's own measured values from that transcription;
       redistributing a transcribed copy of another paper's table as a separately
@@ -269,14 +272,14 @@ is not automatic and needs its own scoping:
       not a technical default.
 - [ ] **Update the data-availability statement once a DOI exists.** The manuscript
       draft's "Data & code availability" section
-      (`docs/paper/draft.template.html`) currently points at "the project repository"
-      for everything; once a dataset DOI is minted, that section (and any eventual
+      (`docs/paper/draft.template.html`) currently points at the project repository and
+      explicitly distinguishes the downstream bundle from external raw/template assets;
+      once a dataset DOI is minted, that section (and any eventual
       journal submission's own data-availability statement) should cite it directly.
       That edit is downstream of this checklist, not made here.
 
 ## 5. What this document does not do
 
-No git command was run, no tag or branch was created, no GitHub release was published,
-no Zenodo account action was taken, and no existing file in this repository —
-including `CITATION.cff`, `.zenodo.json`, and `pyproject.toml` — was modified in the
-course of writing it.
+This checklist does not authorize a tag, branch, GitHub release, Zenodo action, submission,
+or correspondence. Preparatory metadata may be corrected in the repository; every external
+release action remains gated to Matthew's explicit per-instance approval.

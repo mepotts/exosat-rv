@@ -1,15 +1,16 @@
 # A Nested Sampler's Internal Uncertainty Is Not Its Reproducibility
 
-*Matthew Potts · independent analysis · draft 2026-08-13*
+*Matthew Potts · unaffiliated analysis · draft 2026-08-13*
 
 Bayesian model comparisons are often decided by a log-evidence difference, ΔlnZ,
 quoted with the uncertainty a nested sampler reports internally — a number
-describing one integration's numerical precision, not its reproducibility. Running
-the same comparison 82 times — one likelihood, one real dataset, varying only the
-seed and, separately, the priors and live-point count — the empirical run-to-run
+describing one integration's numerical precision, not its reproducibility. Repeating
+82 paired model comparisons — 164 nested-sampler invocations on one likelihood and one
+real dataset, varying the seed and, separately, the priors and live-point count — the empirical seed-to-seed
 scatter in ΔlnZ exceeds the sampler's quoted uncertainty by 1.1× to 8.1×.
-Quadrupling live points shrinks the internal number as expected but not the
-scatter, so the understatement grows to 4–5×.
+Quadrupling live points shrinks the internal number as expected; the three tested
+high-nlive ratios remain 4–5×, although one partly unconverged configuration improves
+substantially.
 
 ## Setup
 
@@ -23,52 +24,54 @@ two axes: period handling (fixed; free within bounding windows; or free with bot
 models equally eccentric) and the jitter/amplitude prior (uniform; linear jitter;
 log-uniform amplitude). Seven configurations ran at nlive = 500 (ten seeds each);
 three were repeated at nlive = 2000 (four seeds each) as a convergence check — 82
-runs in total.
+paired comparisons, or 164 individual model-evidence runs, in total.
 
 ## Result
 
-**Table 1.** ΔlnZ over 82 nested-sampling runs. "Internal" is the sampler's own
-quoted uncertainty (quadrature sum of both models' log-evidence errors);
-"run-to-run σ" is the empirical scatter across seeds; "ratio" divides the second by
+**Table 1.** ΔlnZ over 82 paired model comparisons. "Internal" is the quadrature
+sum of the two model runs' sampler-reported log-evidence errors;
+"seed-to-seed σ" is the empirical scatter across comparisons; "ratio" divides the second by
 the first.
 
-| priors | period handling | nlive | ΔlnZ (mean ± s.e.) | run-to-run σ | internal | ratio |
-|---|---|---:|---:|---:|---:|---:|
-| uniform | fixed | 500 | −1.83 ± 0.08 | 0.25 | 0.24 | 1.1× |
-| uniform | in windows | 500 | −4.60 ± 0.27 | 0.87 | 0.27 | 3.3× |
-| uniform | both eccentric | 500 | −5.51 ± 0.69 | 2.18 | 0.27 | **8.1×** |
-| jitter U(0,300) | in windows | 500 | −3.82 ± 0.20 | 0.62 | 0.27 | 2.3× |
-| jitter U(0,300) | both eccentric | 500 | −3.37 ± 0.38 | 1.19 | 0.27 | 4.4× |
-| K log-uniform | in windows | 500 | −3.77 ± 0.30 | 0.96 | 0.27 | 3.5× |
-| K log-uniform | both eccentric | 500 | −1.42 ± 0.44 | 1.40 | 0.27 | 5.3× |
-| uniform | fixed | 2000 | −1.50 ± 0.24 | 0.49 | 0.12 | 4.1× |
-| uniform | in windows | 2000 | −4.46 ± 0.31 | 0.62 | 0.13 | 4.7× |
-| uniform | both eccentric | 2000 | −3.49 ± 0.27 | 0.54 | 0.13 | 4.1× |
+| priors | period handling | nlive | n | ΔlnZ (mean ± s.e.) | seed-to-seed σ | internal | ratio |
+|---|---|---:|---:|---:|---:|---:|---:|
+| uniform | fixed | 500 | 10 | −1.83 ± 0.08 | 0.25 | 0.24 | 1.1× |
+| uniform | in windows | 500 | 10 | −4.60 ± 0.27 | 0.87 | 0.27 | 3.3× |
+| uniform | both eccentric | 500 | 10 | −5.51 ± 0.69 | 2.18 | 0.27 | **8.1×** |
+| jitter U(0,300) | in windows | 500 | 10 | −3.82 ± 0.20 | 0.62 | 0.27 | 2.3× |
+| jitter U(0,300) | both eccentric | 500 | 10 | −3.37 ± 0.38 | 1.19 | 0.27 | 4.4× |
+| K log-uniform | in windows | 500 | 10 | −3.77 ± 0.30 | 0.96 | 0.27 | 3.5× |
+| K log-uniform | both eccentric | 500 | 10 | −1.42 ± 0.44 | 1.40 | 0.27 | 5.3× |
+| uniform | fixed | 2000 | 4 | −1.50 ± 0.24 | 0.49 | 0.12 | 4.1× |
+| uniform | in windows | 2000 | 4 | −4.46 ± 0.31 | 0.62 | 0.13 | 4.7× |
+| uniform | both eccentric | 2000 | 4 | −3.49 ± 0.27 | 0.54 | 0.13 | 4.1× |
 
-Every configuration's mean favours one companion, and 81 of 82 individual runs are
+Every configuration's mean favours one companion, and 81 of 82 paired comparisons are
 negative; the single exception reaches +0.9 — not this note's point. The uncertainty
 columns are. At nlive = 500 the internal estimate sits at ±0.24–0.27 regardless of
 configuration, while the empirical scatter over ten seeds spans 0.25 to 2.18:
 understated by 1.1× to 8.1×. Quadrupling live points to 2000 shrinks the internal
-estimate to ±0.12–0.13, matching its N^−1/2 scaling — but the empirical scatter
-barely moves (0.49–0.62), so the understatement *grows*, to 4.1–4.7×.
+estimate to ±0.12–0.13, matching its N^−1/2 scaling. The empirical scatters are
+0.49–0.62, so the ratios remain 4.1–4.7×. One partly unconverged row does improve:
+its scatter falls from 2.18 to 0.54 and its mean moves from −5.51 to −3.49.
 
-## Why more live points make it worse
+## Why the uncertainty ratio can remain large
 
-This is consistent with the internal estimate measuring the wrong thing: one
+This is consistent with the internal estimate measuring a different thing: one
 integration's numerical precision, not the variance between independent runs —
 which mode a random walk settles into, and how a degenerate posterior region gets
-explored. More live points tighten the first without touching the second, so the
-two move apart rather than together.
+explored. More live points can improve convergence and empirical scatter while also
+shrinking the internal number; the two diagnostics need not move together.
 
 ## The motivating case
 
 This test was prompted by Hoy et al.'s tentative second, shorter-period companion: a
 nested-sampling comparison at ΔlnZ = +2.622, with quoted log-evidence uncertainties
 of ±0.695 and ±0.691 — the same class of internal number examined here. The
-system's primary ~171 d companion signal itself reproduces independently from the
-raw archival frames in our companion paper (in prep.); this note is not a challenge
-to that detection. We did not test their sampler, or how its uncertainty was
+system's primary ~171 d signal is recovered from the 17 screened raw-archive nights by a
+separately implemented but paper-calibrated extraction in our companion paper (in prep.);
+the all-18-night search degrades to noise, and this note is not a test of that screening
+choice. We did not test their sampler, or how its uncertainty was
 computed; the runs above use a different code on their own published table, testing
 only whether a comparable gap appears in a similar setting. The honest, conditional
 statement: *if* other nested samplers show a similar gap, *then* an uncertainty of

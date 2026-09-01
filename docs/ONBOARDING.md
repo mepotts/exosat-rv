@@ -1,6 +1,6 @@
 # Onboarding — read this first
 
-You are picking up an independent astronomy project that is close to publication. This
+You are picking up an independent astronomy project in pre-publication remediation. This
 document is the fastest correct path into it. It assumes you have just opened this folder and
 know nothing else about it.
 
@@ -12,13 +12,19 @@ Point a high-resolution spectrograph at a *directly imaged companion* rather tha
 star, and its own reflex motion can be measured — which makes satellites of that companion
 detectable. Hoy et al. (2026, *Nature*) did this on the brown dwarf **CD-35 2722 B** and
 reported a planetary-mass satellite. This project rebuilt the measurement from the public raw
-frames with an independently configured pipeline, then applied that pipeline to nine further
-companions. It runs on a laptop against public archives; there is no telescope time and no
-institutional affiliation behind it.
+frames with a separately implemented extraction whose configuration was calibrated against
+the published RV series. Its downstream fits do not ingest those values, but the historical
+search/reporting code is target- and paper-aware; this is not a blind reproduction. It
+runs on a laptop against public archives; there is no telescope time and no institutional
+affiliation behind it.
 
-**Findings.** The satellite reproduces. The reported *second* companion does not, and there is
-a mechanism for why. η Tel B has no satellite down to ~0.5–1.3 M_Jup. The pipeline transfers
-across three wavelength settings and both observing modes.
+**Findings, with the audit qualifications that must travel with them.** The ~171 d signal is
+recovered on the 17 nights retained by an internal quality screen, but the all-18-night series
+degrades to noise. The second companion is not reproduced under the models and priors tested
+here. η Tel B has no detected signal and has pointwise circular-orbit sensitivity of
+~0.5–1.3 M_Jup, conditional on fitter-stage transmission. Clean transfer is demonstrated for
+the same-setting nodding control; the former staring-mode claims were withdrawn when those
+data proved to be HiRISE fibre observations reduced with a slit recipe.
 
 ---
 
@@ -136,31 +142,52 @@ changing the manuscript's typography updates all of them.
 
 | draft | state |
 |---|---|
-| `docs/paper/rnaas-etatel-draft.md` | **Ready to submit.** 1,464 words, needs an ORCID and Matthew's decision. |
-| `docs/paper/draft.template.html` | The manuscript. Sound; **needs a target journal chosen**. |
+| `docs/paper/rnaas-etatel-draft.md` | **Not submission-ready.** Its numerical curve is reproducible, but it must retain the fitter-stage/template-construction limitation and pointwise-completeness wording; it also needs an ORCID and Matthew's decision. |
+| `docs/paper/draft.template.html` | **Not submission-ready.** Audit-driven claim corrections are incorporated and `data/repro/` freezes the adopted downstream M14/M15 evidence, but raw/template replay and a valid end-to-end independence experiment remain open. |
 | `docs/paper/contrast-wall-note.md` | Checklist cleared bar **one data item**: PDS 70's R is still unmeasured, and closing it needs a nodding reduction or a standard star, not a re-read of what is on disk. The two open DOIs were closed 2026-08-24 (via arXiv, verified through CrossRef by title). |
 | `docs/paper/methods-note.md` | **13 open items.** Least advanced; the remaining work is reconciling its own numbers against the milestone documents. |
 | `docs/paper/sampler-reproducibility-note.md` | **Open decision.** Retiring it is the recommendation here, because its content is §5.1 of the manuscript and load-bearing there — but `NEXT-DIRECTIONS.md` C2 proposes publishing exactly this material as a standalone RNAAS note. Both cannot hold. Matthew's call. |
 
-**The highest-value open experiment**, recorded in `M34-RESULTS.md` §3: choose an extraction
-configuration by injection recovery *alone*, never computing rms against the published series,
-then run the blind period search. That would make the reproduction independent end to end. It
-needs re-running viper rather than re-scoring.
+**The highest-value open validation project** is now the M38 successor design, not a corrected
+rerun of M36. M36's injection bank was paper-derived — K = 1530 m/s at the published
+171.454-day orbit — and its execution was also invalid: the gate ignored slope uncertainty,
+the runner did not pass the pre-registered polynomial degrees, and the scorer could compare
+means formed from different valid-order sets. Treat all existing CD-35 spectra and M34/M36
+products as development material. The maintenance runner is deliberately dry-run-only and
+cannot produce a post-audit replay. A replacement needs a new frozen, paper-independent
+injection bank and fresh validation material; genuine blind rediscovery would additionally
+require a clean-room analyst and untouched science data. Otherwise call the result a locked
+reanalysis or prospective confirmation, not a retrospective blind experiment.
 
 ---
 
 ## 7. Things that are true and non-obvious
 
-- **The pipeline is not a reconstruction of Hoy et al.'s procedure**, which has never been
-  published. It is an independent route to the same quantity. Where the two agree, that is
-  cross-validation of both.
-- **The method is not overfitted, but this reproduction is not fully independent.** Two
-  different statements — `M34-RESULTS.md` separates them carefully. Do not collapse them.
+- **The pipeline is not a reconstruction of Hoy et al.'s unpublished procedure.** It is a
+  separate implementation, but its extraction choices were calibrated against their RVs.
+  Method diversity is useful; the numerical agreement is not independent evidence.
+- **End-to-end independence and absence of overfitting are not established.** M34 bounds
+  selection only within a configuration family explored with the published series visible.
+  The broad transfer argument was weakened by the HiRISE reclassification, and M36's attempted
+  injection-selected test was paper-derived as well as invalid/inconclusive. The strongest
+  uncontaminated transfer remains the same-setting η Tel B nodding series.
 - **A companion closer than one resolution element has no extractable spectrum at any
   contrast**, and every other diagnostic — precision, dispersion, injection recovery —
   *improves* on a host. Only the spatial profile catches it. This withdrew one verdict.
-- **β Pic b is taken.** Kenworthy et al. (2026, MNRAS) published RV limits on it in July. Do
-  not spend effort competing with a dedicated campaign using one archival night.
+- **Use M35's v2 photometry, not its original headline.** Nightly/per-camera analysis gives
+  no 171.454 d detection (nominal night-permutation *p* = 0.13–0.16, conditional on
+  exchangeability of the final camera-corrected night bins). On nested deterministic 720/1440/2880 phase
+  grids, the four host/filter rows first reach at least 90% phase recovery at 12/13/12/13
+  mmag semiamplitude, so the cross-series threshold is 13 mmag (26 mmag peak-to-peak); 5 mmag
+  is recovered in 43.2–44.2% of the finest-grid phases. The two source IDs reuse the same
+  2,173 timestamp/camera measurements with alternative aperture magnitudes and are not
+  independent replications. This is sensitivity conditional on one observed-noise realization
+  and an estimated fixed-period permutation threshold, not a binomial confidence interval.
+  Gaia's ordinary RUWE and absent NSS entry are context, not proof of no astrometric perturbation.
+- **β Pic b is not white space.** Kenworthy et al. (2026, MNRAS) published dedicated RV
+  limits. The slit extraction in this repository is host-dominated, not a planet RV; the public
+  HiRISE nights are useful only as a fibre-pipeline or separate-check project, not as a
+  priority claim.
 - **A catalogue magnitude column widely used in this field is wrong** in two of the three cases
   checked against primary sources, by 1.6 and 2.4 mag. Treat compiled photometry as
   provisional.
@@ -171,13 +198,20 @@ needs re-running viper rather than re-scoring.
 
 ```bash
 git log --oneline -20                  # what happened recently
-cat LESSONS.md                         # the traps
+cat docs/LESSONS.md                    # the traps
 
-# 125 tests, run from inside WSL. viperenv is the only interpreter carrying the whole set:
+# Offline tests plus network-marked tests, run from inside WSL. viperenv is the only interpreter carrying the whole set:
 # Windows python has no scipy, WSL python3 has no astropy, and each fails a different slice.
 # If an import is missing:  ~/viperenv/bin/pip install -e ".[dev]"
 cd "$(wslpath -a .)" && PYTHONPATH=src ~/viperenv/bin/python -m pytest tests/ -q
 ```
 
-Then ask Matthew what he wants next rather than guessing. The project is at the stage where
-the remaining decisions are editorial and his, not technical.
+Then ask Matthew what he wants next rather than guessing. Editorial decisions remain his. The
+adopted RV/per-order/BERV/configuration evidence is now frozen in `data/repro/`, and M37 reruns
+the screened/all-18 null from it. Before M38 preregistration, authorized development is limited
+to generic code, simulations, and declared controls: the pre-template injection operator,
+convergence metrics, paper-free period search and calibration, manifests, and the information
+firewall. Do not mount or inspect CD-35 raw/reduced spectra or templates, and do not execute a
+claim-bearing M38 target stage, until the protocol is reviewed and frozen and the required
+role-separated executor/custodian process exists. Extending raw-to-template reproducibility is
+a separate project; it does not relax that barrier.

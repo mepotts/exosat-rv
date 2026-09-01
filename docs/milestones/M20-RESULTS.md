@@ -1,5 +1,10 @@
 # M20–M22 — The census harvest: a contrast wall measured on beta Pic b, a quiet star at PDS 70, and the first companion monitoring of HIP 65426 b
 
+> **Audit scope correction (M29/M37):** the beta Pic slit extraction is host-dominated,
+> not a companion measurement. Any companion limit or “first monitoring” language in this
+> historical record must also be checked against the later spatial-profile and HiRISE
+> reclassification before use.
+
 > **Status: COMPLETE (M20, M21, M22).**
 > Covers the work that followed the coordinate census (M19 scripts, commit 465d27a).
 

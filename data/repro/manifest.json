@@ -1,0 +1,152 @@
+{
+  "bundle_sha256": "66283cfdf2b2a584901ebdb8f6a88706a890fa148460a46c1cc2f11c9d25eda3",
+  "external_hash_only_files": [
+    {
+      "logical_source": "~/viper-src/M13tpl_tpl.fits",
+      "role": "CD-35 2722 B iteration-1 fitted template",
+      "sha256": "50baff2f024fbc358c4e92b423078ebb42a860547a4081314f28838dbd3707aa",
+      "size_bytes": 1074240
+    },
+    {
+      "logical_source": "~/viper-src/M14tpl2_tpl.fits",
+      "role": "CD-35 2722 B iteration-2 fitted template",
+      "sha256": "7a1a638cee0b86bb7285672c89b638d170455ef802a92a456aabf320fbc8ec4d",
+      "size_bytes": 1074240
+    },
+    {
+      "logical_source": "~/viper-src/E15tpl2_tpl.fits",
+      "role": "eta Tel B iteration-2 fitted template",
+      "sha256": "1ba34749c7fbffd1d7f2a343f08e909dbb624d16bc98c40859852288ee821620",
+      "size_bytes": 1074240
+    },
+    {
+      "logical_source": "~/viper-src/lib/CRIRES/FTS/CRp_SGC2_FTStmpl-HR0p007-WN5000-10000_Hband.dat",
+      "role": "H-band FTS atlas passed explicitly to VIPER",
+      "sha256": "ed7a7431d95cb63946af6ba7593ee1bd7373d34f96e6362750e26a74c555ed83",
+      "size_bytes": 74354167
+    }
+  ],
+  "included_files": [
+    {
+      "logical_source": "~/viper-src/M14_NODT2.rvo.dat",
+      "path": "viper/results/M14_NODT2.rvo.dat",
+      "role": "CD-35 2722 B adopted per-nodding RV series",
+      "sha256": "b46585784888d8883bcfaa2020178695a6fff0b05e8f2408af698075efc87939",
+      "size_bytes": 18383
+    },
+    {
+      "logical_source": "~/viper-src/M14_NODT2.par.dat",
+      "path": "viper/results/M14_NODT2.par.dat",
+      "role": "CD-35 2722 B adopted per-nodding per-order fit parameters",
+      "sha256": "88fbeb9230fbd1b53ee9025f0009caed92cd7a69917bd5a97aad30b445e0fa4e",
+      "size_bytes": 201308
+    },
+    {
+      "logical_source": "~/viper-src/M14_NODT2.targ.csv",
+      "path": "viper/results/M14_NODT2.targ.csv",
+      "role": "CD-35 2722 B target metadata used by VIPER",
+      "sha256": "b633fee597810a78ec482b439f84bd5f2531d59f5b308e18cc95c481e86bc465",
+      "size_bytes": 197
+    },
+    {
+      "logical_source": "~/viper-src/M14_T2.rvo.dat",
+      "path": "viper/results/M14_T2.rvo.dat",
+      "role": "CD-35 2722 B adopted per-epoch RV series",
+      "sha256": "e450f10717f0fcadc88487100bd3e8c78f4127c57733783a777fca312e3501c7",
+      "size_bytes": 9564
+    },
+    {
+      "logical_source": "~/viper-src/M14_T2.par.dat",
+      "path": "viper/results/M14_T2.par.dat",
+      "role": "CD-35 2722 B adopted per-epoch per-order fit parameters",
+      "sha256": "4ce45c14159e079086828e8ffb0eab122b8c12e72681c3cf6e4446fd672a1a52",
+      "size_bytes": 100810
+    },
+    {
+      "logical_source": "~/viper-src/M14_T2.targ.csv",
+      "path": "viper/results/M14_T2.targ.csv",
+      "role": "CD-35 2722 B target metadata used by VIPER",
+      "sha256": "b633fee597810a78ec482b439f84bd5f2531d59f5b308e18cc95c481e86bc465",
+      "size_bytes": 197
+    },
+    {
+      "logical_source": "~/viper-src/E15_NOD.rvo.dat",
+      "path": "viper/results/E15_NOD.rvo.dat",
+      "role": "eta Tel B adopted per-nodding RV series",
+      "sha256": "5c1b4935e418991436f967b76ba01c5562e3b46d100b286843dda6cff1b6b53c",
+      "size_bytes": 19818
+    },
+    {
+      "logical_source": "~/viper-src/E15_NOD.par.dat",
+      "path": "viper/results/E15_NOD.par.dat",
+      "role": "eta Tel B adopted per-nodding per-order fit parameters",
+      "sha256": "8b9a9f31534e71cf7c49daf94a470f4626998a17897b7133ed9a9f1c194b4bd5",
+      "size_bytes": 222328
+    },
+    {
+      "logical_source": "~/viper-src/E15_NOD.targ.csv",
+      "path": "viper/results/E15_NOD.targ.csv",
+      "role": "eta Tel B target metadata used by VIPER",
+      "sha256": "27d0d18e9ea2670cdc8a9971cd81506ec0028bfd2c45eb4036252e21cbb8bcbc",
+      "size_bytes": 165
+    },
+    {
+      "logical_source": "~/viper-src/E15_R2.rvo.dat",
+      "path": "viper/results/E15_R2.rvo.dat",
+      "role": "eta Tel B adopted per-epoch RV series",
+      "sha256": "536101a949a8f2608c9671a654e19c0a74028f4ae157591a1a604710d57b6c52",
+      "size_bytes": 10360
+    },
+    {
+      "logical_source": "~/viper-src/E15_R2.par.dat",
+      "path": "viper/results/E15_R2.par.dat",
+      "role": "eta Tel B adopted per-epoch per-order fit parameters",
+      "sha256": "20041b14b63a68d67595b433d131e83d5f7b2518e56382ed41366560d18f3cce",
+      "size_bytes": 110632
+    },
+    {
+      "logical_source": "~/viper-src/E15_R2.targ.csv",
+      "path": "viper/results/E15_R2.targ.csv",
+      "role": "eta Tel B target metadata used by VIPER",
+      "sha256": "27d0d18e9ea2670cdc8a9971cd81506ec0028bfd2c45eb4036252e21cbb8bcbc",
+      "size_bytes": 165
+    },
+    {
+      "logical_source": "~/viper-src/config_viper.ini",
+      "path": "viper/config_viper.ini",
+      "role": "VIPER configuration present in the audited checkout",
+      "sha256": "24c1a73fbfe07dc26cdaa35387fb03eb7c0a455e0b1c871f57d30c2a834bd2c6",
+      "size_bytes": 3135
+    },
+    {
+      "logical_source": "git diff of audited VIPER tracked worktree",
+      "path": "viper/viper-tracked.patch",
+      "role": "tracked modifications present in the audited checkout; application date unknown",
+      "sha256": "7e6253f0d712cd48cf345ce941800d78610491b81f43461c3d52184e6b1642ba",
+      "size_bytes": 2681
+    }
+  ],
+  "schema_version": 1,
+  "scope": {
+    "does_not_support": [
+      "raw ESO exposure to reduced-spectrum replay",
+      "rebuilding the fitted templates, which are hash-only here",
+      "claiming that the packaging environment was the historical run environment",
+      "proving when the audited VIPER patch/configuration was applied relative to the historical runs"
+    ],
+    "supports": [
+      "offline downstream reanalysis of the adopted CD-35 2722 B RV tables",
+      "offline downstream reanalysis of the adopted eta Tel B RV tables",
+      "verification of VIPER source/configuration/template/FTS identities observed during the audit"
+    ]
+  },
+  "viper": {
+    "commit": "e8b22fa7489a9357e3b1936c54d54f86313dc129",
+    "repository": "https://github.com/mzechmeister/viper",
+    "tracked_status": [
+      " M utils/gplot.py",
+      " M viper.py"
+    ],
+    "untracked_files_enumerated": false
+  }
+}

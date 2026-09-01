@@ -12,7 +12,6 @@ rules, strikethrough, inline code -- are added on top.
 
 Usage: python scripts/m33_render_notes.py
 """
-import io
 import os
 import re
 
@@ -24,7 +23,7 @@ TEMPLATE = os.path.join(PAPER, "draft.template.html")
 NL = chr(10)
 
 NOTES = [
-    ("rnaas-etatel-draft.md", "First Radial-Velocity Constraints on eta Telescopii B",
+    ("rnaas-etatel-draft.md", "Radial-Velocity Limits on Satellites of eta Telescopii B",
      "Research Note draft - NOT SUBMITTED"),
     ("contrast-wall-note.md", "First resolve, then worry about contrast",
      "Working note - not submitted"),
@@ -65,8 +64,9 @@ EXTRA_CSS = """
 
 def journal_css():
     """Lift the manuscript's <style> block so the two cannot drift apart."""
-    html = io.open(TEMPLATE, encoding="utf-8").read()
-    m = re.search(r"<style>.*?</style>", html, re.S)
+    with open(TEMPLATE, encoding="utf-8") as handle:
+        html = handle.read()
+    m = re.search(r"<style>.*?</style>", html, re.DOTALL)
     if not m:
         raise SystemExit("no <style> block in the manuscript template")
     return m.group()[: -len("</style>")] + EXTRA_CSS + "</style>"
@@ -93,15 +93,16 @@ def _promote_title(src, title):
 
 
 def render(md_name, title, banner, css):
-    src = _promote_title(io.open(os.path.join(PAPER, md_name), encoding="utf-8").read(),
-                         title)
+    with open(os.path.join(PAPER, md_name), encoding="utf-8") as handle:
+        src = _promote_title(handle.read(), title)
     md = MarkdownIt("commonmark", {"html": True, "typographer": True})
     md.enable(["table", "strikethrough"])
     body = md.render(src)
     out = (f"<title>{title} - draft</title>\n{css}\n\n"
            f'<div class="sheet">\n<div class="notebar">{banner}</div>\n{body}\n</div>\n')
     dest = os.path.join(PAPER, md_name.replace(".md", ".html"))
-    io.open(dest, "w", encoding="utf-8", newline="\n").write(out)
+    with open(dest, "w", encoding="utf-8", newline="\n") as handle:
+        handle.write(out)
     return dest, len(out)
 
 

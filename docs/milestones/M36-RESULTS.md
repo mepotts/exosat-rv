@@ -1,5 +1,17 @@
 # M36 — The paper-blind selection is inconclusive, and the gate that let it through was mine
 
+> **Execution invalidated by M37 (2026-08-31):** the historical runner omitted fixed
+> arguments required by the preregistration, compared injected/reference means built from
+> potentially different valid-order sets, rounded recovery before selection, and reused
+> unmanifested outputs. The conservative “inconclusive” interpretation below remains safe,
+> but `data/m36-selection.json` is **not** a valid execution of the preregistered protocol.
+> The audited runner is dry-run only: every non-dry invocation aborts before external work
+> or artifact creation. Its dormant paths use a separate post-audit namespace.
+> M37 also found that the registered injection plan encodes the published 171.454-day orbit
+> and that the search script loads published epochs and hard-codes the published-period
+> window. M36 therefore was target-aware, not paper-blind, even apart from the execution
+> defects.
+
 **Pre-registration: [`M36-PREREGISTRATION.md`](M36-PREREGISTRATION.md), committed before the
 first run.** This document reports what happened. The short version is that the experiment
 did not answer its question, that the reason is a defect in the protocol rather than
@@ -12,12 +24,13 @@ sensitive, which is a different thing and must not be read as the first.
 
 ## 1. What ran
 
-All 36 pre-registered configurations, 2397 s of wall clock, exactly the grid in the protocol:
+The historical record claimed all 36 pre-registered configurations, 2397 s of wall clock,
+and exactly the grid in the protocol:
 order set × oversampling × κσ × telluric treatment, iteration-1 template throughout, each
-configuration scored only against its own uninjected run. No published value was read at any
-point before the blind search, and the runner
-([`m36_blind_selection.py`](../../scripts/injection/m36_blind_selection.py)) imports nothing
-that could load one.
+configuration scored only against its own uninjected run. M37 showed that this was not an
+exact execution and was not paper-blind. The runner did not load the published RV table, but
+its injection plan encoded the published 171.454-day orbit; the later search loaded published
+epochs to form a matched subset and hard-coded the published-period window.
 
 ## 2. The selection metric did not measure anything
 
@@ -77,11 +90,13 @@ K column.
 
 ## 4. Why the series are not usable
 
-The fitted semi-amplitudes above run to **9,656 m/s**, and the top-ranked peaks of the search
-sit at 8.5 d with K between 1,377 and 8,837 m/s. The signal this project actually measures on this
-object is **K ≈ 306 m/s published, 380–470 m/s fitted here** (M14). A fit returning thousands
-of m/s on a brown dwarf is not a velocity; it is the search fitting noise, and the 8.5 d
-top peak is the sampling rather than the sky.
+The near-171-day fits in the table are already **1,377–5,803 m/s**, and the top-ranked
+short-period peaks are **3,559–9,656 m/s**. Near-baseline aliases at 365.7–366.1 d reach
+**119,098–168,814 m/s**; those amplitudes are effectively unconstrained, not evidence for
+physical motion. The signal this project actually measures on this object is **K ≈ 306 m/s
+published, 380–470 m/s fitted here** (M14). A fit returning thousands of m/s on a brown dwarf
+is not a velocity; it is the search fitting noise, and the ~8.5 d top peak is the sampling
+rather than the sky.
 
 So the substantive outcome is the protocol's **fourth** row, not its second: *the paper-blind
 family cannot extract usable velocities at all, and therefore states nothing about the
@@ -135,13 +150,17 @@ That is a genuinely different experiment and needs its own pre-registration. It 
 started here, because writing it after seeing these numbers would need saying so plainly, and
 the honest sequence is to record this outcome first.
 
-## 8. Reproduce
+## 8. Historical reproducibility boundary
+
+The current runner is hardened code, not the program that produced the invalid historical
+artifact, and it cannot reproduce that execution. Its dry run can inspect the registered grid:
 
 ```bash
-cd "$(wslpath -a .)"
-~/viperenv/bin/python scripts/injection/m36_blind_selection.py --dry-run   # the grid
-~/viperenv/bin/python scripts/injection/m36_blind_selection.py            # ~40 min
+~/viperenv/bin/python scripts/injection/m36_blind_selection.py --dry-run
 ```
 
-Outputs `data/m36-selection.json`. The 684 viper series live in `~/viper-src/M36_*` and are
-outside the repository, as all viper output is.
+Non-dry execution is deliberately disabled before any external work or artifact creation:
+the runner cannot yet capture the complete per-invocation provenance and repository-resident
+evidence required by the audit. Its dormant execution paths are isolated under an `M36PA_`
+namespace and run-specific artifact names, but they are not authorised. No replay was run for
+M37, and M38's unresolved design must not be executed as though this command answered it.

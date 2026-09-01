@@ -267,15 +267,16 @@
 <div class="sheet">
 <div class="notebar">Working note - not submitted</div>
 <h1>A Nested Sampler's Internal Uncertainty Is Not Its Reproducibility</h1>
-<p><em>Matthew Potts · independent analysis · draft 2026-08-13</em></p>
+<p><em>Matthew Potts · unaffiliated analysis · draft 2026-08-13</em></p>
 <p>Bayesian model comparisons are often decided by a log-evidence difference, ΔlnZ,
 quoted with the uncertainty a nested sampler reports internally — a number
-describing one integration's numerical precision, not its reproducibility. Running
-the same comparison 82 times — one likelihood, one real dataset, varying only the
-seed and, separately, the priors and live-point count — the empirical run-to-run
+describing one integration's numerical precision, not its reproducibility. Repeating
+82 paired model comparisons — 164 nested-sampler invocations on one likelihood and one
+real dataset, varying the seed and, separately, the priors and live-point count — the empirical seed-to-seed
 scatter in ΔlnZ exceeds the sampler's quoted uncertainty by 1.1× to 8.1×.
-Quadrupling live points shrinks the internal number as expected but not the
-scatter, so the understatement grows to 4–5×.</p>
+Quadrupling live points shrinks the internal number as expected; the three tested
+high-nlive ratios remain 4–5×, although one partly unconverged configuration improves
+substantially.</p>
 <h2>Setup</h2>
 <p>We fit two competing Keplerian models (one companion versus two) to the 23-epoch
 CD-35 2722 B radial-velocity table published by Hoy et al. (2026, <em>Nature</em>), using
@@ -287,11 +288,11 @@ two axes: period handling (fixed; free within bounding windows; or free with bot
 models equally eccentric) and the jitter/amplitude prior (uniform; linear jitter;
 log-uniform amplitude). Seven configurations ran at nlive = 500 (ten seeds each);
 three were repeated at nlive = 2000 (four seeds each) as a convergence check — 82
-runs in total.</p>
+paired comparisons, or 164 individual model-evidence runs, in total.</p>
 <h2>Result</h2>
-<p><strong>Table 1.</strong> ΔlnZ over 82 nested-sampling runs. &quot;Internal&quot; is the sampler's own
-quoted uncertainty (quadrature sum of both models' log-evidence errors);
-&quot;run-to-run σ&quot; is the empirical scatter across seeds; &quot;ratio&quot; divides the second by
+<p><strong>Table 1.</strong> ΔlnZ over 82 paired model comparisons. &quot;Internal&quot; is the quadrature
+sum of the two model runs' sampler-reported log-evidence errors;
+&quot;seed-to-seed σ&quot; is the empirical scatter across comparisons; &quot;ratio&quot; divides the second by
 the first.</p>
 <table>
 <thead>
@@ -299,8 +300,9 @@ the first.</p>
 <th>priors</th>
 <th>period handling</th>
 <th style="text-align:right">nlive</th>
+<th style="text-align:right">n</th>
 <th style="text-align:right">ΔlnZ (mean ± s.e.)</th>
-<th style="text-align:right">run-to-run σ</th>
+<th style="text-align:right">seed-to-seed σ</th>
 <th style="text-align:right">internal</th>
 <th style="text-align:right">ratio</th>
 </tr>
@@ -310,6 +312,7 @@ the first.</p>
 <td>uniform</td>
 <td>fixed</td>
 <td style="text-align:right">500</td>
+<td style="text-align:right">10</td>
 <td style="text-align:right">−1.83 ± 0.08</td>
 <td style="text-align:right">0.25</td>
 <td style="text-align:right">0.24</td>
@@ -319,6 +322,7 @@ the first.</p>
 <td>uniform</td>
 <td>in windows</td>
 <td style="text-align:right">500</td>
+<td style="text-align:right">10</td>
 <td style="text-align:right">−4.60 ± 0.27</td>
 <td style="text-align:right">0.87</td>
 <td style="text-align:right">0.27</td>
@@ -328,6 +332,7 @@ the first.</p>
 <td>uniform</td>
 <td>both eccentric</td>
 <td style="text-align:right">500</td>
+<td style="text-align:right">10</td>
 <td style="text-align:right">−5.51 ± 0.69</td>
 <td style="text-align:right">2.18</td>
 <td style="text-align:right">0.27</td>
@@ -337,6 +342,7 @@ the first.</p>
 <td>jitter U(0,300)</td>
 <td>in windows</td>
 <td style="text-align:right">500</td>
+<td style="text-align:right">10</td>
 <td style="text-align:right">−3.82 ± 0.20</td>
 <td style="text-align:right">0.62</td>
 <td style="text-align:right">0.27</td>
@@ -346,6 +352,7 @@ the first.</p>
 <td>jitter U(0,300)</td>
 <td>both eccentric</td>
 <td style="text-align:right">500</td>
+<td style="text-align:right">10</td>
 <td style="text-align:right">−3.37 ± 0.38</td>
 <td style="text-align:right">1.19</td>
 <td style="text-align:right">0.27</td>
@@ -355,6 +362,7 @@ the first.</p>
 <td>K log-uniform</td>
 <td>in windows</td>
 <td style="text-align:right">500</td>
+<td style="text-align:right">10</td>
 <td style="text-align:right">−3.77 ± 0.30</td>
 <td style="text-align:right">0.96</td>
 <td style="text-align:right">0.27</td>
@@ -364,6 +372,7 @@ the first.</p>
 <td>K log-uniform</td>
 <td>both eccentric</td>
 <td style="text-align:right">500</td>
+<td style="text-align:right">10</td>
 <td style="text-align:right">−1.42 ± 0.44</td>
 <td style="text-align:right">1.40</td>
 <td style="text-align:right">0.27</td>
@@ -373,6 +382,7 @@ the first.</p>
 <td>uniform</td>
 <td>fixed</td>
 <td style="text-align:right">2000</td>
+<td style="text-align:right">4</td>
 <td style="text-align:right">−1.50 ± 0.24</td>
 <td style="text-align:right">0.49</td>
 <td style="text-align:right">0.12</td>
@@ -382,6 +392,7 @@ the first.</p>
 <td>uniform</td>
 <td>in windows</td>
 <td style="text-align:right">2000</td>
+<td style="text-align:right">4</td>
 <td style="text-align:right">−4.46 ± 0.31</td>
 <td style="text-align:right">0.62</td>
 <td style="text-align:right">0.13</td>
@@ -391,6 +402,7 @@ the first.</p>
 <td>uniform</td>
 <td>both eccentric</td>
 <td style="text-align:right">2000</td>
+<td style="text-align:right">4</td>
 <td style="text-align:right">−3.49 ± 0.27</td>
 <td style="text-align:right">0.54</td>
 <td style="text-align:right">0.13</td>
@@ -398,26 +410,28 @@ the first.</p>
 </tr>
 </tbody>
 </table>
-<p>Every configuration's mean favours one companion, and 81 of 82 individual runs are
+<p>Every configuration's mean favours one companion, and 81 of 82 paired comparisons are
 negative; the single exception reaches +0.9 — not this note's point. The uncertainty
 columns are. At nlive = 500 the internal estimate sits at ±0.24–0.27 regardless of
 configuration, while the empirical scatter over ten seeds spans 0.25 to 2.18:
 understated by 1.1× to 8.1×. Quadrupling live points to 2000 shrinks the internal
-estimate to ±0.12–0.13, matching its N^−1/2 scaling — but the empirical scatter
-barely moves (0.49–0.62), so the understatement <em>grows</em>, to 4.1–4.7×.</p>
-<h2>Why more live points make it worse</h2>
-<p>This is consistent with the internal estimate measuring the wrong thing: one
+estimate to ±0.12–0.13, matching its N^−1/2 scaling. The empirical scatters are
+0.49–0.62, so the ratios remain 4.1–4.7×. One partly unconverged row does improve:
+its scatter falls from 2.18 to 0.54 and its mean moves from −5.51 to −3.49.</p>
+<h2>Why the uncertainty ratio can remain large</h2>
+<p>This is consistent with the internal estimate measuring a different thing: one
 integration's numerical precision, not the variance between independent runs —
 which mode a random walk settles into, and how a degenerate posterior region gets
-explored. More live points tighten the first without touching the second, so the
-two move apart rather than together.</p>
+explored. More live points can improve convergence and empirical scatter while also
+shrinking the internal number; the two diagnostics need not move together.</p>
 <h2>The motivating case</h2>
 <p>This test was prompted by Hoy et al.'s tentative second, shorter-period companion: a
 nested-sampling comparison at ΔlnZ = +2.622, with quoted log-evidence uncertainties
 of ±0.695 and ±0.691 — the same class of internal number examined here. The
-system's primary ~171 d companion signal itself reproduces independently from the
-raw archival frames in our companion paper (in prep.); this note is not a challenge
-to that detection. We did not test their sampler, or how its uncertainty was
+system's primary ~171 d signal is recovered from the 17 screened raw-archive nights by a
+separately implemented but paper-calibrated extraction in our companion paper (in prep.);
+the all-18-night search degrades to noise, and this note is not a test of that screening
+choice. We did not test their sampler, or how its uncertainty was
 computed; the runs above use a different code on their own published table, testing
 only whether a comparable gap appears in a similar setting. The honest, conditional
 statement: <em>if</em> other nested samplers show a similar gap, <em>then</em> an uncertainty of

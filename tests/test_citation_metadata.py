@@ -61,9 +61,9 @@ def test_both_records_point_at_the_repository_that_is_actually_archived():
     assert REPO_URL in ids
 
 
-def test_the_reproduced_paper_is_cited_and_not_claimed_as_a_supplement():
+def test_the_audited_paper_is_cited_and_not_claimed_as_a_supplement():
     """`isSupplementTo` on Hoy et al. would present this as material accompanying their
-    Nature paper. It is an independent reproduction, so the honest relation is `cites`."""
+    Nature paper. This project audits and cites that work; it is not their supplement."""
     rel = {r["identifier"]: r["relation"] for r in _zenodo()["related_identifiers"]}
     assert rel.get(HOY_DOI) == "cites"
 

@@ -21,13 +21,11 @@ import sys
 
 import numpy as np
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from score import combine  # noqa: E402
-
 
 def load(p):
     """Chunk-tolerant rvo.dat loader: rv7 or rv7-0 columns both become entries."""
-    hdr = open(p).readline().split()
+    with open(p) as handle:
+        hdr = handle.readline().split()
     d = np.genfromtxt(p, skip_header=1, usecols=range(len(hdr) - 1),
                       invalid_raise=False)
     if d.ndim == 1:
@@ -38,7 +36,7 @@ def load(p):
         cols[n] = d[:, i]
     # normalise: map rvX-Y / e_rvX-Y onto integer pseudo-order X*10+Y when chunked
     out = {k: v for k, v in cols.items() if not k[2:].replace("-", "").isdigit()
-           or not (k.startswith("rv") or k.startswith("e_rv"))}
+           or not k.startswith(("rv", "e_rv"))}
     orders = []
     for k in keys:
         if k.isdigit():
@@ -65,7 +63,7 @@ def published():
     with open(PUB, encoding="utf-8") as f:
         for line in f:
             line = line.strip()
-            if not line or line.startswith("#") or line.startswith("bjd"):
+            if not line or line.startswith(("#", "bjd")):
                 continue
             rows.append([float(x) for x in line.split(",")])
     a = np.array(rows)
@@ -73,8 +71,12 @@ def published():
 
 
 def score(path):
+    # Keep the SciPy-dependent paper scorer out of downstream imports that only need load().
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    from score import combine
+
     c, orders = load(path)
-    mean, wmean, eps = combine(c, orders)
+    mean, _wmean, eps = combine(c, orders)
     bjd, berv = c["BJD"], c["BERV"]
     pb, pv, pe = published()
 
@@ -87,8 +89,12 @@ def score(path):
             ours_t.append(t); ours_v.append(v); pub_v.append(pv[i]); pub_e.append(pe[i])
     ours_v, pub_v = np.array(ours_v), np.array(pub_v)
 
-    out = dict(n=len(orders), n_match=len(ours_v),
-               rms=float(np.nanstd(mean, ddof=0)), eq1=float(np.nanmean(eps)))
+    out = {
+        "n": len(orders),
+        "n_match": len(ours_v),
+        "rms": float(np.nanstd(mean, ddof=0)),
+        "eq1": float(np.nanmean(eps)),
+    }
     g = np.isfinite(mean) & np.isfinite(berv)
     if g.sum() > 2:
         out["r_berv"] = float(np.corrcoef(berv[g], mean[g])[0, 1])
@@ -96,7 +102,7 @@ def score(path):
         d = ours_v - pub_v
         out["rms_pub"] = float(np.std(d - d.mean(), ddof=0))
         A = np.column_stack([pub_v, np.ones_like(pub_v)])
-        b, res, *_ = np.linalg.lstsq(A, ours_v, rcond=None)
+        b, _res, *_ = np.linalg.lstsq(A, ours_v, rcond=None)
         out["slope"] = float(b[0])
         n = len(ours_v)
         sig2 = float(np.sum((ours_v - A @ b) ** 2)) / max(n - 2, 1)

@@ -24,8 +24,10 @@ They are the highest-value-per-hour ideas in this file.
 > - **Within-night frame scatter.** Frames of one night are minutes apart, so a
 >   satellite orbit cannot move between them — pure noise, in principle ideal. But the
 >   campaigns take only **~2 frames per night**, giving too few degrees of freedom. The
->   built-in control settles it: CD-35 2722 B, which carries a real signal (published K = 306 m/s, fitted here at 426-472),
->   resolves its excess at only **1.4σ**. A method that cannot recover a known signal
+>   built-in control is informative but qualified: H26 reports K = 306 m/s for CD-35 2722 B
+>   and the screened extraction here fits 426–472 m/s, while the all-18-night search fails.
+>   Even this signal-bearing screened case resolves its excess at only **1.4σ**. A method
+>   with so little power on its control
 >   cannot certify a null, so every other object's "no excess" is a power failure, not
 >   a physical result.
 > - **Across-order dispersion.** Far more degrees of freedom, and invariant to
@@ -53,19 +55,22 @@ They are the highest-value-per-hour ideas in this file.
 *Original statement of the idea, kept for the record:*
 
 **The gap.** Every proposal in this genre — including this project's own — guesses the
-astrophysical RV noise floor of a young self-luminous giant. Nobody has measured it,
-because nobody has a homogeneous multi-epoch RV sample of imaged companions.
+astrophysical RV noise floor of a young self-luminous giant. This project has not measured it,
+because its apparent multi-epoch sample did not survive mode and spatial-resolution audit as
+a homogeneous companion-RV set; any broader novelty claim requires a fresh literature review.
 
-**We do.** Per-epoch scatter is in hand for ~11 companions spanning M7 → L → T, at
-known ages, masses, spectral types and rotation regimes, all through one pipeline whose
-velocity transmission is injection-verified per target:
+**The original premise.** Per-epoch scatter appeared to be in hand for ~11 companions
+spanning M7 → L → T. The later HiRISE and spatial-profile audits narrowed that set: the
+fibre observations reduced with a slit recipe are invalid, and an unresolved, host-dominated
+extraction is not a companion RV even when its fitter-stage injection gate passes. Any revival
+must first rebuild the eligible sample from verified nodding or fibre-appropriate reductions.
 
 | object | per-epoch scatter | note |
 |---|---:|---|
 | YSES 1 b | 34 m/s | best of the campaign |
 | HD 19467 B | 45 m/s | benchmark T dwarf |
 | 2M0103AB b | 53 m/s | within-night |
-| CD-35 2722 B | 70–90 m/s | has a real signal — the calibrator |
+| CD-35 2722 B | 70–90 m/s | screened ~171 d recovery; all-18 search fails |
 | HIP 81208 B | 124 m/s | |
 | eta Tel B | 127–129 m/s | |
 | PDS 70 (star) | 130 m/s | accreting transition-disk host |
@@ -86,9 +91,10 @@ exists — this is analysis, not observation.
 
 Direct imaging gives sky-plane position; it cannot give the line-of-sight velocity that
 breaks the orbit-orientation degeneracy. A single precise companion RV does (this is
-how Ruffio et al. constrained HR 8799). **We have absolute RVs for ~11 companions** and
-have never used them for this — the whole project treats RV as a satellite probe and
-throws the systemic value away.
+how Ruffio et al. constrained HR 8799). The repository contains extracted systemic values
+for multiple targets, but **they are not yet a catalogue of companion RVs**: HiRISE/slit
+misclassifications and unresolved host-dominated spectra must be removed first. The viable
+subset has not yet been audited for absolute zero-point accuracy.
 
 Deliverable: a table of companion-minus-host radial velocities with uncertainties, and
 per system what it does to the orbit posterior when combined with published astrometry.
@@ -98,8 +104,9 @@ Different science case, different audience (dynamics, not exomoons), same data.
 
 The same H- and K-band spectra carry rotational broadening, and viper already forward-
 models line profiles. Companion spin is an active formation diagnostic (spin–mass and
-spin–age relations test accretion history). No homogeneous multi-object set exists —
-published v sin i values are one-object-per-paper with inconsistent methods. Moderate
+spin–age relations test accretion history). The sources reviewed here are predominantly
+one-object-per-paper and use inconsistent methods; whether a homogeneous multi-object set
+already exists needs a dedicated literature check before any novelty claim. Moderate
 new work (a broadening fit alongside the RV fit), high citation surface.
 
 ### A4. CT Cha B's accretion variability
@@ -114,28 +121,38 @@ cheap ask.
 ### B1. Photometric cross-check of the 171 d period — **DONE (M35)**
 
 If CD-35 2722 shows a ~171 d **photometric** periodicity, the satellite has an activity
-explanation and the paper's central claim is in trouble. If it does not, that is another
-independent systematics defence. ASAS-SN, ATLAS and TESS are public and account-free,
-and the primary is bright. Half a day of work, and a referee will ask for it.
+alternative and the paper's central claim is in trouble. A sufficiently sensitive null would
+be supporting context, not proof of a nonstellar origin. ASAS-SN, ATLAS and TESS are public
+and account-free, and the primary is bright.
 
-> **Result (2026-08-24, `scripts/m35_asassn_photometry.py`, M35 §1): it does not.**
-> No power at 171.454 d in either ASAS-SN filter era (permutation *p* = 0.35-0.55), and
-> injection recovery puts the limit at **5 mmag** -- an order of magnitude below the star's
-> own rotational amplitude. The same search recovers the catalogued 1.717 d rotation as its
-> daily alias at *p* = 0.000, so the null has demonstrated sensitivity rather than being a
-> power failure. **The satellite has no photometric activity explanation.**
+> **Re-audited result (2026-08-31, `scripts/m35_asassn_photometry.py`,
+> `data/m35-photometry-v2.json`): no 171.454 d photometric detection.** After per-camera
+> centering and reduction to one effective datum per observing night, nominal night-permutation
+> *p* = 0.13–0.16 across the host/filter rows, conditional on exchangeability of the final
+> camera-corrected night bins. The two ASAS-SN source IDs are alternative
+> aperture photometry of the same 2,173 timestamp/camera measurements, not independent
+> replications. Injection recovery on nested deterministic grids of 720, 1440 and 2880 phases
+> first reaches at least 90% phase recovery at K = 12/13/12/13 mmag across the four rows; the
+> grid-resolved cross-series threshold is therefore **13 mmag semiamplitude (26 mmag
+> peak-to-peak)**. At K = 5 mmag, only 43.2–44.2% of the finest-grid phases recover, and the
+> maximum successive-grid fraction change over the curves is <0.0007. These are numerical
+> uniform-phase fractions conditional on one observed-noise realization, the preprocessing and
+> an estimated fixed-period permutation threshold—not binomial samples or confidence bounds.
+> A photometric null does not prove that the RV signal is nonstellar.
 
 ### B2. Gaia astrometric cross-check -- **DONE (M35)**
 
 RUWE, astrometric excess noise, and any non-single-star solution for CD-35 2722 A and
-for every target carrying a limit. Independent constraint on unseen companions,
-essentially free, and it strengthens the null results as well as the detection.
+for every target carrying a limit. This is an inexpensive catalogue diagnostic for obvious
+astrometric problems, not by itself an exclusion of unseen companions.
 
-> **Result (2026-08-24, `scripts/m35_gaia_astrometry.py`, M35 §2).** CD-35 2722:
-> **RUWE 1.023**, excess noise 0.099 mas, **no non-single-star solution**. eta Tel likewise
-> (RUWE 1.013). **Not one of the 31 roster positions carries an NSS solution.** Six exceed
-> RUWE 1.4 and every one is a very bright star, where Gaia's astrometric solution is known
-> to degrade -- they are not read as companions, and nothing rests on them.
+> **Result (2026-08-24, `scripts/m35_gaia_astrometry.py`, M35 §2).** CD-35 2722 has
+> **RUWE 1.023** and no Gaia DR3 non-single-star solution; eta Tel likewise has RUWE 1.013.
+> Not one of the 31 roster positions carries an NSS solution. This is catalogue context, not
+> proof of no astrometric perturbation: CD-35 2722's excess noise is 0.099 mas and formally
+> significant, and RUWE/NSS alone cannot exclude an unresolved companion. Six roster entries
+> exceed RUWE 1.4; their brightness makes simple interpretation unsafe, so no claim rests on
+> them.
 
 ## C. Method contributions with reach beyond this subfield
 
@@ -152,22 +169,31 @@ data:
    *against* this project's two largest real improvements.
 3. **A search maximum is not a significance.** ΔBIC quoted as the peak of a 4000-period
    search, when a signal-free series with the same cadence reaches ΔBIC ≈ 19 five
-   percent of the time.
-4. **Sampler-internal evidence errors are not reproducibility.** Measured 2–8x
-   understatement on a real published RV table (§C2).
+   percent of the time. With the load-bearing BERV covariate included, the screened
+   series has a nominal 5000-permutation global *p* of about 0.002–0.008; the plain-search
+   range is about 0.0002–0.0006, not the BERV-adjusted result. Those values assume
+   exchangeability of the fitted base-model residuals and are conditional on a post-hoc
+   screen, so they are diagnostic rather than confirmatory false-alarm probabilities; the
+   all-18-night BERV-adjusted values are 0.31–0.91.
+4. **Sampler-internal evidence errors are not reproducibility.** In this dynesty analysis,
+   seed-to-seed scatter is 1.1–8.1× the internal estimate on a real published RV table
+   (§C2); that factor is not evidence about a different sampler.
 
 ### C2. Sampler reproducibility as a standalone note
 
 Evidence ratios across the exoplanet literature are quoted with the sampler's internal
 logZ uncertainty. Measured here on the published Nature table: empirical seed-to-seed
-scatter is 1.1x, 3.3x and 8.1x the quoted error depending on prior family, with single
-runs spanning −1.7 to −8.9 where the internal error claims ±0.27. Short, sharp, wide
-audience, code included. RNAAS-length.
+scatter is 1.1x, 3.3x and 8.1x the quoted error depending on model/prior configuration,
+with paired comparisons spanning −1.7 to −8.9 in the broadest row while the internal
+error is ~±0.27. The dataset comprises 82 paired model comparisons (164 nested-sampler
+fits), not 82 individual sampler invocations. The result is specific to dynesty, this
+likelihood and this dataset. Short, sharp, wide audience, code included. RNAAS-length.
 
 ### C3. A public "does your detection survive?" service
 
-`m28_nullcal.py` generalized: upload an RV table, get back permutation-calibrated
-significance, a leave-one-out panel, window-function/alias structure, and a
+`m28_nullcal.py` generalized: upload an RV table, get back permutation-based nominal null
+calibration with explicit exchangeability assumptions, a leave-one-out panel,
+window-function/alias structure, and a
 nuisance-covariate test. This is exactly the portfolio's stated thesis — the usability
 layer between public archives and the people using them — and it turns the methods paper
 from a lecture into a tool.
@@ -176,19 +202,18 @@ from a lecture into a tool.
 
 ### D1. Isolated planetary-mass objects: where the contrast wall does not exist
 
-This project measured the wall at four points and concluded that inside ~0.8″/2000x you
-need fiber suppression. **Free-floating planetary-mass objects have no host at all** —
-no contrast wall, no starlight, no slit contamination, and the same bright young IR
-spectra. They are the ideal targets for companion-side RV and nobody frames them that
-way. ESO's archive is swept negative, so this is a proposal case rather than an archival
-one — but it is the strongest proposal case the project has, and it is the natural
-ELT/ANDES argument.
+This project established a hard spatial-resolution gate for slit extraction and measured a
+few separation/contrast points; it did not measure a universal ~0.8″/2000× contrast wall.
+**Free-floating planetary-mass objects have no host at all**, so they remove both starlight
+contrast and slit-contamination terms while retaining young infrared spectra. That makes them
+a promising companion-side-RV proposal class. The ESO archive sweep found no usable series;
+the literature and novelty case still need to be checked before making a priority claim.
 
 ### D2. The contrast wall as an instrument-design curve
 
-The separation–contrast–precision surface, measured rather than forecast, is directly
-actionable for HiRISE/KPIC/RISTRETTO and for ELT instrument teams. Small paper,
-specific and useful audience.
+The audited separation/contrast/resolution points could seed an instrument-design surface,
+but the contrast dependence between the resolved and unresolved regimes remains unmeasured.
+Filling that gap could be actionable for HiRISE/KPIC/RISTRETTO and ELT instrument teams.
 
 ### D3. Systematic significance audit of published periodic detections
 
@@ -201,19 +226,31 @@ the methods paper published first so it reads as method rather than accusation.
 
 ## Suggested execution order
 
-1. ~~**B1, B2**~~ — **done (M35).** Both came out the way the paper needs. They are ready
-   to be cited in Paper I; neither has been written into the manuscript yet.
-2. **C1** — writes from banked milestones.
-3. **A2, A3** — new science, moderate new analysis.
-4. Then the existing queue: YSES 1 b's blocked 2022 pair, beta Pic b's HiRISE nights,
+1. **M38 control-only development and protocol freeze before new target science.**
+   `data/repro/` now freezes the adopted M14/M15 RV/per-order/BERV/configuration products,
+   VIPER source patch and hashes, and M37 regenerates the screened/all-18 CD-35 null from that
+   bundle. Develop the pre-template injection operator, convergence metrics, paper-free period
+   search and calibration, manifests, and information firewall only on simulations and the
+   declared controls. Then resolve the M38 decision register, name the role-separated executor
+   and custodian, independently review the protocol, and freeze it. Until those gates close,
+   do not mount or inspect CD-35 raw/reduced spectra or templates and do not execute a
+   claim-bearing target stage. Extending raw-to-template replay remains a separate
+   reproducibility project and does not relax this barrier. The prose corrections do not by
+   themselves make either science draft submission-ready.
+2. ~~**B1, B2**~~ — **done, then re-audited.** The photometric null remains useful after
+   nightly/camera-aware reanalysis; Gaia supplies catalogue context, not a proof of no
+   perturbation. Use the qualified statements in §B, not the original M35 headlines.
+3. **C1** — writes from banked milestones after the bundle audit.
+4. **A2, A3** — new science, moderate new analysis.
+5. Then the existing queue: YSES 1 b's blocked 2022 pair, beta Pic b's HiRISE nights,
    Keck/KOA (DH Tau B, HR 8799).
 
 **Two items came off this ranking and are deliberately not in it.**
 
 - **A1 is attempted and not achievable with the data in hand.** Its own section carries the
-  result: ~2 frames per night is too few degrees of freedom, and the built-in control — a
-  target with a real signal — resolves its excess at only 1.4σ, so every other object's "no
-  excess" is a power failure rather than a physical result. It stays written up because the
+  result: ~2 frames per night is too few degrees of freedom, and even the screened,
+  signal-bearing CD-35 control resolves its excess at only 1.4σ (the all-18-night search itself
+  fails), so every other object's "no excess" is a power failure rather than a physical result. It stays written up because the
   negative is informative, but it was ranked third here as "the highest-value new result
   available without new observations" and that is no longer true.
 - **C2 is blocked on a decision, not on work.** Its content is presently §5.1 of the

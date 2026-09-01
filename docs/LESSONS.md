@@ -5,11 +5,13 @@ Every entry was paid for with a wrong result, a dead run, or a retraction.
 Reading order for a new session: this file → `HANDOFF.md` banner →
 `docs/target-queue.md` (the roster ledger) → the latest `M*-RESULTS.md`.
 
-Scoring law, stated once: **every change is scored with
+Historical scoring law, stated once: **every adopted extraction change was scored with
 `scripts/injection/vs_published.py` against the published RVs, never an internal
-metric, and anything adopted must pass injection-recovery first.** Success was
-always "rms_pub ≤ threshold AND blind search survives the BERV covariate" — both,
-not either.
+metric, and had to pass fitter-stage injection recovery first.** Success was
+"rms_pub ≤ threshold AND the downstream period search survives the BERV covariate" — both,
+not either. M37 makes the consequence explicit: this is a paper-calibrated reproduction
+workflow, not an end-to-end independent test. A future independence experiment must hold the
+published values out rather than reuse this scoring law.
 
 ---
 
@@ -28,6 +30,9 @@ not either.
 | 9 | Claiming "first ever" | "First RVs of beta Pic b" was wrong (A&A 2024 got there) | Literature-search every first; hedge as "to the best of our knowledge"; log corrections in place (M20 §5) |
 | 10 | Trusting the mode label | The entire "staring" tier was actually **HiRISE fiber data**; slit-recipe reductions produced km/s artifacts we mistook for sky physics | **Check `INS MODE` + `ORIGFILE` in raw headers before classifying any dataset**; three ledgered verdicts had to be retracted (M27 banner, target-queue) |
 | 11 | An injection gate read without its error bar | M36: three configurations "passed" `slope in [0.80, 1.20]` on 0.97 +- 2.28, 1.13 +- 1.54, 1.14 +- 0.92 — every 2-sigma interval containing **0**, i.e. total signal destruction | **A recovery number with no usable uncertainty is not a pass.** Gate the error too: this project's working configurations gate at 99–101% ± 1%, so require `slope_err <= 0.10` alongside the slope. Same family as M28 §6.5, one level up |
+| 12 | Calling a screen-conditioned permutation probability “global” | The near-171 d peak is strong on 17 internally retained nights but all BERV-adjusted 18-night searches are compatible with noise | Always show the complete-series result beside the screened one. “Global” covers the period grid only; it does not pay for choosing an epoch screen. Treat the detection as conditional until the screen is fixed before new data (M37) |
+| 13 | Assuming a preregistration proves what the runner executed | M36's prose fixed polynomial degrees and a wavelength interval that its command never passed; filename-only caches silently reused old products | Print and test the effective argv, pass every held-fixed value explicitly, bind caches to content/configuration manifests, and audit conformance before reading results. A post-audit code fix cannot rehabilitate a historical preregistered artifact (M37) |
+| 14 | Calling a shifted-template injection “end to end” | Recovery validates the fit against an already-built template but cannot reveal signal absorbed while that template was constructed | Name the boundary **fitter-stage transmission**. A template-construction claim needs injection before template building, and injected/reference means must use the same valid-order intersection (M37) |
 
 ## 2. viper quirks (mechanical, cost hours each)
 
@@ -90,6 +95,10 @@ not either.
 - `git commit -F <file>` always; PowerShell here-strings mangle multi-line messages.
 - Read **full** logs on failure — `tail -30` hid the actual retry error once.
 - Long WSL jobs run as harness background tasks; recover from TAP outages with a probe-then-rerun loop and a 6 h ceiling.
+- A result table outside Git is not reproducible because a script path exists. Freeze small
+  load-bearing outputs with content hashes and distinguish copied artifacts from hash-only
+  external inputs. `data/repro/manifest.json` is the M37 pattern; it deliberately does not
+  pretend to reconstruct an uncaptured historical environment.
 
 ## 5b. Attribution and sourcing traps (M29 — nine errors in one day, none found by doing science)
 
@@ -161,20 +170,22 @@ has to happen before the write, not after.
 
 | Artifact | What it holds |
 |---|---|
-| `M13/M14-RESULTS.md` | The reproduction: floor 147→70–90 m/s, blind detection through BERV, dynesty flip (10/10 negative vs paper's +2.62) |
-| `M15-RESULTS.md` | eta Tel B: first-ever RV limit, msini ≳ 0.5–1.2 M_Jup (P=20–300 d), both routes |
-| `M17-RESULTS.md` | K-band tier: beta Pic b 162 m/s within-night, AB Pic b, CT Cha B (+ the corrected "first" claim) |
+| `M13/M14-RESULTS.md` | Historical extraction development and model comparison; M37 narrows the detection and independence wording |
+| `M15-RESULTS.md` | eta Tel B null and pointwise circular sensitivity, conditional on fitter-stage transmission; M37 owns that scope correction |
+| `M17-RESULTS.md` | Historical K-band tier; M29/M37 withdraw or narrow the beta Pic and observing-mode claims |
 | `M20-RESULTS.md` | Census harvest: HIP 65426 b exomoon-regime limit, PDS 70 star, beta Pic b contamination, **the contrast wall**, correction log |
 | `M23-RESULTS.md` | Roster closed: 1 confirmation, 1 contradiction, 4 limits, 1 contamination, 4 data-limited (§5); embargo calendar (§6) |
 | `docs/target-queue.md` | **The living ledger**: every system's verdict + the HiRISE/M27 banner + archive traps + standing machinery |
 | `docs/paper/draft.template.html` | The manuscript (generated, never hand-edited) + Figs 5–12 answering Hoy figure-for-figure |
-| `M28-RESULTS.md` | The audit: common-mode test (171 d exists nowhere else), permutation significance (p=5e-4), jackknife 17/17, eta Tel limit verified, slit-function contamination bound |
+| `M28-RESULTS.md` | The first audit; M37 establishes that its permutation and jackknife conclusions are conditional on the internal screen |
 | `M29-RESULTS.md` | YSES 1 b's 2022 night reduced then **rejected** by a pre-committed screen; the CRLF defect; the contrast axis derived, twice corrected, and finally replaced by **S = contrast/theta^2** (§§6-8) |
+| `M35-RESULTS.md` | Historical photometry/Gaia check; M37 and `data/m35-photometry-v2.json` supersede the sensitivity and astrometric wording |
+| `M36-RESULTS.md` | Inconclusive historical paper-blind attempt; M37 establishes that it did not faithfully execute the preregistration |
+| `M37-RESULTS.md` | Authoritative audit correction: complete-versus-screened RV evidence, corrected M35, M36 invalidation, claim scope, and downstream evidence bundle |
 | `audits/REFERENCE-AUDIT.md` | Every citation checked against source PDFs: 14 wrong across 60+ sites |
 | `audits/PROPERTY-AUDIT.md` | 268 object properties: 171 verified, 34 conflicting, 63 unsourced |
-| `~/.claude/.../memory/` | Cross-session index of all of the above |
 
-**Open front (M27):** proper HiRISE reduction → re-do the fiber tier → beta Pic b's
-six public starlight-suppressed nights. Post-M27 frontier: Keck/NIRSPEC (HR 8799
-~25 nights, DH Tau ~27; needs a new pipeline). Queued fixes: yses1 2022 SOF ("the
-prize": 4-night/290-d exomoon-depth series), cd35d1 split, pds70h mapping.
+**Open front after M37:** review and commit a valid successor protocol before any new
+paper-blind run; then close the raw-to-RV provenance/environment gap. Proper HiRISE reduction
+and the other target-specific queues remain secondary until the central evidence boundary is
+settled.

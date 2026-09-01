@@ -1,0 +1,62 @@
+diff --git a/utils/gplot.py b/utils/gplot.py
+index 0b22ae2..aab5164 100644
+--- a/utils/gplot.py
++++ b/utils/gplot.py
+@@ -90,8 +90,11 @@ class Gplot(object):
+ 
+    >>> gplot.key_bottom_rev("left")('sin(x)')
+    """
+-   version = subprocess.check_output(['gnuplot', '-V'])
+-   version = float(version.split()[1])
++   # PATCHED (exosat-rv): gnuplot absent; only needed for interactive -look* plots.
++   try:
++      version = float(subprocess.check_output(['gnuplot', '-V']).split()[1])
++   except Exception:
++      version = 5.4
+ 
+    def __init__(self, cmdargs='', tmp='$', mode='plot', stdout=False, stderr=None):
+       self.stdout = stdout
+@@ -289,7 +292,11 @@ class Iplot(Gplot):
+    # '/usr/local/share/gnuplot/%s/js/' % Gplot.version
+    # The path can be extracted from output of term svg mousing.
+    # Request a small plot and parse the output
+-   _jsdir = subprocess.check_output(['gnuplot', '-e', 'set term svg mousing; unset border; unset tics; set samp 2; pl [][0:1]NaN t ""'], universal_newlines=True).split('gnuplot_svg.js')[0].split('xlink:href="')[-1]
++   # PATCHED (exosat-rv): see the note on Gplot.version.
++   try:
++      _jsdir = subprocess.check_output(['gnuplot', '-e', 'set term svg mousing; unset border; unset tics; set samp 2; pl [][0:1]NaN t ""'], universal_newlines=True).split('gnuplot_svg.js')[0].split('xlink:href="')[-1]
++   except Exception:
++      _jsdir = ''
+    # universal_newlines=True leads finally to the same type|class=str in python 2 and python 3, instead of bytes
+ 
+    # The absolute path might not accessible in Jupyter, if localhost was
+diff --git a/viper.py b/viper.py
+index 2fc7617..a545d41 100755
+--- a/viper.py
++++ b/viper.py
+@@ -861,7 +861,8 @@ if tplname:
+                 wave_tpl[order], spec_tpl[order] = np.exp(us), fs
+             else:
+                 wave_tpl[order], spec_tpl[order] = wave_tplo, spec_tplo
+-        except:
++        except Exception:
++            import traceback as _tb; _tb.print_exc()
+             print(f'\x1b[0;31;40mError: Failed to read the template for order {order} \x1b[0m')
+ else:
+     # no template given; model pure iodine
+@@ -930,7 +931,8 @@ for n, obsname in enumerate(obsnames):
+             except Exception as e:
+                 if repr(e) == 'BdbQuit()':
+                     exit()
+-                print("Order failed due to:", repr(e))
++                import traceback as _tb
++                print("Order failed due to:", repr(e)); _tb.print_exc()
+                 rv[i_o*chunks+ch], e_rv[i_o*chunks+ch] = np.nan, np.nan
+ 
+     if not np.isnan(rv).all():
+@@ -1031,4 +1033,4 @@ if not createtpl:
+ print(tag, 'done.')
+ 
+ def run():
+-    pass
++    pass
+\ No newline at end of file

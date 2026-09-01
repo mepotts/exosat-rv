@@ -1,6 +1,6 @@
 """M19 verdict: the beta Pic b 4-epoch series — variability test + K exclusion.
 
-With four epochs a blind period search is over-parameterized (3 fit params), so the
+With four epochs a period search is over-parameterized (3 fit params), so the
 honest statistics are: (1) is the night-binned series consistent with constant RV,
 given per-night errors? (2) what companion amplitude K would, at 90% of phases, have
 produced more night-to-night scatter than observed? The second is licensed by the
@@ -10,15 +10,15 @@ real binned series, compare its std against the observed std.
 Usage (WSL, ~/viper-src): python m19_verdict.py M19_BPB.rvo.dat
 """
 import os
-_ROOT = os.environ.get("EXOSAT_ROOT") or os.path.abspath(
-    os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
 import sys
 
 import numpy as np
 
+_ROOT = os.environ.get("EXOSAT_ROOT") or os.path.abspath(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
 sys.path.insert(0, _ROOT + "/scripts/injection")
-from vs_published import load  # noqa: E402
-from m14_score import bin_frames  # noqa: E402
+from m14_score import bin_frames
+from vs_published import load
 
 path = sys.argv[1]
 c, orders = load(path)

@@ -1,5 +1,11 @@
 # M35 — The two pre-submission cross-checks: no photometric period, and clean astrometry
 
+> **Superseded analysis (M37, 2026-08-31):** the photometric null survives a corrected
+> camera- and night-aware reanalysis, but the exposure-level permutation and sparse phase
+> experiment below overstated sensitivity. The authoritative artifact is
+> `data/m35-photometry-v2.json`. Gaia RUWE and the absence of an NSS solution provide
+> catalogue context; they do not prove that the host has no astrometric perturbation.
+
 `NEXT-DIRECTIONS.md` ranks **B1** and **B2** first, ahead of any new science, because they
 belong in Paper I before it goes out and a referee will ask for both. Neither needs new
 observations and neither needs an account. Both are done here.

@@ -3,31 +3,27 @@
 The Nature version carries *"All correspondence and request for materials can be made to
 Kevin Hoy (kevin.hoy@mail.udp.cl)"*. Kevin Hoy is also reachable at `Kevin.Hoy@eso.org`.
 
-**Send it yourself.** Nothing in this repo should mail anyone. Rewritten after M14: the
-extraction questions from the old draft are mostly answered by our own work now, so the
-email leads with the good news (the satellite reproduces from raw frames) and asks for
-the two things we genuinely cannot get elsewhere: their EMPEROR setup, and order level
-RVs.
+**Send it yourself.** Nothing in this repo should mail anyone. This draft was corrected after
+M37: it does not claim an independent reproduction. It asks about the load-bearing epoch,
+extraction lineage, EMPEROR setup, and order-level RVs that the public material does not settle.
 
 ---
 
-**Subject:** Your CD-35 2722 B satellite reproduces from the raw frames. Two asks.
+**Subject:** Questions from a public-data audit of the CD-35 2722 B RV series
 
 Dear Dr Hoy,
 
 Congratulations on the CD-35 2722 B paper, and thanks for publishing the full RV table.
-I have been reproducing it independently, starting from the raw CRIRES+ frames in the
-ESO archive, with the aim of pointing the same method at other companions that already
-have archival H band data.
+I have been auditing it with a separately implemented reduction starting from public CRIRES+
+frames, with the aim of understanding which conclusions can transfer to other companions.
 
-First the good news. The main detection holds up from scratch. I rebuilt the reduction
-with cr2res 1.6.10, extracted per nodding RVs with viper, and ran a blind period search
-with no published values anywhere in the chain. The ~171 day signal comes out as the top
-peak, and it survives adding BERV as a nuisance term, which given how entangled orbital
-phase and BERV are in the archive sampling was the part I most doubted. My per epoch
-scatter against your Table 2 lands at 70 to 90 m/s, so a bit above your 57.7, and my
-semi amplitude runs some 20 to 40 percent high, which I currently blame on that same
-phase BERV entanglement rather than on anything real.
+The result is more conditional than I first expected. On the 17 nights retained by an internal
+across-order-spread screen, the near-171-day peak is the strongest searched period and remains
+after adding BERV as a nuisance term. Restoring the eighteenth night removes that result in all
+three BERV-adjusted global searches. The extraction machinery was also developed with your RV
+table visible, so I do not describe this as blind or independent. My per-epoch scatter against
+your Table 2 is about 70–90 m/s, and the fitted semiamplitude is 20–40% high. I would especially
+value your view of the discrepant night and the effective extraction/order choices.
 
 Now the two asks.
 
@@ -41,13 +37,10 @@ configuration, so a factor of 1 to 8. Raising the live points fourfold does not 
 the internal number shrinks as N^-1/2, to +/- 0.13, while the real scatter stays near
 0.5, so the gap gets worse rather than better.
 
-If EMPEROR behaves at all similarly, then the +/- 0.70 and +/- 0.69 on your two logZ
-values may be measuring the sampler's accounting of its own integration rather than the
-reproducibility of the comparison, and +2.622 would not be significant on its own terms
-before anyone argues about priors, which would sit comfortably with your own description
-of the second satellite as tentative. I want to stress I cannot test your sampler and am
-not asserting this about your result. A handful of reruns at different seeds would settle
-it either way, and I would happily publish the answer whichever direction it falls.
+That dynesty behaviour cannot be extrapolated to EMPEROR, which I have not run. It does make
+the independent-seed scatter of the reported model comparison an important reproducibility
+question. A handful of EMPEROR reruns at different seeds, with the run-level evidences, would
+show whether the quoted internal uncertainties also describe between-run variation.
 
 Alongside that, the EMPEROR configuration itself would help: the priors on each
 parameter (periods, amplitudes, eccentricity terms, jitter, offset), the period windows

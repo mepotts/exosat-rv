@@ -1,0 +1,3755 @@
+{
+  "schema_version": "m35-photometry-v2.1",
+  "analysis_date": "2026-09-01",
+  "input": {
+    "path": "data/m35-asassn-cd35.csv",
+    "sha256": "8a7174d15449c9cef9c74122178f4721d9b0fae978032c4d0ded4d76121b5cf8",
+    "rows": 6658,
+    "network_used": false,
+    "cache_refresh_query": {
+      "service": "ASAS-SN Sky Patrol master_list cone search",
+      "ra_deg": 92.3300338228,
+      "dec_deg": -35.82529604851,
+      "radius_deg": 0.02,
+      "row_filter": "quality == 'G' and 0 < mag_err < 0.5",
+      "cached_columns": [
+        "asas_sn_id",
+        "jd",
+        "mag",
+        "mag_err",
+        "phot_filter",
+        "camera"
+      ]
+    }
+  },
+  "legacy_artifact_preserved": "data/m35-photometry.json",
+  "method": {
+    "observing_night": "floor(JD), a noon-to-noon UTC interval",
+    "camera_correction": "subtract per-camera median within each source/filter series",
+    "binning": "median within camera/night, then median across cameras; one point/night",
+    "periodogram_weighting": "equal weight per observing night",
+    "search_period_days": [
+      2.0,
+      "min(2000, baseline/2)"
+    ],
+    "n_frequency_grid": 20000,
+    "permutation_unit": "complete camera-corrected observing-night bin",
+    "n_permutations": 2000,
+    "p_value": "(1 + null statistics >= observed) / (1 + n_permutations)",
+    "p_value_floor": 0.0004997501249375312,
+    "permutation_scope": "nominal conditional p-values assuming exchangeability of final night bins; camera/season heteroskedasticity has not been calibrated",
+    "rv_period_days": 171.454,
+    "injection_location": "raw cached magnitudes, before camera correction and night binning",
+    "injection_quantity": "sinusoidal semiamplitude K in millimagnitudes",
+    "deterministic_phase_grid_sizes": [
+      720,
+      1440,
+      2880
+    ],
+    "phase_fraction_inference": "numerical uniform-phase quadrature with nested-grid convergence; not a binomial sample and no confidence interval"
+  },
+  "software": {
+    "python": "3.12.3",
+    "numpy": "2.5.2",
+    "astropy": "8.0.1"
+  },
+  "implementation": {
+    "path": "scripts/m35_asassn_photometry.py",
+    "sha256": "be87692f8e053748135cba5165871d14fd220a235a33f686756bc9f0918f50bb"
+  },
+  "target_source_relationship": {
+    "asas_sn_ids": [
+      609885843909,
+      661427779128
+    ],
+    "rows_by_id": {
+      "609885843909": 2173,
+      "661427779128": 2173
+    },
+    "shared_timestamp_filter_camera_rows": 2173,
+    "sampling_keys_identical": true,
+    "interpretation": "paired catalog/aperture light curves of the same unresolved host; not independent replications"
+  },
+  "series": [
+    {
+      "series": "575526675969/V",
+      "asas_sn_id": 575526675969,
+      "physical_source_role": "field_control_40arcsec",
+      "phot_filter": "V",
+      "n_raw_observations": 608,
+      "n_camera_night_bins": 608,
+      "n_observing_nights": 475,
+      "baseline_days": 1609.3204853003845,
+      "cameras": [
+        "be",
+        "bf",
+        "bg"
+      ],
+      "camera_median_magnitudes": {
+        "be": 16.414830572390365,
+        "bf": 16.43199763574899,
+        "bg": 16.402078394137277
+      },
+      "permutation_seed": 3649434974,
+      "grid_max_period_days": 804.6602426501922,
+      "best_period_days": 15.299594456057699,
+      "best_power": 0.03198718852641655,
+      "power_at_rv_period": 0.005705461451879701,
+      "global_exceedances": 1255,
+      "global_p_plus_one": 0.6276861569215393,
+      "rv_period_exceedances": 493,
+      "rv_period_p_plus_one": 0.24687656171914044,
+      "rv_period_detection_rule": {
+        "alpha": 0.01,
+        "comparison": "(1 + count(null_power >= injected_power)) / (1 + N) <= alpha",
+        "max_null_exceedances": 19,
+        "critical_null_power_boundary": 0.019336866386262856,
+        "boundary_note": "with no ties, injected power must exceed this order statistic"
+      },
+      "rv_period_null_power_quantiles": {
+        "q90": 0.009370856210773482,
+        "q95": 0.012117852963821911,
+        "q99": 0.019273921241464917
+      },
+      "injection_recovery": {
+        "quantity": "sinusoidal photometric semiamplitude K",
+        "units": "millimagnitude",
+        "peak_to_peak_relation": "peak-to-peak modulation = 2 K",
+        "period_days": 171.454,
+        "detection_alpha": 0.01,
+        "phase_grid": "uniform deterministic [0, 2pi), endpoint excluded",
+        "phase_grid_sizes": [
+          720,
+          1440,
+          2880
+        ],
+        "finest_phase_grid_size": 2880,
+        "interpretation": "deterministic uniform-phase fraction conditional on the observed residual series, camera/night preprocessing, and fixed-period permutation threshold",
+        "curve": [
+          {
+            "semiamplitude_mmag": 1.0,
+            "semiamplitude_mag": 0.001,
+            "peak_to_peak_mmag": 2.0,
+            "recovered_phases": 0,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.0,
+            "recovered_phases_by_grid": {
+              "720": 0,
+              "1440": 0,
+              "2880": 0
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.0,
+              "1440": 0.0,
+              "2880": 0.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.2108945527236382,
+            "max_permutation_p_plus_one": 0.28235882058970513
+          },
+          {
+            "semiamplitude_mmag": 2.0,
+            "semiamplitude_mag": 0.002,
+            "peak_to_peak_mmag": 4.0,
+            "recovered_phases": 0,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.0,
+            "recovered_phases_by_grid": {
+              "720": 0,
+              "1440": 0,
+              "2880": 0
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.0,
+              "1440": 0.0,
+              "2880": 0.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.18240879560219891,
+            "max_permutation_p_plus_one": 0.3248375812093953
+          },
+          {
+            "semiamplitude_mmag": 3.0,
+            "semiamplitude_mag": 0.003,
+            "peak_to_peak_mmag": 6.0,
+            "recovered_phases": 0,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.0,
+            "recovered_phases_by_grid": {
+              "720": 0,
+              "1440": 0,
+              "2880": 0
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.0,
+              "1440": 0.0,
+              "2880": 0.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.15592203898050974,
+            "max_permutation_p_plus_one": 0.3708145927036482
+          },
+          {
+            "semiamplitude_mmag": 4.0,
+            "semiamplitude_mag": 0.004,
+            "peak_to_peak_mmag": 8.0,
+            "recovered_phases": 0,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.0,
+            "recovered_phases_by_grid": {
+              "720": 0,
+              "1440": 0,
+              "2880": 0
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.0,
+              "1440": 0.0,
+              "2880": 0.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.13793103448275862,
+            "max_permutation_p_plus_one": 0.4142928535732134
+          },
+          {
+            "semiamplitude_mmag": 5.0,
+            "semiamplitude_mag": 0.005,
+            "peak_to_peak_mmag": 10.0,
+            "recovered_phases": 0,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.0,
+            "recovered_phases_by_grid": {
+              "720": 0,
+              "1440": 0,
+              "2880": 0
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.0,
+              "1440": 0.0,
+              "2880": 0.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.11144427786106946,
+            "max_permutation_p_plus_one": 0.45527236381809094
+          },
+          {
+            "semiamplitude_mmag": 6.0,
+            "semiamplitude_mag": 0.006,
+            "peak_to_peak_mmag": 12.0,
+            "recovered_phases": 0,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.0,
+            "recovered_phases_by_grid": {
+              "720": 0,
+              "1440": 0,
+              "2880": 0
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.0,
+              "1440": 0.0,
+              "2880": 0.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.08945527236381809,
+            "max_permutation_p_plus_one": 0.5012493753123438
+          },
+          {
+            "semiamplitude_mmag": 7.0,
+            "semiamplitude_mag": 0.007,
+            "peak_to_peak_mmag": 14.0,
+            "recovered_phases": 0,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.0,
+            "recovered_phases_by_grid": {
+              "720": 0,
+              "1440": 0,
+              "2880": 0
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.0,
+              "1440": 0.0,
+              "2880": 0.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.07246376811594203,
+            "max_permutation_p_plus_one": 0.5557221389305347
+          },
+          {
+            "semiamplitude_mmag": 8.0,
+            "semiamplitude_mag": 0.008,
+            "peak_to_peak_mmag": 16.0,
+            "recovered_phases": 0,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.0,
+            "recovered_phases_by_grid": {
+              "720": 0,
+              "1440": 0,
+              "2880": 0
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.0,
+              "1440": 0.0,
+              "2880": 0.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.062468765617191405,
+            "max_permutation_p_plus_one": 0.6121939030484758
+          },
+          {
+            "semiamplitude_mmag": 9.0,
+            "semiamplitude_mag": 0.009,
+            "peak_to_peak_mmag": 18.0,
+            "recovered_phases": 0,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.0,
+            "recovered_phases_by_grid": {
+              "720": 0,
+              "1440": 0,
+              "2880": 0
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.0,
+              "1440": 0.0,
+              "2880": 0.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.050974512743628186,
+            "max_permutation_p_plus_one": 0.6546726636681659
+          },
+          {
+            "semiamplitude_mmag": 10.0,
+            "semiamplitude_mag": 0.01,
+            "peak_to_peak_mmag": 20.0,
+            "recovered_phases": 0,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.0,
+            "recovered_phases_by_grid": {
+              "720": 0,
+              "1440": 0,
+              "2880": 0
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.0,
+              "1440": 0.0,
+              "2880": 0.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.04147926036981509,
+            "max_permutation_p_plus_one": 0.7096451774112944
+          },
+          {
+            "semiamplitude_mmag": 11.0,
+            "semiamplitude_mag": 0.011,
+            "peak_to_peak_mmag": 22.0,
+            "recovered_phases": 0,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.0,
+            "recovered_phases_by_grid": {
+              "720": 0,
+              "1440": 0,
+              "2880": 0
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.0,
+              "1440": 0.0,
+              "2880": 0.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.03548225887056472,
+            "max_permutation_p_plus_one": 0.7581209395302348
+          },
+          {
+            "semiamplitude_mmag": 12.0,
+            "semiamplitude_mag": 0.012,
+            "peak_to_peak_mmag": 24.0,
+            "recovered_phases": 0,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.0,
+            "recovered_phases_by_grid": {
+              "720": 0,
+              "1440": 0,
+              "2880": 0
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.0,
+              "1440": 0.0,
+              "2880": 0.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.02848575712143928,
+            "max_permutation_p_plus_one": 0.8035982008995503
+          },
+          {
+            "semiamplitude_mmag": 13.0,
+            "semiamplitude_mag": 0.013,
+            "peak_to_peak_mmag": 26.0,
+            "recovered_phases": 0,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.0,
+            "recovered_phases_by_grid": {
+              "720": 0,
+              "1440": 0,
+              "2880": 0
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.0,
+              "1440": 0.0,
+              "2880": 0.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.02498750624687656,
+            "max_permutation_p_plus_one": 0.8385807096451774
+          },
+          {
+            "semiamplitude_mmag": 14.0,
+            "semiamplitude_mag": 0.014,
+            "peak_to_peak_mmag": 28.0,
+            "recovered_phases": 0,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.0,
+            "recovered_phases_by_grid": {
+              "720": 0,
+              "1440": 0,
+              "2880": 0
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.0,
+              "1440": 0.0,
+              "2880": 0.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.020989505247376312,
+            "max_permutation_p_plus_one": 0.8755622188905547
+          },
+          {
+            "semiamplitude_mmag": 15.0,
+            "semiamplitude_mag": 0.015,
+            "peak_to_peak_mmag": 30.0,
+            "recovered_phases": 0,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.0,
+            "recovered_phases_by_grid": {
+              "720": 0,
+              "1440": 0,
+              "2880": 0
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.0,
+              "1440": 0.0,
+              "2880": 0.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.01699150424787606,
+            "max_permutation_p_plus_one": 0.9105447276361819
+          },
+          {
+            "semiamplitude_mmag": 16.0,
+            "semiamplitude_mag": 0.016,
+            "peak_to_peak_mmag": 32.0,
+            "recovered_phases": 0,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.0,
+            "recovered_phases_by_grid": {
+              "720": 0,
+              "1440": 0,
+              "2880": 0
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.0,
+              "1440": 0.0,
+              "2880": 0.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.014492753623188406,
+            "max_permutation_p_plus_one": 0.9425287356321839
+          },
+          {
+            "semiamplitude_mmag": 17.0,
+            "semiamplitude_mag": 0.017,
+            "peak_to_peak_mmag": 34.0,
+            "recovered_phases": 0,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.0,
+            "recovered_phases_by_grid": {
+              "720": 0,
+              "1440": 0,
+              "2880": 0
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.0,
+              "1440": 0.0,
+              "2880": 0.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.010994502748625687,
+            "max_permutation_p_plus_one": 0.9620189905047476
+          },
+          {
+            "semiamplitude_mmag": 18.0,
+            "semiamplitude_mag": 0.018,
+            "peak_to_peak_mmag": 36.0,
+            "recovered_phases": 393,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.13645833333333332,
+            "recovered_phases_by_grid": {
+              "720": 98,
+              "1440": 197,
+              "2880": 393
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.1361111111111111,
+              "1440": 0.13680555555555557,
+              "2880": 0.13645833333333332
+            },
+            "max_abs_successive_grid_fraction_change": 0.0006944444444444697,
+            "min_permutation_p_plus_one": 0.0074962518740629685,
+            "max_permutation_p_plus_one": 0.9815092453773113
+          },
+          {
+            "semiamplitude_mmag": 19.0,
+            "semiamplitude_mag": 0.019,
+            "peak_to_peak_mmag": 38.0,
+            "recovered_phases": 579,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.20104166666666667,
+            "recovered_phases_by_grid": {
+              "720": 145,
+              "1440": 289,
+              "2880": 579
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.2013888888888889,
+              "1440": 0.20069444444444445,
+              "2880": 0.20104166666666667
+            },
+            "max_abs_successive_grid_fraction_change": 0.000694444444444442,
+            "min_permutation_p_plus_one": 0.006496751624187906,
+            "max_permutation_p_plus_one": 0.993503248375812
+          },
+          {
+            "semiamplitude_mmag": 20.0,
+            "semiamplitude_mag": 0.02,
+            "peak_to_peak_mmag": 40.0,
+            "recovered_phases": 709,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.24618055555555557,
+            "recovered_phases_by_grid": {
+              "720": 177,
+              "1440": 354,
+              "2880": 709
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.24583333333333332,
+              "1440": 0.24583333333333332,
+              "2880": 0.24618055555555557
+            },
+            "max_abs_successive_grid_fraction_change": 0.00034722222222224874,
+            "min_permutation_p_plus_one": 0.004997501249375313,
+            "max_permutation_p_plus_one": 0.999000499750125
+          },
+          {
+            "semiamplitude_mmag": 25.0,
+            "semiamplitude_mag": 0.025,
+            "peak_to_peak_mmag": 50.0,
+            "recovered_phases": 1097,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.38090277777777776,
+            "recovered_phases_by_grid": {
+              "720": 274,
+              "1440": 549,
+              "2880": 1097
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.38055555555555554,
+              "1440": 0.38125,
+              "2880": 0.38090277777777776
+            },
+            "max_abs_successive_grid_fraction_change": 0.000694444444444442,
+            "min_permutation_p_plus_one": 0.0029985007496251873,
+            "max_permutation_p_plus_one": 0.92103948025987
+          },
+          {
+            "semiamplitude_mmag": 30.0,
+            "semiamplitude_mag": 0.03,
+            "peak_to_peak_mmag": 60.0,
+            "recovered_phases": 1360,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.4722222222222222,
+            "recovered_phases_by_grid": {
+              "720": 340,
+              "1440": 680,
+              "2880": 1360
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.4722222222222222,
+              "1440": 0.4722222222222222,
+              "2880": 0.4722222222222222
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0009995002498750624,
+            "max_permutation_p_plus_one": 0.7141429285357321
+          },
+          {
+            "semiamplitude_mmag": 40.0,
+            "semiamplitude_mag": 0.04,
+            "peak_to_peak_mmag": 80.0,
+            "recovered_phases": 1785,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.6197916666666666,
+            "recovered_phases_by_grid": {
+              "720": 446,
+              "1440": 893,
+              "2880": 1785
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.6194444444444445,
+              "1440": 0.6201388888888889,
+              "2880": 0.6197916666666666
+            },
+            "max_abs_successive_grid_fraction_change": 0.000694444444444442,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.2658670664667666
+          },
+          {
+            "semiamplitude_mmag": 50.0,
+            "semiamplitude_mag": 0.05,
+            "peak_to_peak_mmag": 100.0,
+            "recovered_phases": 2218,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.7701388888888889,
+            "recovered_phases_by_grid": {
+              "720": 555,
+              "1440": 1109,
+              "2880": 2218
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.7708333333333334,
+              "1440": 0.7701388888888889,
+              "2880": 0.7701388888888889
+            },
+            "max_abs_successive_grid_fraction_change": 0.000694444444444442,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.05297351324337831
+          },
+          {
+            "semiamplitude_mmag": 75.0,
+            "semiamplitude_mag": 0.075,
+            "peak_to_peak_mmag": 150.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          },
+          {
+            "semiamplitude_mmag": 100.0,
+            "semiamplitude_mag": 0.1,
+            "peak_to_peak_mmag": 200.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          }
+        ],
+        "first_sampled_K_mmag_with_fine_grid_phase_fraction_ge_0.90": 75.0,
+        "k90_mmag_by_phase_grid": {
+          "720": 75.0,
+          "1440": 75.0,
+          "2880": 75.0
+        },
+        "first_sampled_K_mmag_with_phase_fraction_ge_0.90_on_all_grids": 75.0,
+        "max_abs_successive_grid_fraction_change_over_curve": 0.0006944444444444697
+      }
+    },
+    {
+      "series": "575526675969/g",
+      "asas_sn_id": 575526675969,
+      "physical_source_role": "field_control_40arcsec",
+      "phot_filter": "g",
+      "n_raw_observations": 1704,
+      "n_camera_night_bins": 1672,
+      "n_observing_nights": 1150,
+      "baseline_days": 2438.5671116001904,
+      "cameras": [
+        "bF",
+        "bG",
+        "bk",
+        "bn",
+        "bo"
+      ],
+      "camera_median_magnitudes": {
+        "bF": 16.817951057559434,
+        "bG": 16.836123706799842,
+        "bk": 16.932023342318068,
+        "bn": 16.986329448773894,
+        "bo": 16.9232573575783
+      },
+      "permutation_seed": 2328098084,
+      "grid_max_period_days": 1219.2835558000952,
+      "best_period_days": 29.483363810383644,
+      "best_power": 0.05894590692318548,
+      "power_at_rv_period": 0.00025105218894514673,
+      "global_exceedances": 0,
+      "global_p_plus_one": 0.0004997501249375312,
+      "rv_period_exceedances": 1735,
+      "rv_period_p_plus_one": 0.8675662168915542,
+      "rv_period_detection_rule": {
+        "alpha": 0.01,
+        "comparison": "(1 + count(null_power >= injected_power)) / (1 + N) <= alpha",
+        "max_null_exceedances": 19,
+        "critical_null_power_boundary": 0.007999781090233686,
+        "boundary_note": "with no ties, injected power must exceed this order statistic"
+      },
+      "rv_period_null_power_quantiles": {
+        "q90": 0.003988124109673481,
+        "q95": 0.005141330583255394,
+        "q99": 0.007954883709458165
+      },
+      "injection_recovery": {
+        "quantity": "sinusoidal photometric semiamplitude K",
+        "units": "millimagnitude",
+        "peak_to_peak_relation": "peak-to-peak modulation = 2 K",
+        "period_days": 171.454,
+        "detection_alpha": 0.01,
+        "phase_grid": "uniform deterministic [0, 2pi), endpoint excluded",
+        "phase_grid_sizes": [
+          720,
+          1440,
+          2880
+        ],
+        "finest_phase_grid_size": 2880,
+        "interpretation": "deterministic uniform-phase fraction conditional on the observed residual series, camera/night preprocessing, and fixed-period permutation threshold",
+        "curve": [
+          {
+            "semiamplitude_mmag": 1.0,
+            "semiamplitude_mag": 0.001,
+            "peak_to_peak_mmag": 2.0,
+            "recovered_phases": 0,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.0,
+            "recovered_phases_by_grid": {
+              "720": 0,
+              "1440": 0,
+              "2880": 0
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.0,
+              "1440": 0.0,
+              "2880": 0.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.8095952023988006,
+            "max_permutation_p_plus_one": 0.9215392303848076
+          },
+          {
+            "semiamplitude_mmag": 2.0,
+            "semiamplitude_mag": 0.002,
+            "peak_to_peak_mmag": 4.0,
+            "recovered_phases": 0,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.0,
+            "recovered_phases_by_grid": {
+              "720": 0,
+              "1440": 0,
+              "2880": 0
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.0,
+              "1440": 0.0,
+              "2880": 0.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.7481259370314842,
+            "max_permutation_p_plus_one": 0.9585207396301849
+          },
+          {
+            "semiamplitude_mmag": 3.0,
+            "semiamplitude_mag": 0.003,
+            "peak_to_peak_mmag": 6.0,
+            "recovered_phases": 0,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.0,
+            "recovered_phases_by_grid": {
+              "720": 0,
+              "1440": 0,
+              "2880": 0
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.0,
+              "1440": 0.0,
+              "2880": 0.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.6711644177911045,
+            "max_permutation_p_plus_one": 0.9910044977511244
+          },
+          {
+            "semiamplitude_mmag": 4.0,
+            "semiamplitude_mag": 0.004,
+            "peak_to_peak_mmag": 8.0,
+            "recovered_phases": 0,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.0,
+            "recovered_phases_by_grid": {
+              "720": 0,
+              "1440": 0,
+              "2880": 0
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.0,
+              "1440": 0.0,
+              "2880": 0.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.607696151924038,
+            "max_permutation_p_plus_one": 0.9985007496251874
+          },
+          {
+            "semiamplitude_mmag": 5.0,
+            "semiamplitude_mag": 0.005,
+            "peak_to_peak_mmag": 10.0,
+            "recovered_phases": 0,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.0,
+            "recovered_phases_by_grid": {
+              "720": 0,
+              "1440": 0,
+              "2880": 0
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.0,
+              "1440": 0.0,
+              "2880": 0.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.5292353823088456,
+            "max_permutation_p_plus_one": 0.9970014992503748
+          },
+          {
+            "semiamplitude_mmag": 6.0,
+            "semiamplitude_mag": 0.006,
+            "peak_to_peak_mmag": 12.0,
+            "recovered_phases": 0,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.0,
+            "recovered_phases_by_grid": {
+              "720": 0,
+              "1440": 0,
+              "2880": 0
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.0,
+              "1440": 0.0,
+              "2880": 0.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.4612693653173413,
+            "max_permutation_p_plus_one": 0.9825087456271864
+          },
+          {
+            "semiamplitude_mmag": 7.0,
+            "semiamplitude_mag": 0.007,
+            "peak_to_peak_mmag": 14.0,
+            "recovered_phases": 0,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.0,
+            "recovered_phases_by_grid": {
+              "720": 0,
+              "1440": 0,
+              "2880": 0
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.0,
+              "1440": 0.0,
+              "2880": 0.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.391304347826087,
+            "max_permutation_p_plus_one": 0.9425287356321839
+          },
+          {
+            "semiamplitude_mmag": 8.0,
+            "semiamplitude_mag": 0.008,
+            "peak_to_peak_mmag": 16.0,
+            "recovered_phases": 0,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.0,
+            "recovered_phases_by_grid": {
+              "720": 0,
+              "1440": 0,
+              "2880": 0
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.0,
+              "1440": 0.0,
+              "2880": 0.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.3213393303348326,
+            "max_permutation_p_plus_one": 0.9045477261369316
+          },
+          {
+            "semiamplitude_mmag": 9.0,
+            "semiamplitude_mag": 0.009,
+            "peak_to_peak_mmag": 18.0,
+            "recovered_phases": 0,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.0,
+            "recovered_phases_by_grid": {
+              "720": 0,
+              "1440": 0,
+              "2880": 0
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.0,
+              "1440": 0.0,
+              "2880": 0.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.2703648175912044,
+            "max_permutation_p_plus_one": 0.8460769615192404
+          },
+          {
+            "semiamplitude_mmag": 10.0,
+            "semiamplitude_mag": 0.01,
+            "peak_to_peak_mmag": 20.0,
+            "recovered_phases": 0,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.0,
+            "recovered_phases_by_grid": {
+              "720": 0,
+              "1440": 0,
+              "2880": 0
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.0,
+              "1440": 0.0,
+              "2880": 0.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.2288855572213893,
+            "max_permutation_p_plus_one": 0.7796101949025487
+          },
+          {
+            "semiamplitude_mmag": 11.0,
+            "semiamplitude_mag": 0.011,
+            "peak_to_peak_mmag": 22.0,
+            "recovered_phases": 0,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.0,
+            "recovered_phases_by_grid": {
+              "720": 0,
+              "1440": 0,
+              "2880": 0
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.0,
+              "1440": 0.0,
+              "2880": 0.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.18690654672663667,
+            "max_permutation_p_plus_one": 0.7016491754122939
+          },
+          {
+            "semiamplitude_mmag": 12.0,
+            "semiamplitude_mag": 0.012,
+            "peak_to_peak_mmag": 24.0,
+            "recovered_phases": 0,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.0,
+            "recovered_phases_by_grid": {
+              "720": 0,
+              "1440": 0,
+              "2880": 0
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.0,
+              "1440": 0.0,
+              "2880": 0.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.14992503748125938,
+            "max_permutation_p_plus_one": 0.6346826586706646
+          },
+          {
+            "semiamplitude_mmag": 13.0,
+            "semiamplitude_mag": 0.013,
+            "peak_to_peak_mmag": 26.0,
+            "recovered_phases": 0,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.0,
+            "recovered_phases_by_grid": {
+              "720": 0,
+              "1440": 0,
+              "2880": 0
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.0,
+              "1440": 0.0,
+              "2880": 0.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.12093953023488256,
+            "max_permutation_p_plus_one": 0.559720139930035
+          },
+          {
+            "semiamplitude_mmag": 14.0,
+            "semiamplitude_mag": 0.014,
+            "peak_to_peak_mmag": 28.0,
+            "recovered_phases": 0,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.0,
+            "recovered_phases_by_grid": {
+              "720": 0,
+              "1440": 0,
+              "2880": 0
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.0,
+              "1440": 0.0,
+              "2880": 0.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.09095452273863068,
+            "max_permutation_p_plus_one": 0.49225387306346824
+          },
+          {
+            "semiamplitude_mmag": 15.0,
+            "semiamplitude_mag": 0.015,
+            "peak_to_peak_mmag": 30.0,
+            "recovered_phases": 0,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.0,
+            "recovered_phases_by_grid": {
+              "720": 0,
+              "1440": 0,
+              "2880": 0
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.0,
+              "1440": 0.0,
+              "2880": 0.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.06796601699150424,
+            "max_permutation_p_plus_one": 0.42628685657171417
+          },
+          {
+            "semiamplitude_mmag": 16.0,
+            "semiamplitude_mag": 0.016,
+            "peak_to_peak_mmag": 32.0,
+            "recovered_phases": 0,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.0,
+            "recovered_phases_by_grid": {
+              "720": 0,
+              "1440": 0,
+              "2880": 0
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.0,
+              "1440": 0.0,
+              "2880": 0.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.053973013493253376,
+            "max_permutation_p_plus_one": 0.3708145927036482
+          },
+          {
+            "semiamplitude_mmag": 17.0,
+            "semiamplitude_mag": 0.017,
+            "peak_to_peak_mmag": 34.0,
+            "recovered_phases": 0,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.0,
+            "recovered_phases_by_grid": {
+              "720": 0,
+              "1440": 0,
+              "2880": 0
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.0,
+              "1440": 0.0,
+              "2880": 0.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.03798100949525238,
+            "max_permutation_p_plus_one": 0.2943528235882059
+          },
+          {
+            "semiamplitude_mmag": 18.0,
+            "semiamplitude_mag": 0.018,
+            "peak_to_peak_mmag": 36.0,
+            "recovered_phases": 0,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.0,
+            "recovered_phases_by_grid": {
+              "720": 0,
+              "1440": 0,
+              "2880": 0
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.0,
+              "1440": 0.0,
+              "2880": 0.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.02798600699650175,
+            "max_permutation_p_plus_one": 0.25037481259370314
+          },
+          {
+            "semiamplitude_mmag": 19.0,
+            "semiamplitude_mag": 0.019,
+            "peak_to_peak_mmag": 38.0,
+            "recovered_phases": 0,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.0,
+            "recovered_phases_by_grid": {
+              "720": 0,
+              "1440": 0,
+              "2880": 0
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.0,
+              "1440": 0.0,
+              "2880": 0.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.020989505247376312,
+            "max_permutation_p_plus_one": 0.20339830084957522
+          },
+          {
+            "semiamplitude_mmag": 20.0,
+            "semiamplitude_mag": 0.02,
+            "peak_to_peak_mmag": 40.0,
+            "recovered_phases": 0,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.0,
+            "recovered_phases_by_grid": {
+              "720": 0,
+              "1440": 0,
+              "2880": 0
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.0,
+              "1440": 0.0,
+              "2880": 0.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.013493253373313344,
+            "max_permutation_p_plus_one": 0.16441779110444776
+          },
+          {
+            "semiamplitude_mmag": 25.0,
+            "semiamplitude_mag": 0.025,
+            "peak_to_peak_mmag": 50.0,
+            "recovered_phases": 1564,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.5430555555555555,
+            "recovered_phases_by_grid": {
+              "720": 391,
+              "1440": 782,
+              "2880": 1564
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.5430555555555555,
+              "1440": 0.5430555555555555,
+              "2880": 0.5430555555555555
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.001999000499750125,
+            "max_permutation_p_plus_one": 0.04297851074462768
+          },
+          {
+            "semiamplitude_mmag": 30.0,
+            "semiamplitude_mag": 0.03,
+            "peak_to_peak_mmag": 60.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0009995002498750624,
+            "max_permutation_p_plus_one": 0.00849575212393803
+          },
+          {
+            "semiamplitude_mmag": 40.0,
+            "semiamplitude_mag": 0.04,
+            "peak_to_peak_mmag": 80.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0009995002498750624
+          },
+          {
+            "semiamplitude_mmag": 50.0,
+            "semiamplitude_mag": 0.05,
+            "peak_to_peak_mmag": 100.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          },
+          {
+            "semiamplitude_mmag": 75.0,
+            "semiamplitude_mag": 0.075,
+            "peak_to_peak_mmag": 150.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          },
+          {
+            "semiamplitude_mmag": 100.0,
+            "semiamplitude_mag": 0.1,
+            "peak_to_peak_mmag": 200.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          }
+        ],
+        "first_sampled_K_mmag_with_fine_grid_phase_fraction_ge_0.90": 30.0,
+        "k90_mmag_by_phase_grid": {
+          "720": 30.0,
+          "1440": 30.0,
+          "2880": 30.0
+        },
+        "first_sampled_K_mmag_with_phase_fraction_ge_0.90_on_all_grids": 30.0,
+        "max_abs_successive_grid_fraction_change_over_curve": 0.0
+      }
+    },
+    {
+      "series": "609885843909/V",
+      "asas_sn_id": 609885843909,
+      "physical_source_role": "cd35_2722_host",
+      "phot_filter": "V",
+      "n_raw_observations": 647,
+      "n_camera_night_bins": 647,
+      "n_observing_nights": 501,
+      "baseline_days": 1609.3204853003845,
+      "cameras": [
+        "be",
+        "bf",
+        "bg"
+      ],
+      "camera_median_magnitudes": {
+        "be": 11.05616930546228,
+        "bf": 11.052255160805206,
+        "bg": 11.047616267440297
+      },
+      "permutation_seed": 4015594999,
+      "grid_max_period_days": 804.6602426501922,
+      "best_period_days": 804.6602426501921,
+      "best_power": 0.1444675387158509,
+      "power_at_rv_period": 0.007535362955534593,
+      "global_exceedances": 0,
+      "global_p_plus_one": 0.0004997501249375312,
+      "rv_period_exceedances": 296,
+      "rv_period_p_plus_one": 0.14842578710644677,
+      "rv_period_detection_rule": {
+        "alpha": 0.01,
+        "comparison": "(1 + count(null_power >= injected_power)) / (1 + N) <= alpha",
+        "max_null_exceedances": 19,
+        "critical_null_power_boundary": 0.019609171806316106,
+        "boundary_note": "with no ties, injected power must exceed this order statistic"
+      },
+      "rv_period_null_power_quantiles": {
+        "q90": 0.009156564898513086,
+        "q95": 0.011826604073895098,
+        "q99": 0.01906534027304579
+      },
+      "injection_recovery": {
+        "quantity": "sinusoidal photometric semiamplitude K",
+        "units": "millimagnitude",
+        "peak_to_peak_relation": "peak-to-peak modulation = 2 K",
+        "period_days": 171.454,
+        "detection_alpha": 0.01,
+        "phase_grid": "uniform deterministic [0, 2pi), endpoint excluded",
+        "phase_grid_sizes": [
+          720,
+          1440,
+          2880
+        ],
+        "finest_phase_grid_size": 2880,
+        "interpretation": "deterministic uniform-phase fraction conditional on the observed residual series, camera/night preprocessing, and fixed-period permutation threshold",
+        "curve": [
+          {
+            "semiamplitude_mmag": 1.0,
+            "semiamplitude_mag": 0.001,
+            "peak_to_peak_mmag": 2.0,
+            "recovered_phases": 0,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.0,
+            "recovered_phases_by_grid": {
+              "720": 0,
+              "1440": 0,
+              "2880": 0
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.0,
+              "1440": 0.0,
+              "2880": 0.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.06096951524237881,
+            "max_permutation_p_plus_one": 0.31084457771114443
+          },
+          {
+            "semiamplitude_mmag": 2.0,
+            "semiamplitude_mag": 0.002,
+            "peak_to_peak_mmag": 4.0,
+            "recovered_phases": 0,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.0,
+            "recovered_phases_by_grid": {
+              "720": 0,
+              "1440": 0,
+              "2880": 0
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.0,
+              "1440": 0.0,
+              "2880": 0.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.02148925537231384,
+            "max_permutation_p_plus_one": 0.5382308845577212
+          },
+          {
+            "semiamplitude_mmag": 3.0,
+            "semiamplitude_mag": 0.003,
+            "peak_to_peak_mmag": 6.0,
+            "recovered_phases": 255,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.08854166666666667,
+            "recovered_phases_by_grid": {
+              "720": 64,
+              "1440": 128,
+              "2880": 255
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.08888888888888889,
+              "1440": 0.08888888888888889,
+              "2880": 0.08854166666666667
+            },
+            "max_abs_successive_grid_fraction_change": 0.000347222222222221,
+            "min_permutation_p_plus_one": 0.009995002498750625,
+            "max_permutation_p_plus_one": 0.769615192403798
+          },
+          {
+            "semiamplitude_mmag": 4.0,
+            "semiamplitude_mag": 0.004,
+            "peak_to_peak_mmag": 8.0,
+            "recovered_phases": 952,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.33055555555555555,
+            "recovered_phases_by_grid": {
+              "720": 238,
+              "1440": 476,
+              "2880": 952
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.33055555555555555,
+              "1440": 0.33055555555555555,
+              "2880": 0.33055555555555555
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0034982508745627187,
+            "max_permutation_p_plus_one": 0.9625187406296851
+          },
+          {
+            "semiamplitude_mmag": 5.0,
+            "semiamplitude_mag": 0.005,
+            "peak_to_peak_mmag": 10.0,
+            "recovered_phases": 1273,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.4420138888888889,
+            "recovered_phases_by_grid": {
+              "720": 318,
+              "1440": 636,
+              "2880": 1273
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.44166666666666665,
+              "1440": 0.44166666666666665,
+              "2880": 0.4420138888888889
+            },
+            "max_abs_successive_grid_fraction_change": 0.000347222222222221,
+            "min_permutation_p_plus_one": 0.0009995002498750624,
+            "max_permutation_p_plus_one": 0.9950024987506247
+          },
+          {
+            "semiamplitude_mmag": 6.0,
+            "semiamplitude_mag": 0.006,
+            "peak_to_peak_mmag": 12.0,
+            "recovered_phases": 1498,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.5201388888888889,
+            "recovered_phases_by_grid": {
+              "720": 374,
+              "1440": 749,
+              "2880": 1498
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.5194444444444445,
+              "1440": 0.5201388888888889,
+              "2880": 0.5201388888888889
+            },
+            "max_abs_successive_grid_fraction_change": 0.000694444444444442,
+            "min_permutation_p_plus_one": 0.0009995002498750624,
+            "max_permutation_p_plus_one": 0.8825587206396801
+          },
+          {
+            "semiamplitude_mmag": 7.0,
+            "semiamplitude_mag": 0.007,
+            "peak_to_peak_mmag": 14.0,
+            "recovered_phases": 1681,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.5836805555555555,
+            "recovered_phases_by_grid": {
+              "720": 421,
+              "1440": 841,
+              "2880": 1681
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.5847222222222223,
+              "1440": 0.5840277777777778,
+              "2880": 0.5836805555555555
+            },
+            "max_abs_successive_grid_fraction_change": 0.000694444444444442,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.6526736631684158
+          },
+          {
+            "semiamplitude_mmag": 8.0,
+            "semiamplitude_mag": 0.008,
+            "peak_to_peak_mmag": 16.0,
+            "recovered_phases": 1843,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.6399305555555556,
+            "recovered_phases_by_grid": {
+              "720": 461,
+              "1440": 922,
+              "2880": 1843
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.6402777777777777,
+              "1440": 0.6402777777777777,
+              "2880": 0.6399305555555556
+            },
+            "max_abs_successive_grid_fraction_change": 0.0003472222222221655,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.4112943528235882
+          },
+          {
+            "semiamplitude_mmag": 9.0,
+            "semiamplitude_mag": 0.009,
+            "peak_to_peak_mmag": 18.0,
+            "recovered_phases": 2000,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.6944444444444444,
+            "recovered_phases_by_grid": {
+              "720": 500,
+              "1440": 1000,
+              "2880": 2000
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.6944444444444444,
+              "1440": 0.6944444444444444,
+              "2880": 0.6944444444444444
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.21339330334832585
+          },
+          {
+            "semiamplitude_mmag": 10.0,
+            "semiamplitude_mag": 0.01,
+            "peak_to_peak_mmag": 20.0,
+            "recovered_phases": 2172,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.7541666666666667,
+            "recovered_phases_by_grid": {
+              "720": 543,
+              "1440": 1086,
+              "2880": 2172
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.7541666666666667,
+              "1440": 0.7541666666666667,
+              "2880": 0.7541666666666667
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.09495252373813093
+          },
+          {
+            "semiamplitude_mmag": 11.0,
+            "semiamplitude_mag": 0.011,
+            "peak_to_peak_mmag": 22.0,
+            "recovered_phases": 2361,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.8197916666666667,
+            "recovered_phases_by_grid": {
+              "720": 590,
+              "1440": 1180,
+              "2880": 2361
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.8194444444444444,
+              "1440": 0.8194444444444444,
+              "2880": 0.8197916666666667
+            },
+            "max_abs_successive_grid_fraction_change": 0.0003472222222222765,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0384807596201899
+          },
+          {
+            "semiamplitude_mmag": 12.0,
+            "semiamplitude_mag": 0.012,
+            "peak_to_peak_mmag": 24.0,
+            "recovered_phases": 2613,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.9072916666666667,
+            "recovered_phases_by_grid": {
+              "720": 653,
+              "1440": 1306,
+              "2880": 2613
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.9069444444444444,
+              "1440": 0.9069444444444444,
+              "2880": 0.9072916666666667
+            },
+            "max_abs_successive_grid_fraction_change": 0.0003472222222222765,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.01199400299850075
+          },
+          {
+            "semiamplitude_mmag": 13.0,
+            "semiamplitude_mag": 0.013,
+            "peak_to_peak_mmag": 26.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.004497751124437781
+          },
+          {
+            "semiamplitude_mmag": 14.0,
+            "semiamplitude_mag": 0.014,
+            "peak_to_peak_mmag": 28.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0009995002498750624
+          },
+          {
+            "semiamplitude_mmag": 15.0,
+            "semiamplitude_mag": 0.015,
+            "peak_to_peak_mmag": 30.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0009995002498750624
+          },
+          {
+            "semiamplitude_mmag": 16.0,
+            "semiamplitude_mag": 0.016,
+            "peak_to_peak_mmag": 32.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0009995002498750624
+          },
+          {
+            "semiamplitude_mmag": 17.0,
+            "semiamplitude_mag": 0.017,
+            "peak_to_peak_mmag": 34.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          },
+          {
+            "semiamplitude_mmag": 18.0,
+            "semiamplitude_mag": 0.018,
+            "peak_to_peak_mmag": 36.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          },
+          {
+            "semiamplitude_mmag": 19.0,
+            "semiamplitude_mag": 0.019,
+            "peak_to_peak_mmag": 38.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          },
+          {
+            "semiamplitude_mmag": 20.0,
+            "semiamplitude_mag": 0.02,
+            "peak_to_peak_mmag": 40.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          },
+          {
+            "semiamplitude_mmag": 25.0,
+            "semiamplitude_mag": 0.025,
+            "peak_to_peak_mmag": 50.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          },
+          {
+            "semiamplitude_mmag": 30.0,
+            "semiamplitude_mag": 0.03,
+            "peak_to_peak_mmag": 60.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          },
+          {
+            "semiamplitude_mmag": 40.0,
+            "semiamplitude_mag": 0.04,
+            "peak_to_peak_mmag": 80.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          },
+          {
+            "semiamplitude_mmag": 50.0,
+            "semiamplitude_mag": 0.05,
+            "peak_to_peak_mmag": 100.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          },
+          {
+            "semiamplitude_mmag": 75.0,
+            "semiamplitude_mag": 0.075,
+            "peak_to_peak_mmag": 150.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          },
+          {
+            "semiamplitude_mmag": 100.0,
+            "semiamplitude_mag": 0.1,
+            "peak_to_peak_mmag": 200.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          }
+        ],
+        "first_sampled_K_mmag_with_fine_grid_phase_fraction_ge_0.90": 12.0,
+        "k90_mmag_by_phase_grid": {
+          "720": 12.0,
+          "1440": 12.0,
+          "2880": 12.0
+        },
+        "first_sampled_K_mmag_with_phase_fraction_ge_0.90_on_all_grids": 12.0,
+        "max_abs_successive_grid_fraction_change_over_curve": 0.000694444444444442
+      }
+    },
+    {
+      "series": "609885843909/g",
+      "asas_sn_id": 609885843909,
+      "physical_source_role": "cd35_2722_host",
+      "phot_filter": "g",
+      "n_raw_observations": 1526,
+      "n_camera_night_bins": 1484,
+      "n_observing_nights": 1168,
+      "baseline_days": 2438.5459278998896,
+      "cameras": [
+        "bG",
+        "bk",
+        "bn",
+        "bo"
+      ],
+      "camera_median_magnitudes": {
+        "bG": 11.693224214038585,
+        "bk": 11.699142867382653,
+        "bn": 11.678374737373577,
+        "bo": 11.82430648465759
+      },
+      "permutation_seed": 3241352705,
+      "grid_max_period_days": 1219.2729639499448,
+      "best_period_days": 1219.2729639499448,
+      "best_power": 0.07428872693971598,
+      "power_at_rv_period": 0.00343303512035703,
+      "global_exceedances": 0,
+      "global_p_plus_one": 0.0004997501249375312,
+      "rv_period_exceedances": 254,
+      "rv_period_p_plus_one": 0.12743628185907047,
+      "rv_period_detection_rule": {
+        "alpha": 0.01,
+        "comparison": "(1 + count(null_power >= injected_power)) / (1 + N) <= alpha",
+        "max_null_exceedances": 19,
+        "critical_null_power_boundary": 0.007801943803343309,
+        "boundary_note": "with no ties, injected power must exceed this order statistic"
+      },
+      "rv_period_null_power_quantiles": {
+        "q90": 0.0038712601527981358,
+        "q95": 0.005038487165927484,
+        "q99": 0.00778158394314793
+      },
+      "injection_recovery": {
+        "quantity": "sinusoidal photometric semiamplitude K",
+        "units": "millimagnitude",
+        "peak_to_peak_relation": "peak-to-peak modulation = 2 K",
+        "period_days": 171.454,
+        "detection_alpha": 0.01,
+        "phase_grid": "uniform deterministic [0, 2pi), endpoint excluded",
+        "phase_grid_sizes": [
+          720,
+          1440,
+          2880
+        ],
+        "finest_phase_grid_size": 2880,
+        "interpretation": "deterministic uniform-phase fraction conditional on the observed residual series, camera/night preprocessing, and fixed-period permutation threshold",
+        "curve": [
+          {
+            "semiamplitude_mmag": 1.0,
+            "semiamplitude_mag": 0.001,
+            "peak_to_peak_mmag": 2.0,
+            "recovered_phases": 0,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.0,
+            "recovered_phases_by_grid": {
+              "720": 0,
+              "1440": 0,
+              "2880": 0
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.0,
+              "1440": 0.0,
+              "2880": 0.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.054972513743128434,
+            "max_permutation_p_plus_one": 0.2563718140929535
+          },
+          {
+            "semiamplitude_mmag": 2.0,
+            "semiamplitude_mag": 0.002,
+            "peak_to_peak_mmag": 4.0,
+            "recovered_phases": 0,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.0,
+            "recovered_phases_by_grid": {
+              "720": 0,
+              "1440": 0,
+              "2880": 0
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.0,
+              "1440": 0.0,
+              "2880": 0.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.019490254872563718,
+            "max_permutation_p_plus_one": 0.45577211394302847
+          },
+          {
+            "semiamplitude_mmag": 3.0,
+            "semiamplitude_mag": 0.003,
+            "peak_to_peak_mmag": 6.0,
+            "recovered_phases": 479,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.16631944444444444,
+            "recovered_phases_by_grid": {
+              "720": 120,
+              "1440": 240,
+              "2880": 479
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.16666666666666666,
+              "1440": 0.16666666666666666,
+              "2880": 0.16631944444444444
+            },
+            "max_abs_successive_grid_fraction_change": 0.000347222222222221,
+            "min_permutation_p_plus_one": 0.006496751624187906,
+            "max_permutation_p_plus_one": 0.6826586706646677
+          },
+          {
+            "semiamplitude_mmag": 4.0,
+            "semiamplitude_mag": 0.004,
+            "peak_to_peak_mmag": 8.0,
+            "recovered_phases": 972,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.3375,
+            "recovered_phases_by_grid": {
+              "720": 243,
+              "1440": 486,
+              "2880": 972
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.3375,
+              "1440": 0.3375,
+              "2880": 0.3375
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0009995002498750624,
+            "max_permutation_p_plus_one": 0.8865567216391804
+          },
+          {
+            "semiamplitude_mmag": 5.0,
+            "semiamplitude_mag": 0.005,
+            "peak_to_peak_mmag": 10.0,
+            "recovered_phases": 1245,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.4322916666666667,
+            "recovered_phases_by_grid": {
+              "720": 311,
+              "1440": 622,
+              "2880": 1245
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.43194444444444446,
+              "1440": 0.43194444444444446,
+              "2880": 0.4322916666666667
+            },
+            "max_abs_successive_grid_fraction_change": 0.000347222222222221,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.992503748125937
+          },
+          {
+            "semiamplitude_mmag": 6.0,
+            "semiamplitude_mag": 0.006,
+            "peak_to_peak_mmag": 12.0,
+            "recovered_phases": 1439,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.4996527777777778,
+            "recovered_phases_by_grid": {
+              "720": 360,
+              "1440": 720,
+              "2880": 1439
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.5,
+              "1440": 0.5,
+              "2880": 0.4996527777777778
+            },
+            "max_abs_successive_grid_fraction_change": 0.000347222222222221,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.9765117441279361
+          },
+          {
+            "semiamplitude_mmag": 7.0,
+            "semiamplitude_mag": 0.007,
+            "peak_to_peak_mmag": 14.0,
+            "recovered_phases": 1616,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.5611111111111111,
+            "recovered_phases_by_grid": {
+              "720": 404,
+              "1440": 808,
+              "2880": 1616
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.5611111111111111,
+              "1440": 0.5611111111111111,
+              "2880": 0.5611111111111111
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.8300849575212393
+          },
+          {
+            "semiamplitude_mmag": 8.0,
+            "semiamplitude_mag": 0.008,
+            "peak_to_peak_mmag": 16.0,
+            "recovered_phases": 1776,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.6166666666666667,
+            "recovered_phases_by_grid": {
+              "720": 444,
+              "1440": 888,
+              "2880": 1776
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.6166666666666667,
+              "1440": 0.6166666666666667,
+              "2880": 0.6166666666666667
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.6061969015492253
+          },
+          {
+            "semiamplitude_mmag": 9.0,
+            "semiamplitude_mag": 0.009,
+            "peak_to_peak_mmag": 18.0,
+            "recovered_phases": 1915,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.6649305555555556,
+            "recovered_phases_by_grid": {
+              "720": 479,
+              "1440": 958,
+              "2880": 1915
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.6652777777777777,
+              "1440": 0.6652777777777777,
+              "2880": 0.6649305555555556
+            },
+            "max_abs_successive_grid_fraction_change": 0.0003472222222221655,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.38630684657671166
+          },
+          {
+            "semiamplitude_mmag": 10.0,
+            "semiamplitude_mag": 0.01,
+            "peak_to_peak_mmag": 20.0,
+            "recovered_phases": 2053,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.7128472222222222,
+            "recovered_phases_by_grid": {
+              "720": 514,
+              "1440": 1027,
+              "2880": 2053
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.7138888888888889,
+              "1440": 0.7131944444444445,
+              "2880": 0.7128472222222222
+            },
+            "max_abs_successive_grid_fraction_change": 0.000694444444444442,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.20389805097451275
+          },
+          {
+            "semiamplitude_mmag": 11.0,
+            "semiamplitude_mag": 0.011,
+            "peak_to_peak_mmag": 22.0,
+            "recovered_phases": 2211,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.7677083333333333,
+            "recovered_phases_by_grid": {
+              "720": 553,
+              "1440": 1105,
+              "2880": 2211
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.7680555555555556,
+              "1440": 0.7673611111111112,
+              "2880": 0.7677083333333333
+            },
+            "max_abs_successive_grid_fraction_change": 0.000694444444444442,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.09795102448775612
+          },
+          {
+            "semiamplitude_mmag": 12.0,
+            "semiamplitude_mag": 0.012,
+            "peak_to_peak_mmag": 24.0,
+            "recovered_phases": 2380,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.8263888888888888,
+            "recovered_phases_by_grid": {
+              "720": 595,
+              "1440": 1190,
+              "2880": 2380
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.8263888888888888,
+              "1440": 0.8263888888888888,
+              "2880": 0.8263888888888888
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.041979010494752625
+          },
+          {
+            "semiamplitude_mmag": 13.0,
+            "semiamplitude_mag": 0.013,
+            "peak_to_peak_mmag": 26.0,
+            "recovered_phases": 2629,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.9128472222222223,
+            "recovered_phases_by_grid": {
+              "720": 657,
+              "1440": 1314,
+              "2880": 2629
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.9125,
+              "1440": 0.9125,
+              "2880": 0.9128472222222223
+            },
+            "max_abs_successive_grid_fraction_change": 0.0003472222222222765,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.014992503748125937
+          },
+          {
+            "semiamplitude_mmag": 14.0,
+            "semiamplitude_mag": 0.014,
+            "peak_to_peak_mmag": 28.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0029985007496251873
+          },
+          {
+            "semiamplitude_mmag": 15.0,
+            "semiamplitude_mag": 0.015,
+            "peak_to_peak_mmag": 30.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          },
+          {
+            "semiamplitude_mmag": 16.0,
+            "semiamplitude_mag": 0.016,
+            "peak_to_peak_mmag": 32.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          },
+          {
+            "semiamplitude_mmag": 17.0,
+            "semiamplitude_mag": 0.017,
+            "peak_to_peak_mmag": 34.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          },
+          {
+            "semiamplitude_mmag": 18.0,
+            "semiamplitude_mag": 0.018,
+            "peak_to_peak_mmag": 36.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          },
+          {
+            "semiamplitude_mmag": 19.0,
+            "semiamplitude_mag": 0.019,
+            "peak_to_peak_mmag": 38.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          },
+          {
+            "semiamplitude_mmag": 20.0,
+            "semiamplitude_mag": 0.02,
+            "peak_to_peak_mmag": 40.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          },
+          {
+            "semiamplitude_mmag": 25.0,
+            "semiamplitude_mag": 0.025,
+            "peak_to_peak_mmag": 50.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          },
+          {
+            "semiamplitude_mmag": 30.0,
+            "semiamplitude_mag": 0.03,
+            "peak_to_peak_mmag": 60.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          },
+          {
+            "semiamplitude_mmag": 40.0,
+            "semiamplitude_mag": 0.04,
+            "peak_to_peak_mmag": 80.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          },
+          {
+            "semiamplitude_mmag": 50.0,
+            "semiamplitude_mag": 0.05,
+            "peak_to_peak_mmag": 100.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          },
+          {
+            "semiamplitude_mmag": 75.0,
+            "semiamplitude_mag": 0.075,
+            "peak_to_peak_mmag": 150.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          },
+          {
+            "semiamplitude_mmag": 100.0,
+            "semiamplitude_mag": 0.1,
+            "peak_to_peak_mmag": 200.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          }
+        ],
+        "first_sampled_K_mmag_with_fine_grid_phase_fraction_ge_0.90": 13.0,
+        "k90_mmag_by_phase_grid": {
+          "720": 13.0,
+          "1440": 13.0,
+          "2880": 13.0
+        },
+        "first_sampled_K_mmag_with_phase_fraction_ge_0.90_on_all_grids": 13.0,
+        "max_abs_successive_grid_fraction_change_over_curve": 0.000694444444444442
+      }
+    },
+    {
+      "series": "661427779128/V",
+      "asas_sn_id": 661427779128,
+      "physical_source_role": "cd35_2722_host",
+      "phot_filter": "V",
+      "n_raw_observations": 647,
+      "n_camera_night_bins": 647,
+      "n_observing_nights": 501,
+      "baseline_days": 1609.3204853003845,
+      "cameras": [
+        "be",
+        "bf",
+        "bg"
+      ],
+      "camera_median_magnitudes": {
+        "be": 11.051458551198909,
+        "bf": 11.055164446903557,
+        "bg": 11.04417251116772
+      },
+      "permutation_seed": 2871123832,
+      "grid_max_period_days": 804.6602426501922,
+      "best_period_days": 804.6602426501921,
+      "best_power": 0.1448643181242456,
+      "power_at_rv_period": 0.007443842876295541,
+      "global_exceedances": 0,
+      "global_p_plus_one": 0.0004997501249375312,
+      "rv_period_exceedances": 309,
+      "rv_period_p_plus_one": 0.1549225387306347,
+      "rv_period_detection_rule": {
+        "alpha": 0.01,
+        "comparison": "(1 + count(null_power >= injected_power)) / (1 + N) <= alpha",
+        "max_null_exceedances": 19,
+        "critical_null_power_boundary": 0.019417046917631617,
+        "boundary_note": "with no ties, injected power must exceed this order statistic"
+      },
+      "rv_period_null_power_quantiles": {
+        "q90": 0.00945828047013822,
+        "q95": 0.012642915224576725,
+        "q99": 0.019260324792162897
+      },
+      "injection_recovery": {
+        "quantity": "sinusoidal photometric semiamplitude K",
+        "units": "millimagnitude",
+        "peak_to_peak_relation": "peak-to-peak modulation = 2 K",
+        "period_days": 171.454,
+        "detection_alpha": 0.01,
+        "phase_grid": "uniform deterministic [0, 2pi), endpoint excluded",
+        "phase_grid_sizes": [
+          720,
+          1440,
+          2880
+        ],
+        "finest_phase_grid_size": 2880,
+        "interpretation": "deterministic uniform-phase fraction conditional on the observed residual series, camera/night preprocessing, and fixed-period permutation threshold",
+        "curve": [
+          {
+            "semiamplitude_mmag": 1.0,
+            "semiamplitude_mag": 0.001,
+            "peak_to_peak_mmag": 2.0,
+            "recovered_phases": 0,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.0,
+            "recovered_phases_by_grid": {
+              "720": 0,
+              "1440": 0,
+              "2880": 0
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.0,
+              "1440": 0.0,
+              "2880": 0.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.07196401799100449,
+            "max_permutation_p_plus_one": 0.32533733133433285
+          },
+          {
+            "semiamplitude_mmag": 2.0,
+            "semiamplitude_mag": 0.002,
+            "peak_to_peak_mmag": 4.0,
+            "recovered_phases": 0,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.0,
+            "recovered_phases_by_grid": {
+              "720": 0,
+              "1440": 0,
+              "2880": 0
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.0,
+              "1440": 0.0,
+              "2880": 0.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.030984507746126936,
+            "max_permutation_p_plus_one": 0.55872063968016
+          },
+          {
+            "semiamplitude_mmag": 3.0,
+            "semiamplitude_mag": 0.003,
+            "peak_to_peak_mmag": 6.0,
+            "recovered_phases": 277,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.09618055555555556,
+            "recovered_phases_by_grid": {
+              "720": 69,
+              "1440": 138,
+              "2880": 277
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.09583333333333334,
+              "1440": 0.09583333333333334,
+              "2880": 0.09618055555555556
+            },
+            "max_abs_successive_grid_fraction_change": 0.000347222222222221,
+            "min_permutation_p_plus_one": 0.009495252373813094,
+            "max_permutation_p_plus_one": 0.809095452273863
+          },
+          {
+            "semiamplitude_mmag": 4.0,
+            "semiamplitude_mag": 0.004,
+            "peak_to_peak_mmag": 8.0,
+            "recovered_phases": 951,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.3302083333333333,
+            "recovered_phases_by_grid": {
+              "720": 237,
+              "1440": 475,
+              "2880": 951
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.32916666666666666,
+              "1440": 0.3298611111111111,
+              "2880": 0.3302083333333333
+            },
+            "max_abs_successive_grid_fraction_change": 0.000694444444444442,
+            "min_permutation_p_plus_one": 0.001999000499750125,
+            "max_permutation_p_plus_one": 0.9640179910044977
+          },
+          {
+            "semiamplitude_mmag": 5.0,
+            "semiamplitude_mag": 0.005,
+            "peak_to_peak_mmag": 10.0,
+            "recovered_phases": 1273,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.4420138888888889,
+            "recovered_phases_by_grid": {
+              "720": 318,
+              "1440": 637,
+              "2880": 1273
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.44166666666666665,
+              "1440": 0.4423611111111111,
+              "2880": 0.4420138888888889
+            },
+            "max_abs_successive_grid_fraction_change": 0.000694444444444442,
+            "min_permutation_p_plus_one": 0.0009995002498750624,
+            "max_permutation_p_plus_one": 0.993503248375812
+          },
+          {
+            "semiamplitude_mmag": 6.0,
+            "semiamplitude_mag": 0.006,
+            "peak_to_peak_mmag": 12.0,
+            "recovered_phases": 1499,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.5204861111111111,
+            "recovered_phases_by_grid": {
+              "720": 375,
+              "1440": 749,
+              "2880": 1499
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.5208333333333334,
+              "1440": 0.5201388888888889,
+              "2880": 0.5204861111111111
+            },
+            "max_abs_successive_grid_fraction_change": 0.000694444444444442,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.8715642178910544
+          },
+          {
+            "semiamplitude_mmag": 7.0,
+            "semiamplitude_mag": 0.007,
+            "peak_to_peak_mmag": 14.0,
+            "recovered_phases": 1682,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.5840277777777778,
+            "recovered_phases_by_grid": {
+              "720": 420,
+              "1440": 841,
+              "2880": 1682
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.5833333333333334,
+              "1440": 0.5840277777777778,
+              "2880": 0.5840277777777778
+            },
+            "max_abs_successive_grid_fraction_change": 0.000694444444444442,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.6541729135432284
+          },
+          {
+            "semiamplitude_mmag": 8.0,
+            "semiamplitude_mag": 0.008,
+            "peak_to_peak_mmag": 16.0,
+            "recovered_phases": 1848,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.6416666666666667,
+            "recovered_phases_by_grid": {
+              "720": 462,
+              "1440": 924,
+              "2880": 1848
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.6416666666666667,
+              "1440": 0.6416666666666667,
+              "2880": 0.6416666666666667
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.4002998500749625
+          },
+          {
+            "semiamplitude_mmag": 9.0,
+            "semiamplitude_mag": 0.009,
+            "peak_to_peak_mmag": 18.0,
+            "recovered_phases": 2012,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.6986111111111111,
+            "recovered_phases_by_grid": {
+              "720": 503,
+              "1440": 1006,
+              "2880": 2012
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.6986111111111111,
+              "1440": 0.6986111111111111,
+              "2880": 0.6986111111111111
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.20539730134932535
+          },
+          {
+            "semiamplitude_mmag": 10.0,
+            "semiamplitude_mag": 0.01,
+            "peak_to_peak_mmag": 20.0,
+            "recovered_phases": 2179,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.7565972222222223,
+            "recovered_phases_by_grid": {
+              "720": 545,
+              "1440": 1089,
+              "2880": 2179
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.7569444444444444,
+              "1440": 0.75625,
+              "2880": 0.7565972222222223
+            },
+            "max_abs_successive_grid_fraction_change": 0.000694444444444442,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.09945027486256872
+          },
+          {
+            "semiamplitude_mmag": 11.0,
+            "semiamplitude_mag": 0.011,
+            "peak_to_peak_mmag": 22.0,
+            "recovered_phases": 2378,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.8256944444444444,
+            "recovered_phases_by_grid": {
+              "720": 594,
+              "1440": 1189,
+              "2880": 2378
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.825,
+              "1440": 0.8256944444444444,
+              "2880": 0.8256944444444444
+            },
+            "max_abs_successive_grid_fraction_change": 0.000694444444444442,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.044977511244377814
+          },
+          {
+            "semiamplitude_mmag": 12.0,
+            "semiamplitude_mag": 0.012,
+            "peak_to_peak_mmag": 24.0,
+            "recovered_phases": 2651,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.9204861111111111,
+            "recovered_phases_by_grid": {
+              "720": 663,
+              "1440": 1325,
+              "2880": 2651
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.9208333333333333,
+              "1440": 0.9201388888888888,
+              "2880": 0.9204861111111111
+            },
+            "max_abs_successive_grid_fraction_change": 0.000694444444444442,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.014992503748125937
+          },
+          {
+            "semiamplitude_mmag": 13.0,
+            "semiamplitude_mag": 0.013,
+            "peak_to_peak_mmag": 26.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.004497751124437781
+          },
+          {
+            "semiamplitude_mmag": 14.0,
+            "semiamplitude_mag": 0.014,
+            "peak_to_peak_mmag": 28.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.001999000499750125
+          },
+          {
+            "semiamplitude_mmag": 15.0,
+            "semiamplitude_mag": 0.015,
+            "peak_to_peak_mmag": 30.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          },
+          {
+            "semiamplitude_mmag": 16.0,
+            "semiamplitude_mag": 0.016,
+            "peak_to_peak_mmag": 32.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          },
+          {
+            "semiamplitude_mmag": 17.0,
+            "semiamplitude_mag": 0.017,
+            "peak_to_peak_mmag": 34.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          },
+          {
+            "semiamplitude_mmag": 18.0,
+            "semiamplitude_mag": 0.018,
+            "peak_to_peak_mmag": 36.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          },
+          {
+            "semiamplitude_mmag": 19.0,
+            "semiamplitude_mag": 0.019,
+            "peak_to_peak_mmag": 38.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          },
+          {
+            "semiamplitude_mmag": 20.0,
+            "semiamplitude_mag": 0.02,
+            "peak_to_peak_mmag": 40.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          },
+          {
+            "semiamplitude_mmag": 25.0,
+            "semiamplitude_mag": 0.025,
+            "peak_to_peak_mmag": 50.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          },
+          {
+            "semiamplitude_mmag": 30.0,
+            "semiamplitude_mag": 0.03,
+            "peak_to_peak_mmag": 60.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          },
+          {
+            "semiamplitude_mmag": 40.0,
+            "semiamplitude_mag": 0.04,
+            "peak_to_peak_mmag": 80.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          },
+          {
+            "semiamplitude_mmag": 50.0,
+            "semiamplitude_mag": 0.05,
+            "peak_to_peak_mmag": 100.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          },
+          {
+            "semiamplitude_mmag": 75.0,
+            "semiamplitude_mag": 0.075,
+            "peak_to_peak_mmag": 150.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          },
+          {
+            "semiamplitude_mmag": 100.0,
+            "semiamplitude_mag": 0.1,
+            "peak_to_peak_mmag": 200.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          }
+        ],
+        "first_sampled_K_mmag_with_fine_grid_phase_fraction_ge_0.90": 12.0,
+        "k90_mmag_by_phase_grid": {
+          "720": 12.0,
+          "1440": 12.0,
+          "2880": 12.0
+        },
+        "first_sampled_K_mmag_with_phase_fraction_ge_0.90_on_all_grids": 12.0,
+        "max_abs_successive_grid_fraction_change_over_curve": 0.000694444444444442
+      }
+    },
+    {
+      "series": "661427779128/g",
+      "asas_sn_id": 661427779128,
+      "physical_source_role": "cd35_2722_host",
+      "phot_filter": "g",
+      "n_raw_observations": 1526,
+      "n_camera_night_bins": 1484,
+      "n_observing_nights": 1168,
+      "baseline_days": 2438.5459278998896,
+      "cameras": [
+        "bG",
+        "bk",
+        "bn",
+        "bo"
+      ],
+      "camera_median_magnitudes": {
+        "bG": 11.696124422852977,
+        "bk": 11.69526694342013,
+        "bn": 11.689674271613118,
+        "bo": 11.82983883763535
+      },
+      "permutation_seed": 4184334210,
+      "grid_max_period_days": 1219.2729639499448,
+      "best_period_days": 1219.2729639499448,
+      "best_power": 0.07437480740206015,
+      "power_at_rv_period": 0.003183454570337236,
+      "global_exceedances": 0,
+      "global_p_plus_one": 0.0004997501249375312,
+      "rv_period_exceedances": 324,
+      "rv_period_p_plus_one": 0.16241879060469766,
+      "rv_period_detection_rule": {
+        "alpha": 0.01,
+        "comparison": "(1 + count(null_power >= injected_power)) / (1 + N) <= alpha",
+        "max_null_exceedances": 19,
+        "critical_null_power_boundary": 0.007571712464601345,
+        "boundary_note": "with no ties, injected power must exceed this order statistic"
+      },
+      "rv_period_null_power_quantiles": {
+        "q90": 0.004058998789414865,
+        "q95": 0.005243884197067086,
+        "q99": 0.007549648587330131
+      },
+      "injection_recovery": {
+        "quantity": "sinusoidal photometric semiamplitude K",
+        "units": "millimagnitude",
+        "peak_to_peak_relation": "peak-to-peak modulation = 2 K",
+        "period_days": 171.454,
+        "detection_alpha": 0.01,
+        "phase_grid": "uniform deterministic [0, 2pi), endpoint excluded",
+        "phase_grid_sizes": [
+          720,
+          1440,
+          2880
+        ],
+        "finest_phase_grid_size": 2880,
+        "interpretation": "deterministic uniform-phase fraction conditional on the observed residual series, camera/night preprocessing, and fixed-period permutation threshold",
+        "curve": [
+          {
+            "semiamplitude_mmag": 1.0,
+            "semiamplitude_mag": 0.001,
+            "peak_to_peak_mmag": 2.0,
+            "recovered_phases": 0,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.0,
+            "recovered_phases_by_grid": {
+              "720": 0,
+              "1440": 0,
+              "2880": 0
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.0,
+              "1440": 0.0,
+              "2880": 0.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.07646176911544228,
+            "max_permutation_p_plus_one": 0.303848075962019
+          },
+          {
+            "semiamplitude_mmag": 2.0,
+            "semiamplitude_mag": 0.002,
+            "peak_to_peak_mmag": 4.0,
+            "recovered_phases": 0,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.0,
+            "recovered_phases_by_grid": {
+              "720": 0,
+              "1440": 0,
+              "2880": 0
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.0,
+              "1440": 0.0,
+              "2880": 0.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.030484757621189407,
+            "max_permutation_p_plus_one": 0.4862568715642179
+          },
+          {
+            "semiamplitude_mmag": 3.0,
+            "semiamplitude_mag": 0.003,
+            "peak_to_peak_mmag": 6.0,
+            "recovered_phases": 404,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.14027777777777778,
+            "recovered_phases_by_grid": {
+              "720": 101,
+              "1440": 202,
+              "2880": 404
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.14027777777777778,
+              "1440": 0.14027777777777778,
+              "2880": 0.14027777777777778
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0079960019990005,
+            "max_permutation_p_plus_one": 0.7126436781609196
+          },
+          {
+            "semiamplitude_mmag": 4.0,
+            "semiamplitude_mag": 0.004,
+            "peak_to_peak_mmag": 8.0,
+            "recovered_phases": 971,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.3371527777777778,
+            "recovered_phases_by_grid": {
+              "720": 242,
+              "1440": 485,
+              "2880": 971
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.33611111111111114,
+              "1440": 0.3368055555555556,
+              "2880": 0.3371527777777778
+            },
+            "max_abs_successive_grid_fraction_change": 0.000694444444444442,
+            "min_permutation_p_plus_one": 0.0014992503748125937,
+            "max_permutation_p_plus_one": 0.9065467266366817
+          },
+          {
+            "semiamplitude_mmag": 5.0,
+            "semiamplitude_mag": 0.005,
+            "peak_to_peak_mmag": 10.0,
+            "recovered_phases": 1249,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.43368055555555557,
+            "recovered_phases_by_grid": {
+              "720": 313,
+              "1440": 625,
+              "2880": 1249
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.43472222222222223,
+              "1440": 0.4340277777777778,
+              "2880": 0.43368055555555557
+            },
+            "max_abs_successive_grid_fraction_change": 0.000694444444444442,
+            "min_permutation_p_plus_one": 0.0014992503748125937,
+            "max_permutation_p_plus_one": 0.9970014992503748
+          },
+          {
+            "semiamplitude_mmag": 6.0,
+            "semiamplitude_mag": 0.006,
+            "peak_to_peak_mmag": 12.0,
+            "recovered_phases": 1453,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.5045138888888889,
+            "recovered_phases_by_grid": {
+              "720": 364,
+              "1440": 727,
+              "2880": 1453
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.5055555555555555,
+              "1440": 0.5048611111111111,
+              "2880": 0.5045138888888889
+            },
+            "max_abs_successive_grid_fraction_change": 0.000694444444444442,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.9535232383808095
+          },
+          {
+            "semiamplitude_mmag": 7.0,
+            "semiamplitude_mag": 0.007,
+            "peak_to_peak_mmag": 14.0,
+            "recovered_phases": 1622,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.5631944444444444,
+            "recovered_phases_by_grid": {
+              "720": 405,
+              "1440": 811,
+              "2880": 1622
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.5625,
+              "1440": 0.5631944444444444,
+              "2880": 0.5631944444444444
+            },
+            "max_abs_successive_grid_fraction_change": 0.000694444444444442,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.7941029485257372
+          },
+          {
+            "semiamplitude_mmag": 8.0,
+            "semiamplitude_mag": 0.008,
+            "peak_to_peak_mmag": 16.0,
+            "recovered_phases": 1777,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.6170138888888889,
+            "recovered_phases_by_grid": {
+              "720": 444,
+              "1440": 888,
+              "2880": 1777
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.6166666666666667,
+              "1440": 0.6166666666666667,
+              "2880": 0.6170138888888889
+            },
+            "max_abs_successive_grid_fraction_change": 0.0003472222222221655,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.5787106446776612
+          },
+          {
+            "semiamplitude_mmag": 9.0,
+            "semiamplitude_mag": 0.009,
+            "peak_to_peak_mmag": 18.0,
+            "recovered_phases": 1934,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.6715277777777777,
+            "recovered_phases_by_grid": {
+              "720": 484,
+              "1440": 967,
+              "2880": 1934
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.6722222222222223,
+              "1440": 0.6715277777777777,
+              "2880": 0.6715277777777777
+            },
+            "max_abs_successive_grid_fraction_change": 0.000694444444444553,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.37031484257871067
+          },
+          {
+            "semiamplitude_mmag": 10.0,
+            "semiamplitude_mag": 0.01,
+            "peak_to_peak_mmag": 20.0,
+            "recovered_phases": 2082,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.7229166666666667,
+            "recovered_phases_by_grid": {
+              "720": 521,
+              "1440": 1041,
+              "2880": 2082
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.7236111111111111,
+              "1440": 0.7229166666666667,
+              "2880": 0.7229166666666667
+            },
+            "max_abs_successive_grid_fraction_change": 0.000694444444444442,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.20089955022488756
+          },
+          {
+            "semiamplitude_mmag": 11.0,
+            "semiamplitude_mag": 0.011,
+            "peak_to_peak_mmag": 22.0,
+            "recovered_phases": 2232,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.775,
+            "recovered_phases_by_grid": {
+              "720": 558,
+              "1440": 1116,
+              "2880": 2232
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.775,
+              "1440": 0.775,
+              "2880": 0.775
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.10144927536231885
+          },
+          {
+            "semiamplitude_mmag": 12.0,
+            "semiamplitude_mag": 0.012,
+            "peak_to_peak_mmag": 24.0,
+            "recovered_phases": 2415,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.8385416666666666,
+            "recovered_phases_by_grid": {
+              "720": 603,
+              "1440": 1207,
+              "2880": 2415
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.8375,
+              "1440": 0.8381944444444445,
+              "2880": 0.8385416666666666
+            },
+            "max_abs_successive_grid_fraction_change": 0.000694444444444442,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.04547726136931534
+          },
+          {
+            "semiamplitude_mmag": 13.0,
+            "semiamplitude_mag": 0.013,
+            "peak_to_peak_mmag": 26.0,
+            "recovered_phases": 2709,
+            "phase_grid_size": 2880,
+            "phase_fraction": 0.940625,
+            "recovered_phases_by_grid": {
+              "720": 678,
+              "1440": 1355,
+              "2880": 2709
+            },
+            "phase_fraction_by_grid": {
+              "720": 0.9416666666666667,
+              "1440": 0.9409722222222222,
+              "2880": 0.940625
+            },
+            "max_abs_successive_grid_fraction_change": 0.000694444444444442,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.01699150424787606
+          },
+          {
+            "semiamplitude_mmag": 14.0,
+            "semiamplitude_mag": 0.014,
+            "peak_to_peak_mmag": 28.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0024987506246876563
+          },
+          {
+            "semiamplitude_mmag": 15.0,
+            "semiamplitude_mag": 0.015,
+            "peak_to_peak_mmag": 30.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0014992503748125937
+          },
+          {
+            "semiamplitude_mmag": 16.0,
+            "semiamplitude_mag": 0.016,
+            "peak_to_peak_mmag": 32.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0009995002498750624
+          },
+          {
+            "semiamplitude_mmag": 17.0,
+            "semiamplitude_mag": 0.017,
+            "peak_to_peak_mmag": 34.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          },
+          {
+            "semiamplitude_mmag": 18.0,
+            "semiamplitude_mag": 0.018,
+            "peak_to_peak_mmag": 36.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          },
+          {
+            "semiamplitude_mmag": 19.0,
+            "semiamplitude_mag": 0.019,
+            "peak_to_peak_mmag": 38.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          },
+          {
+            "semiamplitude_mmag": 20.0,
+            "semiamplitude_mag": 0.02,
+            "peak_to_peak_mmag": 40.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          },
+          {
+            "semiamplitude_mmag": 25.0,
+            "semiamplitude_mag": 0.025,
+            "peak_to_peak_mmag": 50.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          },
+          {
+            "semiamplitude_mmag": 30.0,
+            "semiamplitude_mag": 0.03,
+            "peak_to_peak_mmag": 60.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          },
+          {
+            "semiamplitude_mmag": 40.0,
+            "semiamplitude_mag": 0.04,
+            "peak_to_peak_mmag": 80.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          },
+          {
+            "semiamplitude_mmag": 50.0,
+            "semiamplitude_mag": 0.05,
+            "peak_to_peak_mmag": 100.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          },
+          {
+            "semiamplitude_mmag": 75.0,
+            "semiamplitude_mag": 0.075,
+            "peak_to_peak_mmag": 150.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          },
+          {
+            "semiamplitude_mmag": 100.0,
+            "semiamplitude_mag": 0.1,
+            "peak_to_peak_mmag": 200.0,
+            "recovered_phases": 2880,
+            "phase_grid_size": 2880,
+            "phase_fraction": 1.0,
+            "recovered_phases_by_grid": {
+              "720": 720,
+              "1440": 1440,
+              "2880": 2880
+            },
+            "phase_fraction_by_grid": {
+              "720": 1.0,
+              "1440": 1.0,
+              "2880": 1.0
+            },
+            "max_abs_successive_grid_fraction_change": 0.0,
+            "min_permutation_p_plus_one": 0.0004997501249375312,
+            "max_permutation_p_plus_one": 0.0004997501249375312
+          }
+        ],
+        "first_sampled_K_mmag_with_fine_grid_phase_fraction_ge_0.90": 13.0,
+        "k90_mmag_by_phase_grid": {
+          "720": 13.0,
+          "1440": 13.0,
+          "2880": 13.0
+        },
+        "first_sampled_K_mmag_with_phase_fraction_ge_0.90_on_all_grids": 13.0,
+        "max_abs_successive_grid_fraction_change_over_curve": 0.000694444444444553
+      }
+    }
+  ]
+}

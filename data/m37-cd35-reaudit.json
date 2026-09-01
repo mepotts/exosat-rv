@@ -1,0 +1,233 @@
+{
+  "implementation": {
+    "files": {
+      "scripts/injection/m14_score.py": "6e0b3647840b9ca7aaa24c22c79823dfecd29abc8bd687d3a1a36e423a584d65",
+      "scripts/injection/m28_nullcal.py": "12feb7d60bd7ed6f8e8f3301a0149c622b6d0be81ea82c993acf82a024d9308e",
+      "scripts/injection/vs_published.py": "d294280d97be70b2861d7cdc4c19243fa8a78c500ea814243894ad21fbdd6dbb",
+      "scripts/m37_reaudit.py": "cc0b1487e8693e59c6384d542c2e8030e4291c5c5ef36ac490831ef82449d954"
+    },
+    "numpy": "2.4.3",
+    "python": "3.13.0"
+  },
+  "internal_screen": {
+    "dropped_bjd": [
+      2460604.817957461
+    ],
+    "dropped_spread_m_per_s": [
+      17494.330620276665
+    ],
+    "n_all": 18,
+    "n_dropped": 1,
+    "rule": "nightly across-order spread > 3 * median nightly spread",
+    "threshold_m_per_s": 2743.4601089263083
+  },
+  "method": {
+    "landscape_and_permutation_calibration": "scripts/injection/m28_nullcal.py",
+    "order_combination_and_night_binning": "scripts/injection/m14_score.py",
+    "period_grid_points": 4000,
+    "period_max_days": 460.0,
+    "period_min_days": 5.0,
+    "permutation_p_value": "(1 + exceedances) / (1 + permutations)",
+    "permutation_scope": "nominal conditional probabilities assuming exchangeable fitted base-model residuals; heteroskedasticity/leverage and the choice of epoch screen are not included in the null calibration",
+    "permutations": 5000,
+    "published_loader_called": false,
+    "published_rvs_used": false,
+    "reference_log_tolerance": 0.06,
+    "reference_period_days": 171.45,
+    "rng_seed": 20260813
+  },
+  "schema_version": 1,
+  "source": {
+    "orders": [
+      4,
+      7,
+      8,
+      9,
+      10,
+      12,
+      13,
+      14,
+      17,
+      18,
+      19
+    ],
+    "path": "data/repro/viper/results/M14_NODT2.rvo.dat",
+    "sha256": "b46585784888d8883bcfaa2020178695a6fff0b05e8f2408af698075efc87939"
+  },
+  "variants": {
+    "clip": {
+      "all_epochs": [
+        {
+          "P_max": 171.22331170359496,
+          "P_ref": 171.22331170359496,
+          "berv": false,
+          "dbic_max": 11.323491177699156,
+          "dbic_ref": 11.323491177699156,
+          "n": 18,
+          "null95": 17.723617379584848,
+          "null_ref95": 3.214063632483681,
+          "p_max": 0.3275344931013797,
+          "p_ref": 0.004799040191961607,
+          "span": 465.77664735913277
+        },
+        {
+          "P_max": 5.746078838898336,
+          "P_ref": 173.9553815581994,
+          "berv": true,
+          "dbic_max": 9.446127493001903,
+          "dbic_ref": 4.822186271754285,
+          "n": 18,
+          "null95": 17.139925919945785,
+          "null_ref95": 4.179381273764482,
+          "p_max": 0.5752849430113978,
+          "p_ref": 0.03839232153569286,
+          "span": 465.77664735913277
+        }
+      ],
+      "internal_screen": [
+        {
+          "P_max": 169.2981433858796,
+          "P_ref": 169.2981433858796,
+          "berv": false,
+          "dbic_max": 39.91409728759707,
+          "dbic_ref": 39.91409728759707,
+          "n": 17,
+          "null95": 18.41855517365659,
+          "null_ref95": 3.5393986257196848,
+          "p_max": 0.0005998800239952009,
+          "p_ref": 0.0001999600079984003,
+          "span": 465.77664735913277
+        },
+        {
+          "P_max": 169.10682111282995,
+          "P_ref": 169.10682111282995,
+          "berv": true,
+          "dbic_max": 26.852393291812042,
+          "dbic_ref": 26.852393291812042,
+          "n": 17,
+          "null95": 19.56835784411718,
+          "null_ref95": 4.232145884629463,
+          "p_max": 0.004999000199960008,
+          "p_ref": 0.0001999600079984003,
+          "span": 465.77664735913277
+        }
+      ]
+    },
+    "mean": {
+      "all_epochs": [
+        {
+          "P_max": 169.8734099217988,
+          "P_ref": 169.8734099217988,
+          "berv": false,
+          "dbic_max": 8.728436140839188,
+          "dbic_ref": 8.728436140839188,
+          "n": 18,
+          "null95": 10.40987385474822,
+          "null_ref95": 0.8503121081206091,
+          "p_max": 0.08218356328734253,
+          "p_ref": 0.0003999200159968006,
+          "span": 465.77664735913277
+        },
+        {
+          "P_max": 8.057520664307413,
+          "P_ref": 167.5840060541481,
+          "berv": true,
+          "dbic_max": 7.3835552209415365,
+          "dbic_ref": -0.06451343818973676,
+          "n": 18,
+          "null95": 12.258264237861463,
+          "null_ref95": 4.788529518680767,
+          "p_max": 0.31073785242951407,
+          "p_ref": 0.16756648670265947,
+          "span": 465.77664735913277
+        }
+      ],
+      "internal_screen": [
+        {
+          "P_max": 170.06559948992538,
+          "P_ref": 170.06559948992538,
+          "berv": false,
+          "dbic_max": 40.40062902519821,
+          "dbic_ref": 40.40062902519821,
+          "n": 17,
+          "null95": 18.21129987310974,
+          "null_ref95": 3.6114220522134093,
+          "p_max": 0.0005998800239952009,
+          "p_ref": 0.0001999600079984003,
+          "span": 465.77664735913277
+        },
+        {
+          "P_max": 169.10682111282995,
+          "P_ref": 169.10682111282995,
+          "berv": true,
+          "dbic_max": 26.654189529854648,
+          "dbic_ref": 26.654189529854648,
+          "n": 17,
+          "null95": 19.905713705486836,
+          "null_ref95": 4.1664646241826375,
+          "p_max": 0.007598480303939212,
+          "p_ref": 0.0001999600079984003,
+          "span": 465.77664735913277
+        }
+      ]
+    },
+    "median": {
+      "all_epochs": [
+        {
+          "P_max": 5.7266200732781405,
+          "P_ref": 175.93350950794684,
+          "berv": false,
+          "dbic_max": 5.616927632257308,
+          "dbic_ref": 3.988023557191948,
+          "n": 18,
+          "null95": 16.56937587355545,
+          "null_ref95": 3.2637279941511483,
+          "p_max": 0.9334133173365327,
+          "p_ref": 0.03759248150369926,
+          "span": 465.77664735913277
+        },
+        {
+          "P_max": 5.739585248108774,
+          "P_ref": 177.53219546798329,
+          "berv": true,
+          "dbic_max": 5.296400533825299,
+          "dbic_ref": 0.5587040288575489,
+          "n": 18,
+          "null95": 13.573012597772646,
+          "null_ref95": 4.07688887553353,
+          "p_max": 0.9104179164167167,
+          "p_ref": 0.16456708658268346,
+          "span": 465.77664735913277
+        }
+      ],
+      "internal_screen": [
+        {
+          "P_max": 171.4170285092131,
+          "P_ref": 171.4170285092131,
+          "berv": false,
+          "dbic_max": 43.157408234304334,
+          "dbic_ref": 43.157408234304334,
+          "n": 17,
+          "null95": 18.52975304034412,
+          "null_ref95": 3.842736380437174,
+          "p_max": 0.0001999600079984003,
+          "p_ref": 0.0001999600079984003,
+          "span": 465.77664735913277
+        },
+        {
+          "P_max": 171.22331170359496,
+          "P_ref": 171.22331170359496,
+          "berv": true,
+          "dbic_max": 27.935849622735567,
+          "dbic_ref": 27.935849622735567,
+          "n": 17,
+          "null95": 18.555099372411863,
+          "null_ref95": 4.267995969050738,
+          "p_max": 0.0021995600879824036,
+          "p_ref": 0.0001999600079984003,
+          "span": 465.77664735913277
+        }
+      ]
+    }
+  }
+}

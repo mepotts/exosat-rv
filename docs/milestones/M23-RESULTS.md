@@ -1,5 +1,12 @@
 # M23–M24 — The roster closes: HD 1160 B's first series, the crumbs land on the far side of the wall, and a gate catches a fake-quiet series
 
+> **Superseded mode classification (M27/M37):** the supposed staring tier discussed below
+> was HiRISE fibre data processed with a slit recipe. Its target verdicts and the claimed
+> transfer across observing modes are withdrawn. The document remains as a historical record;
+> do not use its roster totals without the current target ledger and M37. M37 also supersedes
+> the CD-35 row (conditional 17-night recovery; all 18 nights are noise-compatible) and the
+> eta Tel row (conditional grid-pointwise sensitivity, not an unconditional exclusion).
+
 **Question:** the last targets with public data — HD 1160 B (nine deep staring
 nights), AF Lep b and 51 Eri b (staring crumbs), the CT Cha B order screen, and the
 PDS 70 nine-night upgrade. What do they yield?

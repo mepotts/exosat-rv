@@ -1,8 +1,8 @@
 # Flat is not quiet: four silent failure modes in companion-side radial velocimetry
 
-*Matthew Potts · independent analysis · draft 2026-08-13*
+*Matthew Potts · unaffiliated analysis · draft 2026-08-13*
 
-*Methods note. Target venue: A&A or MNRAS methods section. Written from milestones M9–M29 of the exosat-rv archival reproduction project; every number below traces to a document in that repository, cited inline as (M-n §s).*
+*Methods note. Target venue: A&A or MNRAS methods section. Written from milestones M9–M37 of the exosat-rv archival reanalysis project; every number below traces to a document in that repository, cited inline as (M-n §s).*
 
 ---
 
@@ -14,8 +14,8 @@ growing set of upper limits. It is an unforgiving regime: the signal sits well b
 per-spectrum noise, the wavelength reference is telluric, and the stellar template is
 usually built from the target's own data. We describe four ways a measurement of this
 class goes wrong without leaving a visible trace, each with a worked example from a
-from-raw reproduction of a published CRIRES+ detection and from an eleven-system
-archival survey run through a single pipeline.
+from-raw, paper-calibrated reanalysis of a published CRIRES+ detection and from an archival
+survey whose valid nodding and later HiRISE branches must be distinguished.
 
 **(1) A flat series is not a quiet series.** A template that has lost its stellar lever
 returns a tighter, better-looking and entirely meaningless upper limit. Ours did: a
@@ -27,17 +27,22 @@ dispersion statistic in use in this subfield is an error-weighted dispersion of
 per-order velocities *within* an epoch. A common-mode Doppler shift cancels from it
 exactly. That makes it safe to optimise, and unsafe to quote as accuracy: it moved
 against our two largest genuine improvements while agreement with an external reference
-series improved by ~40%.
+series improved substantially along the adopted chain (the order combine also changed, so
+this is not a controlled single-change percentage).
 
 **(3) A search maximum is not a significance.** ΔBIC charges for parameters, not for the
-size of the search. Permutation-calibrated on the true cadence, our detection survives
-at *p* = 5×10⁻⁴ — and the same null shows that a *signal-free* series with this sampling
-reaches ΔBIC ≈ 19 as its best peak 5% of the time.
+size of the search. On the true cadence, our screened series has a nominal 5000-permutation
+global BERV-adjusted *p* ≈ 0.002–0.008; the plain-search range is ≈0.0002–0.0006. These
+values assume exchangeability of the fitted base-model residuals and are conditional on a
+post-hoc screen, so they are diagnostic rather than confirmatory false-alarm probabilities.
+The same conditional null shows that a *signal-free* series with this sampling reaches
+ΔBIC ≈ 19 as its best peak 5% of the time.
 
 **(4) A sampler's internal evidence error is not its reproducibility.** Measured over 82
-nested-sampling runs on a real published RV table, run-to-run scatter in ΔlnZ is
-**1.1–8.1×** the sampler's internal estimate, and quadrupling the live points makes the
-understatement *worse*, not better.
+paired model comparisons (164 sampler invocations) on a real published RV table,
+seed-to-seed scatter in ΔlnZ is **1.1–8.1×** the sampler's internal estimate. At four
+times the live points the three tested ratios remain 4–5×, although one partly unconverged
+configuration's scatter and mean both improve.
 
 The four have one structure in common: each makes a result look better than it is, so
 none of them self-report. We give the checks that catch them, and the observing-strategy
@@ -56,13 +61,16 @@ et al. (2026, hereafter H26) reported a detection: a *P* ≈ 171 d,
 *K* ≈ 306 m s⁻¹ signal in CD-35 2722 B, interpreted as a ~0.92 M_Jup satellite, with
 tentative evidence for a second, smaller companion.
 
-This note is not about any one of those results. It is about the class. We reproduced H26
-from the raw CRIRES+ frames with an independently configured extraction, then applied the
-validated pipeline to every other companion with usable public CRIRES+ data — eleven
-systems, yielding one confirmation, one contradiction, four limits, one contamination case
-and four honestly data-limited entries (M23 §5). H26's primary result reproduces: a blind
-period search with no reference to the published values recovers *P* ≈ 169–171 d as the
-rank-1 peak, and it survives a barycentric-velocity (BERV) nuisance term (M14 §6). We use
+This note is not about any one of those results. It is about the class. We reanalysed H26
+from the raw CRIRES+ frames with a separately implemented extraction whose configuration was
+selected with the published RV series visible. The downstream fits do not ingest the published
+RV values, but the historical driver is target- and paper-aware: on the 17 nights retained by
+an internal spread screen it recovers
+*P* ≈ 169–171 d as the rank-1 peak and survives a barycentric-velocity (BERV) nuisance term
+(M14 §6), while the all-18-night series degrades to noise. The clean transfer evidence is
+η Tel B in the same H1567 nodding mode. Every supposed staring-mode dataset was later
+identified as HiRISE fibre data reduced through the wrong slit recipe, and those verdicts
+were withdrawn. We use
 that work as the motivating case throughout, and where our conclusions differ from H26's we
 say so with the arithmetic attached; but none of what follows is an argument about that
 paper.
@@ -84,7 +92,7 @@ publication.
 All spectra are public ESO archive holdings. RVs are extracted with `viper` (Köhler et al.
 2025) in gas-cell-free CRIRES+ mode, forward-modelling each spectral order against a
 telluric-free stellar template built from the observations themselves; reductions use
-`cr2res` 1.6.10 from raw frames, and reproduce ESO's own archived products to 42 m s⁻¹ in
+`cr2res` 1.6.10 from raw frames, and match ESO's own archived products to 42 m s⁻¹ in
 the final RV (M12 §9b). The CD-35 2722 B series is 18 archival H1567 nights over 466 d;
 η Tel B is the same instrument setting over 815 d; the remaining systems span H- and K-band
 settings (M20, M23).
@@ -110,12 +118,13 @@ has no clean analogue in stellar RV work.
 ### 3.1 The worked example: PDS 70
 
 Six CRIRES+ K2166 nights over 426 d on PDS 70 gave a flat series: night-to-night scatter
-130 m s⁻¹, χ² = 3.5/5 against a constant, injection gates at 99% ± 1–2, and a variance
-exclusion of *K*₉₀ ≈ 150 m s⁻¹ for *P* ≤ 200 d, i.e. ~3 M_Jup on close companions of the
+130 m s⁻¹, χ² = 3.5/5 against a constant, fitter-stage injection gates at 99% ± 1–2, and an
+apparent variance-based 90%-sensitivity threshold of *K* ≈ 150 m s⁻¹ for *P* ≤ 200 d,
+i.e. ~3 M_Jup on close companions of the
 star (M20 §3). Six further archival products were then recovered, growing the series to
 nine nights over 483 d, and the template was rebuilt over all fourteen files. The rebuild
-looked like the better result: 150 m s⁻¹ night-to-night over a baseline 13% longer, and a
-tighter 90% amplitude limit than the six-night state it replaced (M23 §4).
+looked like the better result: 150 m s⁻¹ night-to-night over a baseline 13% longer, and an
+apparently tighter 90% amplitude threshold than the six-night state it replaced (M23 §4).
 
 The injection arm returned **−62% ± 197%** recovery, with systematically *negative*
 per-order recoveries. The enlarged template had converged on a solution with no stellar
@@ -127,10 +136,10 @@ The rebuild was rejected on the gate and the validated six-night state was re-st
 reproduced bit for bit (`m21_restore.sh`). Nothing about the nine-night series looked
 wrong. It looked like the best result the target had ever produced.
 
-**Rule.** Gate *every* template iteration against injection recovery, not just the final
-one, and keep a bit-for-bit restore path to the last validated state. An upper limit is a
-statement about the pipeline's sensitivity as much as about the sky, and it is only as
-good as the most recent measurement of that sensitivity.
+**Rule.** A post-build template shift can gate fitter transmission at every iteration, but it
+does not validate self-template construction; that requires an injection propagated from
+before the template is built. Keep a bit-for-bit restore path to the last validated state. A
+sensitivity statement is only as good as the stages its validation actually exercises.
 
 ### 3.2 The same failure, twice more, with different mechanisms
 
@@ -167,8 +176,9 @@ template's epoch spread, so the control over-predicts absorption on the science 
 nearly two orders of magnitude. Measured directly on the target by injection, the corrected
 configuration transmits **95% ± 7%** where the control had predicted 46% — a 7σ
 disagreement (M12 §7.1, §8.3). **A positive control tells you the extraction works; it does
-not transfer a quantitative bias across a 70× difference in amplitude.** Only injection into
-the target's own spectra does that.
+not transfer a quantitative bias across a 70× difference in amplitude.** Quantifying that
+bias requires an injection propagated through self-template construction on the target's own
+spectra; the fitter-stage template shifts used here do not perform that test.
 
 ### 3.3 Two rules that the injection test itself needs
 
@@ -187,7 +197,7 @@ pipeline 92% blind to radial velocity and conclude the extraction was broken.
 has no barycentric lever with which to separate target lines from telluric residue, so it
 drags a fraction of Earth's motion into every epoch. On β Pic b this produced a
 **4712 m s⁻¹** night-to-night scatter locked to the barycentric velocity at *r* = +0.94,
-with blind period peaks that collapsed under a BERV covariate. Rebuilding across all 28
+with period-search peaks that collapsed under a BERV covariate. Rebuilding across all 28
 frames over 813 d halved the scatter to 2466 m s⁻¹ and left *r* = +0.88 intact — which is
 how we established that the residual was host starlight rather than the template (M20 §2).
 The artifact and the real contamination were separable only because the template was
@@ -278,8 +288,10 @@ a factor of at least six at least once.
 
 ## 5. Failure III — A search maximum is not a significance
 
-Our blind period search evaluates a sinusoid-plus-covariates model on a grid of 4000
-periods log-spaced over 5–460 d and reports ΔBIC at the best period. The CD-35 detection
+Our period search evaluates a sinusoid-plus-covariates model on a grid of 4000 periods
+log-spaced over 5–460 d and reports ΔBIC at the best period. Its model fits do not ingest the
+published RV values, but its historical driver constructs a paper-matched subset and reports
+a hard-coded 171.45 d comparison window, so the procedure is target- and paper-aware. The CD-35 detection
 peaked at ΔBIC = +43.16.
 
 **That number was never a significance.** The BIC penalty charges for the number of free
@@ -293,22 +305,28 @@ campaigns, is seasonal, sparse and strongly aliased.
 The calibration is cheap and there is no excuse for omitting it. Hold the epoch times, the
 nuisance-covariate column and the value distribution fixed; shuffle the residuals of the
 base model, which is signal-free by construction and preserves the true window function;
-re-run the identical search. 2000 realisations (M28 §2):
+re-run the identical search. The original 2000-realisation result (M28 §2) was superseded
+by a 5000-realisation rerun from the frozen M14 series (M37):
 
-| order combine | model | observed ΔBIC | permutation *p* | noise-only best peak, 95th pct |
+| order combine | model | observed ΔBIC | nominal permutation *p* | noise-only best peak, 95th pct |
 |---|---|---:|---:|---:|
-| median | plain | +43.16 | **0.0005** | +18.90 |
-| median | + BERV covariate | +27.94 | **0.0025** | +17.77 |
-| clip | plain | +39.91 | **0.0010** | +18.11 |
-| clip | + BERV covariate | +26.85 | **0.0055** | +19.70 |
+| median | plain | +43.16 | **0.0002** | +18.53 |
+| median | + BERV covariate | +27.94 | **0.0022** | +18.56 |
+| clip | plain | +39.91 | **0.0006** | +18.42 |
+| clip | + BERV covariate | +26.85 | **0.0050** | +19.57 |
 
 Two things follow, and the second is the transferable one.
 
-1. The detection survives its own search space, at *p* ≤ 0.006 in every combine and at the
-   2000-permutation floor of *p* = 5×10⁻⁴ without the covariate. Supporting this, all 17
-   leave-one-out subsets return the peak within 6% of 171 d, at ΔBIC +38.5 to +45.7 (plain)
-   and +23.9 to +29.8 (with covariate), and the largest single-epoch effect is to *raise*
-   the significance (M28 §3).
+1. Conditional on exchangeability of the fitted base-model residuals and on the post-hoc
+   17-night internal quality screen, the series has nominal global *p* = 0.0022–0.0076
+   with the BERV covariate and *p* = 0.0002–0.0006 without it across mean, median and clipped
+   combines. These are diagnostic null-calibration values, not confirmatory false-alarm
+   probabilities. All 17 leave-one-out subsets of that
+   already-screened series return the peak within 6% of 171 d, at ΔBIC +38.5 to +45.7
+   (plain) and +23.9 to +29.8 (with covariate), and the largest retained-epoch effect is to
+   *raise* the test statistic (M28 §3). This jackknife does not test the excluded eighteenth
+   night; including it degrades the search to noise, with nominal BERV-adjusted global
+   *p* = 0.31–0.91 (M14 §6; M37).
 
 2. **A signal-free series with this sampling reaches ΔBIC ≈ 19 as its best peak 5% of the
    time.** Any ΔBIC in the teens, on a cadence of this class, is not evidence. This is a
@@ -331,7 +349,7 @@ period tested from 20 to 300 d, and identically zero at bars of 15 or 20 (M28 §
 peak must both clear the bar and land inside a narrow window around the specified period.
 
 Re-deriving the 90% amplitude limits on a 3× finer phase and amplitude grid reproduced the
-published values, one period bin coming out mildly conservative. The general point:
+previously reported values, one period bin coming out mildly conservative. The general point:
 **measure the FAP of the composite criterion you actually used, not of the test statistic in
 isolation.**
 
@@ -361,36 +379,36 @@ the procedure returns.**
 
 We measured the difference on a real published RV table — the 23-epoch table of H26 —
 comparing a one-companion against a two-companion model with `dynesty` (Speagle 2020),
-priors symmetric between models, over 82 independent runs varying only the random seed, the
-prior family and the live-point count (M28 §7). At nlive = 500 the run-to-run scatter in
+priors symmetric between models, over 82 paired model comparisons — 164 nested-sampler
+invocations — varying the random seed, prior family and live-point count (M28 §7). At
+nlive = 500 the seed-to-seed scatter in
 ΔlnZ is **1.1× to 8.1×** the internal estimate of ±0.24–0.27, worst where the model pairing is
 least constrained: a single run reporting −5.5 ± 0.27 is one draw from a distribution with
 σ = 2.18.
 
-The counterintuitive part is what happens when the standard remedy is applied. Raising the
-live points fourfold shrinks the internal estimate to ±0.12–0.13, exactly as its
-*N*^(−1/2) scaling demands, while the empirical scatter stays at 0.49–0.62 — so the ratio
-*rises*, to 4–5×. More live points tighten the number you quote without tightening the number
-you would get if you ran it again. They do fix something real — the *location* of one partly
-unconverged configuration moved from −5.51 to −3.49 — which is why a convergence check is
-worth reporting, as a separate claim from the uncertainty.
+Raising the live points fourfold shrinks the internal estimate to ±0.12–0.13. The three
+high-nlive empirical scatters are 0.49–0.62, so their ratios remain 4–5×. This does not mean
+more live points changed nothing: one partly unconverged configuration's scatter tightened
+from 2.18 to 0.54 and its mean moved from −5.51 to −3.49. Convergence of the mean and
+seed-to-seed reproducibility are separate diagnostics; neither should be inferred from the
+other.
 
 **Rule.** Quote the run-to-run scatter over ≥ 10 independent seeds as the uncertainty on a
 ΔlnZ, and report the convergence check separately. Both are cheap; the full matrix here is
-minutes of CPU. The per-configuration table and the complete 82-run analysis are given in a
+minutes of CPU. The per-configuration table and the complete 82-comparison analysis are given in a
 companion note (`docs/paper/sampler-reproducibility-note.md`, in preparation), which
-independently re-derives them; they are not repeated here.
+re-derives them; they are not repeated here.
 
 **What this does and does not say about a published result.** In our comparison every
-configuration's mean is negative (−1.42 to −5.51) and 81 of 82 runs land below zero, the
+configuration's mean is negative (−1.42 to −5.51) and 81 of 82 comparisons land below zero, the
 single exception reaching +0.90 — against a published ΔlnZ = +2.62 ± ~1.0 favouring the
 two-companion model. The sign disagreement is a scientific matter argued elsewhere. The
 *methodological* point is narrower: +2.62 rests on lnZ uncertainties of ±0.70 and ±0.69,
-internal estimates of the same class, and if their reproducibility resembles what we measure
-for ours then +2.62 is not significant on its own terms — before any argument about priors,
-and consistent with the authors' own description of that result as tentative. We cannot test
-another group's sampler and do not claim to have. The falsifiable version is a question any
-author can answer in an afternoon, and one we would like to see asked routinely in review:
+internal estimates of a related class. Our result motivates an empirical repeated-run check;
+it does not establish the reproducibility or significance of another group's sampler. The
+non-reproduction claim is limited to our stated likelihoods and priors and is consistent with
+the authors' description of their result as tentative. The falsifiable version is a question
+any author can answer, and one we would like to see asked routinely in review:
 *how many independent runs stand behind this evidence ratio, and what is the scatter among
 them?*
 
@@ -402,18 +420,20 @@ One further result belongs here, because it is the practical consequence of taki
 above seriously.
 
 Every proposal in this genre, including our own, *guesses* the astrophysical RV noise floor
-of a young self-luminous giant. We attempted to measure it from a homogeneous multi-epoch
-sample of ~11 companions and could not, and the reason is a scheduling parameter rather
-than a physical one (M29, recorded in `NEXT-DIRECTIONS.md` §A1).
+of a young self-luminous giant. We attempted to measure it from a nominal multi-epoch roster
+of ~11 companions and could not. The later mode and spatial-resolution audit showed that the
+roster was not homogeneous; among the valid series, the remaining limitation is statistical
+power set largely by a scheduling parameter (M29, recorded in `NEXT-DIRECTIONS.md` §A1).
 
 The measurement requires splitting the epoch-to-epoch scatter into measurement noise and
 astrophysical variability. Two noise channels were tried. **Within-night frame scatter** is
 in principle ideal — frames minutes apart, across which no plausible satellite orbit moves —
 but current campaigns take only **~2 frames per night**, leaving too few degrees of freedom.
-The built-in control settles it: CD-35 2722 B, which carries a known signal of several
-hundred m s⁻¹, resolves its own excess at only **1.4σ**. A method that cannot recover a
-known signal cannot certify a null, so every other object's "no excess" is a power failure
-rather than a physical result. **Across-order dispersion**, the other channel, has far more
+The built-in control is informative but qualified: H26 reports K = 306 m s⁻¹ for CD-35
+2722 B and the screened extraction here fits 426–472 m s⁻¹, while the all-18-night search
+fails. Even that signal-bearing screened case resolves its own excess at only **1.4σ**. A
+method with so little power on its control cannot certify a null, so every other object's
+"no excess" is a power failure rather than a physical result. **Across-order dispersion**, the other channel, has far more
 degrees of freedom and is invariant to common-mode signal by construction (§4) — but the
 per-epoch order distribution is heavy-tailed, so a Gaussian σ/√N conversion overestimates
 the error on the combined RV several-fold: on CD-35 it reads 1333 m s⁻¹ against a
@@ -437,11 +457,13 @@ decides whether this technique is feasible at all.
 
 Compressed, in the order we would apply it.
 
-1. **Gate every template iteration** by injection recovery, not just the last. Keep a
-   bit-for-bit restore path to the last validated state.
-2. **Inject by shifting the template, never the observation.** Shifting the observation
-   moves the tellurics, which a real Doppler shift does not, and the fit recalibrates the
-   injection away.
+1. **Distinguish fitter transmission from template construction.** A post-build template
+   shift can gate the fitter at every iteration, but validating self-templating requires an
+   injection propagated from before construction. Keep a bit-for-bit restore path to the last
+   validated state.
+2. **For the fitter-stage test, shift the template, never the observation.** Shifting the
+   observation moves the tellurics, which a real Doppler shift does not, and the fit
+   recalibrates the injection away.
 3. **Never build a template from a single night.** Without a barycentric lever the template
    cannot separate target lines from telluric residue.
 4. **Report per-order injection recovery, not just the combined figure.** A combined ~100%
@@ -451,8 +473,8 @@ Compressed, in the order we would apply it.
 5. **Say what your precision statistic is invariant to** — signal, timescale, or both — and
    never quote a within-epoch dispersion as a night-level accuracy.
 6. **Prefer an external reference** (published RVs, a second instrument, a positive control)
-   over any internal proxy. Where none exists, the injection harness carries the entire
-   validation burden and should be stated as doing so.
+   over any internal proxy. Where none exists, a post-build injection carries the fitter-stage
+   burden but leaves template construction unvalidated; state both facts.
 7. **Calibrate every search maximum by permutation on the true cadence**, holding times,
    covariates and the value distribution fixed. Report the noise-only 95th-percentile peak
    alongside the observed one.
@@ -460,7 +482,8 @@ Compressed, in the order we would apply it.
 9. **Measure the FAP of the composite detection criterion** used to define an upper limit,
    not of the test statistic alone.
 10. **Quote evidence uncertainties as run-to-run scatter over ≥ 10 seeds**, and report a
-    live-point convergence check separately. Do not treat more live points as a fix.
+    live-point convergence check separately. More live points can improve convergence but
+    do not substitute for measuring seed-to-seed scatter.
 11. **Do not quote a standard deviation at *n* = 2.** Give the range or a bootstrap.
 12. **Ask for 6–10 frames per night** in any new campaign, so the noise decomposition is
     possible at all.
@@ -488,18 +511,20 @@ you did not produce; a null you generated from your own cadence; a second run wi
 different seed.
 
 The corollary for a field at this stage of maturity is uncomfortable but simple.
-Companion-side RV currently consists of a small number of nulls and one detection. Nulls are
+Companion-side RV currently consists of a small number of nulls and one claimed detection. Nulls are
 the easiest results in the world to produce accidentally, and a survey of upper limits from
 un-gated pipelines would be indistinguishable from a survey of upper limits from working
 ones — except that the broken pipeline's limits would be *deeper*. The first thing to
 publish alongside a limit in this field should be the measured velocity transmission of the
 pipeline that produced it.
 
-None of this is an argument against the measurement. Our own reproduction found the
-motivating detection to be real, blind, robust to leaving out any single night, and absent
-from every other target reduced identically — including one on the same instrument setting
-with a longer baseline (M28 §1). The technique works. It simply does not tell you when it
-has stopped working, and that is the gap these checks fill.
+None of this decides the measurement's physical interpretation. Our paper-calibrated
+extraction recovers the motivating signal in a target- and paper-aware downstream search on 17
+screened nights; all leave-one-out subsets of those retained nights survive, but the excluded
+eighteenth night destroys the result. The same-setting η Tel B control has no 171 d power.
+That is qualified evidence that the technique can work, not an end-to-end independent proof
+or a claim that every other target was reduced identically. The technique also does not tell
+you when it has stopped working, and that is the gap these checks fill.
 
 ---
 
@@ -510,10 +535,11 @@ calibration, and the drafting of this note — were carried out by AI agents (Cl
 Anthropic, running in Claude Code), directed and reviewed by the human author, who set the
 research questions, challenged the agents' claims, made every decision with external
 consequences, and takes sole responsibility for all content. Verification is primarily
-mechanical rather than expert-audited: every adopted pipeline change was scored against an
-external reference and required signal-injection recovery; positive controls preceded every
-null; dead ends and retractions remain in the public record. Based on data obtained from the
-ESO Science Archive Facility. This document reports an independent analysis and is not
+mechanical rather than expert-audited: adopted pipeline changes were scored against an
+external reference and required fitter-stage signal-injection recovery after template
+construction; valid nulls were conditioned on positive controls; dead ends and retractions
+remain in the public record. Based on data obtained from the
+ESO Science Archive Facility. This document reports a separately authored analysis and is not
 affiliated with or endorsed by the authors of any work discussed.
 
 ---
@@ -542,11 +568,11 @@ affiliated with or endorsed by the authors of any work discussed.
 >   from the same M13 baseline of 331; they are *not* sequential. The non-sequential
 >   phrasing here is correct.
 > - **2 — DEFECT, FIXED.** The "~40% external improvement" compared **different order
->   combines**: 147 m/s is the M13_G *median*-combine baseline, 85 m/s is the final
->   *mean*-combine result. The like-for-like pair in M14 §6 is **133 → 85 m/s = 36%**.
->   The manuscript now states 36% and names the combine; this note should too.
+>   combines**. Even the documented 133 → 85 m/s adoption step crosses combines, so it is
+>   not a controlled percentage. The text now says that agreement improved substantially
+>   along the adopted chain and carries that caveat.
 > - **5 — RESOLVED.** Both counts are right for their own treatment: M15 works from
->   **18 nights** with **n = 19** in the blind search (two nights carry double visits),
+>   **18 nights** with **n = 19** in the period search (two nights carry double visits),
 >   while M28 §1 reports **n = 17** after per-night binning plus the internal spread
 >   screen. Quote the treatment alongside the count.
 > - **8 — FIXED.** The HTML draft now reads Köhler, **J.**, confirmed twice: the viper
@@ -568,22 +594,17 @@ milestone document in the repository.
    Both appear to be measured against the same M13 baseline of 331 rather than in sequence.
    Confirm before the sentence is read as a two-step progression; the phrasing here is
    deliberately non-sequential.
-2. ~~**The "~40% external improvement".**~~ — **FIXED (2026-08-24).** §4 now reads **36%**
-   on the 133 → 85 step and names what it is, matching the manuscript. The old 42% was
-   147 → 85, which spans two separate changes *and* a change of combine.
-   **One wrinkle, recorded because the resolution above does not quite say it:** its stated
-   reason is that 147 is median-combine and 85 is mean-combine, but M14's table at §5 quotes
-   **133 under a "rms_pub (median combine)" header too**, so 133 → 85 also crosses combines.
-   What justifies the pair is not that the combines match — they do not — but that M14 §8's
-   own improvement chain reads *osamp 2 (147→133) → template iteration 2 (→85)*, so 133 → 85
-   is the step that change is responsible for. Anyone re-deriving this should quote it that
-   way rather than as a like-for-like combine comparison.
-3. **"a known signal of several hundred m s⁻¹" on CD-35 (§7).** `NEXT-DIRECTIONS.md` §A1
-   uses "~430 m s⁻¹"; the published *K*₁ is 306 and this project's own fitted *K* runs
-   380–470. Written vaguely here on purpose; decide which number to state.
+2. ~~**The "~40% external improvement".**~~ — **FIXED.** The old 42% was 147 → 85,
+   spanning two separate changes and a change of combine. The documented 133 → 85 step is
+   attributed to template iteration 2 in M14's adoption chain, but it also crosses combines;
+   the body therefore gives no controlled improvement percentage.
+3. **CD-35 control-amplitude wording — QUALIFIED.** H26
+   reports *K*₁ = 306 m s⁻¹ and the screened direct fits here give 426–472 m s⁻¹, but the
+   all-18-night search fails. The body now calls it a signal-bearing screened case rather than
+   treating the physical signal as established.
 4. **The 92%-absorption figure (§3.3)** is measured on **one epoch** at 1000 m s⁻¹ injected
    (M12 §8.1). It is decisive as a direction and should not be read as a calibrated fraction.
-5. **η Tel B epoch counts.** M15 uses 18 nights / 815 d with *n* = 19 in the blind search;
+5. **η Tel B epoch counts.** M15 uses 18 nights / 815 d with *n* = 19 in the period search;
    M28 §1 tabulates *n* = 17 over 815 d for the common-mode test. Different screens. If
    η Tel B numbers are quoted more fully than they are here, reconcile them.
 6. **HD 1160 B extrapolation factor.** M28 §1 says "4× beyond the data" (171 d against a

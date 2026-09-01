@@ -1,4 +1,12 @@
-# M15 — eta Tel B: the recipe transfers, nothing is orbiting loudly, and the first RV limit on the object is sub-Jupiter
+# M15 — eta Tel B: same-setting control and circular-orbit RV sensitivity
+
+> **Audit correction (M37, 2026-08-31):** the numerical sensitivity curve remains
+> reproducible, but it is a grid-pointwise, circular-orbit 90%-completeness sensitivity
+> conditional on fitter-stage transmission—not an unconditional 90% confidence upper limit.
+> Template-shift injections do not test absorption during template construction. eta Tel B is
+> the strongest clean same-setting nodding control, not evidence for transfer across every mode.
+> No exhaustive literature search established “first RV limit” priority, so that wording is
+> withdrawn as well.
 
 > **Status: COMPLETE.** Both routes ran: archive products and the full per-nodding
 > recipe from raw (all 20 epochs reduced, zero failed downloads). The per-nodding
