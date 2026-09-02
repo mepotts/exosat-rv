@@ -1,0 +1,113 @@
+{
+  "branch": "codex/m37-audit-m38-controls",
+  "code_commit": "79170dfcf2097c3ce40cca52315a350ad457884d",
+  "evidence_kind": "m38-target-free-code-verification",
+  "independent_review": {
+    "period_calibration_control_decision": {
+      "focused_result": "103 passed with warnings treated as errors",
+      "outcome": "no remaining P0-P3 finding in the five final adversarial probes",
+      "retained_external_limit": "verifier and key authenticity require trusted external cryptographic enforcement"
+    },
+    "runtime_container": {
+      "focused_result": "18 passed with warnings treated as errors under Linux; 17 passed and 1 symlink-capability skip under Windows",
+      "outcome": "technical contract clean after flat-context and junction hardening",
+      "retained_external_limit": "point-in-time audit is not cryptographically linked to a later build or image"
+    },
+    "template_synthetic": {
+      "focused_result": "93 passed with warnings treated as errors",
+      "outcome": "no remaining P0-P2 finding; the sole P3 import-order finding was fixed and Ruff rerun clean",
+      "retained_external_limit": "in-process freshness registry cannot prove process isolation or absence of hidden adapter caches"
+    },
+    "workflow_provenance_firewall": {
+      "focused_result": "86 passed with warnings treated as errors",
+      "outcome": "all discovered replay, roster, role-key, configuration-identity, and output-binding findings fixed",
+      "retained_external_limit": "global atomic compare-and-append storage and authentic external signatures remain external"
+    }
+  },
+  "package_import": {
+    "asserted_exports": [
+      "calibration.CalibrationExecutionAttestation",
+      "template_chain.WorkflowFreshnessRegistry",
+      "workflow.WorkflowLedger",
+      "run_adaptive_pipeline_grid_calibration"
+    ],
+    "result": "passed without I/O"
+  },
+  "repository_wide_checks_outside_scope": {
+    "full_pytest": "not run because known historical tests open target-derived products outside the M38 target-free boundary",
+    "ruff": "no repository-wide result is claimed; final lint verification is exactly the recorded M38 scope"
+  },
+  "schema_version": 1,
+  "target_boundary_scan": {
+    "roots": [
+      "src/exosat_rv/m38",
+      "containers/m38",
+      "tests/test_m38_*.py"
+    ],
+    "result": "zero forbidden target, historical-product, loader, or network-client matches"
+  },
+  "verification_date": "2026-09-02",
+  "verification_runs": {
+    "dependency_lock": {
+      "command": [
+        "uv",
+        "lock",
+        "--check",
+        "--offline",
+        "--cache-dir",
+        ".codex-uv-lock-check-cache"
+      ],
+      "result": "resolved 44 packages in 1ms with CPython 3.11.15; scoped cache removed"
+    },
+    "m38_pytest": {
+      "command": [
+        "wsl",
+        "/usr/bin/env",
+        "PYTHONPATH=src",
+        "/home/matth/viperenv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "-W",
+        "error",
+        "tests/test_m38_calibration.py",
+        "tests/test_m38_control_suite.py",
+        "tests/test_m38_convergence.py",
+        "tests/test_m38_decision_register.py",
+        "tests/test_m38_firewall.py",
+        "tests/test_m38_period_search.py",
+        "tests/test_m38_provenance.py",
+        "tests/test_m38_runtime_policy.py",
+        "tests/test_m38_selection.py",
+        "tests/test_m38_spectral.py",
+        "tests/test_m38_synthetic_controls.py",
+        "tests/test_m38_template_chain.py",
+        "tests/test_m38_workflow.py"
+      ],
+      "result": "331 passed in 31.27s"
+    },
+    "ruff": {
+      "result": "all checks passed; 27 M38 source/test files already formatted",
+      "scope": [
+        "src/exosat_rv/m38",
+        "tests/test_m38_calibration.py",
+        "tests/test_m38_control_suite.py",
+        "tests/test_m38_convergence.py",
+        "tests/test_m38_decision_register.py",
+        "tests/test_m38_firewall.py",
+        "tests/test_m38_period_search.py",
+        "tests/test_m38_provenance.py",
+        "tests/test_m38_runtime_policy.py",
+        "tests/test_m38_selection.py",
+        "tests/test_m38_spectral.py",
+        "tests/test_m38_synthetic_controls.py",
+        "tests/test_m38_template_chain.py",
+        "tests/test_m38_workflow.py"
+      ]
+    },
+    "windows_runtime_policy": {
+      "command_summary": "python -m pytest -q -W error -p no:cacheprovider with a scoped basetemp",
+      "result": "17 passed, 1 symlink-capability skip in 0.31s; scoped basetemp removed"
+    }
+  }
+}

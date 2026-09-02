@@ -64,6 +64,9 @@ The following roles must be named before preregistration and must not be collaps
 
 1. **Development team.** Works only on simulations and declared control targets. It may tune
    engineering choices and resolve §12, but it may not run any M38 code on CD-35 spectra.
+   One named member is the **protocol freezer**: that principal alone signs the frozen workflow
+   genesis and any terminal scientific-change cancellation. This is an operational sub-role,
+   not permission for the development team to perform later target stages.
 2. **Hold-out custodian.** Verifies hashes, mounts the frozen CD-35 inputs only after the
    freeze, and releases only the outputs allowed at each barrier below.
 3. **Blind executor.** Runs the signed workflow without access to Hoy et al.'s RV table,
@@ -71,6 +74,17 @@ The following roles must be named before preregistration and must not be collaps
    experiment observer-blind, this person must also not know the reported period or amplitude.
 4. **Unblinding reviewer.** Receives the sealed search artifact and only then compares it with
    the published claim.
+5. **Independent reviewer.** Reviews the control truths, every blocking-decision record, role
+   ownership, implementation, and replacement preregistration before the workflow is frozen.
+   This reviewer does not sign or execute a target stage merely by performing that review.
+
+The five governance-role rosters must be principal-disjoint. The protocol-freezer principal
+must be a named development-team member. Frozen key ownership must map every signature key to
+exactly one declared principal; the protocol-freezer, custodian, blind-executor, and
+unblinding-reviewer workflow keys must be distinct. The independent reviewer has no workflow
+stage key unless a future reviewed schema adds an explicit review stage. The signed decision
+attestation and its external verifier must prove this mapping before workflow genesis; caller
+labels alone are not evidence of a person, role, or key owner.
 
 If no genuinely blind executor is available, the experiment may still test a paper-excluded,
 outcome-isolated selection algorithm, but it must not be described as an observer-blind or
@@ -470,7 +484,7 @@ target outcomes.
 
 | unresolved decision | required independent basis |
 |---|---|
-| blind executor, custodian, and enforcement mechanism | named people/process plus a tested deny-list and stage-output firewall |
+| five governance-role rosters, named protocol freezer, stage-key ownership, and enforcement mechanism | principal-disjoint development, custodian, executor, unblinding, and independent-review assignments; protocol freezer drawn from development; distinct stage keys; named external verifiers/store; tested deny-list and stage-output firewall |
 | claim and target-data regime | clean-room rediscovery on consumed data or prospective confirmation on genuinely untouched epochs, with matching outcome language |
 | exact control targets and truth definitions | same-setting suitability and truth independent of this project's CD-35 result |
 | extraction-family axes/values and whether template creation is common or arm-specific | control-only performance and a design with unambiguous `-oset` propagation |
@@ -485,7 +499,7 @@ target outcomes.
 | minimum common orders, per-order failure limits, and reference fit-quality rule | predeclared control completeness, false-pass behaviour, and protection against cancellation of unusable RVs |
 | injection-induced order-attrition/reference-mask policy, statistic, threshold, and penalty | simulations with shift/amplitude/S/N-dependent order failures demonstrating false-pass control and interval coverage |
 | primary period model, weights, grid, global null method, seeds, and evidence thresholds | control false-positive/coverage study and a declared scientific error budget |
-| end-to-end familywise null calibration for QC and 36-arm adaptive selection | null simulations/controls replaying the complete frozen pipeline, or an independently justified ancillarity argument |
+| end-to-end familywise null calibration for QC and the complete frozen adaptive arm roster/selection procedure | null simulations/controls replaying the complete frozen pipeline, or an independently justified ancillarity argument |
 | claim-bearing orbital family, amplitude/phase grid, completeness target, uncertainty rule, and recovery tolerance | signal simulations/controls replaying the complete frozen adaptive pipeline and demonstrating coverage of the reported sensitivity bound |
 | exact frozen commits, dependency lock, manifests, output schemas, and signing method | reproducible build and an independent audit before target mount |
 

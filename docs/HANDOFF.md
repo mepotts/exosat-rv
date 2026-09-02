@@ -298,8 +298,26 @@ role-separated target mount.
 The generic implementation completed under this boundary is recorded in
 [`M38-CONTROL-DEVELOPMENT.md`](milestones/M38-CONTROL-DEVELOPMENT.md). It provides synthetic
 injection/convergence, search/calibration, recovery-selection, manifest-chain, and application
-firewall primitives. It does not choose controls or thresholds, create observer blindness, or
-authorize a target run; the next automatic work remains simulations and declared controls only.
+firewall primitives, plus a replayable toy full-template chain, exact control/decision freeze
+schemas, a signed stage ledger, and a dedicated target-free runtime probe. The runtime build and
+launch evidence is in
+[`M38-CONTROL-RUNTIME-EVIDENCE.md`](milestones/M38-CONTROL-RUNTIME-EVIDENCE.md); it is an
+identity/launch-restriction probe, not the frozen scientific image.
+
+The current executable/test/container snapshot is local commit `79170df`; all 13 M38 suites
+pass 331 target-free tests with warnings fatal, and the exact scope is recorded in
+[`m38-verification-2026-09-02.json`](evidence/m38-verification-2026-09-02.json). This is an
+engineering checkpoint only; the current historical repository-wide tests were not rerun
+because some intentionally open target-derived products outside the automatic boundary.
+
+The control search in
+[`M38-CONTROL-CANDIDATES.md`](milestones/M38-CONTROL-CANDIDATES.md) has **not** selected a
+suite and has not identified a sufficient second same-setting positive control with independent
+truth. None of the 18 blocking decisions is thereby resolved. The next automatic work remains
+simulations, declared observational controls, external verifier/storage integration, and
+replacement-preregistration drafting only. Human or independently controlled gates still must
+name the roles and keys, choose and sign the control truths and scientific settings, freeze the
+raw target manifest and production image, and approve a later role-separated target mount.
 
 ## Reading order
 

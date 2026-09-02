@@ -1,0 +1,105 @@
+{
+  "artifact_authentication": "none; local engineering observation pending external signature",
+  "audit": {
+    "audit_sha256": "712fa445db8e2a956599ff3beed43729f6b755bb936b2c0d73ee5ec2900bded7",
+    "context_sha256": "6003dca1276828526f8b57affd1ecc4b11fdb23978bb6925aa0d02f748a7beda",
+    "runtime_contract_sha256": "3f53f6eafff880b8bd90d39619c470426f5a6068995e7404b605f4d2327175e9"
+  },
+  "build": {
+    "base_image": "python:3.11-slim@sha256:233de06753d30d120b1a3ce359d8d3be8bda78524cd8f520c99883bfe33964cf",
+    "command": [
+      "docker",
+      "build",
+      "--network=none",
+      "--pull=false",
+      "--tag",
+      "exosat-rv-m38-runtime:6003dca1",
+      "--file",
+      "containers/m38/Dockerfile",
+      "containers/m38"
+    ],
+    "image": {
+      "architecture": "amd64",
+      "entrypoint": [
+        "python",
+        "-I",
+        "/opt/m38/entrypoint.py"
+      ],
+      "image_sha256": "e1f066f38b8e4785bfca460a5498535b0dac327add4e46fdca57c5f38fe4b384",
+      "os": "linux",
+      "rootfs_layers": [
+        "60e70dddd9ea3b1c77c62fe78be1d9f485706b6fe6052c3d88612bd8f56acd67",
+        "8076efe3d64ead47a6ac47b688eaba9e19790cd297c7adf15871341d7f1fdb29",
+        "6c445a4198d4ece50efa22a99bfa32828954a325c63a8db1ba6ebb1525c9a012",
+        "b9d46130ce8be37cb8a372ecf64214756468fe0d6b1d999017cd9865ee37b83d",
+        "5731c24373d33e1c5951a6aea4a9f0148e40a759e8cee5a2470d4097427a6ccd",
+        "8a8fb284bd742adab02dd61110f51163441c3fcd014a3251e2d3c336c8cbc443"
+      ],
+      "user": "65532:65532"
+    },
+    "network_disabled_during_build": true,
+    "pull_disabled": true
+  },
+  "container_inspection": {
+    "capability_drop": [
+      "ALL"
+    ],
+    "command": [
+      "docker",
+      "create",
+      "--name",
+      "exosat-rv-m38-audit-6003dca1",
+      "--network=none",
+      "--read-only",
+      "--user=65532:65532",
+      "--cap-drop=ALL",
+      "--security-opt=no-new-privileges:true",
+      "--tmpfs=/tmp:rw,noexec,nosuid,nodev,size=64m",
+      "exosat-rv-m38-runtime:6003dca1"
+    ],
+    "container_removed_after_observation": true,
+    "image_sha256": "e1f066f38b8e4785bfca460a5498535b0dac327add4e46fdca57c5f38fe4b384",
+    "network_mode": "none",
+    "read_only_root_filesystem": true,
+    "security_options": [
+      "no-new-privileges:true"
+    ],
+    "tmpfs": {
+      "/tmp": "rw,noexec,nosuid,nodev,size=64m"
+    },
+    "user": "65532:65532"
+  },
+  "evidence_kind": "m38-target-free-runtime-engineering-observation",
+  "limitations": [
+    "not a preregistration or target-run authorization",
+    "not externally signed or timestamped",
+    "does not cryptographically bind the point-in-time audit to the Docker build transaction",
+    "does not prove observer blindness or resistance to a hostile host administrator",
+    "identity probe only; project and scientific dependencies are not installed"
+  ],
+  "observation_date": "2026-09-01",
+  "probe": {
+    "command": [
+      "docker",
+      "start",
+      "--attach",
+      "exosat-rv-m38-audit-6003dca1"
+    ],
+    "container_state": {
+      "error": "",
+      "exit_code": 0,
+      "oom_killed": false,
+      "status": "exited"
+    },
+    "strict_json_output": {
+      "contract_sha256": "3f53f6eafff880b8bd90d39619c470426f5a6068995e7404b605f4d2327175e9",
+      "effective_gid": 65532,
+      "effective_uid": 65532,
+      "expected_gid": 65532,
+      "expected_uid": 65532,
+      "observation_scope": "identity-only; launch isolation requires external audit",
+      "status": "ready"
+    }
+  },
+  "schema_version": 1
+}
