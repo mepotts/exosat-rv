@@ -43,6 +43,7 @@ packages = ["src/exosat_rv"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["."]
 markers = [
     "network: performs a live TAP/HTTP request to ESO or the NASA Exoplanet Archive",
     "slow: needs downloaded spectra in data/spectra, or runs many optimiser restarts",
