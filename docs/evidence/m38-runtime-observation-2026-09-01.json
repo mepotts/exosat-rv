@@ -25,7 +25,7 @@
         "-I",
         "/opt/m38/entrypoint.py"
       ],
-      "image_sha256": "e1f066f38b8e4785bfca460a5498535b0dac327add4e46fdca57c5f38fe4b384",
+      "local_image_id_sha256": "e1f066f38b8e4785bfca460a5498535b0dac327add4e46fdca57c5f38fe4b384",
       "os": "linux",
       "rootfs_layers": [
         "60e70dddd9ea3b1c77c62fe78be1d9f485706b6fe6052c3d88612bd8f56acd67",
@@ -37,8 +37,9 @@
       ],
       "user": "65532:65532"
     },
-    "network_disabled_during_build": true,
-    "pull_disabled": true
+    "pull_always": false,
+    "registry_egress_disabled_proven": false,
+    "run_instruction_network_mode": "none"
   },
   "container_inspection": {
     "capability_drop": [
@@ -58,7 +59,7 @@
       "exosat-rv-m38-runtime:6003dca1"
     ],
     "container_removed_after_observation": true,
-    "image_sha256": "e1f066f38b8e4785bfca460a5498535b0dac327add4e46fdca57c5f38fe4b384",
+    "local_image_id_sha256": "e1f066f38b8e4785bfca460a5498535b0dac327add4e46fdca57c5f38fe4b384",
     "network_mode": "none",
     "read_only_root_filesystem": true,
     "security_options": [
@@ -74,6 +75,9 @@
     "not a preregistration or target-run authorization",
     "not externally signed or timestamped",
     "does not cryptographically bind the point-in-time audit to the Docker build transaction",
+    "--network=none governed Dockerfile RUN instructions only; this Dockerfile had no RUN instruction",
+    "--pull=false disabled pull-always but did not prove that registry egress was disabled",
+    "recorded image identity is the local Docker image ID; its config/manifest semantics were not independently established",
     "does not prove observer blindness or resistance to a hostile host administrator",
     "identity probe only; project and scientific dependencies are not installed"
   ],

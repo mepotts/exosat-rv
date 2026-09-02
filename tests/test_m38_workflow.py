@@ -270,6 +270,18 @@ class MemoryWorkflowStore:
             and chain[-1]["record_sha256"] == record_sha256
         )
 
+    def verify_record_included(self, workflow_id, sequence, record_sha256):
+        chain = self._records.get(workflow_id, [])
+        return bool(
+            type(sequence) is int
+            and 0 <= sequence < len(chain)
+            and chain[sequence]["sequence"] == sequence
+            and chain[sequence]["record_sha256"] == record_sha256
+        )
+
+    def load_chain(self, workflow_id):
+        return tuple(deepcopy(record) for record in self._records.get(workflow_id, []))
+
 
 def ledger_restore_arguments(store):
     return {
@@ -278,6 +290,7 @@ def ledger_restore_arguments(store):
         "gate_attestation_verifier": gate_verifier,
         "failure_attestation_verifier": failure_verifier,
         "durable_head_verifier": store.verify_head,
+        "durable_record_verifier": store.verify_record_included,
         "exclusive_append_committer": store.append_exclusive,
     }
 
@@ -293,6 +306,7 @@ def make_ledger(*, store=None, **overrides):
         "gate_attestation_verifier": gate_verifier,
         "failure_attestation_verifier": failure_verifier,
         "durable_head_verifier": store.verify_head,
+        "durable_record_verifier": store.verify_record_included,
         "exclusive_append_committer": store.append_exclusive,
     }
     arguments.update(overrides)
@@ -1022,6 +1036,73 @@ def test_exclusive_store_rejects_duplicate_creation_and_stale_concurrent_append(
         advance(peer, WorkflowStage.TARGET_MOUNTED, mount_output(), "mount-input")
 
 
+def test_creation_confirms_genesis_inclusion_when_a_valid_successor_lands_first():
+    store = MemoryWorkflowStore()
+    committed_genesis = {}
+
+    def commit_then_advance(workflow_id, expected_sequence, expected_sha256, record):
+        accepted = store.append_exclusive(
+            workflow_id,
+            expected_sequence,
+            expected_sha256,
+            record,
+        )
+        if accepted and record["sequence"] == 0:
+            committed_genesis.update(deepcopy(record))
+            peer = WorkflowLedger([record], **ledger_restore_arguments(store))
+            advance(peer, WorkflowStage.TARGET_MOUNTED, mount_output(), "peer-mount-input")
+        return accepted
+
+    ledger = make_ledger(store=store, exclusive_append_committer=commit_then_advance)
+    assert store.verify_record_included(
+        committed_genesis["workflow_id"],
+        0,
+        committed_genesis["record_sha256"],
+    )
+    with pytest.raises(WorkflowError, match="stale, truncated, or rolled-back"):
+        _ = ledger.snapshot
+
+
+def test_append_confirms_record_inclusion_when_a_valid_successor_lands_first():
+    store = MemoryWorkflowStore()
+
+    def commit_then_advance(workflow_id, expected_sequence, expected_sha256, record):
+        accepted = store.append_exclusive(
+            workflow_id,
+            expected_sequence,
+            expected_sha256,
+            record,
+        )
+        if accepted and record["sequence"] == 1:
+            peer = WorkflowLedger(
+                store.load_chain(workflow_id),
+                **ledger_restore_arguments(store),
+            )
+            advance(
+                peer,
+                WorkflowStage.SELECTION_COMPLETE,
+                selection_output(),
+                "peer-selection-input",
+            )
+        return accepted
+
+    ledger = make_ledger(store=store, exclusive_append_committer=commit_then_advance)
+    committed = advance(
+        ledger,
+        WorkflowStage.TARGET_MOUNTED,
+        mount_output(),
+        "mount-input",
+    )
+    assert committed["sequence"] == 1
+    assert store.verify_record_included(
+        committed["workflow_id"],
+        committed["sequence"],
+        committed["record_sha256"],
+    )
+    with pytest.raises(WorkflowError, match="stale, truncated, or rolled-back"):
+        _ = ledger.snapshot
+
+
 def test_durable_callbacks_must_report_exact_true():
     store = MemoryWorkflowStore()
     with pytest.raises(WorkflowError, match="refused exclusive workflow creation"):
@@ -1031,8 +1112,29 @@ def test_durable_callbacks_must_report_exact_true():
         )
 
     store = MemoryWorkflowStore()
-    with pytest.raises(WorkflowError, match="did not verify the committed genesis head"):
+    with pytest.raises(WorkflowError, match="committed record inclusion"):
         make_ledger(
             store=store,
-            durable_head_verifier=lambda _workflow, _sequence, _head: 1,
+            durable_record_verifier=lambda _workflow, _sequence, _head: 1,
+        )
+
+    store = MemoryWorkflowStore()
+    ledger = make_ledger(
+        store=store,
+        durable_head_verifier=lambda _workflow, _sequence, _head: 1,
+    )
+    with pytest.raises(WorkflowError, match="stale, truncated, or rolled-back"):
+        _ = ledger.snapshot
+
+    store = MemoryWorkflowStore()
+    normal_ledger = make_ledger(store=store)
+    with pytest.raises(WorkflowError, match="stale, truncated, or rolled-back"):
+        WorkflowLedger(
+            normal_ledger.records,
+            **(
+                ledger_restore_arguments(store)
+                | {
+                    "durable_head_verifier": lambda _workflow, _sequence, _head: 1,
+                }
+            ),
         )

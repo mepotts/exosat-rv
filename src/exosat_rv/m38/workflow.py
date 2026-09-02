@@ -11,9 +11,9 @@ verify their signature and evidence lineage.  A current application firewall is 
 as operating-system confinement.  Failure classification likewise comes only from a fixed-schema
 attestation accepted by an independently controlled verifier, never from an operator assertion.
 
-Rollback protection depends on an external durable-head verifier and atomic compare-and-append
-committer.  The in-process object is not itself durable storage and cannot make a caller-owned
-callback independent or trustworthy.
+Rollback protection depends on external durable-record-inclusion and exact-head verifiers plus
+an atomic compare-and-append committer.  The in-process object is not itself durable storage and
+cannot make caller-owned callbacks independent or trustworthy.
 """
 
 from __future__ import annotations
@@ -39,6 +39,7 @@ TransitionSignatureVerifier = Callable[[bytes, Mapping[str, Any]], bool]
 GateAttestationVerifier = Callable[[str, Mapping[str, Any]], bool]
 FailureAttestationVerifier = Callable[[Mapping[str, Any]], bool]
 DurableHeadVerifier = Callable[[str, int, str], bool]
+DurableRecordVerifier = Callable[[str, int, str], bool]
 ExclusiveAppendCommitter = Callable[[str, int | None, str | None, Mapping[str, Any]], bool]
 
 _TRANSITION_SIGNATURE_ALGORITHM = "external-detached-sha256-v1"
@@ -512,6 +513,22 @@ def _verify_record(
     return detached
 
 
+def validate_workflow_record_envelope(record: Mapping[str, Any]) -> dict[str, Any]:
+    """Validate a record's strict schema, self-hash, payload hash, and signature envelope.
+
+    This deliberately does not authenticate the detached signature, its key owner, the
+    transition's stage authorization, or the complete workflow state machine.  It is the
+    narrow validation level needed by an untrusted local persistence adapter before storing
+    bytes.  :class:`WorkflowLedger` still performs the authoritative verifier callbacks and
+    whole-chain evaluation when creating, restoring, or advancing a workflow.
+    """
+
+    return _verify_record(
+        record,
+        signature_verifier=lambda _payload, _details: True,
+    )
+
+
 def _require_exact_fields(output: dict[str, Any], expected: set[str], stage: WorkflowStage) -> None:
     if set(output) != expected:
         raise WorkflowError(
@@ -755,9 +772,10 @@ def _validate_cancellation_output(output: Mapping[str, Any]) -> dict[str, Any]:
 class WorkflowLedger:
     """A signed ledger coupled to an external compare-and-append durable head.
 
-    The callbacks are security-critical.  The head verifier must be controlled outside the
-    process restoring this object, and the committer must atomically compare the expected head
-    and exclusively append the supplied next record.
+    The callbacks are security-critical.  The record verifier confirms that a successful
+    commit remains durably included even if a successor has already landed.  The exact-head
+    verifier rejects stale local ledgers before transitions or snapshot exposure, and the
+    committer atomically compares the expected head and exclusively appends the next record.
     """
 
     def __init__(
@@ -769,7 +787,33 @@ class WorkflowLedger:
         gate_attestation_verifier: GateAttestationVerifier,
         failure_attestation_verifier: FailureAttestationVerifier,
         durable_head_verifier: DurableHeadVerifier,
+        durable_record_verifier: DurableRecordVerifier,
         exclusive_append_committer: ExclusiveAppendCommitter,
+    ) -> None:
+        self._initialize(
+            records,
+            signer=signer,
+            signature_verifier=signature_verifier,
+            gate_attestation_verifier=gate_attestation_verifier,
+            failure_attestation_verifier=failure_attestation_verifier,
+            durable_head_verifier=durable_head_verifier,
+            durable_record_verifier=durable_record_verifier,
+            exclusive_append_committer=exclusive_append_committer,
+            require_current_head=True,
+        )
+
+    def _initialize(
+        self,
+        records: Sequence[Mapping[str, Any]],
+        *,
+        signer: TransitionSigner,
+        signature_verifier: TransitionSignatureVerifier,
+        gate_attestation_verifier: GateAttestationVerifier,
+        failure_attestation_verifier: FailureAttestationVerifier,
+        durable_head_verifier: DurableHeadVerifier,
+        durable_record_verifier: DurableRecordVerifier,
+        exclusive_append_committer: ExclusiveAppendCommitter,
+        require_current_head: bool,
     ) -> None:
         if not records:
             raise WorkflowError("workflow ledger cannot be empty")
@@ -778,10 +822,13 @@ class WorkflowLedger:
         self._gate_attestation_verifier = gate_attestation_verifier
         self._failure_attestation_verifier = failure_attestation_verifier
         self._durable_head_verifier = durable_head_verifier
+        self._durable_record_verifier = durable_record_verifier
         self._exclusive_append_committer = exclusive_append_committer
         self._records = tuple(_strict_copy(record, label="workflow record") for record in records)
         self._evaluate()
-        self._require_current_durable_head()
+        self._require_durable_record(self._records[-1])
+        if require_current_head:
+            self._require_current_durable_head()
 
     @classmethod
     def create(
@@ -795,6 +842,7 @@ class WorkflowLedger:
         gate_attestation_verifier: GateAttestationVerifier,
         failure_attestation_verifier: FailureAttestationVerifier,
         durable_head_verifier: DurableHeadVerifier,
+        durable_record_verifier: DurableRecordVerifier,
         exclusive_append_committer: ExclusiveAppendCommitter,
     ) -> WorkflowLedger:
         """Create a frozen workflow only after both structural attestations verify."""
@@ -844,17 +892,19 @@ class WorkflowLedger:
             is not True
         ):
             raise WorkflowError("durable store refused exclusive workflow creation")
-        if durable_head_verifier(workflow_id, 0, genesis["record_sha256"]) is not True:
-            raise WorkflowError("durable store did not verify the committed genesis head")
-        return cls(
+        ledger = cls.__new__(cls)
+        ledger._initialize(
             [genesis],
             signer=signer,
             signature_verifier=signature_verifier,
             gate_attestation_verifier=gate_attestation_verifier,
             failure_attestation_verifier=failure_attestation_verifier,
             durable_head_verifier=durable_head_verifier,
+            durable_record_verifier=durable_record_verifier,
             exclusive_append_committer=exclusive_append_committer,
+            require_current_head=False,
         )
+        return ledger
 
     @property
     def records(self) -> tuple[dict[str, Any], ...]:
@@ -879,6 +929,17 @@ class WorkflowLedger:
             raise WorkflowError(
                 "durable head verification failed; refusing a stale, truncated, or rolled-back ledger"
             )
+
+    def _require_durable_record(self, record: Mapping[str, Any]) -> None:
+        if (
+            self._durable_record_verifier(
+                record["workflow_id"],
+                record["sequence"],
+                record["record_sha256"],
+            )
+            is not True
+        ):
+            raise WorkflowError("durable store did not verify committed record inclusion")
 
     def _evaluate(self) -> _Evaluation:
         verified = [
@@ -1160,15 +1221,7 @@ class WorkflowLedger:
             is not True
         ):
             raise WorkflowError("durable store refused exclusive compare-and-append")
-        if (
-            self._durable_head_verifier(
-                evaluation.snapshot.workflow_id,
-                record["sequence"],
-                record["record_sha256"],
-            )
-            is not True
-        ):
-            raise WorkflowError("durable store did not verify the newly committed head")
+        self._require_durable_record(record)
         self._records = candidate
         return _strict_copy(record, label="workflow record")
 
@@ -1372,6 +1425,7 @@ class WorkflowLedger:
 __all__ = [
     "WORKFLOW_SCHEMA_VERSION",
     "DurableHeadVerifier",
+    "DurableRecordVerifier",
     "ExclusiveAppendCommitter",
     "FailureAttestationVerifier",
     "GateAttestationVerifier",
@@ -1381,4 +1435,5 @@ __all__ = [
     "WorkflowLedger",
     "WorkflowSnapshot",
     "WorkflowStage",
+    "validate_workflow_record_envelope",
 ]

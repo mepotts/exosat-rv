@@ -34,7 +34,7 @@ from the runtime row below.
 | provenance chain | `ImmutableFileRecord`, `build_stage_manifest`, `append_stage_manifest`, `verify_manifest_chain` | strict canonical JSON, content-bound files, sequence-zero linked manifests, exclusive creation, optional detached signature callbacks, and rehash-before-append verification | immutable storage, a selected signing scheme, or protection against a hostile filesystem without external confinement |
 | application firewall | `InformationFirewall`, `enforce_output_fields` | resolved-path allowlists, path/content/hash denials, recursive preflight, checked reads, access logs, and detached strict-JSON output-field barriers | an OS security boundary, network isolation, interception of other I/O APIs, or observer blindness by itself |
 | signed stage workflow | `WorkflowLedger`, `WorkflowStage` | signature-independent run identity, one-way exact output schemas, stable frozen arm/config roster, stage-authorized distinct role keys, failure/head/sequence replay protection, winner/plan continuity, and external compare-and-append hooks | authentic signatures/people, a globally atomic durable store, trusted timestamps, or authority to create a target genesis record |
-| dedicated runtime probe | `audit_runtime_context`, `RuntimeLaunchContract` | exact five-file content pins, pinned base image/non-root entrypoint, offline build, and inspected no-network/read-only/capability/tmpfs launch settings | a scientific image, a cryptographic audit-to-build transaction, host-admin resistance, or a target mount; see [runtime evidence](M38-CONTROL-RUNTIME-EVIDENCE.md) |
+| dedicated runtime probe | `audit_runtime_context`, `RuntimeLaunchContract` | exact five-file content pins, a pinned base image/non-root entrypoint, Docker `RUN` network mode set to none, non-pull-always build semantics, and inspected no-network/read-only/capability/tmpfs launch settings | disabled registry egress during build, a scientific image, a cryptographic audit-to-build transaction, host-admin resistance, or a target mount; see [runtime evidence](M38-CONTROL-RUNTIME-EVIDENCE.md) |
 
 ## Independent hardening cycle
 
@@ -126,8 +126,9 @@ in a new preregistration.
 ## Next permitted work
 
 1. Choose the exact development-control suite and independently established truth records.
-   [The candidate dossier](M38-CONTROL-CANDIDATES.md) has not found a sufficient second
-   same-setting positive control, so this remains a hard gate.
+   [The candidate dossier](M38-CONTROL-CANDIDATES.md) now records V340 Ara as a conditional
+   positive candidate, but has not found a sufficient 0.2-arcsec same-setting positive control
+   with an independently established night-level H1567 amplitude, so this remains a hard gate.
 2. Exercise these APIs on simulations and only those controls to calibrate the unresolved
    metrics, thresholds, uncertainty/coverage behaviour, extraction family, and search design.
 3. Promote the minimal runtime probe into a content-addressed scientific image and test its

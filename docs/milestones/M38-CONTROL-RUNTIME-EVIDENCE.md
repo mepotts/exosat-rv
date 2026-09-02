@@ -30,12 +30,15 @@ The five accepted context files were independently content-pinned by the runtime
 | `entrypoint.py` | 1264 | `bc74902b627b3aabaa352e77d803be46ce493126d711260559537700944fb633` |
 | `runtime-contract.json` | 664 | `3f53f6eafff880b8bd90d39619c470426f5a6068995e7404b605f4d2327175e9` |
 
-The image was built with network disabled and pulls disabled. The local image identity is
+The build requested network mode `none` for Dockerfile `RUN` instructions and set
+`--pull=false`, meaning “do not always pull.” This Dockerfile has no `RUN` instruction, but
+those flags did not independently disable or measure builder registry egress. The recorded
+local Docker image identity is
 `sha256:e1f066f38b8e4785bfca460a5498535b0dac327add4e46fdca57c5f38fe4b384`.
 The exact build invocation, image/platform inspection, container settings, probe output, and
 exit state are also retained as a strict JSON
 [engineering observation](../evidence/m38-runtime-observation-2026-09-01.json), whose file
-SHA-256 is `2f14be5d2ad4a5f961d986645e985490966d75ffab4a443f840d9f3e678237a9`.
+SHA-256 is `06667e5b33ec281c1b99ad8c50c04d1c5149006660ab5b6ce66c136297cdc65d`.
 That record is deliberately marked unauthenticated; committing it makes the local observation
 auditable but does not turn it into an external signature or a cryptographic build attestation.
 
@@ -59,8 +62,10 @@ build evidence.
 
 ## What this does not prove
 
-This probe demonstrates that the dedicated context is small, content-bound, builds offline,
-and can be launched with the declared Docker restrictions. It does **not** prove observer
+This probe demonstrates that the dedicated context is small, content-bound, that the observed
+build completed without any Dockerfile `RUN` instruction, and that the resulting image can be
+launched with the declared Docker restrictions. It does **not** prove that the builder made no
+registry connection. Nor does it prove observer
 blindness, immutable external storage, a cold full-pipeline rebuild, a production signing or
 timestamp scheme, scientific dependency completeness, or resistance to a hostile Docker
 administrator or host kernel. The root `uv.lock` is a reproducibility input for later
