@@ -1,0 +1,64 @@
+{
+  "buildx.build.provenance": {
+    "builder": {
+      "id": ""
+    },
+    "buildType": "https://mobyproject.org/buildkit@v1",
+    "materials": [
+      {
+        "uri": "pkg:docker/python@3.11-slim?digest=sha256:233de06753d30d120b1a3ce359d8d3be8bda78524cd8f520c99883bfe33964cf\u0026platform=linux%2Famd64",
+        "digest": {
+          "sha256": "233de06753d30d120b1a3ce359d8d3be8bda78524cd8f520c99883bfe33964cf"
+        }
+      },
+      {
+        "uri": "http://buildkit-session/4zaah95q1b66mpb0iv9qbhw09",
+        "digest": {
+          "sha256": "f95612d175d1953d6d255d2c72d5c6bd5cc84e5446b42998727f8bb5b54de656"
+        }
+      }
+    ],
+    "invocation": {
+      "configSource": {
+        "uri": "http://buildkit-session/4zaah95q1b66mpb0iv9qbhw09",
+        "digest": {
+          "sha256": "f95612d175d1953d6d255d2c72d5c6bd5cc84e5446b42998727f8bb5b54de656"
+        },
+        "entryPoint": "Dockerfile"
+      },
+      "parameters": {
+        "frontend": "dockerfile.v0",
+        "args": {
+          "force-network-mode": "none"
+        },
+        "root": {
+          "configSource": {
+            "uri": "http://buildkit-session/4zaah95q1b66mpb0iv9qbhw09",
+            "digest": {
+              "sha256": "f95612d175d1953d6d255d2c72d5c6bd5cc84e5446b42998727f8bb5b54de656"
+            },
+            "path": "Dockerfile"
+          },
+          "request": {
+            "args": {
+              "force-network-mode": "none"
+            }
+          }
+        },
+        "compatibilityVersion": 30
+      },
+      "environment": {
+        "dockerfileVersion": "1.25.0",
+        "platform": "linux/amd64"
+      }
+    }
+  },
+  "buildx.build.ref": "desktop-linux/desktop-linux/5nfdy1y6m5p8q1tjznrlbotrc",
+  "containerimage.descriptor": {
+    "mediaType": "application/vnd.oci.image.index.v1+json",
+    "digest": "sha256:b3c4ae1c307d43d47367089870fd1b12f101473c179ff68265a6d03ba52cdd0e",
+    "size": 856
+  },
+  "containerimage.digest": "sha256:b3c4ae1c307d43d47367089870fd1b12f101473c179ff68265a6d03ba52cdd0e",
+  "image.name": "moby-dangling@sha256:b3c4ae1c307d43d47367089870fd1b12f101473c179ff68265a6d03ba52cdd0e"
+}

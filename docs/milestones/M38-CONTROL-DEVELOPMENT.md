@@ -13,6 +13,11 @@
 **Parent control-infrastructure checkpoint:** `cb1f4cd`
 (`M38: add control-only blind-analysis infrastructure`).
 
+**Target-free follow-up checkpoints:** `63d1deecc2794b4fd400688bd5b4b00dd14a97df`
+(`M38: harden sealed runtime and workflow storage`) and
+`cde7f856558e542d7198b90eac2f06fb785ff36e`
+(`M38: integrate target-free synthetic campaign`).
+
 ## What this checkpoint implements
 
 The Python library code is under `src/exosat_rv/m38/`; the minimal executable bootstrap,
@@ -28,13 +33,14 @@ from the runtime row below.
 | deterministic toy controls | `ToyControlSpecification`, `generate_toy_control`, `ToyTemplateAdapterFactory` | replayable multi-epoch/order stellar/telluric/noise fixtures and a deliberately simple end-to-end adapter for wiring/failure tests | an adopted synthetic population, instrumental realism, or an observational control truth record |
 | generic period search | `weighted_sinusoid_search`, `calibrate_global_max_statistic` | strict weighted null/periodic designs, an immutable replay-validated landscape, rank checks, and complete fixed-design Gaussian max-statistic calibration with plus-one probability | a frozen scientific grid/model/threshold or familywise calibration of an adaptive extractor |
 | full-pipeline simulation accounting | `run_adaptive_pipeline_calibration`, `run_adaptive_pipeline_grid_calibration` | plan-hashed trial identities, domain-separated seeds, complete null/multi-axis signal accounting, recovery-rule coupling, failed-run retention, and interval reporting | proof that a caller really rebuilt external templates or replayed every adaptive production stage; callback contents remain independently auditable |
+| target-free synthetic campaign integration | `SyntheticWholePipelineCallback`, `RVFrameContract`, `ToyStructuralGateEvaluation` | fresh pre-template injections through template iteration, caller-declared native-to-m/s transforms, selection plus winner-only hidden validation, associated-period recovery, toy-only gate traces, and fail-closed rejection when injected training data leave a final template unchanged | a wavelength solution, externally verified build/evaluator identity, scientific gates or thresholds, detector-level realism, CRIRES+/VIPER behaviour, or authority to use observational/target data |
 | exhaustive calibration grid | `CalibrationCandidate`, `CalibrationCase`, `CalibrationReport`, `evaluate_*_grid` | exact candidate/case/trial accounting, retained failures, content-bound metrics, and verified execution-attestation hooks for successful outcomes | authentic executor keys, scientific adequacy, calibrated coverage, or permission to promote a winning design |
 | control and decision freeze schemas | `ControlSuite`, `TruthRecord`, `DecisionRegister`, `validate_*` | complete exact-schema rosters, evidence/review/signature lineage, nested chronology, independent-review and role/key ownership checks, and fail-closed draft/frozen states | selection of a control, truth of an assertion, authentication of a person/key, or human approval |
 | reference-mask recovery and arm selection | `score_injection_responses`, `estimate_recovery_slope`, `SelectionContract`, `select_winner` | epoch-aligned disjoint velocity banks, paired-difference uncertainties, strict failure on any injection-only order loss, epoch-clustered recovery intervals, unity-centred equivalence, an exact content-identified arm roster, a committed hidden-plan/seed identity, and deterministic eligible-arm ranking | control validation of the uncertainty/weighting model, bootstrap coverage, cluster minimum, equivalence margin, external gates, or proof that the roster/configuration/hidden-plan digests and statistical contract were signed and timestamped before access and map to the intended real configurations |
 | provenance chain | `ImmutableFileRecord`, `build_stage_manifest`, `append_stage_manifest`, `verify_manifest_chain` | strict canonical JSON, content-bound files, sequence-zero linked manifests, exclusive creation, optional detached signature callbacks, and rehash-before-append verification | immutable storage, a selected signing scheme, or protection against a hostile filesystem without external confinement |
 | application firewall | `InformationFirewall`, `enforce_output_fields` | resolved-path allowlists, path/content/hash denials, recursive preflight, checked reads, access logs, and detached strict-JSON output-field barriers | an OS security boundary, network isolation, interception of other I/O APIs, or observer blindness by itself |
-| signed stage workflow | `WorkflowLedger`, `WorkflowStage` | signature-independent run identity, one-way exact output schemas, stable frozen arm/config roster, stage-authorized distinct role keys, failure/head/sequence replay protection, winner/plan continuity, and external compare-and-append hooks | authentic signatures/people, a globally atomic durable store, trusted timestamps, or authority to create a target genesis record |
-| dedicated runtime probe | `audit_runtime_context`, `RuntimeLaunchContract` | exact five-file content pins, a pinned base image/non-root entrypoint, Docker `RUN` network mode set to none, non-pull-always build semantics, and inspected no-network/read-only/capability/tmpfs launch settings | disabled registry egress during build, a scientific image, a cryptographic audit-to-build transaction, host-admin resistance, or a target mount; see [runtime evidence](M38-CONTROL-RUNTIME-EVIDENCE.md) |
+| signed stage workflow and local durable adapter | `WorkflowLedger`, `SQLiteWorkflowStore`, `SubprocessWorkflowStore` | signature-independent run identity, one-way exact output schemas, stable frozen arm/config roster, stage-authorized distinct role keys, failure/head/sequence replay protection, winner/plan continuity, and process-backed SQLite compare-and-append with snapshot reads and durable-record inclusion checks | authentic signatures/people, independence from the local principal, protection from a hostile writer or whole-database rollback without an external anchor, trusted timestamps, or authority to create a target genesis record |
+| sealed runtime identity probe | `seal_runtime_context`, `DockerBuildRequest`, `execute_docker_build` | exact five-file content pins, one canonical USTAR stream passed on standard input, a pinned base image/non-root entrypoint, validated unauthenticated BuildKit context/base/platform/network bindings, and inspected no-network/read-only/capability/tmpfs launch settings | disabled registry egress during build, authenticated daemon evidence, a bit-reproducible or scientific image, host-admin resistance, or a target mount; see [runtime evidence](M38-CONTROL-RUNTIME-EVIDENCE.md) |
 
 ## Independent hardening cycle
 
@@ -66,18 +72,23 @@ module. The reviews found and regression-tested failures that happy-path tests h
   signing every governance role; and
 - arbitrary runtime-context replacements, mutable Docker frontend directives, unsafe identity
   or tmpfs settings, and unexpected directory/junction entries in the nominally flat context.
+- a mutable audit-to-build directory handoff, ambiguous output aliases, stale output reuse,
+  unvalidated BuildKit context/base/platform/network bindings, successor races in durable-record
+  checks, and permissive or structurally replaceable local workflow-store records; and
+- native toy centroids mislabeled as metres per second, self-attested scientific gates,
+  all-arm hidden validation, unbound build declarations, seed collisions, weak period-recovery
+  assertions, unchecked bank mutation, zero-only training injections, and signed but
+  sub-resolution injections that left final template flux unchanged.
 
 Those defects were corrected before this checkpoint. They did not reach a target run or a
 scientific artifact.
 
 ## Verification at this checkpoint
 
-- The executable/test/container snapshot is local commit
+- The initial executable/test/container snapshot is local commit
   `79170dfcf2097c3ce40cca52315a350ad457884d`.
-- All 13 target-free M38 suites pass **331 tests** with warnings treated as errors. The exact
-  file list, command, result, audit scopes, and exclusions are retained in the strict JSON
-  [verification record](../evidence/m38-verification-2026-09-02.json), whose file SHA-256 is
-  `5e8c37225380eeedf63d2cd7303f5993fdb8484dc7caebf9fab99edf5cc2e410`.
+- At that snapshot, all 13 target-free M38 suites passed **331 tests** with warnings treated as
+  errors.
 - Ruff lint and format checks pass for all **27** M38 source/test files. The offline `uv.lock`
   check resolves 44 packages. A direct Windows runtime-policy run passes 17 tests with one
   symlink-capability skip; the Linux M38 run executes all 18 runtime-policy tests.
@@ -94,6 +105,25 @@ scientific artifact.
   repository-wide lint result is claimed either; the exact M38-only scope is recorded instead,
   and no unrelated file was changed merely to make this checkpoint appear repository-wide
   clean.
+
+### Target-free follow-up verification
+
+- The sealed-runtime/workflow-store implementation is commit `63d1deecc2794b4fd400688bd5b4b00dd14a97df`;
+  the synthetic campaign integration is commit `cde7f856558e542d7198b90eac2f06fb785ff36e`.
+- All 16 target-free M38 suites pass **376 tests** with warnings treated as errors under
+  CPython 3.12.3 on WSL Linux. The synthetic campaign suite separately passes **12 tests** on
+  CPython 3.13.0 on Windows.
+- Ruff lint and format checks pass for all **33** M38 source/test files. The offline `uv.lock`
+  check resolves 44 packages, package/submodule import smoke passes without project-data I/O,
+  and `git diff --check` is clean.
+- Independent final audit reports no remaining P0--P3 finding in the synthetic campaign
+  integration and no unresolved P0--P2 finding in the sealed-runtime/workflow-store slice.
+- The initial and follow-up commands, exact suite list, results, review outcomes, exclusions,
+  and retained external limits are recorded in the strict JSON
+  [verification record](../evidence/m38-verification-2026-09-02.json), whose current file
+  SHA-256 is `065d00f9dce5e404e066a0b60a50447434e0ba6572220f679f7cbbc666671add`.
+- These are target-free engineering results only. They do not select a control, calibrate a
+  scientific threshold, validate CRIRES+/VIPER behaviour, or authorize target access.
 
 ## Decisions deliberately absent from code
 
@@ -126,9 +156,10 @@ in a new preregistration.
 ## Next permitted work
 
 1. Choose the exact development-control suite and independently established truth records.
-   [The candidate dossier](M38-CONTROL-CANDIDATES.md) now records V340 Ara as a conditional
-   positive candidate, but has not found a sufficient 0.2-arcsec same-setting positive control
-   with an independently established night-level H1567 amplitude, so this remains a hard gate.
+   [The candidate dossier](M38-CONTROL-CANDIDATES.md) records V340 Ara only as a possible
+   supplemental research lead, not a selected control, and has not found a sufficient
+   0.2-arcsec same-setting positive control with an independently established night-level
+   H1567 amplitude, so this remains a hard gate.
 2. Exercise these APIs on simulations and only those controls to calibrate the unresolved
    metrics, thresholds, uncertainty/coverage behaviour, extraction family, and search design.
 3. Promote the minimal runtime probe into a content-addressed scientific image and test its

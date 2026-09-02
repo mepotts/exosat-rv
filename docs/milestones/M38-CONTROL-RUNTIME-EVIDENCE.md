@@ -2,9 +2,10 @@
 
 > **NOT A PREREGISTRATION / NOT A SCIENTIFIC RUNTIME / NO TARGET AUTHORITY**
 >
-> This record covers a minimal identity probe built from a dedicated five-file context on
-> 2026-09-01. The repository root was not used as the Docker build context, no host path was
-> mounted, and no target spectrum, target-derived product, or target diagnostic was opened.
+> This record covers the initial 2026-09-01 identity probe and the 2026-09-02 sealed-context
+> follow-up, both built from the dedicated five-file context. The repository root was not used
+> as the Docker build context, no host path was mounted, and no target spectrum, target-derived
+> product, or target diagnostic was opened.
 
 ## Bound build inputs
 
@@ -60,6 +61,42 @@ effective UID/GID `65532:65532`, the expected contract digest, and status `ready
 disposable stopped container was then removed; the tagged local image remains available as
 build evidence.
 
+## Sealed-context follow-up (2026-09-02)
+
+Commit `63d1deecc2794b4fd400688bd5b4b00dd14a97df` adds a caller-side canonical build
+transaction. It re-audits the same five files, encodes them as deterministic USTAR bytes, and
+passes those exact immutable bytes to `docker buildx build` on standard input. The observed
+context tar was 10,240 bytes with SHA-256
+`f95612d175d1953d6d255d2c72d5c6bd5cc84e5446b42998727f8bb5b54de656`; its complete
+seal identity was `546258906a488b387bec8159c26c1b88c1611533150bebc36e283585a6e14757`.
+
+The fresh BuildKit metadata reported that same context digest, the pinned base-material digest,
+`linux/amd64`, `Dockerfile`, and `force-network-mode=none`. The IID file and metadata both
+bound local image ID
+`sha256:b3c4ae1c307d43d47367089870fd1b12f101473c179ff68265a6d03ba52cdd0e`.
+The IID and metadata outputs used the neutral temporary path
+`C:\Users\Public\m38-sealed-build-evidence-20260902`; that directory was removed after its
+contents were captured.
+An inspected disposable container again had no host mounts, network mode `none`, a read-only
+root, user `65532:65532`, all capabilities dropped, no-new-privileges, and only the contracted
+`/tmp` tmpfs. The identity probe exited zero and the container was removed.
+
+The strict [sealed observation](../evidence/m38-sealed-runtime-observation-2026-09-02.json)
+has file SHA-256 `dcabf042342d629d8d5370b35d07b9d1850005075f4ea4741b03d0173602b9d5`.
+The semantically identical, normalized copy of the
+[raw BuildKit metadata](../evidence/m38-sealed-buildkit-metadata-2026-09-02.json) has file
+SHA-256 `2184526bb8123efbdc430753d22293815397f512ed4397c158e914e3c81ef1ef`;
+the exact builder-emitted bytes are separately bound in the observation by SHA-256
+`5f1c7c8424e996e4d611b88fee803b857f55616a204537bda0a749582ae0e970`.
+
+This also exposed a reproducibility limit: two earlier builds of the identical sealed tar had
+local OCI image IDs `sha256:93d2db084d1634e61e2161c3426ba96118678cb223431c84256d4c1dc8c98401`
+and `sha256:9d1216f597da329605d7bcfed7f0a849a13abe4e0735b7ae2100623b2ae2a54e`.
+The six rootfs layer identities were identical across all three observations, and every
+observed layer list is retained in the strict JSON record, but the reported OCI image IDs
+differed. Therefore neither bit-reproducible image identity nor an exact frozen scientific
+image is claimed.
+
 ## What this does not prove
 
 This probe demonstrates that the dedicated context is small, content-bound, that the observed
@@ -72,12 +109,14 @@ administrator or host kernel. The root `uv.lock` is a reproducibility input for 
 control-only development, but the probe image intentionally does not install the project or
 claim to be the frozen M38 scientific runtime.
 
-The static audit also observes a mutable directory; it is not a cryptographic transaction with
-the later Docker build. Although this build followed the audit and its resulting image digest
-was recorded, the current machinery cannot prove that no bytes changed between those events or
-that another builder used the audited directory. A production route must build from a sealed,
-content-addressed read-only snapshot and issue an externally verified attestation binding the
-context hash, platform, build invocation, and resulting image digest.
+The original 2026-09-01 static audit observed a mutable directory and was not a cryptographic
+transaction with its later Docker build. The 2026-09-02 follow-up closes that local caller-side
+handoff by hashing and streaming one canonical tar, and it validates the bindings reported by
+BuildKit. It still cannot make the same-host Docker daemon truthful, disable or measure registry
+egress, authenticate the metadata, or produce an external timestamp/signature. A production
+route must issue an independently verified attestation binding the context hash, platform,
+build invocation, dependency set, and resulting image identity, and must resolve the observed
+whole-image reproducibility gap.
 
 Any future image that adds code, dependencies, controls, mounts, or output handling is a new
 artifact. It must receive a new allowlist/content audit, independent review, and runtime

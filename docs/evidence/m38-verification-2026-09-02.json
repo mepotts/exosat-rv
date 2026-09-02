@@ -38,6 +38,115 @@
     "ruff": "no repository-wide result is claimed; final lint verification is exactly the recorded M38 scope"
   },
   "schema_version": 1,
+  "target_free_follow_up": {
+    "branch": "codex/m38-target-free-next",
+    "implementation_commits": {
+      "sealed_runtime_and_workflow_storage": "63d1deecc2794b4fd400688bd5b4b00dd14a97df",
+      "synthetic_campaign_integration": "cde7f856558e542d7198b90eac2f06fb785ff36e"
+    },
+    "independent_review": {
+      "sealed_runtime_and_workflow_storage": {
+        "outcome": "no unresolved P0-P2 finding after correction",
+        "retained_external_limit": "the same host and principal remain one trust domain; external signatures, timestamps, rollback anchors, and daemon attestation are unresolved"
+      },
+      "synthetic_campaign_integration": {
+        "focused_result": "12 passed on Linux and 12 passed on Windows",
+        "outcome": "no remaining P0-P3 finding after two independent adversarial repair cycles",
+        "retained_external_limit": "frame, build, and evaluator identities are caller declarations; the campaign is toy-only and cannot authorize scientific use"
+      }
+    },
+    "package_import": {
+      "asserted_exports": [
+        "RVFrameContract",
+        "SyntheticInjectionBank",
+        "SyntheticWholePipelineCallback",
+        "ToyStructuralGateEvaluation"
+      ],
+      "asserted_submodules": [
+        "sealed_context.DockerBuildRequest",
+        "sealed_context.seal_runtime_context",
+        "workflow_store.SQLiteWorkflowStore",
+        "workflow_store.SubprocessWorkflowStore"
+      ],
+      "result": "passed without project-data I/O"
+    },
+    "retained_limits": [
+      "no control suite, observational truth, scientific threshold, extraction family, or target manifest is selected or frozen",
+      "no target spectrum, target-derived product, target diagnostic, or target-specific loader was opened",
+      "the synthetic campaign validates toy wiring and failure closure, not CRIRES+/VIPER behavior or scientific adequacy",
+      "the SQLite compare-and-append store is local same-principal durability and cannot detect whole-database rollback without an external anchor",
+      "the sealed build evidence is an unauthenticated same-host observation; registry egress was not disabled or measured",
+      "three builds of one sealed tar retained identical rootfs layers but produced different local OCI image IDs, so bit reproducibility is not established"
+    ],
+    "verification_runs": {
+      "dependency_lock": {
+        "command_contract": [
+          "uv",
+          "lock",
+          "--check",
+          "--offline",
+          "--cache-dir",
+          "<scoped-temporary-cache>"
+        ],
+        "result": "resolved 44 packages in 1ms using CPython 3.11.15; scoped cache removed"
+      },
+      "git_diff_check": "passed",
+      "linux_m38_pytest": {
+        "command_contract": [
+          "python",
+          "-m",
+          "pytest",
+          "-q",
+          "-W",
+          "error",
+          "<the 16 listed M38 suites>"
+        ],
+        "python": "CPython 3.12.3 under WSL Linux",
+        "result": "376 passed in 43.07s",
+        "suites": [
+          "tests/test_m38_calibration.py",
+          "tests/test_m38_control_suite.py",
+          "tests/test_m38_convergence.py",
+          "tests/test_m38_decision_register.py",
+          "tests/test_m38_firewall.py",
+          "tests/test_m38_period_search.py",
+          "tests/test_m38_provenance.py",
+          "tests/test_m38_runtime_policy.py",
+          "tests/test_m38_sealed_context.py",
+          "tests/test_m38_selection.py",
+          "tests/test_m38_spectral.py",
+          "tests/test_m38_synthetic_campaign.py",
+          "tests/test_m38_synthetic_controls.py",
+          "tests/test_m38_template_chain.py",
+          "tests/test_m38_workflow.py",
+          "tests/test_m38_workflow_store.py"
+        ]
+      },
+      "ruff": {
+        "result": "all checks passed; 33 M38 source/test files already formatted",
+        "scope": "src/exosat_rv/m38 plus the 16 listed M38 test suites"
+      },
+      "synthetic_campaign_windows": {
+        "command_contract": [
+          "python",
+          "-m",
+          "pytest",
+          "-q",
+          "-W",
+          "error",
+          "-p",
+          "no:cacheprovider",
+          "--basetemp=<scoped-temporary-directory>",
+          "tests/test_m38_synthetic_campaign.py"
+        ],
+        "python": "CPython 3.13.0 on Windows",
+        "result": "12 passed in 10.00s; scoped temporary directories removed"
+      },
+      "target_boundary_scan": {
+        "result": "the new synthetic campaign source and tests contain no filesystem opener, network client, target-product path, or target-specific execution hook"
+      }
+    }
+  },
   "target_boundary_scan": {
     "roots": [
       "src/exosat_rv/m38",
@@ -64,7 +173,7 @@
         "wsl",
         "/usr/bin/env",
         "PYTHONPATH=src",
-        "/home/matth/viperenv/bin/python",
+        "<local-wsl-python>",
         "-m",
         "pytest",
         "-q",
@@ -84,6 +193,7 @@
         "tests/test_m38_template_chain.py",
         "tests/test_m38_workflow.py"
       ],
+      "command_path_redacted": true,
       "result": "331 passed in 31.27s"
     },
     "ruff": {
