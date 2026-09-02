@@ -1,0 +1,22 @@
+{
+  "allowed_context_files": [
+    ".dockerignore",
+    ".m38-target-free-context",
+    "Dockerfile",
+    "entrypoint.py",
+    "runtime-contract.json"
+  ],
+  "application_firewall_is_os_confinement": false,
+  "base_image": "python:3.11-slim@sha256:233de06753d30d120b1a3ce359d8d3be8bda78524cd8f520c99883bfe33964cf",
+  "container_user": "65532:65532",
+  "context_kind": "dedicated-target-free-allowlist",
+  "drop_all_capabilities_required": true,
+  "network_mode_required": "none",
+  "no_new_privileges_required": true,
+  "read_only_root_filesystem_required": true,
+  "runtime_observation_required": true,
+  "schema_version": 1,
+  "tmpfs_mounts": [
+    "/tmp"
+  ]
+}

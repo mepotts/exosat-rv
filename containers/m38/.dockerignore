@@ -1,0 +1,6 @@
+*
+!.dockerignore
+!.m38-target-free-context
+!Dockerfile
+!entrypoint.py
+!runtime-contract.json

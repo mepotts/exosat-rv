@@ -4,6 +4,15 @@ These utilities are synthetic/component-level infrastructure.  Importing this pa
 not access spectra, RV products, timestamps, or target-specific artifacts.
 """
 
+from exosat_rv.m38 import (
+    calibration,
+    control_suite,
+    decision_register,
+    runtime_policy,
+    synthetic_controls,
+    template_chain,
+    workflow,
+)
 from exosat_rv.m38.convergence import (
     ConvergenceDataError,
     ConvergencePolicy,
@@ -23,11 +32,18 @@ from exosat_rv.m38.firewall import (
 )
 from exosat_rv.m38.period_search import (
     AdaptivePipelineCalibration,
+    AdaptivePipelineGridCalibration,
+    AmplitudeCompleteness,
+    MultiAxisDetectionCompleteness,
     PeriodSearchResult,
     PipelineOutcome,
     PipelineTrial,
+    SignalAxis,
+    SignalCellCompleteness,
+    SignalTrialPlan,
     calibrate_global_max_statistic,
     run_adaptive_pipeline_calibration,
+    run_adaptive_pipeline_grid_calibration,
     weighted_sinusoid_search,
 )
 from exosat_rv.m38.provenance import (
@@ -74,6 +90,8 @@ from exosat_rv.m38.spectral import (
 __all__ = [
     "C_M_S",
     "AdaptivePipelineCalibration",
+    "AdaptivePipelineGridCalibration",
+    "AmplitudeCompleteness",
     "ArmAssessment",
     "ArmGates",
     "ArmRosterEntry",
@@ -95,6 +113,7 @@ __all__ = [
     "InjectionPlan",
     "InjectionScore",
     "ManifestVerificationError",
+    "MultiAxisDetectionCompleteness",
     "PeriodSearchResult",
     "PipelineOutcome",
     "PipelineTrial",
@@ -102,6 +121,9 @@ __all__ = [
     "RecoverySlopeEstimate",
     "ReferenceResponse",
     "SelectionContract",
+    "SignalAxis",
+    "SignalCellCompleteness",
+    "SignalTrialPlan",
     "SpectralInjectionResult",
     "TemplateChangeMetric",
     "WinnerSelection",
@@ -110,8 +132,11 @@ __all__ = [
     "assess_arm",
     "build_stage_manifest",
     "calibrate_global_max_statistic",
+    "calibration",
     "check_injection_invariants",
+    "control_suite",
     "convolve_fixed_lsf",
+    "decision_register",
     "enforce_output_fields",
     "estimate_recovery_slope",
     "evaluate_convergence",
@@ -119,11 +144,16 @@ __all__ = [
     "rank_eligible_arms",
     "relativistic_doppler_factor",
     "run_adaptive_pipeline_calibration",
+    "run_adaptive_pipeline_grid_calibration",
+    "runtime_policy",
     "rv_change_metric",
     "score_injection_responses",
     "select_winner",
     "shift_stellar_component",
+    "synthetic_controls",
+    "template_chain",
     "template_change_metric",
     "verify_manifest_chain",
     "weighted_sinusoid_search",
+    "workflow",
 ]
