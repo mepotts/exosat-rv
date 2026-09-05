@@ -5,6 +5,7 @@ No credentials anywhere: every endpoint here is anonymous-access.
 
 from __future__ import annotations
 
+import os
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -29,7 +30,22 @@ Caveat that shapes M5: the archive caps companion mass at 30 M_Jup, so CD-35 272
 very object being reproduced. See DATA-SOURCES.md.
 """
 
-DATA = Path(__file__).resolve().parents[2] / "data"
+def _data_directory() -> Path:
+    """Use explicit user storage, the source checkout, or the caller's working directory.
+
+    Wheels do not contain the research data. Never infer a writable data directory inside
+    the Python environment from a wheel's installation path.
+    """
+    if override := os.environ.get("EXOSAT_DATA_DIR"):
+        return Path(override).expanduser().resolve()
+    module = Path(__file__).resolve()
+    root = module.parents[2]
+    if module.parent.parent.name == "src" and (root / "pyproject.toml").is_file():
+        return root / "data"
+    return Path.cwd() / "data"
+
+
+DATA = _data_directory()
 
 # --- the reproduction target ------------------------------------------------------------
 

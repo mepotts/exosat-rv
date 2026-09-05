@@ -1,45 +1,42 @@
-"""M34: is the CD-35 detection an artefact of tuning the extraction on the published RVs?
+"""M34: historical configuration-sensitivity check, interpreted under M37's audit.
 
-The manuscript's Table 1 says it plainly: "the scoring metric for every choice was the rms
-against the published RV series". The extraction configuration -- order set, template
-iteration, clipping, oversampling -- was selected by minimising disagreement with Hoy et al.'s
-answer. The period search that follows is blind, and its epoch screen is internal, but its
-INPUT was chosen with the published numbers in hand. So the chain is not independent end to
-end, and a referee is entitled to ask whether a ~171 d peak was tuned into existence.
+Extraction choices -- order set, template iteration, clipping, oversampling -- were scored
+against Hoy et al.'s published RV values. Those values do not enter the period regression,
+but its input series was selected using them. This script also matches published epochs
+for rms scoring and reads a hard-coded window around the published period. It is not an
+independent or paper-blind validation.
 
-THE TEST. A configuration sweep already exists on disk -- M13_A..M13_J and the M14 variants,
-each a complete RV series from the same spectra under a different configuration. For every
-one of them this script computes two numbers that were never combined before:
+THE TEST. An existing sweep -- M13_A..M13_J and the M14 variants -- contains RV series
+from the same spectra under different configurations. After the internal spread screen,
+this script compares:
 
     rms against the published series   -- the metric that SELECTED the adopted configuration
-    blind-search dBIC near 171 d       -- the result that configuration was used to obtain
+    period-search dBIC near 171 d      -- support near the published period
 
-and then asks the only question that matters:
+The configurations share a family explored using the published RVs. Persistence of a peak
+in poorer-matching configurations cannot rule out tuning artifacts or prove an astrophysical
+origin. The correlation and counts are descriptive, not a calibrated test of overfitting.
+The retained counts vary across configurations; dBIC > 10 here is not a detection probability.
 
-    Does the detection appear ONLY in the configurations that best match the published RVs?
+M37 controls the adopted-series interpretation: near-171-day support is conditional on the
+17-of-18-night internal screen. All 18 nights are compatible with noise in the BERV-adjusted
+global searches. Those permutations assume exchangeable residuals and do not account for
+choosing the screen. This script does not redo that complete-versus-screened audit.
 
-  If dBIC correlates strongly with rms_pub, the detection tracks the tuning metric and the
-  concern is real: better agreement with their answer is buying the signal.
-
-  If the signal appears at similar strength across configurations INCLUDING rms-poor ones,
-  it is a property of the spectra rather than of the selection, and the tuning is not what
-  put it there.
-
-Nothing here re-reduces anything. It re-scores runs that already exist, which is why it can
-be run at all -- and it is the cheapest available answer to the sharpest question anyone has
-asked about this reproduction.
+Nothing here re-reduces spectra. It re-scores existing external runs.
 
 ⚠ ROUND 1 OF THIS SCRIPT WAS WRONG, and the way it was wrong is worth keeping. The period
 search was reimplemented here "to avoid a dependency" -- a bad reason, since `blind_search.py`
 takes a filename and there was no dependency to avoid -- and the reimplementation differed
-from the project's in two ways that both crush the evidence toward zero. It combined orders by
+from the project's combination and scoring conventions. It combined orders by
 taking viper's own `RV` column instead of the MEDIAN ACROSS PER-ORDER RVs, and it fitted with
-inverse-variance weights from the `e_RV` column, which carries 400-1000 m/s against a true
-epoch precision of 70-90 m/s, where the project fits UNWEIGHTED and scores
+inverse-variance weights from the `e_RV` column, historically reported as 400-1000 m/s against
+an estimated epoch precision of 70-90 m/s, where the project fits UNWEIGHTED and scores
 BIC = n log(RSS/n) + k log(n) rather than chi-squared. The adopted configuration came out at
 dBIC ~ 0 where M14 measured +24.8, and the script duly announced that the detection tracks the
-tuning metric. It does not; the tool was broken. This version imports the project's own
-machinery so the numbers are comparable to M14's by construction.
+tuning metric. That diagnosis rested on an inconsistent comparison. This version imports
+the project's machinery for comparability with M14; agreement does not validate the error
+model, establish independence, or rule out tuning effects.
 
 Usage (WSL): ~/viperenv/bin/python scripts/injection/m34_overfit_test.py
 """
@@ -80,7 +77,7 @@ VIPER = os.path.expanduser("~/viper-src")
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 PUB = os.path.join(ROOT, "data", "published", "hoy2026_nature_table2_rvs.csv")
 
-P_TARGET = 171.45          # the published period, used only to READ OFF the grid
+P_TARGET = 171.45          # published period defines the reported window; not a blind readout
 P_WINDOW = 12.0            # d, how near the published period a peak must fall to count
 PGRID = np.arange(20.0, 400.0, 0.25)
 SPREAD_SCREEN = 3.0        # the M14 internal screen: drop epochs > 3x median across-order
@@ -109,7 +106,7 @@ def load_rvo(path):
 
 def internal_screen(d):
     """M14's screen: drop epochs whose across-order spread exceeds 3x the median.
-    Computed from our data alone -- it never sees a published number."""
+    Uses our measurements alone; applying it still conditions the reported result."""
     if d["orders"] is None or d["orders"].shape[1] < 3:
         return np.ones(len(d["bjd"]), bool)
     spread = np.nanstd(d["orders"], axis=1)
@@ -184,9 +181,11 @@ def rms_vs_published(d, keep, pt, pv):
 
 def main():
     pt, pv = published()
-    print("# M34: does the detection track the metric that selected the configuration?")
+    print("# M34: historical configuration sensitivity; interpretation corrected by M37.")
     print(f"# published series: {len(pt)} epochs. Search machinery imported from")
     print("# blind_search.py, so dBIC is comparable to M14 by construction.")
+    print("# Configurations share development using published RVs and an internal epoch screen.")
+    print("# This is not an independent validation or a calibrated test of overfitting.")
     print("")
 
     series = sorted(glob.glob(os.path.join(VIPER, 'M13_?.rvo.dat')) +
@@ -231,8 +230,8 @@ def main():
     print(f"rms vs published: {rms.min():.0f}-{rms.max():.0f} m/s (factor {rms.max()/max(rms.min(),1):.1f})")
     print(f"dBIC near {P_TARGET:.0f} d: {dnear.min():+.1f} to {dnear.max():+.1f}")
     print(f"\ncorrelation(rms_pub, dBIC@171) = {r:+.2f}")
-    print("  strongly negative = better agreement with their answer buys the signal,")
-    print("  which is the failure mode this test exists to catch.")
+    print("  Negative values associate closer published-RV agreement with greater dBIC.")
+    print("  This descriptive association does not identify the cause of the peak.")
     med_rms = float(np.median(rms))
     poor = [x for x in rows if x[1] > med_rms]
     poor_det = [x for x in poor if x[4] > 10]
@@ -240,15 +239,15 @@ def main():
     print(f"than median, {len(poor_det)} still show dBIC > 10 near {P_TARGET:.0f} d.")
     print("")
     if len(poor_det) >= max(1, len(poor) // 3) and r > -0.6:
-        print("READING: the signal is not confined to the best-matching configurations.")
-        print("It survives where agreement with the published series is poor, so it is a")
-        print("property of the spectra rather than of the selection metric. The tuning")
-        print("remains a real limitation of the reproduction and should be stated, but it")
-        print("is not what put the period there.")
+        print("READING: near-period support also appears in poorer-matching configurations.")
+        print("They belong to a family explored using the published RVs, so persistence")
+        print("within this family cannot rule out tuning artifacts or establish independence.")
     else:
-        print("READING: the detection tracks the tuning metric, which would mean the")
-        print("reproduction cannot be called independent. Re-derive the configuration from")
-        print("injection recovery alone before publishing the blind-search framing.")
+        print("READING: the historical heuristic does not show broad persistence in the")
+        print("poorer-matching configurations. It cannot establish that tuning caused the peak.")
+    print("Neither reading is a calibrated detection or overfitting test.")
+    print("M37: adopted-series support is conditional on the 17-of-18-night screen;")
+    print("all 18 nights are compatible with noise in BERV-adjusted global searches.")
 
 
 if __name__ == "__main__":

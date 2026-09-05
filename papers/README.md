@@ -7,6 +7,13 @@ project's own writing** — the manuscripts are in [`../docs/paper/`](../docs/pa
   audits cite, so a claim can be checked against the source without re-fetching anything.
 - `pdf/` — the originals. **Gitignored**: fetched from arXiv, not ours to redistribute.
 
+Release source archives and Python source distributions exclude `text/`. Its copies remain
+in the Git checkout/history for the existing audit trail; this exclusion does not remove them
+from GitHub or establish redistribution rights. Readers of a release archive should retrieve
+papers through the DOI/arXiv references in the milestone documents. The project's MIT license
+does not relicense third-party publications. Unsent correspondence is also excluded from
+release archives.
+
 Every citation in the project was read against these files rather than against memory; the pass
 that did it, and the fourteen errors it found, are in
 [`../docs/audits/REFERENCE-AUDIT.md`](../docs/audits/REFERENCE-AUDIT.md).

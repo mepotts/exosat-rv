@@ -37,6 +37,13 @@ jobs:
           python -m pip install --upgrade pip
           pip install -e ".[dev]"
 
+      - name: Lint package and tests; compile all Python sources
+        # Historical campaign scripts retain separately recorded style debt. Compile them
+        # too so reporting-only syntax cannot silently exceed the supported Python floor.
+        run: |
+          python -m ruff check src tests
+          python -m compileall -q src tests scripts
+
       - name: Run tests
         # Deselect the network-marked tests: they make live TAP calls to ESO and the NASA
         # Exoplanet Archive, so leaving them in makes CI fail when a third party is down

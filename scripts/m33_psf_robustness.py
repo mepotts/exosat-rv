@@ -133,7 +133,7 @@ def main():
     rng = np.random.default_rng(RNG_SEED)
     print("# M33: PSF uncertainty on the thin cases, and PDS 70 recovered from the")
     print("# staring products. R = separation / PSF; class boundary at R = 1.\n")
-    print(f"{'target':<14s} {'n':>4s} {'nt':>3s} {'PSF\"':>7s} {'68% CI':>15s} "
+    print(f"""{'target':<14s} {'n':>4s} {'nt':>3s} {'PSF"':>7s} {'68% CI':>15s} """
           f"{'R':>6s} {'R 68% CI':>15s}  class")
 
     for name, pat, sep, src, fname in TARGETS:

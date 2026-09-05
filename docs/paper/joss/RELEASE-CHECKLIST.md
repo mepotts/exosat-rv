@@ -1,13 +1,19 @@
-# Release checklist — minting a Zenodo DOI for exosat-rv
+# Release checklist — exosat-rv candidate and later archive publication
 
-Scope note: written 2026-08-13, when nothing in it had been executed. **Revised
-2026-08-31: the repository split described in §2 and the metadata synchronization in §3
-have since been carried out.** Still not done: no git tag, no GitHub release, no Zenodo
-record, and no release-date declaration. The 2026-08-13 state was verified against the repository contents and
-two read-only, unauthenticated checks: the public GitHub releases/tags API, and Zenodo's
-public search API. Items marked ✅ below were verified on 2026-08-23.
+Written 2026-08-13 and updated 2026-09-05 for preparation of a qualified **`v0.1.0`
+research-software/downstream-reanalysis snapshot**. The repository split and metadata
+synchronization are complete; this preparation pass does not create a tag, GitHub
+Release, Zenodo record, DOI, or release-date declaration. Retain the existing development
+version, rather than treating this as a stable `v1.0.0` or scientific-validation release.
 
-## 1. Current state
+The [candidate notes](../../releases/v0.1.0.md) define scope and limitations. The
+[candidate verification record](../../releases/v0.1.0-verification.md) is authoritative
+for checks performed on the current candidate and remaining work. Checkmarks and dates
+below preserve earlier work; they do not certify that those checks were repeated for this
+candidate. External API, venue-policy, and integration statements retain their historical
+verification dates and need rechecking when the corresponding publication step is taken.
+
+## 1. Metadata and recorded publication state
 
 - **`CITATION.cff`** exists at the repository root and is substantially complete:
   title, audit-qualified abstract, one author (Matthew Potts), license (MIT),
@@ -15,28 +21,30 @@ public search API. Items marked ✅ below were verified on 2026-08-23.
   the five papers this project engages with most directly. It deliberately has no
   `date-released` while no release exists. ✅ `repository-code`
   now reads `https://github.com/mepotts/exosat-rv` (repointed at the split; it previously
-  pointed into the monorepo tree). Gap: the author's `orcid` field is present only as a
-  commented-out `# TODO: add your ORCID` line.
+  pointed into the monorepo tree). The author's `orcid` is absent. Add one only if supplied
+  and verified; an ORCID is not a universal prerequisite for preparing a software release.
+  A chosen venue or service may have its own requirement.
 - **`.zenodo.json`** exists at the repository root and covers title, `upload_type:
   software`, the same audit-qualified description, one creator (`Potts, Matthew`),
-  license, `access_right: open`, keywords, version, and related identifiers. The remaining
-  author-metadata gap in both records is the ORCID.
+  license, `access_right: open`, keywords, version, and related identifiers. Its optional
+  creator ORCID must agree with the author's actual identifier if one is added.
 - ✅ **The two prose records are synchronized.** `CITATION.cff` is authoritative and an
   offline test requires `.zenodo.json`'s description to be byte-identical after YAML
   folding. This fixed the drift recorded by the first version of this checklist.
 - ✅ **Both metadata files are now at the archived repository's root**, which is what
   Zenodo reads. Before the split they sat one level down, inside `astronomy/exosat-rv/`,
   where a monorepo release would not have used them.
-- **No release or version tag exists yet.** `git ls-remote --tags origin` against
+- **Historical tag check:** `git ls-remote --tags origin` against
   `mepotts/exosat-rv` returned nothing when checked 2026-08-23, and the local tag list is
-  empty as of 2026-08-31. The unrelated `itf-state` tag carried through the split was deleted;
-  see §2.
-- **No Zenodo record exists yet.** A search of Zenodo's public API for "exosat-rv"
-  returns no matching record.
+  recorded as empty on 2026-08-31. The unrelated `itf-state` tag carried through the split
+  was deleted; see §2. These dated observations are not a fresh remote-state check.
+- **Historical Zenodo check:** the original 2026-08-13 checklist recorded no matching
+  record from a public API search for "exosat-rv". No new account/API verification is
+  claimed by this documentation update.
 - **Zenodo–GitHub integration status is not verifiable from the repository.** Whether
   `github.com/mepotts/exosat-rv` is enabled at
   `https://zenodo.org/account/settings/github/` can only be checked by logging into
-  the Zenodo account tied to `matthew.e.potts@gmail.com`; this document does not
+  the owner's Zenodo account; this document does not
   assume either state.
 - ✅ **`exosat-rv` is now its own repository**, `github.com/mepotts/exosat-rv`, with
   `main` pushed. This was the structural fact that shaped almost everything below, and
@@ -68,9 +76,9 @@ consequences followed, neither of them exosat-rv-specific:
    same commit as a side effect — version numbers and DOIs would stop corresponding to
    independent release histories per project.
 
-The fix was recorded in advance in `PUBLISHING.md` — **"at submission time, exosat-rv
-splits into its own repository via `git filter-repo --subdirectory-filter exosat-rv`
-(full history preserved), then tags v1.0 and mints its DOI. Until then it stays here."**
+The earlier `PUBLISHING.md` plan proposed a history-preserving standalone split before
+publication, followed by a v1.0 tag and DOI. The split happened; the v1.0 proposal is
+superseded by the current, more limited `v0.1.0` candidate. No further split is needed.
 
 ### What was actually done
 
@@ -90,8 +98,8 @@ splits into its own repository via `git filter-repo --subdirectory-filter exosat
   snapshot from 2026-07-31, not reachable from `main`, and it was the only tag in the
   repository — so release tooling reasoning about "the tags in this repo" would have
   seen a sibling project's artifact first. It existed only in local clones; the remote
-  has no tags. This repository now has no tags, so the first one will be its own
-  release. (Restore, if ever needed: `git tag itf-state 9205806`.)
+  had no tags at the dated check above. This cleared the unrelated artifact before the
+  project's own release. (Historical restore reference: `git tag itf-state 9205806`.)
 - ✅ **~425 MB of gitignored working assets have been copied across** — 30 reference
   PDFs under `papers/pdf/` (115 MB) and 290 files of `data/` FITS products (310 MB).
   They are re-fetchable and are excluded from git by design, but they had existed only
@@ -101,12 +109,27 @@ splits into its own repository via `git filter-repo --subdirectory-filter exosat
   any sibling project that cross-references `exosat-rv` still point at the old path.
   That is a pass over `mepotts/astronomy`, not over this repository.
 
-## 3. Checklist: tagged release -> Zenodo DOI
+## 3. Checklist: candidate verification, then release and Zenodo DOI
+
+**Step 0 — prepare and verify the bounded candidate:**
+
+- [ ] Review the [candidate scope](../../releases/v0.1.0.md) against M37 and the M38
+      control-development checkpoint. Retain the paper-calibration, internal-screen,
+      fitter-stage injection, and historical raw/template provenance limitations.
+- [ ] Complete the [verification record](../../releases/v0.1.0-verification.md):
+      installation/build checks, applicable offline tests, lint, and documented
+      reproducible examples, with exact scope and exclusions. Historical passing checks
+      below are evidence of earlier states only.
+- [ ] Review the concrete release commit and publication metadata before executing the
+      formal release/archive step. Code preparation and an authorized push/merge are
+      distinct from a GitHub Release, DOI deposit, or manuscript submission.
 
 **Step A — metadata, at the exosat-rv level (can be done anytime before tagging):**
 
-- [ ] Add a real ORCID to `CITATION.cff`'s author entry (currently a commented-out
-      TODO). Zenodo, OpenAIRE, and ORCID's own auto-import all key off this field.
+- [ ] If the author supplies an ORCID, verify it and add it consistently to both
+      metadata records. Otherwise leave it absent; do not fabricate an identifier or
+      treat this optional improvement as a universal release blocker. Verify any
+      service-specific requirement when selecting the publication route.
 - [x] Add a `version` field to `.zenodo.json` and keep it synchronized with
       `pyproject.toml`'s `[project] version` and `CITATION.cff`'s `version:` at every
       release. **Done 2026-08-24** — all three read `0.1.0`, and the synchronisation is
@@ -131,14 +154,13 @@ splits into its own repository via `git filter-repo --subdirectory-filter exosat
       repository root that gets archived — confirm current behavior at release time,
       since this has changed before. The abstract/description drift is already guarded
       by an offline test.
-- [ ] Decide the version number for the first tagged release. `pyproject.toml` and
-      `CITATION.cff` currently both say `0.1.0`, and the README records completed results
-      through M37 plus an unexecuted M38 successor-protocol draft, with audit remediation still
-      open — i.e. active, evolving work. Whether the first Zenodo
-      snapshot should be tagged `v0.1.0` ("first archived state") or bumped to `v1.0.0`
-      ("stable, citable API") is Matthew's call, not a default to assume.
-- [ ] At the moment of tagging, add `CITATION.cff`'s `date-released` using the actual
-      release date. It is intentionally absent until then.
+- [x] **Candidate version retained 2026-09-05:** prepare `v0.1.0`, matching the existing
+      package/citation/archive metadata version. This denotes a development snapshot;
+      it does not declare a stable API, independent replication, or broad validation.
+      Selecting this candidate version does not create or publish the tag.
+- [ ] When the release is actually being published, add `CITATION.cff`'s
+      `date-released` using the actual release date. Keep it absent during candidate
+      preparation; neither this document's update date nor a code push is a release date.
 
 **Step B — resolve the monorepo structure (see §2): DONE 2026-08-23.**
 
@@ -148,9 +170,11 @@ splits into its own repository via `git filter-repo --subdirectory-filter exosat
 - [x] Verify the filtered result actually installs and its test suite still passes —
       `pip install -e ".[dev]"` then `pytest -m "not network"` — in a fresh clone, not
       assumed from the fact that internal paths are relative. ✅ Done exactly that way
-      on 2026-08-23; the current offline suite and lint state must be rechecked from the release
-      candidate after the audit correction pass. Live-archive checks are network-marked and CI
-      deselects them. CI does not currently run lint, so lint needs a separate release check.
+      on 2026-08-23; the current offline suite and lint state must be recorded from the
+      release candidate after the audit correction pass. Live-archive checks are
+      network-marked and are separate from offline verification. Record the actual CI and
+      local lint scope in the candidate verification record rather than inferring it from
+      this historical checklist.
 - [x] Decide the new repository's name and the GitHub account/org it lives under.
       ✅ `github.com/mepotts/exosat-rv`.
 - [x] Update `CITATION.cff`'s `repository-code` field (was
@@ -164,7 +188,7 @@ splits into its own repository via `git filter-repo --subdirectory-filter exosat
       cross-references exosat-rv. This is a pass over `mepotts/astronomy`, not over this
       repository, and it is not done here.
 - [x] Delete the stray `itf-state` tag so this repository's only tags are its own
-      releases. ✅ Done; the repository now has no tags. See §2.
+      releases. ✅ Done 2026-08-23; the dated tag observations are recorded in §1–2.
 - [x] Move or re-fetch the ~425 MB of gitignored working assets (`papers/pdf/`,
       `data/`) before the monorepo copy is deleted. ✅ Copied across and verified. See §2.
 - [ ] ~~*Not recommended:* stay in the monorepo and enable Zenodo on
@@ -175,28 +199,30 @@ splits into its own repository via `git filter-repo --subdirectory-filter exosat
 
 **Step C — Zenodo/GitHub mechanics. The repository is now settled (Step B done):**
 
+The workflow below is preparatory guidance from the historical checklist. Verify current
+service behavior and account state before executing it; this pass does not enable an
+integration or create a release/deposit.
+
 - [ ] Enable the GitHub integration for the target repository at
-      `https://zenodo.org/account/settings/github/`, under the account tied to
-      `matthew.e.potts@gmail.com`. This requires granting Zenodo OAuth access to the
+      `https://zenodo.org/account/settings/github/`, under the owner's account.
+      This requires granting Zenodo OAuth access to the
       GitHub account.
 - [ ] Confirm the toggle is **on** before tagging — Zenodo archives releases published
       after the integration is enabled; it does not retroactively archive past tags
-      (irrelevant here today, since no tag exists yet, but matters if one is ever
-      created before the toggle is flipped).
+      (check the current integration rules before relying on this historical behavior).
 - [ ] Publish a **GitHub Release** (not a bare `git tag`) from the target commit.
       Zenodo's integration listens for the "release published" webhook event
       specifically; a pushed tag with no accompanying Release will not trigger an
       archive.
 - [ ] After the webhook fires, verify the resulting Zenodo record directly: correct
-      title, author name/ORCID, license (should inherit MIT from `LICENSE`, but
+      title, author name and ORCID if provided, license (should inherit MIT from `LICENSE`, but
       confirm), version string, and that the archived zip's contents are actually what
       was intended to be cited — it should now be exosat-rv alone, not five projects.
-- [ ] Add the Zenodo-provided DOI badge to `README.md`. Not done as part of
-      this task (existing files were not modified); listed here as the concrete next
-      step for whoever executes the release.
+- [ ] Add the Zenodo-provided DOI badge to `README.md` only after verifying the record.
+      No placeholder or invented DOI belongs in the release candidate.
 - [ ] Back-fill the minted DOI into `CITATION.cff` (the `cff-version: 1.2.0` schema
-      supports an `identifiers:` block with `type: doi`). Also a follow-up edit, not
-      done here.
+      supports an `identifiers:` block with `type: doi`). Use the archive's returned
+      identifier, then recheck metadata consistency.
 
 **Step D — versioning going forward:**
 
@@ -209,9 +235,9 @@ splits into its own repository via `git filter-repo --subdirectory-filter exosat
 
 ## 4. Checklist: a companion dataset deposit (the reduced RV series)
 
-This is a **separate** Zenodo upload (`upload_type: dataset`, not `software`) for the
+This would be a **separate** Zenodo upload (`upload_type: dataset`, not `software`) for the
 actual measured radial-velocity series, distinct from the code that produces them. It
-is not automatic and needs its own scoping:
+is not part of preparing the `v0.1.0` software candidate and needs its own scoping:
 
 - [ ] **Scope it explicitly.** `data/` today mixes inventory JSON, posterior-sample
       arrays, per-milestone provenance bookkeeping, and the actual per-target RV
@@ -280,6 +306,8 @@ is not automatic and needs its own scoping:
 
 ## 5. What this document does not do
 
-This checklist does not authorize a tag, branch, GitHub release, Zenodo action, submission,
-or correspondence. Preparatory metadata may be corrected in the repository; every external
-release action remains gated to Matthew's explicit per-instance approval.
+This checklist records preparation and later publication steps; it does not itself
+authorize a GitHub Release, archive deposit, manuscript submission, or correspondence.
+Preparatory metadata and an authorized code push/merge are separate from those actions.
+The current candidate contains no claim that a DOI, formal release, submission, or M38
+target experiment has occurred.

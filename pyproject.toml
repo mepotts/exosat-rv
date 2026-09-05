@@ -41,6 +41,9 @@ exosat-rv = "exosat_rv.cli:app"
 [tool.hatch.build.targets.wheel]
 packages = ["src/exosat_rv"]
 
+[tool.hatch.build.targets.sdist]
+exclude = ["/papers/text", "/docs/paper/author-query-draft.md"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]

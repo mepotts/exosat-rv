@@ -27,7 +27,7 @@ authors:
   - family-names: Potts
     given-names: Matthew
     email: matthew.e.potts@gmail.com
-    # orcid: "https://orcid.org/0000-0000-0000-0000"  # TODO: add your ORCID
+    # ORCID omitted: an author-confirmed identifier has not been provided.
 repository-code: "https://github.com/mepotts/exosat-rv"
 license: MIT
 version: "0.1.0"

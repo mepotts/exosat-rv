@@ -63,7 +63,7 @@ def main():
     print("# source: Lazzoni et al. 2020, A&A 641, A131, Table 2 -- one instrument, one")
     print(f"# band, one paper. S = contrast / theta^{N:.0f}, exponent carried over from M29.\n")
 
-    print(f"{'system':<13s} {'sep(\")':>7s} {'contrast':>11s} {'S':>10s}  verdict   note")
+    print(f"""{'system':<13s} {'sep(")':>7s} {'contrast':>11s} {'S':>10s}  verdict   note""")
     rows = []
     for name, sep, c, verdict, note in MEASURED:
         s = S(sep, c)

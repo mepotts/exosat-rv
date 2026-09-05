@@ -114,7 +114,7 @@ def main():
     print("# M29 roster blending sweep — R = projected separation / delivered PSF FWHM")
     print(f"# classification fixed in advance: R < {R_BLEND} => BLENDED (verdict describes "
           f"the host)\n")
-    print(f"{'target':<16s} {'sep(\")':>7s} {'PSF(\")':>7s} {'n':>4s} {'R':>6s} "
+    print(f"""{'target':<16s} {'sep(")':>7s} {'PSF(")':>7s} {'n':>4s} {'R':>6s} """
           f"{'wing':>6s}  {'class':<9s} ledger verdict")
     flagged = []
     for name, pat, sep, src, verdict in ROSTER:

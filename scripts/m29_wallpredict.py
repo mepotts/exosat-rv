@@ -98,7 +98,7 @@ def main():
           f"companion mag")
     print(f"# S = contrast / theta^2 ; thresholds fixed from the construction set: "
           f"CLEAN < {CLEAN_MAX:.0f}, FAILS > {FAILS_MIN:.0f}\n")
-    print(f"{'system':<26s} {'sep(\")':>7s} {'contrast':>9s} {'S':>9s} "
+    print(f"""{'system':<26s} {'sep(")':>7s} {'contrast':>9s} {'S':>9s} """
           f"{'predicted':<14s} {'observed':<8s} {'role':<9s} {'verdict'}")
 
     hits = miss = indet = 0

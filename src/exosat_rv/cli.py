@@ -21,7 +21,7 @@ app = typer.Typer(add_completion=False, help=__doc__, no_args_is_help=True)
 
 @app.callback()
 def main() -> None:
-    """Reproduce the CD-35 2722 B exosatellite detection from public ESO data."""
+    """Explore archival RV data and the conditional, paper-calibrated CD-35 reanalysis."""
     # Present so typer keeps sub-command form while only one command exists.
 
 
@@ -46,12 +46,12 @@ def inventory(
     if s["embargo_lifts"]:
         typer.echo(f"  embargo lifts      : {', '.join(s['embargo_lifts'])}")
 
-    typer.echo(f"\n  paper claims {PUBLISHED.n_epochs} usable epochs "
+    typer.echo(f"\n  historical preprint used {PUBLISHED.n_epochs_used} usable epochs "
                f"({PUBLISHED.baseline[0]} -> {PUBLISHED.baseline[1]})")
     typer.echo(f"  we can reach {s['usable_now']} without running esorex, "
                f"{s['usable_now'] + s['reduction_gap']} with it")
 
-    DATA.mkdir(exist_ok=True)
+    DATA.mkdir(parents=True, exist_ok=True)
     path = DATA / out
     payload = {
         "summary": s,
@@ -137,7 +137,7 @@ def targets(
     control = any("2722" in str(t.simbad_id or "") for t in sl)
     typer.echo(f"\ncontrol -- CD-35 2722 B rediscovered: {'YES' if control else 'NO (pipeline broken)'}")
 
-    DATA.mkdir(exist_ok=True)
+    DATA.mkdir(parents=True, exist_ok=True)
     path = DATA / out
     path.write_text(json.dumps([{
         "eso_object": t.eso_object, "aliases": t.aliases, "simbad_id": t.simbad_id,
@@ -207,7 +207,7 @@ def alias(
                    "  ".join(f"{c:g}d {100 * v:4.1f}%" for c, v in counts.items() if v) +
                    f"   |  >1% FAP {100 * sig:5.1f}%")
 
-    DATA.mkdir(exist_ok=True)
+    DATA.mkdir(parents=True, exist_ok=True)
     path = DATA / out
     path.write_text(json.dumps({
         "nights": nights, "mjd": t.tolist(), "baseline_d": span,
@@ -284,7 +284,7 @@ def survey(
                f"binary-like or out of reach: {meta['n_fail']}")
     typer.echo(f"  {meta['note']}")
 
-    DATA.mkdir(exist_ok=True)
+    DATA.mkdir(parents=True, exist_ok=True)
     path = DATA / out
     path.write_text(json.dumps({"targets": rows, "meta": meta}, indent=2), encoding="utf-8")
     typer.echo(f"\nwrote {path}")
@@ -314,7 +314,7 @@ def closein(
     for line in meta["conclusion"]:
         typer.echo(f"  {line}")
 
-    DATA.mkdir(exist_ok=True)
+    DATA.mkdir(parents=True, exist_ok=True)
     path = DATA / out
     path.write_text(json.dumps({"targets": rows, "meta": meta}, indent=2), encoding="utf-8")
     typer.echo(f"\nwrote {path}")

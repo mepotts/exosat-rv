@@ -2,6 +2,11 @@
 
 > **New here, or handing this to an agent?** Start with [`ONBOARDING.md`](docs/ONBOARDING.md) — environment, operating rules, the traps that cost a day each, and where every draft stands.
 
+**Release preparation:** [`v0.1.0`](docs/releases/v0.1.0.md) is scoped as a development
+software/reanalysis snapshot. Its [verification record](docs/releases/v0.1.0-verification.md)
+tracks the release checks. This does not declare a published release, a validated general
+extraction pipeline, or an independent confirmation of the satellite claim.
+
 An independently implemented, paper-calibrated raw-to-radial-velocity workflow for
 **directly imaged companions**, and what it finds when pointed at the one system where a
 satellite has been reported.
@@ -413,8 +418,36 @@ cascade, injection harness, census, per-target runners) lives in
 
 ## Quickstart
 
+Use a source checkout or unpacked source release for the research tables and milestone
+scripts. On Linux/WSL (Python 3.11 or newer):
+
 ```bash
-python -m venv .venv && ./.venv/Scripts/python.exe -m pip install -e ".[dev]"
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install -e ".[dev]"
+exosat-rv --help
+python scripts/m37_package_evidence.py --verify
+python scripts/m37_render_results.py --check
+python -m pytest -m "not network"
+```
+
+On Windows PowerShell, activate with `.venv\Scripts\Activate.ps1` instead. Historical raw
+reduction scripts require the separately installed WSL/cr2res/VIPER environment described
+above. Figure and nested-sampling scripts additionally use `python -m pip install -e
+".[science]"`.
+
+The wheel contains the Python package, not the research data, scripts, or external spectral
+products. An editable source install uses the checkout's `data/`; a wheel install defaults
+to `data/` under the caller's working directory. Set `EXOSAT_DATA_DIR` **before starting the
+CLI** to select another directory (for example, the unpacked source release's `data/`). That
+directory holds both the CLI's inputs and its generated reports; it is not a read-only
+resource path. Commands requiring tables or prior extraction outputs need those files to be
+present. The library's array-based calculations and `--help` do not require the data bundle.
+
+The following are research commands, not an installation test. Archive commands use the
+network, and several commands create reports or download products:
+
+```bash
 exosat-rv inventory          # M0: what is public, reduced, and usable right now
 exosat-rv probe              # M1: open a reduced product, check viper can use it
 exosat-rv targets            # M5: analogue target list, archive-first
@@ -424,8 +457,6 @@ exosat-rv survey             # M7: which imaged companions can the method work o
 exosat-rv closein            # M8: can it reach satellites of young close-in giants?
 exosat-rv orders             # M9: per-order screening, and the ceiling on what it buys
 exosat-rv gravity            # M10: public VLTI/GRAVITY data on the astrometric shortlist
-pytest -m "not network"      # offline suite
-pytest                       # adds the live archive assertions
 ```
 
 ## Honest scope

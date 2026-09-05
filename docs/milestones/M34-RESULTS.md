@@ -1,57 +1,51 @@
-# M34 — Is the CD-35 detection an artefact of tuning the extraction on the published RVs?
+# M34 — Historical configuration-sensitivity check of the CD-35 RV extraction
 
-> **Verdict: no — and the question splits in two, which the first draft of this document ran
-> together.**
+> **Interpretation corrected for the v0.1.0 release preparation.** The historical numerical
+> results below are preserved, but the earlier verdict that the method was "not overfitted"
+> is withdrawn. A period appearing in several configurations from a family explored using
+> the published RVs cannot rule out tuning artifacts. This is a development-data sensitivity
+> check, not independent validation. [`M37-RESULTS.md`](M37-RESULTS.md) controls the scientific
+> interpretation: the near-171-day result is conditional on the internal 17-of-18-night screen;
+> all 18 nights are compatible with noise in the BERV-adjusted global searches.
 >
-> **Is the METHOD overfitted? No.** The configuration transferred unmodified to nine further
-> companions across three wavelength settings and both observing modes, none with a published
-> velocity to tune against, at 99–101% injection recovery. A configuration fitted to one series
-> would not survive that. The tuning is *calibration against the only external reference that
-> exists in this class*, followed by demonstrated transfer where no reference exists — which is
-> the ordinary way a pipeline of this kind is validated, not a defect in it.
->
-> **Is this particular REPRODUCTION fully independent? Not quite**, and that is a narrower
-> claim about one comparison rather than about the pipeline. Our agreement with H26's
-> velocities is not independent evidence, because the configuration was fixed with those
-> velocities in view. Everything downstream is independent, and §2 below bounds what the
-> calibration could have bought: the period survives in configurations that agree *poorly*
-> with the published series.
->
-> The pipeline is also not a reconstruction of H26's procedure, which has never been
-> published. It is a different route to the same quantity, and it does not need to match
-> theirs in method for the two to be compared in result.
+> The earlier nine-companion, three-setting, both-mode transfer claim is also withdrawn.
+> M37 identifies eta Tel B as the strongest clean same-setting nodding control; the HiRISE
+> slit-recipe and host-dominated beta Pic results do not establish the claimed transfer.
+> Historical 99–101% injection recovery measured fitter-stage transmission using already-built
+> templates. It cannot validate signal survival during template construction or exclude
+> extraction tuning effects.
 
-Matthew asked the sharpest question anyone has put to this work: *is our raw-to-RV pipeline
-overfitted on Hoy et al.'s published RVs?*
+Matthew asked whether the raw-to-RV pipeline was overfitted on Hoy et al.'s published RVs.
+The historical manuscript described rms against the published series as the scoring metric
+for extraction choices, including order set, template iteration, clipping, and oversampling.
+The candidate RVs were extracted from spectra, but their agreement with published RV values
+was used to guide configuration selection.
 
-He is right that there is something to ask about. The manuscript's own Table 1 says it
-plainly — **"the scoring metric for every choice was the rms against the published RV
-series"**. The extraction configuration (order set, template iteration, clipping,
-oversampling) was chosen by minimising disagreement with their answer. Everything downstream
-is blind: the period search never sees a published number, and its epoch screen is internal
-and independently rediscovers the one epoch the published table omits. But the *input* to that
-blind search was selected with their numbers in hand.
-
-**So the honest statement is: the analysis is blind; the extraction is not.**
+Published velocity values do not enter the downstream least-squares period fit. That narrower
+fact does not make the workflow blind or independent: its input series was selected using
+those values, and its historical search uses published epochs and a hard-coded window around
+the published period. The internal epoch screen is computed from our measurements, but its
+use also conditions the reported result. M37 documents these distinct dependencies.
 
 ## 1. The test
 
-A configuration sweep already existed on disk and had never been re-scored this way:
-`M13_A`…`M13_J` and the `M14_*` variants, twenty-one complete RV series from the same spectra
-under different configurations. For each, `scripts/injection/m34_overfit_test.py` computes two
-numbers that had never been put side by side:
+A configuration sweep already existed on disk: `M13_A`…`M13_J` and the `M14_*` variants,
+twenty-one RV series from the same spectra under different configurations. For each,
+`scripts/injection/m34_overfit_test.py` applies the internal spread screen and computes:
 
 - **rms against the published series** — the metric that *selected* the adopted configuration
 - **ΔBIC near 171 d** — the result that configuration was used to obtain
 
-and asks whether the detection appears **only** in the configurations that best match Hoy.
+and asks whether near-171-day support appears only in the configurations that best match Hoy.
 
-If the signal lives only where agreement is best, better agreement is buying the detection and
-the reproduction cannot be called independent. If it survives where agreement is poor, the
-period is in the spectra.
+This comparison describes sensitivity within the retained configuration family. Neither
+concentration in the best-matching configurations nor persistence outside them identifies
+the cause of a peak. The configurations share data and development history, and their
+retained epoch counts differ. The test has no calibration that would turn its correlation
+or counts into a probability of overfitting.
 
-Nothing is re-reduced. This re-scores runs that already exist, which is why the sharpest
-question about the project could be answered in an afternoon.
+The historical calculation re-scored existing runs; it did not re-reduce the spectra. No
+new target calculation was performed for this interpretation correction.
 
 ## 2. Result
 
@@ -80,9 +74,9 @@ M14_O8        18      180      8.0     5.5   182.0    -3.6   1348
 M14_nod       10      200     77.2     1.1   182.0    +0.2   1554
 ```
 
-**The machinery is verified against M14**: `M14_T2` returns ΔBIC **+23.8 at P = 167.8, rank 1**,
-which is exactly what M14 §6 reported for that configuration. This test is therefore on the
-same scale as the published claim, not a private one.
+**Historical consistency check against M14:** `M14_T2` returns ΔBIC **+23.8 at P = 167.8,
+rank 1**, matching M14 §6 for that configuration. This checks agreement between the two
+calculations; it does not independently validate their statistical interpretation.
 
 | quantity | value |
 |---|---|
@@ -94,53 +88,46 @@ same scale as the published claim, not a private one.
 
 ## 3. Reading it
 
-**Half the configurations that match the published series *worse* than median still detect the
-signal at ΔBIC > 10.** That is the finding. A period tuned into existence by an rms metric
-would not survive in the configurations that score badly on that metric.
+Five of the ten configurations with worse-than-median agreement still have ΔBIC > 10 near
+171 days. Only three configurations put that period at rank 1 (`M13_C`, `M14_T2`,
+`M14_NODT2`). The observed correlation is −0.31. These are descriptive results within this
+sweep; a ΔBIC threshold here is not a calibrated detection test.
 
-**The −0.31 correlation is weak and is expected even if the signal is entirely real.** Both
-quantities improve with extraction fidelity: a better extraction agrees better with any
-competent measurement of the same photons *and* recovers a real signal more strongly. A
-positive association between the two is therefore the null expectation, not evidence of
-circularity. What would have been damning is the signal *vanishing* off the best-matching
-configurations, and it does not.
+Every configuration belongs to a family explored using the published RVs. Shared spectra,
+template choices, epoch screens, and family selection can affect all of them. Persistence
+of a peak in configurations with poorer published-RV agreement therefore cannot establish
+that the peak is astrophysical or bound the contribution of tuning. The earlier claims
+that a manufactured signal would disappear in these configurations, or that the observed
+correlation is an established null expectation, were not demonstrated by this test.
 
-**A more careful reading of the ranks.** Only three configurations put ~171 d at rank 1
-(`M13_C`, `M14_T2`, `M14_NODT2`). In most others the period is *present* at ΔBIC ≈ +3 to +17
-but not dominant. That is what a real but marginal signal looks like when the extraction is
-degraded: it survives, it weakens, and it stops being the top peak before it stops existing.
-It is not what a manufactured signal looks like, which would be absent rather than merely
-demoted.
+M37 supplies the controlling complete-versus-screened comparison for the adopted series:
+the screened 17-night near-171-day peak has nominal BERV-adjusted global permutation
+probabilities below 0.01, while all three complete 18-night combinations have probabilities
+above 0.05. Those probabilities assume exchangeable fitted residuals and do not account for
+choosing the screen. The present sweep does not remove either limitation.
 
-**What this does not establish.** Every configuration in the sweep is drawn from a family that
-was itself explored with the published series available, so this bounds the effect of choosing
-*within* that family, not the effect of the family's boundaries. The fully independent
-experiment — select a configuration by injection recovery alone, never computing rms against
-the published series at any point, then run the blind search — has still not been done. It
-requires re-running viper rather than re-scoring, and it remains the cleanest available
-strengthening of the reproduction.
-
-> **Attempted 2026-08-24, and inconclusive — see [`M36-RESULTS.md`](M36-RESULTS.md).** The
-> experiment was pre-registered and run over 36 paper-blind configurations. It failed on its
-> own selection metric rather than on the data: the eligibility gate constrained the recovery
-> slope and not its uncertainty, and nothing in the grid measured a slope to better than ±0.48.
-> The probable cause is that the protocol excluded iteration-2 templates as paper-contaminated,
-> while §6 above found iteration 2 to be the decisive change — so the design removed the
-> ingredient that makes the extraction work. **The question stated in this section is unchanged
-> and still open.**
+> **Historical M36 attempt, 2026-08-24:** [`M36-RESULTS.md`](M36-RESULTS.md) reported 36
+> configurations and an inconclusive selection: the gate constrained slope without its
+> uncertainty, and no slope uncertainty was better than ±0.48. M37 subsequently established
+> that the run did not faithfully execute its preregistration: fixed settings were omitted,
+> injection/reference scores used different order sets, scores were rounded, and cached
+> artifacts were not bound to inputs and configuration. Its injection plan encoded the
+> published orbit, so the configurations and search cannot be described as a completed
+> paper-blind experiment. The proposed template explanation remains unestablished; the
+> historical artifact cannot answer the independence question. M38 is successor development,
+> not a completed independent validation of this target.
 
 ## 4. ⚠ The first version of this test said the opposite, and it was wrong
 
 Round 1 announced *"the detection tracks the tuning metric… the reproduction cannot be claimed
-as independent."* That would have been a false alarm on the project's central result, and it
-was caught only because the adopted configuration came out at ΔBIC ≈ 0 where M14 had measured
-+24.8. **A rank-1 peak carrying zero evidence is incoherent, and that incoherence is what
-exposed the bug rather than any suspicion about the conclusion.**
+as independent."* That diagnosis used a calculation inconsistent with M14: the adopted
+configuration came out at ΔBIC ≈ 0 where M14 had measured +24.8. The discrepancy prompted a
+check of the implementation. Correcting it restored a comparable calculation; it did not
+establish independence or show that tuning effects are absent.
 
 The cause was that the period search had been **reimplemented here instead of imported**, for a
-reason that does not survive inspection — "to avoid a dependency", when `blind_search.py` takes
-a filename and there was no dependency to avoid. The reimplementation differed in two ways,
-both of which crush the evidence toward zero:
+reason given as "to avoid a dependency", when `blind_search.py` takes a filename. The
+reimplementation changed the order combination and fitting/scoring convention:
 
 | | this project | round 1 |
 |---|---|---|
@@ -148,20 +135,24 @@ both of which crush the evidence toward zero:
 | fit | **unweighted** | inverse-variance from `e_RV` |
 | score | **BIC = n·log(RSS/n) + k·log(n)** | χ² + k·log(n) |
 
-The `e_RV` column carries 400–1000 m/s against a true epoch precision of 70–90, so weighting by
-it discards the signal.
+The historical comparison reported `e_RV` values of 400–1000 m/s versus an estimated epoch
+precision of 70–90 m/s. The different error treatment changes the score; agreement with M14
+does not itself establish that either uncertainty model is calibrated.
 
 The fix was to stop duplicating and start importing. `blind_search.py` cannot be imported —
 it reads `sys.argv[1]` at module level — so the function's **source is extracted and executed**,
 giving one definition and one behaviour, with a loud failure if it ever moves.
 
-**The lesson is the one this project keeps paying for in a new costume.** Reimplementing a
-reference computation "to keep things clean" is the same error class as re-typing a number
-instead of citing it: it creates a second source of truth that can silently disagree with the
-first. It nearly produced a retraction of a correct result.
+The implementation lesson is to compare like calculations and check against a reference
+case before interpreting a discrepancy. Reusing the reference function addresses numerical
+consistency; scientific validity still requires the separate scope and calibration checks
+documented by M37.
 
-## 5. What changed in the manuscript
+## 5. Publication scope
 
-The limitation is now stated in the paper rather than left implicit, together with this test.
-A referee would have found the Table 1 sentence and asked exactly Matthew's question; better to
-answer it in the text than in correspondence.
+The historical milestone prompted disclosure of extraction tuning in the manuscript. For a
+qualified software/reanalysis release, this table is retained as a record of configuration
+sensitivity, with M37's corrections governing its interpretation. It provides neither an
+independent reproduction of the satellite claim nor broad validation of the extraction
+method. The raw-to-RV provenance gaps and the incomplete successor validation remain as
+documented in M37 and M38.

@@ -45,8 +45,8 @@ def orders(path):
 def main():
     dirs = sys.argv[1:] or sorted(glob.glob("/home/matth/cr2res/red/night*"))
     print(f"# CRIRES+ slit {SLIT_LEN}\" long; literature A-B separation {SEP_LIT}\"")
-    print(f"# {'night':<8s} {'chip/order':<18s} {'npts':>5s} {'\"/pt':>6s} "
-          f"{'peak':>5s} {'2nd':>5s} {'2nd/1st':>8s} {'sep(\")':>7s}")
+    print(f"""# {'night':<8s} {'chip/order':<18s} {'npts':>5s} {'"/pt':>6s} """
+          f"""{'peak':>5s} {'2nd':>5s} {'2nd/1st':>8s} {'sep(")':>7s}""")
     rec = []
     for d in dirs:
         p = os.path.join(d, "cr2res_obs_nodding_slitfuncA.fits")

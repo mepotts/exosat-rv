@@ -62,7 +62,7 @@ def main():
     out = [s[3] for s in SYSTEMS]
 
     print("# M29: which axis orders the outcomes? Every value traced to a source.\n")
-    print(f"{'system':<15s} {'sep(\")':>7s} {'contrast':>9s} {'outcome':<7s} {'precision':<22s}")
+    print(f"""{'system':<15s} {'sep(")':>7s} {'contrast':>9s} {'outcome':<7s} {'precision':<22s}""")
     for n_, s_, c_, o_, p_, src in SYSTEMS:
         print(f"{n_:<15s} {s_:>7.3f} {c_:>8.0f}x {o_:<7s} {p_:<22s}")
 

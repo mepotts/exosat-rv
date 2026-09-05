@@ -71,7 +71,7 @@ def run(tag: str, out: str) -> None:
     typer.echo("  (median per-order rms 2133 m/s; sqrt(10) floor 674 m/s; viper gives 823).")
     typer.echo("  No weighting scheme closes it. Attack the per-order forward model.")
 
-    DATA.mkdir(exist_ok=True)
+    DATA.mkdir(parents=True, exist_ok=True)
     path = DATA / out
     payload = {
         "tag": tag,

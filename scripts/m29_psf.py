@@ -102,7 +102,7 @@ def fwhm(v, scale):
 def main():
     print("# M29: delivered PSF from the nodding slit function, and separation in")
     print("# resolution elements. R = separation / PSF_FWHM.\n")
-    print(f"{'target':<15s} {'sep(\")':>7s} {'PSF FWHM(\")':>12s} {'n':>5s} "
+    print(f"""{'target':<15s} {'sep(")':>7s} {'PSF FWHM(")':>12s} {'n':>5s} """
           f"{'R = sep/PSF':>12s}  outcome")
     rows = []
     for name, pat, sep, out in TARGETS:

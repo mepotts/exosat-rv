@@ -122,7 +122,7 @@ def main():
     print("# contrast = 10^(0.4 * (m_companion - m_host)); companion K from "
           "data/m7-survey.json (M7)")
     print("# host magnitudes queried live from SIMBAD\n")
-    print(f"{'companion':<16s} {'sep(\")':>7s} {'K_comp':>7s} {'host':<24s} "
+    print(f"""{'companion':<16s} {'sep(")':>7s} {'K_comp':>7s} {'host':<24s} """
           f"{'m_host':>7s} {'band':>5s} {'dmag':>6s} {'contrast':>11s}")
     rows = []
     for c, host in HOSTS.items():

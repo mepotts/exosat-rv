@@ -44,7 +44,7 @@ def run(out: str) -> None:
     for line in KILL_CHECK.splitlines():
         typer.echo(f"    {line}")
 
-    DATA.mkdir(exist_ok=True)
+    DATA.mkdir(parents=True, exist_ok=True)
     path = DATA / out
     path.write_text(
         json.dumps(

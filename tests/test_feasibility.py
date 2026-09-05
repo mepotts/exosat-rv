@@ -202,7 +202,9 @@ def test_double_lined_dilution_explains_the_recovered_amplitude():
     from exosat_rv.config import GJ229B
 
     k_ba, k_bb, measured = GJ229B.k_ba_ms, 20010.0, 6165.0
-    centroid = lambda f: (k_ba - f * k_bb) / (1 + f)
+    def centroid(f):
+        return (k_ba - f * k_bb) / (1 + f)
+
     lo, hi = 0.0, 1.0
     for _ in range(60):
         mid = 0.5 * (lo + hi)

@@ -180,7 +180,7 @@ has to happen before the write, not after.
 | `M28-RESULTS.md` | The first audit; M37 establishes that its permutation and jackknife conclusions are conditional on the internal screen |
 | `M29-RESULTS.md` | YSES 1 b's 2022 night reduced then **rejected** by a pre-committed screen; the CRLF defect; the contrast axis derived, twice corrected, and finally replaced by **S = contrast/theta^2** (§§6-8) |
 | `M35-RESULTS.md` | Historical photometry/Gaia check; M37 and `data/m35-photometry-v2.json` supersede the sensitivity and astrometric wording |
-| `M36-RESULTS.md` | Inconclusive historical paper-blind attempt; M37 establishes that it did not faithfully execute the preregistration |
+| `M36-RESULTS.md` | Inconclusive historical target-aware attempt; M37 establishes that its paper-derived injection plan and search were not paper-blind and that it did not faithfully execute the preregistration |
 | `M37-RESULTS.md` | Authoritative audit correction: complete-versus-screened RV evidence, corrected M35, M36 invalidation, claim scope, and downstream evidence bundle |
 | `audits/REFERENCE-AUDIT.md` | Every citation checked against source PDFs: 14 wrong across 60+ sites |
 | `audits/PROPERTY-AUDIT.md` | 268 object properties: 171 verified, 34 conflicting, 63 unsourced |

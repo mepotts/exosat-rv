@@ -23,3 +23,9 @@
 # diagnostic.
 data/repro/viper/results/* -whitespace
 data/repro/viper/viper-tracked.patch -whitespace
+
+# Release source archives omit third-party full text and unsent correspondence.
+# These remain in Git history; this is an archive-content rule, not a history rewrite.
+papers/text export-ignore
+papers/text/** export-ignore
+docs/paper/author-query-draft.md export-ignore
