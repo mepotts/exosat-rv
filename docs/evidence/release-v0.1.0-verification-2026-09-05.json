@@ -1,0 +1,116 @@
+{
+  "artifacts": {
+    "exosat_rv-0.1.0-py3-none-any.whl": {
+      "files": 43,
+      "sha256": "29ec59920a200604dc07e6020cfa61fa5c515eeab36f5cac37634bfbf20651f9"
+    },
+    "exosat_rv-0.1.0.tar.gz": {
+      "files": 421,
+      "sha256": "01d1dd58212d247a1c9e640280d707e7f0f5e9aab59a43be3df39ef8f886aa94"
+    },
+    "source.tar": {
+      "files": 420,
+      "sha256": "dd860a735eba8da1d23c336efb28bd1ba562ad905c5a8d096f61dbbeefd09448"
+    }
+  },
+  "replay": {
+    "differences_beyond_tolerance": [],
+    "max_absolute_numeric_difference": 1.0981366926898772e-9
+  },
+  "versions": {
+    "PyYAML": "6.0.3",
+    "Pygments": "2.21.0",
+    "annotated-doc": "0.0.5",
+    "astropy": "8.0.1",
+    "astropy-iers-data": "0.2026.8.31.0.57.9",
+    "build": "1.6.0",
+    "certifi": "2026.7.22",
+    "charset-normalizer": "3.5.1",
+    "exosat-rv": "0.1.0",
+    "idna": "3.19",
+    "iniconfig": "2.3.0",
+    "markdown-it-py": "4.2.0",
+    "mdurl": "0.1.2",
+    "numpy": "2.5.2",
+    "packaging": "26.3",
+    "pip": "24.0",
+    "pluggy": "1.6.0",
+    "pyerfa": "2.0.1.5",
+    "pypdf": "6.17.0",
+    "pyproject_hooks": "1.2.0",
+    "pytest": "9.1.1",
+    "pyvo": "1.9.1",
+    "requests": "2.34.2",
+    "rich": "15.0.0",
+    "ruff": "0.16.6",
+    "scipy": "1.18.1",
+    "shellingham": "1.5.4",
+    "typer": "0.27.2",
+    "urllib3": "2.7.0"
+  },
+  "schema_version": 1,
+  "verification_date": "2026-09-05",
+  "tested_commit": "6a58e475e2fc1c86553b0fd0c399b910e5b6743f",
+  "environment": {
+    "os": "Ubuntu under WSL",
+    "python": "3.12.3",
+    "build_backend": "hatchling==1.32.0",
+    "installation": "fresh venv; source from git archive; wheel built from sdist; wheel smoke outside source; editable source install for tests"
+  },
+  "checks": {
+    "offline_pytest": {
+      "passed": 554,
+      "deselected": 2,
+      "selection": "not network"
+    },
+    "lint_package_tests": {
+      "command": "python -m ruff check src tests",
+      "ruff": "0.16.6",
+      "exit_code": 0
+    },
+    "compile_sources": {
+      "command": "python -m compileall -q src tests scripts",
+      "exit_code": 0
+    },
+    "wheel_smoke": {
+      "cli_help": true,
+      "default_storage": "caller cwd/data",
+      "no_import_time_storage_creation": true,
+      "explicit_data_override": true,
+      "published_rows_loaded": 23
+    },
+    "evidence_bundle": {
+      "included_files": 14,
+      "sha256": "66283cfdf2b2a584901ebdb8f6a88706a890fa148460a46c1cc2f11c9d25eda3"
+    },
+    "numerical_renderer": {
+      "command": "python scripts/m37_render_results.py --check",
+      "exit_code": 0
+    },
+    "m37_replay": {
+      "permutations": 5000,
+      "period_grid_points": 4000,
+      "relative_tolerance": 1e-10,
+      "absolute_tolerance": 1e-8,
+      "excluded_comparison_fields": [
+        "implementation.python",
+        "implementation.numpy"
+      ]
+    },
+    "archive_content": {
+      "third_party_full_text_excluded": true,
+      "unsent_correspondence_excluded": true,
+      "raw_fits_excluded": true,
+      "source_scripts_tests_metadata_and_evidence_present": true,
+      "wheel_package_only": true
+    },
+    "legacy_script_lint": {
+      "command": "python -m ruff check scripts --statistics",
+      "ruff": "0.15.6",
+      "count": 287,
+      "exit_code": 1,
+      "disposition": "Disclosed legacy style and unused-code debt; no full-repository lint-clean claim. Separate F821,F822,F823,E9 scan passed."
+    }
+  },
+  "scope": "Development software and historical downstream reanalysis only; no raw/template replay, M38 control selection, M38 target execution, publication, DOI, or manuscript submission."
+}

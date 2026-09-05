@@ -93,8 +93,9 @@ survey across the directly imaged companion population, calibrated on achieved r
 than forecast instrumental precision; and a query layer for public VLTI/GRAVITY
 astrometry as a distinct, non-spectroscopic route to the same question. The offline unit
 and integration suite passes, with live-archive checks separately network-marked. CI currently
-runs those offline tests on Python 3.11 and 3.12; lint is not yet a CI job and should be
-checked separately before release.
+runs those offline tests on Python 3.11 and 3.12, runs Ruff on `src` and `tests`, and
+compiles Python sources under `src`, `tests`, and `scripts`. Historical campaign-script
+style findings remain outside the CI lint scope and are reported in the release verification.
 
 The from-raw extraction pipeline itself — driving `cr2res` and `viper`, the
 injection-recovery gate, the permutation-based nominal period-search calibration, and the
