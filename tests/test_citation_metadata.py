@@ -39,13 +39,13 @@ def _pyproject():
 
 def _folded(text, key):
     """Read a YAML folded scalar (`key: >-`) back into one line."""
-    m = re.search(r"^%s: >-\n((?:  .*\n)+)" % re.escape(key), text, re.M)
-    assert m, "no folded '%s:' block in CITATION.cff" % key
+    m = re.search(rf"^{re.escape(key)}: >-\n((?:  .*\n)+)", text, re.MULTILINE)
+    assert m, f"no folded '{key}:' block in CITATION.cff"
     return " ".join(line.strip() for line in m.group(1).splitlines() if line.strip())
 
 
 def test_all_three_files_agree_on_the_version():
-    cff = re.search(r'^version: "([^"]+)"', _cff(), re.M)
+    cff = re.search(r'^version: "([^"]+)"', _cff(), re.MULTILINE)
     assert cff, "CITATION.cff carries no version"
     assert cff.group(1) == _pyproject()["project"]["version"] == _zenodo()["version"]
 
@@ -56,7 +56,7 @@ def test_the_zenodo_description_is_the_citation_abstract_verbatim():
 
 
 def test_both_records_point_at_the_repository_that_is_actually_archived():
-    assert re.search(r'^repository-code: "([^"]+)"', _cff(), re.M).group(1) == REPO_URL
+    assert re.search(r'^repository-code: "([^"]+)"', _cff(), re.MULTILINE).group(1) == REPO_URL
     ids = {r["identifier"] for r in _zenodo()["related_identifiers"]}
     assert REPO_URL in ids
 
@@ -73,5 +73,5 @@ def test_documents_named_in_the_citation_record_exist_where_it_says(path):
     """The 2026-08-24 reorganisation moved every one of these under docs/. A citation
     record that names a path the archive does not contain is a broken record."""
     for text in (_cff(), json.dumps(_zenodo())):
-        for named in re.findall(r"(?<![\w/])((?:docs/)?%s)" % re.escape(path), text):
-            assert (ROOT / named).exists(), "%s names %r, which does not exist" % (path, named)
+        for named in re.findall(rf"(?<![\w/])((?:docs/)?{re.escape(path)})", text):
+            assert (ROOT / named).exists(), f"{path} names {named!r}, which does not exist"
