@@ -1,0 +1,629 @@
+{
+  "schema_version": 1,
+  "status": "bounded_candidate_metadata_screen_not_control_selection",
+  "retrieved_utc_date": "2026-09-06",
+  "scope": {
+    "candidates": [
+      "GJ 447",
+      "GJ 588",
+      "GJ 784"
+    ],
+    "excluded": "GJ229 vicinity and science target; no spectral arrays downloaded or read",
+    "observation_window": [
+      "2021-06-01",
+      "2026-09-07"
+    ],
+    "catalogue_epoch": "J2000",
+    "cone_radius_arcsec": 90,
+    "proper_motion_envelope_note": "Radius encloses linear displacement from J2000 through 2026.7 plus margin; not a full astrometric propagation, component-identification proof, or pointing-completeness guarantee.",
+    "header_sampling_rule": "Earliest dp_id in every returned target/slit/filter/mode/technique/type group except POLARI groups. One header does not establish the setting of all group members.",
+    "coverage": "Incomplete: only 21 representative headers, not all 687 records or every observing block. No inspected H1567 match is not proof of archive absence.",
+    "previous_query_failures": [
+      "Generic CONTAINS(POINT(...)) query failed with ESO geography latitude error; switched to documented s_region field.",
+      "Individual-exposure tool outputs were truncated, so they were not retained or used as complete exports; aggregate response below is complete."
+    ]
+  },
+  "simbad": {
+    "endpoint": "https://simbad.cds.unistra.fr/simbad/sim-tap/sync",
+    "parameters": {
+      "REQUEST": "doQuery",
+      "LANG": "ADQL",
+      "FORMAT": "json",
+      "QUERY": "SELECT main_id,ra,dec,pmra,pmdec,coo_bibcode,pm_bibcode FROM basic JOIN ident ON oidref=oid WHERE id IN ('GJ 447','GJ 588','GJ 784')"
+    },
+    "stars": [
+      {
+        "requested_id": "GJ 447",
+        "main_id": "Ross  128",
+        "ra_deg": 176.93498861725834,
+        "dec_deg": 0.8045556493308333,
+        "pmra_mas_yr": 607.299,
+        "pmdec_mas_yr": -1223.028,
+        "coo_bibcode": "2020yCat.1350....0G",
+        "pm_bibcode": "2020yCat.1350....0G",
+        "linear_displacement_arcsec_over_26_7yr": 36.45903882731749
+      },
+      {
+        "requested_id": "GJ 588",
+        "main_id": "CD-40  9712",
+        "ra_deg": 233.05388462875788,
+        "dec_deg": -41.27559178719,
+        "pmra_mas_yr": -1176.447,
+        "pmdec_mas_yr": -1030.97,
+        "coo_bibcode": "2020yCat.1350....0G",
+        "pm_bibcode": "2020yCat.1350....0G",
+        "linear_displacement_arcsec_over_26_7yr": 41.76588996133326
+      },
+      {
+        "requested_id": "GJ 784",
+        "main_id": "HD 191849",
+        "ra_deg": 303.4724843743875,
+        "dec_deg": -45.16401959745389,
+        "pmra_mas_yr": 778.331,
+        "pmdec_mas_yr": -159.939,
+        "coo_bibcode": "2020yCat.1350....0G",
+        "pm_bibcode": "2020yCat.1350....0G",
+        "linear_displacement_arcsec_over_26_7yr": 21.215659874697394
+      }
+    ]
+  },
+  "eso_tap": {
+    "endpoint": "https://archive.eso.org/tap_obs/sync",
+    "parameters": {
+      "REQUEST": "doQuery",
+      "LANG": "ADQL",
+      "FORMAT": "json",
+      "MAXREC": 5000,
+      "QUERY": "SELECT target,slit_path,filter_path,ins_mode,dp_tech,dp_type,COUNT(*) AS n,MIN(dp_id) AS first_id,MAX(dp_id) AS last_id FROM dbo.raw WHERE instrument='CRIRES' AND date_obs >= '2021-06-01' AND date_obs < '2026-09-07' AND (CONTAINS(s_region,CIRCLE('',176.93498861725834,0.8045556493308333,0.025))=1 OR CONTAINS(s_region,CIRCLE('',233.05388462875788,-41.27559178719,0.025))=1 OR CONTAINS(s_region,CIRCLE('',303.4724843743875,-45.16401959745389,0.025))=1) AND dp_tech LIKE 'SPECTRUM%' AND (dp_type='OBJECT' OR dp_type='STD,RV') GROUP BY target,slit_path,filter_path,ins_mode,dp_tech,dp_type"
+    },
+    "response": {
+      "metadata": [
+        {
+          "name": "target",
+          "description": "Target designation (as given by the astronomer)",
+          "datatype": "char"
+        },
+        {
+          "name": "slit_path",
+          "description": "All slits. The string is in the format <value>, <value>,... where <value> is the value of one of the keywords INS.SLIT*.NAME.",
+          "datatype": "char"
+        },
+        {
+          "name": "filter_path",
+          "description": "All filters.  The string is in the format <value>,<value>,... where <value> is the value of one of the keywords INS.FILT*.NAME",
+          "datatype": "char"
+        },
+        {
+          "name": "ins_mode",
+          "description": "Instrument mode",
+          "datatype": "char"
+        },
+        {
+          "name": "dp_tech",
+          "description": "Mode/technique used for the observation",
+          "datatype": "char"
+        },
+        {
+          "name": "dp_type",
+          "description": "Type of observation/exposure",
+          "datatype": "char"
+        },
+        {
+          "name": "n",
+          "description": "",
+          "datatype": "integer"
+        },
+        {
+          "name": "first_id",
+          "description": "",
+          "datatype": "char"
+        },
+        {
+          "name": "last_id",
+          "description": "",
+          "datatype": "char"
+        }
+      ],
+      "data": [
+        [
+          "CD-40 9712",
+          "W_0.2",
+          "KX1E-2,HK",
+          "Spectroscopy",
+          "SPECTRUM,NODDING,JITTER",
+          "STD,RV",
+          36,
+          "CRIRE.2025-07-29T23:48:51.820",
+          "CRIRE.2026-05-23T06:15:21.980"
+        ],
+        [
+          "HD 191849",
+          "W_0.2",
+          "HX5E-2,HK",
+          "Spectroscopy",
+          "SPECTRUM,NODDING,JITTER",
+          "STD,RV",
+          12,
+          "CRIRE.2025-07-06T06:45:58.571",
+          "CRIRE.2025-07-06T06:53:25.277"
+        ],
+        [
+          "HD 191849",
+          "W_0.2",
+          "K,HK",
+          "Spectroscopy",
+          "SPECTRUM,NODDING,JITTER",
+          "OBJECT",
+          36,
+          "CRIRE.2021-10-08T23:50:31.339",
+          "CRIRE.2023-09-04T05:47:36.205"
+        ],
+        [
+          "ROSS 128",
+          "W_0.2",
+          "HX5E-2,HK",
+          "Spectroscopy",
+          "SPECTRUM,NODDING,JITTER",
+          "STD,RV",
+          12,
+          "CRIRE.2025-06-08T22:39:45.460",
+          "CRIRE.2025-06-08T22:57:12.904"
+        ],
+        [
+          "CD-40 9712",
+          "W_0.2",
+          "HX5E-2,YJ",
+          "Spectroscopy",
+          "SPECTRUM,NODDING,OTHER,POLARI",
+          "OBJECT",
+          8,
+          "CRIRE.2026-07-23T00:46:08.037",
+          "CRIRE.2026-07-23T00:47:56.519"
+        ],
+        [
+          "CD-40 9712",
+          "W_0.2",
+          "K,HK",
+          "Spectroscopy",
+          "SPECTRUM,NODDING,JITTER",
+          "OBJECT",
+          80,
+          "CRIRE.2022-03-25T09:49:06.668",
+          "CRIRE.2025-04-01T10:08:45.674"
+        ],
+        [
+          "CD-40 9712",
+          "W_0.2",
+          "K,HK",
+          "Spectroscopy",
+          "SPECTRUM,NODDING,JITTER",
+          "STD,RV",
+          36,
+          "CRIRE.2025-06-28T22:47:07.543",
+          "CRIRE.2025-08-29T23:22:58.126"
+        ],
+        [
+          "HD 191849",
+          "W_0.2",
+          "J,YJ",
+          "Spectroscopy",
+          "SPECTRUM,GENERIC",
+          "OBJECT",
+          12,
+          "CRIRE.2024-09-29T23:19:51.330",
+          "CRIRE.2024-09-29T23:24:51.325"
+        ],
+        [
+          "HD 191849",
+          "W_0.2",
+          "KX1E-2,HK",
+          "Spectroscopy",
+          "SPECTRUM,NODDING,JITTER",
+          "OBJECT",
+          104,
+          "CRIRE.2021-10-09T00:03:41.855",
+          "CRIRE.2023-10-17T00:52:35.598"
+        ],
+        [
+          "ROSS 128",
+          "W_0.2",
+          "K,HK",
+          "Spectroscopy",
+          "SPECTRUM,NODDING,JITTER",
+          "STD,RV",
+          48,
+          "CRIRE.2025-05-20T22:52:00.283",
+          "CRIRE.2026-06-18T23:10:56.645"
+        ],
+        [
+          "ROSS 128",
+          "W_0.2",
+          "KX1E-2,HK",
+          "Spectroscopy",
+          "SPECTRUM,NODDING,JITTER",
+          "OBJECT",
+          8,
+          "CRIRE.2023-04-15T06:29:20.642",
+          "CRIRE.2023-04-15T06:38:12.620"
+        ],
+        [
+          "CD-40 9712",
+          "W_0.2",
+          "HX5E-2,HK",
+          "Spectroscopy",
+          "SPECTRUM,NODDING,JITTER",
+          "STD,RV",
+          24,
+          "CRIRE.2025-05-11T04:35:20.617",
+          "CRIRE.2025-07-03T23:00:16.058"
+        ],
+        [
+          "GJ 447",
+          "W_0.2",
+          "J,YJ",
+          "Spectroscopy",
+          "SPECTRUM,NODDING,OTHER",
+          "OBJECT",
+          10,
+          "CRIRE.2024-04-05T02:26:29.388",
+          "CRIRE.2025-02-07T07:27:13.904"
+        ],
+        [
+          "ROSS 128",
+          "W_0.2",
+          "KX1E-2,HK",
+          "Spectroscopy",
+          "SPECTRUM,NODDING,JITTER",
+          "STD,RV",
+          12,
+          "CRIRE.2025-05-28T22:51:31.479",
+          "CRIRE.2025-05-28T23:07:15.793"
+        ],
+        [
+          "CD-40 9712",
+          "W_0.2",
+          "HX5E-2,HK",
+          "Spectroscopy",
+          "SPECTRUM,NODDING,JITTER",
+          "OBJECT",
+          8,
+          "CRIRE.2023-06-09T06:00:08.615",
+          "CRIRE.2023-06-09T06:09:15.682"
+        ],
+        [
+          "CD-40 9712",
+          "W_0.2",
+          "KX1E-2,HK",
+          "Spectroscopy",
+          "SPECTRUM,NODDING,JITTER",
+          "OBJECT",
+          64,
+          "CRIRE.2022-08-09T01:56:11.887",
+          "CRIRE.2025-03-31T10:05:47.937"
+        ],
+        [
+          "HD 191849",
+          "W_0.2",
+          "KX1E-2,HK",
+          "Spectroscopy",
+          "SPECTRUM,NODDING,JITTER",
+          "STD,RV",
+          60,
+          "CRIRE.2025-06-20T08:46:22.856",
+          "CRIRE.2026-08-02T04:53:14.842"
+        ],
+        [
+          "CD-40 9712",
+          "W_0.2",
+          "J,YJ",
+          "Spectroscopy",
+          "SPECTRUM,NODDING,OTHER,POLARI",
+          "OBJECT",
+          8,
+          "CRIRE.2026-08-16T01:12:32.899",
+          "CRIRE.2026-08-16T01:14:09.646"
+        ],
+        [
+          "GJ 588",
+          "W_0.2",
+          "K,HK",
+          "Spectroscopy",
+          "SPECTRUM,NODDING,JITTER",
+          "OBJECT",
+          4,
+          "CRIRE.2024-09-11T23:49:01.065",
+          "CRIRE.2024-09-11T23:52:59.552"
+        ],
+        [
+          "HD 191849",
+          "W_0.2",
+          "HX1E-3,YJ",
+          "Spectroscopy",
+          "SPECTRUM,NODDING,OTHER",
+          "OBJECT",
+          2,
+          "CRIRE.2021-10-08T23:20:56.429",
+          "CRIRE.2021-10-08T23:21:13.647"
+        ],
+        [
+          "HD 191849",
+          "W_0.2",
+          "K,HK",
+          "Spectroscopy",
+          "SPECTRUM,NODDING,JITTER",
+          "STD,RV",
+          35,
+          "CRIRE.2025-07-14T07:51:52.531",
+          "CRIRE.2026-08-31T03:47:03.880"
+        ],
+        [
+          "ROSS 128",
+          "W_0.2",
+          "K,HK",
+          "Spectroscopy",
+          "SPECTRUM,NODDING,JITTER",
+          "OBJECT",
+          64,
+          "CRIRE.2023-04-21T02:09:46.798",
+          "CRIRE.2023-08-10T23:28:00.054"
+        ],
+        [
+          "GJ 588",
+          "W_0.2",
+          "HX5E-2,HK",
+          "Spectroscopy",
+          "SPECTRUM,NODDING,JITTER",
+          "OBJECT",
+          4,
+          "CRIRE.2025-05-04T06:36:13.497",
+          "CRIRE.2025-05-04T06:39:59.893"
+        ]
+      ]
+    }
+  },
+  "header_checks": [
+    {
+      "dp_id": "CRIRE.2025-07-29T23:48:51.820",
+      "url": "https://archive.eso.org/hdr?DpId=CRIRE.2025-07-29T23:48:51.820",
+      "sha256_utf8_html": "34d4a1f6386902802eb905bc3cde0e8c3ce36fc0a89f921db83e8e0e58b9a1f8",
+      "cards": [
+        "HIERARCH ESO DPR TECH = 'SPECTRUM,NODDING,JITTER' / Observation technique",
+        "HIERARCH ESO INS MODE = 'Spectroscopy' / Instrument mode.",
+        "HIERARCH ESO INS SLIT1 WID = 0.200 / [arcsec] Slit width.",
+        "HIERARCH ESO INS WLEN ID = 'K2192' / Order/Sub-order/Nominal-Interlaced."
+      ]
+    },
+    {
+      "dp_id": "CRIRE.2025-07-06T06:45:58.571",
+      "url": "https://archive.eso.org/hdr?DpId=CRIRE.2025-07-06T06:45:58.571",
+      "sha256_utf8_html": "85ad2ea8d2af449df6845572d1e54df1ade0d811450dcf9102f335561faff065",
+      "cards": [
+        "HIERARCH ESO DPR TECH = 'SPECTRUM,NODDING,JITTER' / Observation technique",
+        "HIERARCH ESO INS MODE = 'Spectroscopy' / Instrument mode.",
+        "HIERARCH ESO INS SLIT1 WID = 0.200 / [arcsec] Slit width.",
+        "HIERARCH ESO INS WLEN ID = 'K2192' / Order/Sub-order/Nominal-Interlaced."
+      ]
+    },
+    {
+      "dp_id": "CRIRE.2021-10-08T23:50:31.339",
+      "url": "https://archive.eso.org/hdr?DpId=CRIRE.2021-10-08T23:50:31.339",
+      "sha256_utf8_html": "95478109f97d3348fb30b8fb66b0a69449b9c8bb1ec637109f55075b46a2636f",
+      "cards": [
+        "HIERARCH ESO DPR TECH = 'SPECTRUM,NODDING,JITTER' / Observation technique",
+        "HIERARCH ESO INS MODE = 'Spectroscopy' / Instrument mode.",
+        "HIERARCH ESO INS SLIT1 WID = 0.200 / [arcsec] Slit width.",
+        "HIERARCH ESO INS WLEN ID = 'K2192' / Order/Sub-order/Nominal-Interlaced."
+      ]
+    },
+    {
+      "dp_id": "CRIRE.2025-06-08T22:39:45.460",
+      "url": "https://archive.eso.org/hdr?DpId=CRIRE.2025-06-08T22:39:45.460",
+      "sha256_utf8_html": "97789d1492e2c333e702570d712807ff523cef90d71148cb28d207b79d8d4c90",
+      "cards": [
+        "HIERARCH ESO DPR TECH = 'SPECTRUM,NODDING,JITTER' / Observation technique",
+        "HIERARCH ESO INS MODE = 'Spectroscopy' / Instrument mode.",
+        "HIERARCH ESO INS SLIT1 WID = 0.200 / [arcsec] Slit width.",
+        "HIERARCH ESO INS WLEN ID = 'K2192' / Order/Sub-order/Nominal-Interlaced."
+      ]
+    },
+    {
+      "dp_id": "CRIRE.2022-03-25T09:49:06.668",
+      "url": "https://archive.eso.org/hdr?DpId=CRIRE.2022-03-25T09:49:06.668",
+      "sha256_utf8_html": "203d0ddad254a2a0a3c6c1675070a707e1dc07de364c6d28dbeda538f04b3ecd",
+      "cards": [
+        "HIERARCH ESO DPR TECH = 'SPECTRUM,NODDING,JITTER' / Observation technique",
+        "HIERARCH ESO INS MODE = 'Spectroscopy' / Instrument mode.",
+        "HIERARCH ESO INS SLIT1 WID = 0.200 / [arcsec] Slit width.",
+        "HIERARCH ESO INS WLEN ID = 'K2192' / Order/Sub-order/Nominal-Interlaced."
+      ]
+    },
+    {
+      "dp_id": "CRIRE.2025-06-28T22:47:07.543",
+      "url": "https://archive.eso.org/hdr?DpId=CRIRE.2025-06-28T22:47:07.543",
+      "sha256_utf8_html": "e6d83fb9e649f0a7d7af7303a88349dd66b13a693c630c3bc52fed78c311ffb8",
+      "cards": [
+        "HIERARCH ESO DPR TECH = 'SPECTRUM,NODDING,JITTER' / Observation technique",
+        "HIERARCH ESO INS MODE = 'Spectroscopy' / Instrument mode.",
+        "HIERARCH ESO INS SLIT1 WID = 0.200 / [arcsec] Slit width.",
+        "HIERARCH ESO INS WLEN ID = 'K2192' / Order/Sub-order/Nominal-Interlaced."
+      ]
+    },
+    {
+      "dp_id": "CRIRE.2024-09-29T23:19:51.330",
+      "url": "https://archive.eso.org/hdr?DpId=CRIRE.2024-09-29T23:19:51.330",
+      "sha256_utf8_html": "9624a12c666b15b30000864caa518b7b312e541bdb408b097e5a2f53e7751859",
+      "cards": [
+        "HIERARCH ESO DPR TECH = 'SPECTRUM,GENERIC' / Observation technique",
+        "HIERARCH ESO INS MODE = 'Spectroscopy' / Instrument mode.",
+        "HIERARCH ESO INS SLIT1 WID = 0.200 / [arcsec] Slit width.",
+        "HIERARCH ESO INS WLEN ID = 'Y1029' / Order/Sub-order/Nominal-Interlaced."
+      ]
+    },
+    {
+      "dp_id": "CRIRE.2021-10-09T00:03:41.855",
+      "url": "https://archive.eso.org/hdr?DpId=CRIRE.2021-10-09T00:03:41.855",
+      "sha256_utf8_html": "53d34f7e9bfc0f7aa23f8217ba9ef4da592c17c26d5b8e458ad83f9775e78e30",
+      "cards": [
+        "HIERARCH ESO DPR TECH = 'SPECTRUM,NODDING,JITTER' / Observation technique",
+        "HIERARCH ESO INS MODE = 'Spectroscopy' / Instrument mode.",
+        "HIERARCH ESO INS SLIT1 WID = 0.200 / [arcsec] Slit width.",
+        "HIERARCH ESO INS WLEN ID = 'K2192' / Order/Sub-order/Nominal-Interlaced."
+      ]
+    },
+    {
+      "dp_id": "CRIRE.2025-05-20T22:52:00.283",
+      "url": "https://archive.eso.org/hdr?DpId=CRIRE.2025-05-20T22:52:00.283",
+      "sha256_utf8_html": "c9e09c8aa625b02fb60508136a1caca379543ae2b379995184fe325ab3066d23",
+      "cards": [
+        "HIERARCH ESO DPR TECH = 'SPECTRUM,NODDING,JITTER' / Observation technique",
+        "HIERARCH ESO INS MODE = 'Spectroscopy' / Instrument mode.",
+        "HIERARCH ESO INS SLIT1 WID = 0.200 / [arcsec] Slit width.",
+        "HIERARCH ESO INS WLEN ID = 'K2192' / Order/Sub-order/Nominal-Interlaced."
+      ]
+    },
+    {
+      "dp_id": "CRIRE.2023-04-15T06:29:20.642",
+      "url": "https://archive.eso.org/hdr?DpId=CRIRE.2023-04-15T06:29:20.642",
+      "sha256_utf8_html": "73a429519c8189d4f7d9ba22958cec0818ee71db6a5e5b37d557a4e1cb5af254",
+      "cards": [
+        "HIERARCH ESO DPR TECH = 'SPECTRUM,NODDING,JITTER' / Observation technique",
+        "HIERARCH ESO INS MODE = 'Spectroscopy' / Instrument mode.",
+        "HIERARCH ESO INS SLIT1 WID = 0.200 / [arcsec] Slit width.",
+        "HIERARCH ESO INS WLEN ID = 'K2192' / Order/Sub-order/Nominal-Interlaced."
+      ]
+    },
+    {
+      "dp_id": "CRIRE.2025-05-11T04:35:20.617",
+      "url": "https://archive.eso.org/hdr?DpId=CRIRE.2025-05-11T04:35:20.617",
+      "sha256_utf8_html": "987164864a50fe42ef43d0edc875b81d2a7a1f6369941f747beb9e9a56437d01",
+      "cards": [
+        "HIERARCH ESO DPR TECH = 'SPECTRUM,NODDING,JITTER' / Observation technique",
+        "HIERARCH ESO INS MODE = 'Spectroscopy' / Instrument mode.",
+        "HIERARCH ESO INS SLIT1 WID = 0.200 / [arcsec] Slit width.",
+        "HIERARCH ESO INS WLEN ID = 'K2192' / Order/Sub-order/Nominal-Interlaced."
+      ]
+    },
+    {
+      "dp_id": "CRIRE.2024-04-05T02:26:29.388",
+      "url": "https://archive.eso.org/hdr?DpId=CRIRE.2024-04-05T02:26:29.388",
+      "sha256_utf8_html": "4233cb5180a34641c563de873e2715ff128261a398322985a15e4541b3543015",
+      "cards": [
+        "HIERARCH ESO DPR TECH = 'SPECTRUM,NODDING,OTHER' / Observation technique",
+        "HIERARCH ESO INS MODE = 'Spectroscopy' / Instrument mode.",
+        "HIERARCH ESO INS SLIT1 WID = 0.200 / [arcsec] Slit width.",
+        "HIERARCH ESO INS WLEN ID = 'Y1029' / Order/Sub-order/Nominal-Interlaced."
+      ]
+    },
+    {
+      "dp_id": "CRIRE.2025-05-28T22:51:31.479",
+      "url": "https://archive.eso.org/hdr?DpId=CRIRE.2025-05-28T22:51:31.479",
+      "sha256_utf8_html": "f00096d771d6169738ea795457d912e690b2b7f11ea13b46ca50dcec0eafd7af",
+      "cards": [
+        "HIERARCH ESO DPR TECH = 'SPECTRUM,NODDING,JITTER' / Observation technique",
+        "HIERARCH ESO INS MODE = 'Spectroscopy' / Instrument mode.",
+        "HIERARCH ESO INS SLIT1 WID = 0.200 / [arcsec] Slit width.",
+        "HIERARCH ESO INS WLEN ID = 'K2192' / Order/Sub-order/Nominal-Interlaced."
+      ]
+    },
+    {
+      "dp_id": "CRIRE.2023-06-09T06:00:08.615",
+      "url": "https://archive.eso.org/hdr?DpId=CRIRE.2023-06-09T06:00:08.615",
+      "sha256_utf8_html": "51269b0d70a77237f5077130fc08e0f08e1111de04e1c3711475d170a1bd59b5",
+      "cards": [
+        "HIERARCH ESO DPR TECH = 'SPECTRUM,NODDING,JITTER' / Observation technique",
+        "HIERARCH ESO INS MODE = 'Spectroscopy' / Instrument mode.",
+        "HIERARCH ESO INS SLIT1 WID = 0.200 / [arcsec] Slit width.",
+        "HIERARCH ESO INS WLEN ID = 'K2192' / Order/Sub-order/Nominal-Interlaced."
+      ]
+    },
+    {
+      "dp_id": "CRIRE.2022-08-09T01:56:11.887",
+      "url": "https://archive.eso.org/hdr?DpId=CRIRE.2022-08-09T01:56:11.887",
+      "sha256_utf8_html": "2b1e6bbee652dd802cd9c324a7e7c40046858900acc6e9672a967fdd93000aa5",
+      "cards": [
+        "HIERARCH ESO DPR TECH = 'SPECTRUM,NODDING,JITTER' / Observation technique",
+        "HIERARCH ESO INS MODE = 'Spectroscopy' / Instrument mode.",
+        "HIERARCH ESO INS SLIT1 WID = 0.200 / [arcsec] Slit width.",
+        "HIERARCH ESO INS WLEN ID = 'K2192' / Order/Sub-order/Nominal-Interlaced."
+      ]
+    },
+    {
+      "dp_id": "CRIRE.2025-06-20T08:46:22.856",
+      "url": "https://archive.eso.org/hdr?DpId=CRIRE.2025-06-20T08:46:22.856",
+      "sha256_utf8_html": "343342d50ad58e7af58b0e54151446f3a1a65dd17646aa37165d1fb1c2641f26",
+      "cards": [
+        "HIERARCH ESO DPR TECH = 'SPECTRUM,NODDING,JITTER' / Observation technique",
+        "HIERARCH ESO INS MODE = 'Spectroscopy' / Instrument mode.",
+        "HIERARCH ESO INS SLIT1 WID = 0.200 / [arcsec] Slit width.",
+        "HIERARCH ESO INS WLEN ID = 'K2192' / Order/Sub-order/Nominal-Interlaced."
+      ]
+    },
+    {
+      "dp_id": "CRIRE.2024-09-11T23:49:01.065",
+      "url": "https://archive.eso.org/hdr?DpId=CRIRE.2024-09-11T23:49:01.065",
+      "sha256_utf8_html": "d7d44b24e030a5e8ab4a5a09666dc930f9847c2ecbcc1bec77e97ab2ae5eca6b",
+      "cards": [
+        "HIERARCH ESO DPR TECH = 'SPECTRUM,NODDING,JITTER' / Observation technique",
+        "HIERARCH ESO INS MODE = 'Spectroscopy' / Instrument mode.",
+        "HIERARCH ESO INS SLIT1 WID = 0.200 / [arcsec] Slit width.",
+        "HIERARCH ESO INS WLEN ID = 'K2192' / Order/Sub-order/Nominal-Interlaced."
+      ]
+    },
+    {
+      "dp_id": "CRIRE.2021-10-08T23:20:56.429",
+      "url": "https://archive.eso.org/hdr?DpId=CRIRE.2021-10-08T23:20:56.429",
+      "sha256_utf8_html": "af240d82b9e6d2b8676bcb69fab1a25c1c7403a6baaa2146d99a37ad19ea1bda",
+      "cards": [
+        "HIERARCH ESO DPR TECH = 'SPECTRUM,NODDING,OTHER' / Observation technique",
+        "HIERARCH ESO INS MODE = 'Spectroscopy' / Instrument mode.",
+        "HIERARCH ESO INS SLIT1 WID = 0.200 / [arcsec] Slit width.",
+        "HIERARCH ESO INS WLEN ID = 'J1232' / Order/Sub-order/Nominal-Interlaced."
+      ]
+    },
+    {
+      "dp_id": "CRIRE.2025-07-14T07:51:52.531",
+      "url": "https://archive.eso.org/hdr?DpId=CRIRE.2025-07-14T07:51:52.531",
+      "sha256_utf8_html": "030cad213670b6bea1d7a668f0efa676453f63b83463917c6b9bec4e8818c4d4",
+      "cards": [
+        "HIERARCH ESO DPR TECH = 'SPECTRUM,NODDING,JITTER' / Observation technique",
+        "HIERARCH ESO INS MODE = 'Spectroscopy' / Instrument mode.",
+        "HIERARCH ESO INS SLIT1 WID = 0.200 / [arcsec] Slit width.",
+        "HIERARCH ESO INS WLEN ID = 'K2192' / Order/Sub-order/Nominal-Interlaced."
+      ]
+    },
+    {
+      "dp_id": "CRIRE.2023-04-21T02:09:46.798",
+      "url": "https://archive.eso.org/hdr?DpId=CRIRE.2023-04-21T02:09:46.798",
+      "sha256_utf8_html": "159dd8db7d43d9f41b017825638bf533ae01167ffd8d53e16b3a22e97e70f5e2",
+      "cards": [
+        "HIERARCH ESO DPR TECH = 'SPECTRUM,NODDING,JITTER' / Observation technique",
+        "HIERARCH ESO INS MODE = 'Spectroscopy' / Instrument mode.",
+        "HIERARCH ESO INS SLIT1 WID = 0.200 / [arcsec] Slit width.",
+        "HIERARCH ESO INS WLEN ID = 'K2192' / Order/Sub-order/Nominal-Interlaced."
+      ]
+    },
+    {
+      "dp_id": "CRIRE.2025-05-04T06:36:13.497",
+      "url": "https://archive.eso.org/hdr?DpId=CRIRE.2025-05-04T06:36:13.497",
+      "sha256_utf8_html": "92080fe09cf756851ee4ee85d15cb621df56a594a743bd6613a1d60fc9c35e6d",
+      "cards": [
+        "HIERARCH ESO DPR TECH = 'SPECTRUM,NODDING,JITTER' / Observation technique",
+        "HIERARCH ESO INS MODE = 'Spectroscopy' / Instrument mode.",
+        "HIERARCH ESO INS SLIT1 WID = 0.200 / [arcsec] Slit width.",
+        "HIERARCH ESO INS WLEN ID = 'K2192' / Order/Sub-order/Nominal-Interlaced."
+      ]
+    }
+  ],
+  "header_hash_note": "SHA256 of UTF-8 encoding of returned HTML text, not a FITS or spectral-data content hash. Only selected parsed cards retained; full HTML not retained.",
+  "summary": {
+    "metadata_groups": 23,
+    "metadata_records": 687,
+    "header_checks": 21,
+    "setting_counts": {
+      "K2192": 18,
+      "Y1029": 2,
+      "J1232": 1
+    },
+    "h1567_header_matches": []
+  }
+}

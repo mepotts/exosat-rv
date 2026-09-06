@@ -56,6 +56,11 @@ These references establish useful candidate physics, not M38 control admissibili
 
 ## Current decision
 
+The [2026-09-06 follow-up](M38-CONTROL-EVIDENCE-FOLLOWUP.md) verifies sample V340 Ara
+headers in both H1567 and K2166 within its wider-slit visits, identifies independently
+characterized RV standards as a null-control search route, and locates author-deposited
+GJ 229 component RVs. These refine the research leads below; they do not freeze a suite.
+
 No complete observational suite is selected. Archive and literature screening identifies
 V340 Ara only as a possible supplemental research lead, not a selected control or a sufficient
 same-configuration truth; its apparent slit mismatch and optical-to-H-band transfer remain

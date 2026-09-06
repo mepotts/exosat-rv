@@ -155,6 +155,12 @@ in a new preregistration.
 
 ## Next permitted work
 
+The [2026-09-06 response-level coverage pilot](M38-SELECTION-COVERAGE-PILOT.md) begins
+empirical testing of the recovery interval on declared random-effects simulations. It is
+not a spectral injection or an adopted uncertainty method. The accompanying
+[control-source follow-up](M38-CONTROL-EVIDENCE-FOLLOWUP.md) refines observational leads
+without selecting a control or changing the target-access boundary.
+
 1. Choose the exact development-control suite and independently established truth records.
    [The candidate dossier](M38-CONTROL-CANDIDATES.md) records V340 Ara only as a possible
    supplemental research lead, not a selected control, and has not found a sufficient

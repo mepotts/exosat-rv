@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "scope": "Target-free response-level Monte Carlo pilot and candidate-only control metadata research",
+  "base_commit": "e786cb060d35effedd19d2c26d61b1a454bc86e7",
+  "target_stage_executed": false,
+  "spectral_injection_executed": false,
+  "scientific_threshold_adopted": false,
+  "production_selection_code_changed": false,
+  "formal_publication_performed": false,
+  "pilot": {
+    "plan_path": "docs/evidence/m38-selection-coverage-plan-2026-09-06.json",
+    "canonical_plan_sha256": "c41a36be49840bc5947fcc1ac2d6d913c8616e5a68efed4f117ceb6225866ae3",
+    "result_path": "docs/evidence/m38-selection-coverage-result-2026-09-06.json",
+    "result_file_sha256": "2ea66933d128328a45762b205064ea96f63eea0af3863336bd5143b8fc58680f",
+    "cells": 35,
+    "trials": 7000,
+    "trials_per_cell": 200,
+    "bootstrap_repetitions_per_complete_trial": 199,
+    "environment": {"python": "3.12.3", "numpy": "2.5.2", "scipy": "1.18.0"},
+    "earlier_run": "Same plan, before final reporting fixes; initial ledger and driver preserved locally in dist, not committed evidence"
+  },
+  "checks": [
+    {"name": "all exact tests/test_m38_*.py paths", "platform": "WSL Linux", "python": "3.12.3", "warnings": "error", "passed": 396, "seconds": 43.96},
+    {"name": "tests/test_m38_selection_coverage.py", "platform": "Windows", "python": "3.13.0", "warnings": "error", "passed": 20, "seconds": 1.05, "cache_dir": ".codex-m38-coverage-tests/pytest-cache"},
+    {"name": "ruff check src tests scripts/m38_selection_coverage.py scripts/m38_render_selection_coverage.py", "outcome": "passed"},
+    {"name": "compileall -q src tests scripts", "outcome": "passed"},
+    {"name": "generated table --check on Windows", "outcome": "passed", "endpoint_relative_tolerance": 1e-10, "endpoint_absolute_tolerance": 1e-12},
+    {"name": "git diff --check", "outcome": "passed"}
+  ],
+  "independent_agent_audit": {
+    "reviewer": "coverage_audit (agent, not external RV specialist)",
+    "retained_cells_checked": 35,
+    "retained_trials_checked": 7000,
+    "replayed_trials": 5,
+    "replayed_domains": ["independent", "heterogeneous", "season with night labels", "season with season labels", "attrition"],
+    "categorical_and_hash_fields": "exact match",
+    "fit_numerical_absolute_tolerance": 1e-11,
+    "maximum_cross_version_binomial_endpoint_difference": 4.213e-13,
+    "outcome": "No material scientific findings; source identity, event applicability, unrun failure accounting, rendering semantics, and cross-version rounding findings corrected"
+  },
+  "control_metadata": {
+    "path": "docs/evidence/m38-null-standard-metadata-2026-09-06.json",
+    "file_sha256": "27d4ae3197a187cae5e4d546aa5c8cdd40810dcbc109aa8a7eea444594851480",
+    "metadata_records": 687,
+    "representative_headers_checked": 21,
+    "limitations": "Bounded candidate-only metadata screen, not all exposures or a selected control suite; no H1567 match established, not proof of absence"
+  },
+  "environmental_incident": "Initial Windows warning-as-error test run passed its test bodies but failed in shared pytest cache teardown with PermissionError. Reran using a separate task-local cache, retaining warning-as-error checks; clean exit and 20 passed.",
+  "remaining_scientific_requirements": [
+    "Independent uncertainty-method comparison and more realistic simulation coverage",
+    "Real extraction and pre-template stellar-only injection adapter",
+    "Suitable independently grounded observational controls",
+    "Full adaptive-pipeline false-positive and detection-completeness calibration",
+    "Reviewed frozen protocol and required role separation before target execution"
+  ]
+}
