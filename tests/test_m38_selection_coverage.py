@@ -6,7 +6,6 @@ from copy import deepcopy
 
 import numpy as np
 import pytest
-
 from scripts import m38_selection_coverage as coverage
 
 
@@ -97,20 +96,20 @@ def test_order_loss_cannot_gain_eligibility(plan):
 
 def test_denominators_retain_failed_trials():
     records = [
-        dict(
-            complete=True,
-            covered=True,
-            attrition_passed=True,
-            interval_gate_passed=True,
-            false_equivalence=False,
-        ),
-        dict(
-            complete=False,
-            covered=False,
-            attrition_passed=False,
-            interval_gate_passed=False,
-            false_equivalence=False,
-        ),
+        {
+            "complete": True,
+            "covered": True,
+            "attrition_passed": True,
+            "interval_gate_passed": True,
+            "false_equivalence": False,
+        },
+        {
+            "complete": False,
+            "covered": False,
+            "attrition_passed": False,
+            "interval_gate_passed": False,
+            "false_equivalence": False,
+        },
     ]
     result = coverage.summarize_trials(records, 0.95)
     assert result["covered"]["rate"] == 0.5

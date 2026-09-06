@@ -46,6 +46,7 @@
     "limitations": "Bounded candidate-only metadata screen, not all exposures or a selected control suite; no H1567 match established, not proof of absence"
   },
   "environmental_incident": "Initial Windows warning-as-error test run passed its test bodies but failed in shared pytest cache teardown with PermissionError. Reran using a separate task-local cache, retaining warning-as-error checks; clean exit and 20 passed.",
+  "initial_ci_followup": "GitHub run 34058914082 stopped at three new-test-only style findings in its newer Ruff defaults (import grouping and two dictionary literals). Corrected these without changing simulation code, evidence, or test semantics; scientific results did not require rerunning.",
   "remaining_scientific_requirements": [
     "Independent uncertainty-method comparison and more realistic simulation coverage",
     "Real extraction and pre-template stellar-only injection adapter",
