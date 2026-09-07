@@ -1,0 +1,22 @@
+{
+  "schema": "m38-interval-benchmark-plan-v1",
+  "purpose": "Development-only paired Gaussian benchmark; no target validation or estimator adoption",
+  "master_seed": 720260907,
+  "trials_per_case": 1000,
+  "bootstrap_repetitions": [199, 1999],
+  "confidence_level": 0.95,
+  "monte_carlo_confidence_level": 0.95,
+  "true_slope": 1.0,
+  "injected_velocities_m_s": [-1800.0, -600.0, 600.0, 1800.0],
+  "order_count": 3,
+  "night_slope_sd": 0.25,
+  "night_offset_sd_m_s": 80.0,
+  "order_noise_sd_m_s": 40.0,
+  "minimum_independent_clusters": 2,
+  "variance_diagnostic": "sample variance with ddof=1; pointwise chi-square reference envelope",
+  "paired_diagnostic": "all four coverage-discordance counts; no independent-binomial subtraction",
+  "cases": [
+    {"id": "independent-24", "nights": 24, "noise": "independent", "bootstrap_labels": ["night"]},
+    {"id": "six-seasons-24", "nights": 24, "noise": "season", "bootstrap_labels": ["night", "season"]}
+  ]
+}

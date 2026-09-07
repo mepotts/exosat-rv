@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "scope": "Paired response-level Gaussian interval benchmark and source-only real-adapter design",
+  "base_commit": "03d0459f4ccfa21b9a6478c5a77cabfa68956751",
+  "target_data_accessed": false,
+  "observational_control_data_accessed": false,
+  "viper_executed": false,
+  "production_selection_code_changed": false,
+  "estimator_or_scientific_threshold_adopted": false,
+  "formal_publication_performed": false,
+  "pilot": {
+    "plan_path": "docs/evidence/m38-interval-benchmark-plan-2026-09-07.json",
+    "canonical_plan_sha256": "f72006b821618f2d09363c4f61497492b1388cd7d8fa6a3742ba756f2151418f",
+    "result_path": "docs/evidence/m38-interval-benchmark-result-2026-09-07.json",
+    "result_file_sha256": "b45619bbf592c176e919efa38be540ba96cf37234164feb25085853367b44b1c",
+    "generative_cases": 2,
+    "independent_trials": 2000,
+    "interval_records": 10000,
+    "bootstrap_repetition_grid": [199, 1999],
+    "environment": {"python": "3.12.3", "numpy": "2.5.2", "scipy": "1.18.0", "workers": 2},
+    "source_sha256": {
+      "benchmark": "33bc482be5fcf02dfc87e9e681ba4a6a1f910bd49f92700415c53033b30add62",
+      "generator": "774a79caefe8269c15e819c95d653c2cb032e896a0c7c199ce0f3563966c3b30",
+      "selection": "b749ca8f4b67b2998ea95394897c3123c95964e525fc590c56857b523cba5334",
+      "provenance": "bd99a321964e6159699608dcee7ca7f13ac45b19270f1d001d5dc9f053085fe6"
+    }
+  },
+  "checks": [
+    {"name": "exact tests/test_m38_*.py roster", "platform": "WSL Linux", "warnings": "error", "passed": 416, "seconds": 47.26},
+    {"name": "tests/test_m38_interval_benchmark.py", "platform": "Windows", "warnings": "error", "passed": 20, "seconds": 2.20},
+    {"name": "ruff check src tests and two new scripts", "outcome": "passed"},
+    {"name": "new test file explicit I,C4,UP,B,SIM checks", "outcome": "passed"},
+    {"name": "compileall -q src tests scripts", "outcome": "passed"},
+    {"name": "generated table --check on Windows using WSL evidence", "outcome": "passed"},
+    {"name": "git diff --check", "outcome": "passed"}
+  ],
+  "independent_agent_audit": {
+    "reviewer": "coverage_audit; independent agent, not external RV specialist",
+    "pre_run": "Design and implementation reviewed; 15 initial tests independently passed",
+    "post_run": "All retained coverage summaries and source identities checked; oracle variance independently projected through full WLS covariance; final interpretation verified",
+    "replayed_trial_ids_per_case": [0, 499, 999],
+    "replayed_trials_total": 6,
+    "numerical_relative_tolerance": 1e-10,
+    "numerical_absolute_tolerance": 1e-12,
+    "seeds_hashes_and_categorical_fields": "exact match",
+    "renderer_tests_independently_passed": 20,
+    "outcome": "No material unresolved findings; wording corrected to avoid implying target protocol is already frozen"
+  },
+  "adapter_design": {
+    "path": "docs/milestones/M38-REAL-ADAPTER-NEXT-STEP.md",
+    "scope": "Repo and external VIPER source/configuration text inspected only; external file fingerprints recorded in memo",
+    "proposed_first_slice": "Wholly synthetic extracted 1D spectra through actual template reconstruction and held-out RV fitting in a private runtime",
+    "implementation_status": "Design only; no adapter execution or real-control suitability established"
+  }
+}

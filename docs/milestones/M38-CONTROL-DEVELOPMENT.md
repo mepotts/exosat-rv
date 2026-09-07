@@ -155,6 +155,12 @@ in a new preregistration.
 
 ## Next permitted work
 
+The [2026-09-07 paired benchmark](M38-INTERVAL-BENCHMARK.md) follows up the recovery-interval
+pilot with known Gaussian covariance and independent-block Student-t references. More
+bootstrap draws alone do not repair the tested coverage problem; no estimator is adopted.
+The [real-adapter design](M38-REAL-ADAPTER-NEXT-STEP.md) defines the next synthetic
+reduced-spectrum-to-template bridge without running VIPER or opening observational data.
+
 The [2026-09-06 response-level coverage pilot](M38-SELECTION-COVERAGE-PILOT.md) begins
 empirical testing of the recovery interval on declared random-effects simulations. It is
 not a spectral injection or an adopted uncertainty method. The accompanying
