@@ -1,5 +1,9 @@
 # Milestone records
 
+**For current conclusions, start with [M37](M37-RESULTS.md); for current development, use
+[the M38 overview](../validation.md).** The table below preserves historical headlines,
+including claims later narrowed or withdrawn. It is not a list of accepted findings.
+
 One document per milestone, each owning a conclusion. A later milestone can overturn an
 earlier one -- several do -- and when that happens the superseded document is amended to say
 so rather than deleted, because the wrong turn is part of the record.
@@ -55,3 +59,15 @@ Drafts are design records only. They are neither preregistered nor authorized to
 
 - [`M38-PROTOCOL-DRAFT.md`](M38-PROTOCOL-DRAFT.md) — Outcome-isolated successor design; extraction lineage, thresholds, and clean templates remain unresolved
 - [`M38-CONTROL-DEVELOPMENT.md`](M38-CONTROL-DEVELOPMENT.md) — Generic synthetic-only implementation checkpoint; no target run and no protocol blockers closed by code alone
+
+## M38 development studies
+
+- [Control candidates](M38-CONTROL-CANDIDATES.md) and [evidence follow-up](M38-CONTROL-EVIDENCE-FOLLOWUP.md)
+- [Restricted runtime evidence](M38-CONTROL-RUNTIME-EVIDENCE.md)
+- [Selection-interval coverage pilot](M38-SELECTION-COVERAGE-PILOT.md)
+- [Homogeneous Gaussian interval benchmark](M38-INTERVAL-BENCHMARK.md)
+- [Heterogeneous interval stress](M38-HETEROGENEOUS-INTERVALS.md)
+- [Actual VIPER synthetic bridge plan](M38-REAL-ADAPTER-NEXT-STEP.md)
+- [Actual VIPER synthetic bridge engineering results](M38-VIPER-SYNTHETIC-BRIDGE.md)
+
+These are development records, not a frozen target protocol or independent confirmation.

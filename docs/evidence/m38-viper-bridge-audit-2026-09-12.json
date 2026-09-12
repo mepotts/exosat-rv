@@ -1,0 +1,227 @@
+{
+  "schema": "m38-viper-bridge-independent-audit-v1",
+  "date": "2026-09-12",
+  "scope": "Independent synthetic-only engineering audit; no science target data or historical batch driver used.",
+  "outcome": "No unresolved blocker to the bounded fixed-step engineering report; no convergence, calibrated interval, or production-adapter pass is asserted.",
+  "environment": {
+    "python": "3.12.3",
+    "numpy": "2.5.2",
+    "scipy": "1.18.0",
+    "astropy": "8.0.1",
+    "platform": "WSL Linux"
+  },
+  "retained_result": "docs/evidence/m38-viper-synthetic-bridge-2026-09-12.json",
+  "retained_result_sha256": "21dbe7802fd60dc9bc32f83c827adccc611898921ec5f759688db869ec3f9fff",
+  "driver_sha256": "0f51603e1f62d34f1b81ccc421162013815f982b13000482a2def5be01f8523a",
+  "bridge_sha256": "32561a9b874a9662d38cc34c73f3688331538d941d3bdab674715f504740dd4a",
+  "verified_native_products": 28,
+  "verified_private_source_copies": 105,
+  "verified_numeric_rvo_rows": 140,
+  "independent_reference_replay_exact": true,
+  "replay_command": "PYTHONPATH=src:. OPENBLAS_NUM_THREADS=1 /home/matth/viperenv/bin/python -m scripts.m38_viper_synthetic_bridge --viper-source /home/matth/viper-src --output /mnt/c/Users/matth/projects/exosat-rv/.codex-bridge-audit-tests/replay2 --single --iterations 3",
+  "replay_result_sha256": "649bf421782185d9dff39c224c9cad937a5eaea6906bc186688c66607cca4813",
+  "independent_tests_sha256": "40191d70e12ce0a13d16b70a33e63aba9cb4edafd6dc8bb5ad9adb8b1a265ce0",
+  "independent_tests": {
+    "file": "tests/test_m38_viper_bridge_audit.py",
+    "passed": 39,
+    "combined_with_report_tests_passed": 43,
+    "command": "PYTHONPATH=src:. OPENBLAS_NUM_THREADS=1 /home/matth/viperenv/bin/python -m pytest tests/test_m38_viper_bridge_audit.py tests/test_m38_viper_bridge_report.py -q -W error -o cache_dir=.codex-bridge-audit-tests/pytest-cache"
+  },
+  "isolation": {
+    "all_four_native_stages_unchanged_for_zero_repeat": true,
+    "all_four_native_stages_unchanged_for_heldout_perturbation": true,
+    "all_four_native_stages_change_for_both_training_perturbations": true,
+    "unperturbed_heldout_rvs_unchanged": true,
+    "builder_argv_contains_training_glob_only": true,
+    "oracle_created_after_learned_evaluation": "source inspected"
+  },
+  "audit_fixes": [
+    "Reject unregistered or modified private runtime before process execution.",
+    "Reject infinities in native template flux and scatter; do not classify infinity as a mask.",
+    "Align report rows by filenames and use expected log-velocity differences in paired summaries.",
+    "Check all native stages and both training perturbation signs; reject stale/nonfinite report residuals."
+  ],
+  "failure_context": "smoke3 and smoke4 were development attempts with noiseless training velocities [-300,0,300] m/s. They failed at build1 on the middle epoch covariance and were not included among seven completed cases. The successful fixture was changed during development to [-300,-100,400] m/s. Their full RVO and stdout are retained below; these earlier transient driver versions were not frozen, so no exact source-bound replay claim is made for those failures.",
+  "limits": [
+    "One generated order fitted; three chip tables are duplicates, not independent measurements.",
+    "Fixed three updates after initial template; no convergence criterion adopted.",
+    "Unity tellurics, symmetric Gaussian LSF, fixed wavelength map; not a detector-level injection.",
+    "Near-unity paired slopes coexist with template zero-point offsets; they do not establish absolute RV fidelity.",
+    "Only two noisy realizations; no coverage or scientific threshold calibration.",
+    "Trusted external source copied into private runtime with no-op plotting wrapper; not an OS access-control sandbox.",
+    "Generated FITS and full private source/runtime products are ignored local scratch; retained numerical evidence and hashes support rebuilding, not a self-contained executable archive.",
+    "Observational controls, protocol freeze, independent governance, and target-access gates remain unresolved."
+  ],
+  "failure_evidence": {
+    "smoke3": {
+      "rvo_sha256": "c1c83ac274314a91f928cc91afcd36f1a494f008d73e4d00bf51ce3212d612f2",
+      "stdout_sha256": "23732cb170c9395f2702d1f995589c3bc33b044751f77802d0d8af172f8c5041",
+      "failed_row": "2458849.5008007395 nan nan -4.3671263258662 0.04645441001489818 inf epoch01.fits",
+      "rvo_text": "BJD RV e_RV BERV rv0 e_rv0 filename\n2458849.5008007395 -299.94719260361444 0.48626043730146823 -4.3671263258662 -299.94719260361444 0.48626043730146823 epoch00.fits\n2458849.5008007395 nan nan -4.3671263258662 0.04645441001489818 inf epoch01.fits\n2458849.5008007395 300.056404675101 0.486421740285896 -4.3671263258662 300.056404675101 0.486421740285896 epoch02.fits\n",
+      "stdout_text": "/mnt/c/Users/matth/projects/exosat-rv/.codex-viper-bridge-tests/smoke3/reference/runtime/utils/model.py:226: OptimizeWarning: Covariance of the parameters could not be estimated\n  params, e_params = curve_fit(S_model, pixel, spec_obs, p0=varyvals, sigma=sig, absolute_sigma=False, epsfcn=1e-12)\n/mnt/c/Users/matth/projects/exosat-rv/.codex-viper-bridge-tests/smoke3/reference/runtime/viper.py:944: RuntimeWarning: Mean of empty slice\n  RV = np.nanmean(rv[oo])\n/home/matth/viperenv/lib/python3.12/site-packages/numpy/lib/_nanfunctions_impl.py:1997: RuntimeWarning: Degrees of freedom <= 0 for slice.\n  var = nanvar(a, axis=axis, dtype=dtype, out=out, ddof=ddof,\n/mnt/c/Users/matth/projects/exosat-rv/.codex-viper-bridge-tests/smoke3/reference/runtime/viper.py:945: RuntimeWarning: invalid value encountered in power\n  e_RV = np.nanstd(rv[oo])/(oo.sum()-1)**0.5\nNo PyCPL version has been found. Using astropy for data reading and writing.\n[0]\nreading stellar template\n  1/3 epoch00.fits\n1 0 0 -299.94719260361444 0.48626043730146823\nRV: -299.94719260361444 0.48626043730146823 2458849.5008007395 -4.3671263258662\n  2/3 epoch01.fits\n2 0 0 0.04645441001489818 inf\nRV: nan nan 2458849.5008007395 -4.3671263258662\n  3/3 epoch02.fits\n3 0 0 300.056404675101 0.486421740285896\nRV: 300.056404675101 0.486421740285896 2458849.5008007395 -4.3671263258662\nprocessing time total:        00h00m00s\nprocessing time per spectrum: 00h00m00s\nprocessing time per chunk:    00h00m00s\n/mnt/c/Users/matth/projects/exosat-rv/.codex-viper-bridge-tests/smoke3/reference/build1/fit.rvo.dat done.\n"
+    },
+    "smoke4": {
+      "rvo_sha256": "7ee589da971e9862862918177eb8b7863451b4dc38a2da5547fa855e6bd346b0",
+      "stdout_sha256": "b6ff83f32beefd11ad28c1441f63667b9082d494f1597cd070a1bcd13b329290",
+      "failed_row": "2458849.5008007395 nan nan -4.3671263258662 -0.08292464376588593 inf epoch01.fits",
+      "rvo_text": "BJD RV e_RV BERV rv0 e_rv0 filename\n2458849.5008007395 -299.94719321223704 0.4862586834288074 -4.3671263258662 -299.94719321223704 0.4862586834288074 epoch00.fits\n2458849.5008007395 nan nan -4.3671263258662 -0.08292464376588593 inf epoch01.fits\n2458849.5008007395 300.0564046079221 0.4864217592070541 -4.3671263258662 300.0564046079221 0.4864217592070541 epoch02.fits\n",
+      "stdout_text": "/mnt/c/Users/matth/projects/exosat-rv/.codex-viper-bridge-tests/smoke4/reference/runtime/utils/model.py:226: OptimizeWarning: Covariance of the parameters could not be estimated\n  params, e_params = curve_fit(S_model, pixel, spec_obs, p0=varyvals, sigma=sig, absolute_sigma=False, epsfcn=1e-12)\n/mnt/c/Users/matth/projects/exosat-rv/.codex-viper-bridge-tests/smoke4/reference/runtime/viper.py:944: RuntimeWarning: Mean of empty slice\n  RV = np.nanmean(rv[oo])\n/home/matth/viperenv/lib/python3.12/site-packages/numpy/lib/_nanfunctions_impl.py:1997: RuntimeWarning: Degrees of freedom <= 0 for slice.\n  var = nanvar(a, axis=axis, dtype=dtype, out=out, ddof=ddof,\n/mnt/c/Users/matth/projects/exosat-rv/.codex-viper-bridge-tests/smoke4/reference/runtime/viper.py:945: RuntimeWarning: invalid value encountered in power\n  e_RV = np.nanstd(rv[oo])/(oo.sum()-1)**0.5\nNo PyCPL version has been found. Using astropy for data reading and writing.\n[0]\nreading stellar template\n  1/3 epoch00.fits\n1 0 0 -299.94719321223704 0.4862586834288074\nRV: -299.94719321223704 0.4862586834288074 2458849.5008007395 -4.3671263258662\n  2/3 epoch01.fits\n2 0 0 -0.08292464376588593 inf\nRV: nan nan 2458849.5008007395 -4.3671263258662\n  3/3 epoch02.fits\n3 0 0 300.0564046079221 0.4864217592070541\nRV: 300.0564046079221 0.4864217592070541 2458849.5008007395 -4.3671263258662\nprocessing time total:        00h00m00s\nprocessing time per spectrum: 00h00m00s\nprocessing time per chunk:    00h00m00s\n/mnt/c/Users/matth/projects/exosat-rv/.codex-viper-bridge-tests/smoke4/reference/build1/fit.rvo.dat done.\n"
+    }
+  },
+  "cases": {
+    "reference": {
+      "learned_max_abs_error_mps": 0.5211568527331565,
+      "known_max_abs_error_mps": 0.0024074563241356373,
+      "learned_error_mps": [
+        0.5182332320168825,
+        0.5211568527331565,
+        0.5186985051497288,
+        0.5165096943753724
+      ],
+      "native_array_hashes": [
+        "eaa6f729052b3154591315b40dafa63310c7b790e36ce557d806786c7fc68407",
+        "b4d887f1ae396cf4a8073b0228ca5d5715a0f40e15d1cada29dd9e7d0e362f87",
+        "19e6d4d74102f7d74a1361b47c8abbf3039c89b079bbcc1c12596e0dbf759839",
+        "6c45a3b8ea02be98e84776a88480c7225f11a0f049bb2bad54939553a5790cd1"
+      ]
+    },
+    "zero_repeat": {
+      "learned_max_abs_error_mps": 0.5211568527331565,
+      "known_max_abs_error_mps": 0.0024074563241356373,
+      "learned_error_mps": [
+        0.5182332320168825,
+        0.5211568527331565,
+        0.5186985051497288,
+        0.5165096943753724
+      ],
+      "native_array_hashes": [
+        "eaa6f729052b3154591315b40dafa63310c7b790e36ce557d806786c7fc68407",
+        "b4d887f1ae396cf4a8073b0228ca5d5715a0f40e15d1cada29dd9e7d0e362f87",
+        "19e6d4d74102f7d74a1361b47c8abbf3039c89b079bbcc1c12596e0dbf759839",
+        "6c45a3b8ea02be98e84776a88480c7225f11a0f049bb2bad54939553a5790cd1"
+      ]
+    },
+    "positive": {
+      "learned_max_abs_error_mps": 0.6278339949130896,
+      "known_max_abs_error_mps": 0.0020509708899680845,
+      "learned_error_mps": [
+        0.6278339949130896,
+        0.6257085590616214,
+        0.6276805659602189,
+        0.6243026316446958
+      ],
+      "native_array_hashes": [
+        "451cb8e9556327adefc334cbdd27a6dc5f73f3217f138119f52e62cb9815742d",
+        "ff2689e256c25550846444c5aadd60ba72f7de3ea5333d82b968152dc0e669fb",
+        "f3c1fb5a7ca773cbee506b57391d8f876e4778e1a6e1a39f77c2e7bdf5bd68d8",
+        "68972a31a2d811f9ed604337556f3d3a4d2120ba8052137e81f9ad282cfdaa46"
+      ],
+      "paired_expected_log_delta_mps": [
+        -200.0008672586232,
+        -30.000016481371887,
+        29.99998352509374,
+        199.99913275861195
+      ],
+      "paired_measured_delta_mps": [
+        -199.891266495727,
+        -29.895464775043422,
+        30.10896558590423,
+        200.10692569588127
+      ],
+      "paired_residual_mps": [
+        0.10960076289620702,
+        0.10455170632846489,
+        0.10898206081049011,
+        0.10779293726932337
+      ],
+      "through_origin_recovery_slope": 0.999997202364985,
+      "free_intercept_slope": 0.9999972046927522,
+      "free_intercept_mps": 0.1077318655909684
+    },
+    "negative": {
+      "learned_max_abs_error_mps": 0.05701605700423329,
+      "known_max_abs_error_mps": 0.0019852215418723063,
+      "learned_error_mps": [
+        -0.05181932420191515,
+        -0.05425894525745889,
+        -0.05701605700423329,
+        -0.056635458975733854
+      ],
+      "native_array_hashes": [
+        "635905153701edfb2b56eca3a7beb65f588334739e47ab857d96b0a10d9a0051",
+        "e5821b07945c24a1f3d156c450626116d07f84c49b8b592d2512e212a5563ffb",
+        "3d2a6e901ed7ceaf7682963b8990b92ef06ed3a07e8e832d0117516a8cb646e9",
+        "e2bfe3a6d1fddee76a44600ea9d0ee5c059c2f0d34e7dbb43066e14b1867dd15"
+      ],
+      "paired_expected_log_delta_mps": [
+        200.00073383191716,
+        30.000013512575663,
+        -29.999986460600326,
+        -199.99926618318182
+      ],
+      "paired_measured_delta_mps": [
+        199.43068127569836,
+        29.424597714585047,
+        -30.575701022754288,
+        -200.57241133653292
+      ],
+      "paired_residual_mps": [
+        -0.5700525562187977,
+        -0.5754157979906154,
+        -0.5757145621539621,
+        -0.5731451533511063
+      ],
+      "through_origin_recovery_slope": 1.0000076604874673,
+      "free_intercept_slope": 1.0000076709683163,
+      "free_intercept_mps": -0.5735820202950709
+    },
+    "heldout_perturb": {
+      "learned_max_abs_error_mps": 0.5211568527331565,
+      "known_max_abs_error_mps": 0.0024074563241356373,
+      "learned_error_mps": [
+        0.5182332320168825,
+        0.5211568527331565,
+        0.5186985051497288,
+        0.5195896946534049
+      ],
+      "native_array_hashes": [
+        "eaa6f729052b3154591315b40dafa63310c7b790e36ce557d806786c7fc68407",
+        "b4d887f1ae396cf4a8073b0228ca5d5715a0f40e15d1cada29dd9e7d0e362f87",
+        "19e6d4d74102f7d74a1361b47c8abbf3039c89b079bbcc1c12596e0dbf759839",
+        "6c45a3b8ea02be98e84776a88480c7225f11a0f049bb2bad54939553a5790cd1"
+      ]
+    },
+    "noise_1847": {
+      "learned_max_abs_error_mps": 0.4481005301130949,
+      "known_max_abs_error_mps": 0.26228804834968855,
+      "learned_error_mps": [
+        0.36623144456211776,
+        0.4481005301130949,
+        0.15515643438379811,
+        0.4261424638518747
+      ],
+      "native_array_hashes": [
+        "3374907e78173f2e376eec516a019f13c5b00b789c50b9d8ed662fe1a3278f12",
+        "6cd25acda46e21c225ad79eaea1952048f7dd319586a1ed64a11d9e2c1f1b21e",
+        "aa2f1cf57a2d3a2cef52207c0975714ce5e3431a8915fcd3a74e766bcc2a5283",
+        "d2da0f49b45597abd2e9c4301b4a4d0061837e7bc4eee5e684097a7f0244b7a8"
+      ]
+    },
+    "noise_1848": {
+      "learned_max_abs_error_mps": 0.8542570520842219,
+      "known_max_abs_error_mps": 0.23019302677403175,
+      "learned_error_mps": [
+        0.8542570520842219,
+        0.6834588616906956,
+        0.4774863130362519,
+        0.616458462552373
+      ],
+      "native_array_hashes": [
+        "489a1ce08ce88a3bc7b37039c680ab0ee12a898671ec2cdc55ce21b5cb3455b3",
+        "cc2d44213b856146ea2455bde542795ce9e1bff6cc836d519f0e14601133b7da",
+        "1865a1b60fcfaa9a8a048dbb797e2b3f6f6167dab2d58f1f2222c213b68131a3",
+        "bd3eeaf71c5dc1f95688c9b3382fde0091c30a8c16a699590862ccd155b1b54b"
+      ]
+    }
+  }
+}

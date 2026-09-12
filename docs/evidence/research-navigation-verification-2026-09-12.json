@@ -1,0 +1,71 @@
+{
+  "schema": "exosat-research-navigation-verification-v1",
+  "date": "2026-09-12",
+  "base_commit": "907a524d1e718048ece8834563886c446591f4ac",
+  "scope": "Public documentation reorganization plus generated-only M38 VIPER bridge and heterogeneous interval development; no target experiment or formal release.",
+  "organization": {
+    "scientific_paths_moved": false,
+    "frozen_evidence_modified": false,
+    "runtime_allowlist_modified": false,
+    "public_entrypoint": "README.md",
+    "agent_entrypoint": "AGENTS.md",
+    "container_guide_outside_sealed_context": "containers/README.md",
+    "historical_readme": "https://github.com/mepotts/exosat-rv/blob/907a524d1e718048ece8834563886c446591f4ac/README.md"
+  },
+  "checks": {
+    "full_offline_wsl": {
+      "command": "PYTHONPATH=src:. OPENBLAS_NUM_THREADS=1 /home/matth/viperenv/bin/python -m pytest -q -m 'not network' -o cache_dir=.codex-readme-tests/full-wsl-cache",
+      "passed": 677,
+      "deselected_network": 2,
+      "seconds": 81.81
+    },
+    "public_navigation_citation_and_independent_interval_audit_windows": {
+      "passed": 26,
+      "warnings_as_errors": true
+    },
+    "bridge_and_report_wsl": {
+      "passed": 43,
+      "warnings_as_errors": true,
+      "independent_audit": "docs/evidence/m38-viper-bridge-audit-2026-09-12.json"
+    },
+    "heterogeneous_interval_tests_windows": {
+      "passed": 22,
+      "warnings_as_errors": true
+    },
+    "heterogeneous_independent_audit": {
+      "tests": "tests/test_m38_heterogeneous_intervals_audit.py",
+      "tests_sha256": "fa8eec52cd818d6f002404c9db1d90bd0e1ff8b291dd7a340aebe6fb02ebe270",
+      "passed": 5,
+      "result_sha256": "d46d95a5c4ba86ea7d9c9264972ace1a3f546e8acfe7793032de7ff2bec8d938",
+      "checks": [
+        "Declared plan equals retained plan; source identities match current bytes.",
+        "All 1500 trials and 4500 intervals accounted; all 3000 noise/bootstrap seeds unique.",
+        "Every retained interval's coverage, width, completion, normal and t construction checked.",
+        "All summaries checked; Monte Carlo limits independently recomputed with beta quantiles.",
+        "Full covariance matrices and pseudoinverse WLS projections checked for all three geometries.",
+        "Driver check replayed nine retained production-bootstrap trials."
+      ]
+    },
+    "m37_bundle": {
+      "verified_files": 14,
+      "bundle_sha256": "66283cfdf2b2a584901ebdb8f6a88706a890fa148460a46c1cc2f11c9d25eda3"
+    },
+    "report_checks": [
+      "M37 generated results match retained inputs.",
+      "M38 selection-coverage and Gaussian-benchmark renderers verify source/result/table consistency.",
+      "M38 actual-VIPER renderer verifies source-bound evidence and generated report."
+    ],
+    "package_and_test_ruff": "passed",
+    "compile_src_tests_scripts": "passed",
+    "cli_help_wsl": "passed without archive access",
+    "git_diff_check": "passed"
+  },
+  "development_failures_and_fixes": [
+    "Adding a guide inside the exact five-file sealed runtime caused 18 tests to fail; moved only the new guide to containers/README.md. Runtime policy and pins were not weakened.",
+    "A full suite started during final report hardening imported older code and failed two newly added residual-corruption tests. Final focused and full suites passed after all agents froze edits.",
+    "Windows scientific checks required PYTHONPATH=src;. because the default interpreter was not an editable install. Native temporary-directory permission errors were resolved with a fresh repository-scoped pytest base, not suppressed.",
+    "New report-test import spacing was normalized for current lint defaults; numerical sources and retained execution hashes were unchanged.",
+    "The independent public-doc review caught missing required renderer arguments; navigation now links full verified replay commands."
+  ],
+  "review_boundary": "Different coding agents reviewed work they did not author. This is engineering review, not independent human scientific governance, observer blindness, calibrated observational controls, or protocol approval. GitHub CI status is recorded by the remote run, not asserted here."
+}

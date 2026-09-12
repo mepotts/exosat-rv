@@ -39,6 +39,19 @@ Model versions per stage are recorded in the repository commit trail
 | Decisions with external consequences | 0 | Publication priority on other teams' programme data, making the repository public, all correspondence: human only (`PUBLISHING.md`) |
 | Submission and outward communication | 0 | Human only, permanently — no automated submission machinery exists in this repository |
 
+## September 2026 development follow-up
+
+On 2026-09-12 the user requested a research-facing README and better repository navigation,
+and explicitly delegated continued synthetic validation to agents. Agents implemented the
+[actual VIPER synthetic probe](milestones/M38-VIPER-SYNTHETIC-BRIDGE.md) and
+[heterogeneous uncertainty study](milestones/M38-HETEROGENEOUS-INTERVALS.md), wrote their
+reports, and ran the experiments (level 4). Separate coding agents reviewed the bridge and
+public documentation; the coordinating agent independently checked the interval ledger and
+covariance calculation. These are AI code/engineering audits, not independent human review,
+observer blindness, or the principal-disjoint governance required by the M38 protocol.
+No production estimator or target protocol was adopted, and no target experiment or formal
+publication was performed. Repository updates were authorized separately by the user.
+
 ## Reuse
 
 Future papers copy the Paper-1 table, re-grade each stage honestly, and link the

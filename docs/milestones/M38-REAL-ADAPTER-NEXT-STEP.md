@@ -3,6 +3,10 @@
 **Design only, 2026-09-07.** Source inspection only: no spectra, templates, RV products,
 reductions, downloads, or VIPER execution. No scientific configuration or control is selected.
 
+**Follow-up, 2026-09-12:** the [first synthetic engineering bridge](M38-VIPER-SYNTHETIC-BRIDGE.md)
+now runs actual VIPER template building and fitting. It is a fixed-step standalone probe,
+not the complete production adapter or convergence/control validation designed below.
+
 ## Recommendation
 
 Implement a small **synthetic extracted-1D → actual VIPER template rebuild → held-out RV**

@@ -1,8 +1,9 @@
-# Onboarding — read this first
+# Maintainer onboarding
 
-You are picking up an independent astronomy project in pre-publication remediation. This
-document is the fastest correct path into it. It assumes you have just opened this folder and
-know nothing else about it.
+This is the maintainer/agent operating reference, not the public research landing page.
+Readers should start with the [README](../README.md) and [getting-started guide](getting-started.md).
+Coding agents should also read [AGENTS.md](../AGENTS.md), which qualifies historical operating
+advice below. Current validation work is indexed in [validation.md](validation.md).
 
 ---
 
@@ -32,10 +33,10 @@ data proved to be HiRISE fibre observations reduced with a slit recipe.
 
 | order | file | why |
 |---|---|---|
-| 1 | **`LESSONS.md`** | The consolidated trap catalogue. Every expensive mistake this project made, and how to avoid repeating it. **Read this before touching anything.** |
-| 2 | `README.md` | What the project is and what it found. |
-| 3 | `HANDOFF.md` | State of play, target roster, what is queued. |
-| 4 | `docs/target-queue.md` | The ledger: every target, its verdict, and the evidence behind it. |
+| 1 | [LESSONS.md](LESSONS.md) | Historical trap catalogue, subject to current agent guidance and audit corrections. |
+| 2 | [M37 audit](milestones/M37-RESULTS.md) | Current qualified conclusions, superseding historical headlines. |
+| 3 | [Validation overview](validation.md) and [handoff history](HANDOFF.md) | Current M38 development and prior decisions. |
+| 4 | [Target ledger](target-queue.md) | Per-target evidence and corrections; recheck time-sensitive archive claims. |
 
 Then read the milestone document for whatever you are about to work on. `M*-RESULTS.md` files
 are numbered and each owns a conclusion; `LESSONS.md` maps which one owns what.
@@ -68,14 +69,17 @@ These are not style preferences. Each was paid for.
 
 ## 4. Environment
 
-The analysis runs under **WSL**, not Windows Python.
+Historical raw reductions ran under **WSL**. Package tests and generic simulations can run
+on other supported Python environments. The following paths describe this maintainer's
+machine, not portable prerequisites; confirm dependencies before use.
 
 ```bash
-~/viperenv/bin/python          # the ONLY interpreter with astropy
-python3                        # has numpy, NOT astropy — will fail confusingly
+~/viperenv/bin/python          # historical scientific environment, if present
 ```
 
-Data lives **outside this repository**, in WSL:
+Large historical spectra/templates live **outside this repository**, in WSL. Small adopted
+downstream evidence is now bundled in `data/repro/`. The paths below are inventory context,
+not authority to inspect or execute them during target-free M38 development:
 
 ```
 ~/cr2res/red*/                 # reduced products, per target
@@ -84,7 +88,7 @@ Data lives **outside this repository**, in WSL:
 ~/viper-src/*_tpl.fits         # viper stellar templates (wavelength in ANGSTROM, not nm)
 ```
 
-Run analysis scripts from the repo root via WSL:
+Historical target-aware analysis example (not an M38 smoke command or current recommendation):
 
 ```bash
 # Run from inside WSL, at the repo root. The repo sits on the Windows side, so its WSL
@@ -112,9 +116,9 @@ EXOSAT_ROOT=/path/to/repo ./scripts/cr2res/m15_allnights.sh
 
   ```bash
   git ls-files -z "*.sh" "*.py" "*.sof" | xargs -0 file | grep -c CRLF   # want 0
-  # repair -- tracked and unmodified, so git rewrites them byte-for-byte:
-  git ls-files -z "*.sh" "*.py" "*.sof" | xargs -0 rm -f && git checkout -- .
   ```
+  Do not use the old bulk-delete/checkout repair. Inspect affected files and preserve local
+  changes before a scoped non-destructive line-ending normalization.
 - **Wavelength units.** viper templates are Ångström; `cr2res` products are nm. Mixing them
   silently matches zero orders.
 - **`set -u` must come after sourcing `cr2env.sh`**, which references unset variables.
@@ -200,13 +204,11 @@ reanalysis or prospective confirmation, not a retrospective blind experiment.
 git log --oneline -20                  # what happened recently
 cat docs/LESSONS.md                    # the traps
 
-# Offline tests plus network-marked tests, run from inside WSL. viperenv is the only interpreter carrying the whole set:
-# Windows python has no scipy, WSL python3 has no astropy, and each fails a different slice.
-# If an import is missing:  ~/viperenv/bin/pip install -e ".[dev]"
-cd "$(wslpath -a .)" && PYTHONPATH=src ~/viperenv/bin/python -m pytest tests/ -q
+# In a source checkout with the dev extra installed:
+python -m pytest tests/ -q -m "not network"
 ```
 
-Then ask Matthew what he wants next rather than guessing. Editorial decisions remain his. The
+Continue only within the authorized task; editorial and external-action decisions remain Matthew's. The
 adopted RV/per-order/BERV/configuration evidence is now frozen in `data/repro/`, and M37 reruns
 the screened/all-18 null from it. Before M38 preregistration, authorized development is limited
 to generic code, simulations, and declared controls: the pre-template injection operator,
